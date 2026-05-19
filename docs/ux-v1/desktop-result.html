@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-seo-page="desktop-result">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>XingAI Travel AI — Your routine plan</title>
+  <meta name="description" content="Weekly rhythm, next 48 hours, simple or detailed actions, and a gentle nudge — UX V1 demo." />
+  <link rel="icon" href="assets/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="shortcut icon" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/logo-light.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="app.css" />
+  <script src="seo-config.js"></script>
+  <script src="messages.js"></script>
+  <script src="i18n-boot.js"></script>
+  <script src="seo.js" defer></script>
+  <script src="ux.js" defer></script>
+  <style>body { min-width: 1280px; }</style>
+</head>
+<body class="page-desktop">
+  <div class="app">
+    <header class="chrome">
+      <div class="chrome-left">
+        <img class="chrome-logo" src="assets/logo-light.png" data-logo-light="assets/logo-light.png" data-logo-dark="assets/logo-dark.png" alt="XingAI Travel AI" width="32" height="32" />
+        <span class="chrome-brand" data-i18n="chrome.brandFull">XingAI Travel AI</span>
+      </div>
+      <nav class="chrome-nav"><span class="active" data-i18n="chrome.navDecide">Decide</span><span data-i18n="chrome.navTrips">Week</span><span data-i18n="chrome.navSaved">Saved</span></nav>
+      <div class="chrome-tools">
+        <span class="chrome-tools-label" data-i18n="chrome.language">Language</span>
+        <select id="locale-select" class="tool-select" data-locale-select aria-label="Language">
+          <option value="en">English</option>
+          <option value="zh">中文</option>
+          <option value="ko">한국어</option>
+          <option value="es">Español</option>
+        </select>
+        <span class="chrome-tools-label" data-i18n="chrome.appearance">Appearance</span>
+        <select id="theme-select" class="tool-select" data-theme-select aria-label="Appearance">
+          <option value="light" data-i18n="chrome.themeLight">Light</option>
+          <option value="dark" data-i18n="chrome.themeDark">Dark</option>
+        </select>
+      </div>
+    </header>
+    <div class="shell-desktop">
+      <div class="flow-steps" style="margin-bottom:20px">
+        <span class="flow-step" data-flow-step="1" data-i18n="landing.flowStep1">① Your context</span>
+        <span class="flow-step" data-i18n="landing.flowStep2">② Recommend a rhythm</span>
+        <span class="flow-step active" data-flow-step="3" data-i18n="landing.flowStep3">③ Live it</span>
+      </div>
+      <div class="desktop-hero-grid">
+        <div>
+          <span class="result-badge" data-i18n="result.badge">Weekly rhythm · 3×/week</span>
+          <h1 class="headline" style="text-align:left;font-size:2rem" data-i18n="result.title">Evening workout rhythm</h1>
+          <p class="result-body" style="text-align:left;max-width:32rem" data-i18n="result.body">Three evening sessions you can keep — walk or light strength, with rest between harder days.</p>
+          <div id="section-itinerary">
+          <p class="list-block have" style="margin-top:16px;max-width:360px" data-i18n="result.weekBody">Mon walk · Wed strength · Fri optional rest</p>
+          <p class="list-block buy" style="max-width:360px" data-i18n="result.nextBody">Tue: 20 min walk after dinner
+Thu: prep gym clothes before work</p>
+          </div>
+        </div>
+        <div id="section-plan" class="card">
+          <p class="step-num" data-i18n="result.orderTitle">3 · Live it — rhythm</p>
+                          <div class="order-steps">
+          <div class="order-step active">D1<br>arrive</div>
+          <div class="order-step">D2<br>Alfama</div>
+          <div class="order-step">D3<br>Sintra</div>
+          <div class="order-step">D4<br>Belém</div>
+          <div class="order-step">D5<br>fly</div>
+        </div>
+          <div class="result-section" style="margin-top:14px">
+          <div class="step-mode-toggle" role="group" aria-label="Step detail level">
+            <button type="button" id="step-mode-simple" class="step-mode-btn active" aria-pressed="true" data-i18n="result.stepModeSimple">Simple</button>
+            <button type="button" id="step-mode-detail" class="step-mode-btn" aria-pressed="false" data-i18n="result.stepModeDetail">Detailed</button>
+          </div>
+          <h3 data-i18n="result.stepsTitle">Next actions</h3>
+          <ul id="plan-steps-simple" class="plan-steps-list">
+            <li data-i18n="result.step1Simple">Tue: walk 20 min after dinner</li>
+            <li data-i18n="result.step2Simple">Wed: strength — bodyweight circuit</li>
+            <li data-i18n="result.step3Simple">Thu: prep clothes + water bottle</li>
+            <li data-i18n="result.step4Simple">Fri: rest or easy stretch</li>
+          </ul>
+          <ul id="plan-steps-detail" class="plan-steps-list" hidden>
+            <li>
+              <span data-i18n="result.step1Detail">Tue: 20 min walk after dinner — pace you can talk through</span>
+              <button type="button" class="btn-timer" data-i18n="result.timerDemo">⏱ Start reminder (demo)</button>
+            </li>
+            <li data-i18n="result.step2Detail">Wed: 25 min circuit — squats, push-ups, plank (2 rounds)</li>
+            <li>
+              <span data-i18n="result.step3Detail">Thu: lay out clothes + fill bottle (5 min)</span>
+              <button type="button" class="btn-timer" data-i18n="result.timerDemo">⏱ Start reminder (demo)</button>
+            </li>
+            <li data-i18n="result.step4Detail">Fri: optional 10 min stretch — skip if tired</li>
+          </ul>
+        </div>
+        <div class="result-section">
+          <h3 data-i18n="result.nudgeTitle">Gentle nudge</h3>
+          <p data-i18n="result.nudgeBody">If you miss Monday, Wednesday still counts — no doubling up to punish yourself.</p>
+        </div>
+          <div class="result-actions"><a href="desktop-input.html#section-context" class="btn-secondary" data-i18n="result.ctaEditContext">Edit my context</a><button type="button" class="btn-secondary" data-i18n="result.ctaAnother">Suggest another rhythm</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ux-toast" class="ux-toast" hidden role="status"></div>
+</body>
+</html>

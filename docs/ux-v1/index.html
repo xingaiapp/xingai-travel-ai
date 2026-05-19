@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-seo-page="index">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>XingAI Travel AI — UX V1 gallery</title>
+  <meta name="description" content="Interactive UX gallery for XingAI Travel AI: mobile and desktop mocks with i18n and a 3-step travel decision flow." />
+  <link rel="icon" href="assets/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="shortcut icon" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/logo-light.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="app.css" />
+  <script src="seo-config.js"></script>
+  <script src="messages.js"></script>
+  <script src="i18n-boot.js"></script>
+  <script src="seo.js" defer></script>
+  <script src="ux.js" defer></script>
+  <style>
+    body.gallery { font-family: Inter, sans-serif; background: #111; color: #eee; padding: 32px; min-height: 100vh; }
+    body.gallery h1 { font-size: 1.5rem; margin-bottom: 8px; }
+    body.gallery .lead { color: #9ca3af; margin-bottom: 16px; max-width: 40rem; line-height: 1.5; }
+    body.gallery .gallery-tools { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
+    body.gallery .gallery-tools label { font-size: 12px; color: #9ca3af; }
+    body.gallery .gallery-tools select { padding: 8px 12px; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: #eee; }
+    body.gallery ul { margin-bottom: 32px; line-height: 2; }
+    body.gallery a { color: #60a5fa; }
+    body.gallery .row { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start; }
+  </style>
+</head>
+<body class="gallery">
+  <h1>XingAI Travel AI — UX V1</h1>
+  <p class="lead"><strong>XingAI Travel AI</strong> — your trip → destination → plan. Sky-blue accent, logo, hero, favicon, <strong>EN / 中文 / 한국어 / Español</strong>, light/dark theme. Serve from <code>xingai-travel-ai/docs/ux-v1</code>.</p>
+
+  <div class="gallery-tools">
+    <label>Language <select id="locale-select" class="tool-select"><option value="en">English</option><option value="zh">中文</option><option value="ko">한국어</option><option value="es">Español</option></select></label>
+    <label>Theme <select id="theme-select" class="tool-select"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+  </div>
+
+  <ul>
+    <li><a href="mobile-input.html">Mobile · Input</a></li>
+    <li><a href="mobile-result.html">Mobile · Result</a></li>
+    <li><a href="desktop-input.html">Desktop · Input</a></li>
+    <li><a href="desktop-result.html">Desktop · Result</a></li>
+  </ul>
+
+  <div class="row">
+    <div>
+      <p class="viewport-label">Mobile · Input</p>
+      <iframe src="mobile-input.html" class="frame-mobile" title="Mobile input"></iframe>
+    </div>
+    <div>
+      <p class="viewport-label">Mobile · Result</p>
+      <iframe src="mobile-result.html" class="frame-mobile" title="Mobile result"></iframe>
+    </div>
+  </div>
+</body>
+</html>

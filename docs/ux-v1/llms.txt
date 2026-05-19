@@ -1,0 +1,21 @@
+# XingAI Travel AI — UX V1
+
+> Decide where to go from your real constraints — describe the trip, compare destinations with trade-offs, and get one bookable itinerary.
+
+## Product
+
+- **Repo:** xingai-travel-ai
+- **UX path:** docs/ux-v1/
+- **Live (future):** travel.xingai.app
+
+## Flow
+
+1. **Your trip** — dates, budget, departure, travelers, vibe (paste or type).
+2. **Recommend a destination** — trip style (city / beach / nature / culture) + pace (relaxed / balanced / adventure).
+3. **Plan it** — winner destination, itinerary snapshot, book-first list, simple/detailed day plan, trade-off note.
+
+## Gallery pages
+
+- index.html — screen picker
+- mobile-input.html, mobile-result.html
+- desktop-input.html, desktop-result.html

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-seo-page="mobile-input">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>XingAI Travel AI — Decide your trip</title>
+  <meta name="description" content="Describe your habit and schedule, pick focus and cadence, and get one weekly rhythm with next actions — UX V1 demo." />
+  <link rel="icon" href="assets/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="shortcut icon" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/logo-light.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="app.css" />
+  <script src="seo-config.js"></script>
+  <script src="messages.js"></script>
+  <script src="i18n-boot.js"></script>
+  <script src="seo.js" defer></script>
+  <script src="ux.js" defer></script>
+</head>
+<body class="page-mobile">
+  <div  id="nav-backdrop" class="nav-backdrop" hidden aria-hidden="true"></div>
+
+  <aside id="nav-drawer" class="nav-drawer mobile-only" aria-hidden="true" aria-label="Main navigation">
+    <div class="nav-drawer-head">
+      <img class="nav-drawer-logo" src="assets/logo-light.png" data-logo-light="assets/logo-light.png" data-logo-dark="assets/logo-dark.png" alt="XingAI Travel AI" width="40" height="40" />
+      <div class="titles">
+        <span class="brand" data-i18n="chrome.brandFull">XingAI Travel AI</span>
+        <span class="sub" data-i18n="chrome.sheetSubtitle">Travel Decision</span>
+      </div>
+      <button type="button" id="nav-close-btn" class="nav-drawer-close" aria-label="Close" data-i18n-aria="chrome.closeNav">×</button>
+    </div>
+    <nav class="nav-drawer-links">
+      <a href="mobile-input.html" class="nav-drawer-item active">
+        <span class="icon" aria-hidden="true">🌿</span>
+        <span><span class="label" data-i18n="nav.decideLabel">Decide</span><span class="desc" data-i18n="nav.decideDesc">Weekly rhythm — context → plan → live</span></span>
+      </a>
+      <a href="#" class="nav-drawer-item nav-drawer-item--soon" data-nav-soon>
+        <span class="icon" aria-hidden="true">📅</span>
+        <span><span class="label" data-i18n="nav.tripsLabel">Week</span><span class="desc" data-i18n="nav.tripsDesc">Your weekly rhythm at a glance</span></span>
+      </a>
+      <a href="#" class="nav-drawer-item nav-drawer-item--soon" data-nav-soon>
+        <span class="icon" aria-hidden="true">🎤</span>
+        <span><span class="label" data-i18n="nav.exploreLabel">Check-in</span><span class="desc" data-i18n="nav.exploreDesc">Jump to context input</span></span>
+      </a>
+      <a href="#" class="nav-drawer-item nav-drawer-item--soon" data-nav-soon>
+        <span class="icon" aria-hidden="true">★</span>
+        <span><span class="label" data-i18n="nav.savedLabel">Saved</span><span class="desc" data-i18n="nav.savedDesc">Past routines and check-ins</span></span>
+      </a>
+      <a href="#" class="nav-drawer-item nav-drawer-item--soon" data-nav-soon>
+        <span class="icon" aria-hidden="true">👤</span>
+        <span><span class="label" data-i18n="nav.profileLabel">Profile</span><span class="desc" data-i18n="nav.profileDesc">Goals, schedule, language, theme</span></span>
+      </a>
+    </nav>
+    <div class="nav-drawer-foot">
+      <a href="#page-help-guide" class="nav-drawer-help" data-i18n="chrome.helpLink">How to use this page ↓</a>
+      <label for="locale-select-drawer" data-i18n="chrome.language">Language</label>
+      <select id="locale-select-drawer" class="tool-select" data-locale-select aria-label="Language">
+        <option value="en">English</option>
+        <option value="zh">中文</option>
+        <option value="ko">한국어</option>
+        <option value="es">Español</option>
+      </select>
+      <label for="theme-select-drawer" data-i18n="chrome.appearance">Appearance</label>
+      <select id="theme-select-drawer" class="tool-select" data-theme-select aria-label="Appearance">
+        <option value="light" data-i18n="chrome.themeLight">Light</option>
+        <option value="dark" data-i18n="chrome.themeDark">Dark</option>
+      </select>
+    </div>
+  </aside>
+
+  <header class="mobile-header mobile-only">
+    <button type="button" id="menu-btn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer" data-i18n-aria="chrome.openNav">☰</button>
+    <div class="mobile-header-brand">
+      <img class="mobile-header-logo" src="assets/logo-light.png" data-logo-light="assets/logo-light.png" data-logo-dark="assets/logo-dark.png" alt="" width="28" height="28" />
+      <p class="mobile-header-title"><span class="accent" data-i18n="chrome.brandShort">Routine</span> · <span data-i18n="chrome.pageTitleDecide">Decide</span></p>
+    </div>
+    <div class="mobile-header-tools" aria-label="Settings">
+      <label class="sr-only" for="locale-select-header">Language</label>
+      <select id="locale-select-header" class="tool-select" data-locale-select aria-label="Language">
+        <option value="en">EN</option>
+        <option value="zh">中文</option>
+        <option value="ko">KO</option>
+        <option value="es">ES</option>
+      </select>
+      <label class="sr-only" for="theme-select-header">Appearance</label>
+      <select id="theme-select-header" class="tool-select" data-theme-select aria-label="Appearance">
+        <option value="light" data-i18n="chrome.themeLight">Light</option>
+        <option value="dark" data-i18n="chrome.themeDark">Dark</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="app app-col">
+    <main class="shell shell--with-bottom-nav">
+      <div class="hero-block hero-block--travel">
+        <div class="hero-photo-wrap hero-photo-wrap--travel">
+          <img
+            class="hero-photo hero-travel-illustration"
+            src="assets/hero-illustration.png"
+            alt="Travel decision — compare destinations with trade-offs"
+            data-i18n-alt="landing.heroAlt"
+            width="220"
+            height="220"
+            fetchpriority="high"
+          />
+        </div>
+        <p class="eyebrow" data-i18n="landing.eyebrow">Travel Decision System</p>
+        <h1 class="headline" data-i18n="landing.headline">Where should you go — really?</h1>
+        <p class="sub" data-i18n="landing.sub">Describe your trip, compare destinations with trade-offs, and get one itinerary you can actually book.</p>
+        <div class="hero-travel-card" aria-labelledby="hero-travel-tag">
+          <p id="hero-travel-tag" class="hero-travel-card-tag" data-i18n="landing.heroCardTag">Context → destination → plan</p>
+          <ol class="hero-travel-steps">
+            <li data-i18n="landing.flowStep1">① Your context</li>
+            <li data-i18n="landing.flowStep2">② Recommend a rhythm</li>
+            <li data-i18n="landing.flowStep3">③ Live it</li>
+          </ol>
+        </div>
+      </div>
+
+      <section id="page-help-guide" class="page-help-guide" aria-labelledby="page-help-heading">
+        <div class="help-guide-card">
+          <button type="button" id="help-guide-trigger" class="help-guide-trigger" aria-expanded="false" aria-controls="help-guide-panel">
+            <span class="help-guide-icon" aria-hidden="true">?</span>
+            <span class="help-guide-trigger-text">
+              <h2 id="page-help-heading" class="help-guide-title" data-i18n="guide.title">How to use this page</h2>
+              <p class="help-guide-intro-collapsed" data-i18n="guide.intro">Three steps: your context → pick a rhythm → live it. Expand anytime for jump links.</p>
+            </span>
+            <svg class="help-guide-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div id="help-guide-panel" class="help-guide-panel" hidden>
+            <p class="help-guide-intro-expanded" data-i18n="guide.intro">Three steps: your context → pick a rhythm → live it. Expand anytime for jump links.</p>
+            <ol class="help-guide-steps">
+              <li>
+                <span class="help-guide-num" aria-hidden="true">1</span>
+                <div>
+                  <p class="help-guide-step-title" data-i18n="guide.step1Title">Describe your situation</p>
+                  <p class="help-guide-step-body" data-i18n="guide.step1Body">Type your habit goal and real constraints — energy, schedule, and what already failed.</p>
+                  <a class="help-guide-jump" href="#section-context" data-i18n="guide.jump">Jump to section</a>
+                </div>
+              </li>
+              <li>
+                <span class="help-guide-num" aria-hidden="true">2</span>
+                <div>
+                  <p class="help-guide-step-title" data-i18n="guide.step2Title">Recommend a rhythm</p>
+                  <p class="help-guide-step-body" data-i18n="guide.step2Body">Choose a focus area and cadence, then tap Get routine plan for one weekly rhythm.</p>
+                  <a class="help-guide-jump" href="#section-destination-pick" data-i18n="guide.jump">Jump to section</a>
+                </div>
+              </li>
+              <li>
+                <span class="help-guide-num" aria-hidden="true">3</span>
+                <div>
+                  <p class="help-guide-step-title" data-i18n="guide.step3Title">See your week</p>
+                  <p class="help-guide-step-body" data-i18n="guide.step3Body">On the result screen: week overview and next 48 hours.</p>
+                  <a class="help-guide-jump" href="mobile-result.html#section-itinerary" data-i18n="guide.jump">Jump to section</a>
+                </div>
+              </li>
+              <li>
+                <span class="help-guide-num" aria-hidden="true">4</span>
+                <div>
+                  <p class="help-guide-step-title" data-i18n="guide.step4Title">Live it gently</p>
+                  <p class="help-guide-step-body" data-i18n="guide.step4Body">Follow the rhythm, next actions, and one supportive nudge — no guilt if you slip.</p>
+                  <a class="help-guide-jump" href="mobile-result.html#section-plan" data-i18n="guide.jump">Jump to section</a>
+                  <a class="help-guide-jump" href="mobile-result.html" data-i18n="guide.jumpResult">See example result</a>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <p class="help-guide-cta" data-i18n="guide.ctaHelpCopy">New here? Describe an exercise goal and evening preference, pick Exercise, then open the result.</p>
+      </section>
+
+      <div class="flow-steps" aria-label="Steps">
+        <span class="flow-step active" data-flow-step="1" data-i18n="landing.flowStep1">① Your context</span>
+        <span class="flow-step" data-flow-step="2" data-i18n="landing.flowStep2">② Recommend a rhythm</span>
+        <span class="flow-step" data-flow-step="3" data-i18n="landing.flowStep3">③ Live it</span>
+      </div>
+
+      <section id="section-context" class="card" data-context-section>
+        <p class="step-num" data-i18n="landing.step1Title">1 · Your context</p>
+        <p class="card-desc" data-i18n="landing.step1Desc">Describe the habit you want and what gets in the way — schedule, energy, past attempts.</p>
+        <div class="scan-row">
+          <div class="context-thumb" id="context-thumb">
+            <span class="context-thumb-placeholder" aria-hidden="true">📋</span>
+            <img class="context-thumb-img" src="assets/context-mock.jpg" alt="" data-i18n-alt="landing.contextThumbAlt" width="72" height="72" />
+          </div>
+          <button type="button" id="btn-paste-trip" class="btn btn-primary" style="flex:1" data-i18n="landing.ctaPasteTrip">🎤 Voice note (demo)</button>
+        </div>
+        <p class="step-divider" data-i18n="landing.step1Or">or type your situation</p>
+        <label class="sr-only" for="context-input">Ingredients</label>
+        <textarea id="context-input" class="input-field" rows="3" data-i18n-placeholder="landing.inputPlaceholder" placeholder="e.g. exercise 3×/week — mornings impossible, prefer evenings after 7pm…"></textarea>
+        <p class="input-hint" data-i18n="landing.inputExample">Example — edit or replace</p>
+        
+        <div id="context-loading" class="state-banner is-hidden" hidden data-i18n="landing.contextLoading">Reading your notes…</div>
+        <div id="context-empty" class="context-empty" data-i18n="landing.contextEmpty">Type at least a few words about your habit and constraints.</div>
+        <div id="context-box" class="context-box is-hidden" hidden>
+          <p class="label" data-i18n="landing.contextLabel">Understood from your notes (mock)</p>
+          <p data-i18n="landing.contextItems">evenings OK · 25–35 min sessions · rest between hard days · desk job</p>
+        </div>
+      </section>
+
+      <section id="section-destination-pick" class="card">
+        <p class="step-num" data-i18n="landing.step2Title">2 · Recommend a rhythm</p>
+        <p class="card-desc" data-i18n="landing.step2Desc">Which area matters most this week? We'll suggest one rhythm that fits your calendar.</p>
+        <div class="travel-pick-fields">
+          <div class="travel-field">
+            <p class="travel-field-label" data-i18n="landing.paceLabelLine">Pace · recommended</p>
+            <div class="pace-chips" role="group" aria-label="Pace">
+              <button type="button" class="pace-chip selected" data-pace="relaxed" aria-pressed="true">
+                <span class="chip-emoji" aria-hidden="true">🌴</span>
+                <span class="chip-label" data-i18n="landing.paceRelaxedText">Relaxed</span>
+              </button>
+              <button type="button" class="pace-chip selected" data-pace="balanced" aria-pressed="true">
+                <span class="chip-emoji" aria-hidden="true">⚖️</span>
+                <span class="chip-label" data-i18n="landing.paceBalancedText">Balanced</span>
+              </button>
+              <button type="button" class="pace-chip" data-preset="balanced" aria-pressed="false">
+                <span class="chip-emoji" aria-hidden="true">🏙️</span>
+                <span class="chip-label" data-i18n="landing.presetBalanced">City break preset</span>
+              </button>
+              <button type="button" class="pace-chip" data-pace="adventure" aria-pressed="false">
+                <span class="chip-emoji" aria-hidden="true">🥾</span>
+                <span class="chip-label" data-i18n="landing.paceAdventureText">Adventure</span>
+              </button>
+            </div>
+          </div>
+          <div class="travel-field">
+            <p class="travel-field-label" data-i18n="landing.styleLabel">Trip style</p>
+            <div class="style-slots" role="group" aria-label="Trip style">
+              <button type="button" class="style-slot selected" data-style="city" aria-pressed="true">
+                <span class="focus-icon" aria-hidden="true">🏙️</span>
+                <span class="focus-label-text" data-i18n="landing.styleCity">City break</span>
+              </button>
+              <button type="button" class="style-slot" data-style="beach" aria-pressed="false">
+                <span class="focus-icon" aria-hidden="true">🏖️</span>
+                <span class="focus-label-text" data-i18n="landing.styleBeach">Beach</span>
+              </button>
+              <button type="button" class="style-slot" data-style="nature" aria-pressed="false">
+                <span class="focus-icon" aria-hidden="true">⛰️</span>
+                <span class="focus-label-text" data-i18n="landing.styleNature">Nature</span>
+              </button>
+              <button type="button" class="style-slot" data-style="culture" aria-pressed="false">
+                <span class="focus-icon" aria-hidden="true">🏛️</span>
+                <span class="focus-label-text" data-i18n="landing.styleCulture">Culture</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <label class="sr-only" for="constraints-input">Constraints</label>
+        <textarea id="constraints-input" class="input-field" rows="2" data-i18n-placeholder="landing.constraintsPlaceholder" placeholder="Optional: travel week · low energy · need accountability buddy"></textarea>
+        <p class="cta-hint" data-i18n="landing.ctaNextHint">Next: one weekly rhythm, next 48h actions, and a gentle nudge.</p>
+        <a href="mobile-result.html" id="btn-recommend" class="btn btn-primary" style="text-decoration:none;text-align:center;display:block" data-i18n="landing.ctaRecommend">Get routine plan</a>
+      </section>
+
+      <p class="disclaimer" data-i18n="landing.disclaimer">UX mock · V1 · Not connected to API yet</p>
+    </main>
+  </div>
+
+  <nav class="bottom-nav-fixed mobile-only" aria-label="Primary">
+    <a href="mobile-input.html" class="bottom-nav-item active">
+      <span class="bn-icon" aria-hidden="true">✈️</span>
+      <span data-i18n="bottomNav.decide">Decide</span>
+    </a>
+    <button type="button" class="bottom-nav-item bottom-nav-item--soon" data-nav-soon>
+      <span class="bn-icon" aria-hidden="true">📅</span>
+      <span data-i18n="bottomNav.trips">Week</span>
+    </button>
+    <button type="button" class="bottom-nav-item" data-bottom-explore>
+      <span class="bn-icon" aria-hidden="true">🧭</span>
+      <span data-i18n="bottomNav.explore">Check-in</span>
+    </button>
+    <button type="button" class="bottom-nav-item bottom-nav-item--soon" data-nav-soon>
+      <span class="bn-icon" aria-hidden="true">★</span>
+      <span data-i18n="bottomNav.saved">Saved</span>
+    </button>
+    <button type="button" class="bottom-nav-item bottom-nav-item--soon" data-nav-soon>
+      <span class="bn-icon" aria-hidden="true">👤</span>
+      <span data-i18n="bottomNav.profile">Profile</span>
+    </button>
+  </nav>
+
+  <div id="ux-loading" class="ux-overlay" hidden aria-live="polite">
+    <div class="ux-overlay-card">
+      <p class="ux-overlay-title" data-i18n="result.loadingTitle">Building your rhythm…</p>
+      <p data-i18n="result.loadingBody">Matching context, focus area, and cadence preferences.</p>
+    </div>
+  </div>
+  <div id="ux-toast" class="ux-toast" hidden role="status"></div>
+</body>
+</html>

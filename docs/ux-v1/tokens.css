@@ -1,0 +1,65 @@
+/* XingAI Travel AI — UX V1 tokens (sky blue — distinct from Cook orange & Routine emerald) */
+:root,
+[data-theme="light"] {
+  --accent: #2563eb;
+  --accent-bright: #3b82f6;
+  --accent-deep: #1d4ed8;
+  --accent-soft: rgba(37, 99, 235, 0.12);
+  --accent-ring: rgba(37, 99, 235, 0.32);
+  --accent-glow: rgba(59, 130, 246, 0.28);
+  --accent-secondary: #0ea5e9;
+  --bg: #f0f7ff;
+  --bg-grad-end: #e0effe;
+  --bg-glow: rgba(59, 130, 246, 0.18);
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #bfdbfe;
+  --input-bg: #f8fafc;
+  --chrome-bg: rgba(255, 255, 255, 0.92);
+  --logo-src: url("assets/logo-light.png");
+  --radius: 16px;
+  --font: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+[data-theme="dark"] {
+  --accent: #60a5fa;
+  --accent-bright: #93c5fd;
+  --accent-deep: #3b82f6;
+  --accent-soft: rgba(96, 165, 250, 0.14);
+  --accent-ring: rgba(96, 165, 250, 0.38);
+  --accent-glow: rgba(96, 165, 250, 0.22);
+  --accent-secondary: #38bdf8;
+  --bg: #0c1220;
+  --bg-grad-end: #111827;
+  --bg-glow: rgba(59, 130, 246, 0.1);
+  --card: #1e293b;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --border: #334155;
+  --input-bg: #0f172a;
+  --chrome-bg: rgba(30, 41, 59, 0.94);
+  --logo-src: url("assets/logo-dark.png");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --accent: #60a5fa;
+    --accent-bright: #93c5fd;
+    --accent-deep: #3b82f6;
+    --accent-soft: rgba(96, 165, 250, 0.14);
+    --accent-ring: rgba(96, 165, 250, 0.38);
+    --accent-glow: rgba(96, 165, 250, 0.22);
+    --accent-secondary: #38bdf8;
+    --bg: #0c1220;
+    --bg-grad-end: #111827;
+    --bg-glow: rgba(59, 130, 246, 0.1);
+    --card: #1e293b;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: #334155;
+    --input-bg: #0f172a;
+    --chrome-bg: rgba(30, 41, 59, 0.94);
+    --logo-src: url("assets/logo-dark.png");
+  }
+}

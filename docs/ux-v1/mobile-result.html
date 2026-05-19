@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-seo-page="mobile-result">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>XingAI Travel AI — Your routine plan</title>
+  <meta name="description" content="Weekly rhythm, next 48 hours, simple or detailed actions, and a gentle nudge — UX V1 demo." />
+  <link rel="icon" href="assets/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="shortcut icon" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/logo-light.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="app.css" />
+  <script src="seo-config.js"></script>
+  <script src="messages.js"></script>
+  <script src="i18n-boot.js"></script>
+  <script src="seo.js" defer></script>
+  <script src="ux.js" defer></script>
+</head>
+<body class="page-mobile">
+  <div id="nav-backdrop" class="nav-backdrop" hidden aria-hidden="true"></div>
+
+  <aside id="nav-drawer" class="nav-drawer mobile-only" aria-hidden="true">
+    <div class="nav-drawer-head">
+      <img class="nav-drawer-logo" src="assets/logo-light.png" data-logo-light="assets/logo-light.png" data-logo-dark="assets/logo-dark.png" alt="XingAI Travel AI" width="40" height="40" />
+      <div class="titles">
+        <span class="brand" data-i18n="chrome.brandFull">XingAI Travel AI</span>
+        <span class="sub" data-i18n="chrome.sheetSubtitle">Travel Decision</span>
+      </div>
+      <button type="button" id="nav-close-btn" class="nav-drawer-close" aria-label="Close">×</button>
+    </div>
+    <nav class="nav-drawer-links">
+      <a href="mobile-input.html" class="nav-drawer-item active">
+        <span class="icon">🌿</span>
+        <span><span class="label" data-i18n="nav.decideLabel">Decide</span><span class="desc" data-i18n="nav.decideDesc">Weekly rhythm — context → plan → live</span></span>
+      </a>
+      <a href="#" class="nav-drawer-item nav-drawer-item--soon" data-nav-soon><span class="icon">📅</span><span><span class="label" data-i18n="nav.tripsLabel">Week</span><span class="desc" data-i18n="nav.tripsDesc">Your weekly rhythm at a glance</span></span></a>
+      <a href="#" class="nav-drawer-item nav-drawer-item--soon" data-nav-soon><span class="icon">🎤</span><span><span class="label" data-i18n="nav.exploreLabel">Check-in</span><span class="desc" data-i18n="nav.exploreDesc">Jump to context input</span></span></a>
+      <a href="#" class="nav-drawer-item nav-drawer-item--soon" data-nav-soon><span class="icon">★</span><span><span class="label" data-i18n="nav.savedLabel">Saved</span><span class="desc" data-i18n="nav.savedDesc">Past routines and check-ins</span></span></a>
+      <a href="#" class="nav-drawer-item nav-drawer-item--soon" data-nav-soon><span class="icon">👤</span><span><span class="label" data-i18n="nav.profileLabel">Profile</span><span class="desc" data-i18n="nav.profileDesc">Goals, schedule, language, theme</span></span></a>
+    </nav>
+    <div class="nav-drawer-foot">
+      <a href="mobile-input.html#page-help-guide" class="nav-drawer-help" data-i18n="chrome.helpLink">How to use this page ↓</a>
+      <label for="locale-select-drawer" data-i18n="chrome.language">Language</label>
+      <select id="locale-select-drawer" class="tool-select" data-locale-select><option value="en">English</option><option value="zh">中文</option><option value="ko">한국어</option><option value="es">Español</option></select>
+      <label for="theme-select-drawer" data-i18n="chrome.appearance">Appearance</label>
+      <select id="theme-select-drawer" class="tool-select" data-theme-select><option value="light">Light</option><option value="dark">Dark</option></select>
+    </div>
+  </aside>
+
+  <header class="mobile-header mobile-only">
+    <button type="button" id="menu-btn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">☰</button>
+    <div class="mobile-header-brand">
+      <img class="mobile-header-logo" src="assets/logo-light.png" data-logo-light="assets/logo-light.png" data-logo-dark="assets/logo-dark.png" alt="" width="28" height="28" />
+      <p class="mobile-header-title"><span class="accent" data-i18n="chrome.brandShort">Routine</span> · <span data-i18n="chrome.pageTitleDecide">Decide</span></p>
+    </div>
+    <div class="mobile-header-tools" aria-label="Settings">
+      <label class="sr-only" for="locale-select-header">Language</label>
+      <select id="locale-select-header" class="tool-select" data-locale-select aria-label="Language">
+        <option value="en">EN</option>
+        <option value="zh">中文</option>
+        <option value="ko">KO</option>
+        <option value="es">ES</option>
+      </select>
+      <label class="sr-only" for="theme-select-header">Appearance</label>
+      <select id="theme-select-header" class="tool-select" data-theme-select aria-label="Appearance">
+        <option value="light" data-i18n="chrome.themeLight">Light</option>
+        <option value="dark" data-i18n="chrome.themeDark">Dark</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="app app-col">
+    <main class="shell shell--with-bottom-nav">
+      <div class="flow-steps">
+        <span class="flow-step" data-i18n="landing.flowStep1">① Your context</span>
+        <span class="flow-step" data-i18n="landing.flowStep2">② Recommend a rhythm</span>
+        <span class="flow-step active" data-i18n="landing.flowStep3">③ Live it</span>
+      </div>
+
+      <span class="result-badge" data-i18n="result.badge">Weekly rhythm · 3×/week</span>
+      <h1 class="result-title" data-i18n="result.title">Evening workout rhythm</h1>
+      <p class="result-meta" data-i18n="result.meta">Evenings · 25–35 min · supportive tone</p>
+      <p class="result-body" data-i18n="result.body">Three evening sessions you can keep — walk or light strength, with rest between harder days.</p>
+
+      <div id="section-itinerary" class="card">
+        <h3 style="margin:0 0 6px;font-size:11px;text-transform:uppercase;color:var(--muted)" data-i18n="result.weekTitle">This week</h3>
+        <p class="list-block have" data-i18n="result.weekBody">Mon walk · Wed strength · Fri optional rest</p>
+        <h3 style="margin:12px 0 6px;font-size:11px;text-transform:uppercase;color:var(--muted)" data-i18n="result.nextTitle">Next 48 hours</h3>
+        <p class="list-block buy" data-i18n="result.nextBody">Tue: 20 min walk after dinner
+Thu: prep gym clothes before work</p>
+      </div>
+
+      <div id="section-plan" class="card">
+        <p class="step-num" data-i18n="result.orderTitle">3 · Plan it — days</p>
+        <div class="order-steps">
+          <div class="order-step active">D1<br>arrive</div>
+          <div class="order-step">D2<br>Alfama</div>
+          <div class="order-step">D3<br>Sintra</div>
+          <div class="order-step">D4<br>Belém</div>
+          <div class="order-step">D5<br>fly</div>
+        </div>
+        <div class="result-section" style="margin-top:14px">
+          <div class="step-mode-toggle" role="group" aria-label="Step detail level">
+            <button type="button" id="step-mode-simple" class="step-mode-btn active" aria-pressed="true" data-i18n="result.stepModeSimple">Simple</button>
+            <button type="button" id="step-mode-detail" class="step-mode-btn" aria-pressed="false" data-i18n="result.stepModeDetail">Detailed</button>
+          </div>
+          <h3 data-i18n="result.stepsTitle">Next actions</h3>
+          <ul id="plan-steps-simple" class="plan-steps-list">
+            <li data-i18n="result.step1Simple">Tue: walk 20 min after dinner</li>
+            <li data-i18n="result.step2Simple">Wed: strength — bodyweight circuit</li>
+            <li data-i18n="result.step3Simple">Thu: prep clothes + water bottle</li>
+            <li data-i18n="result.step4Simple">Fri: rest or easy stretch</li>
+          </ul>
+          <ul id="plan-steps-detail" class="plan-steps-list" hidden>
+            <li>
+              <span data-i18n="result.step1Detail">Tue: 20 min walk after dinner — pace you can talk through</span>
+              <button type="button" class="btn-timer" data-i18n="result.timerDemo">⏱ Start reminder (demo)</button>
+            </li>
+            <li data-i18n="result.step2Detail">Wed: 25 min circuit — squats, push-ups, plank (2 rounds)</li>
+            <li>
+              <span data-i18n="result.step3Detail">Thu: lay out clothes + fill bottle (5 min)</span>
+              <button type="button" class="btn-timer" data-i18n="result.timerDemo">⏱ Start reminder (demo)</button>
+            </li>
+            <li data-i18n="result.step4Detail">Fri: optional 10 min stretch — skip if tired</li>
+          </ul>
+        </div>
+        <div class="result-section">
+          <h3 data-i18n="result.nudgeTitle">Gentle nudge</h3>
+          <p data-i18n="result.nudgeBody">If you miss Monday, Wednesday still counts — no doubling up to punish yourself.</p>
+        </div>
+      </div>
+
+            <div class="result-actions">
+        <a href="mobile-input.html#section-context" class="btn-secondary" data-i18n="result.ctaEditContext">Edit my context</a>
+        <button type="button" class="btn-secondary" data-i18n="result.ctaAnother">Suggest another rhythm</button>
+      </div>
+      <p class="disclaimer" data-i18n="result.disclaimer">UX mock · Educational · Not medical or therapy advice</p>
+    </main>
+  </div>
+
+  <nav class="bottom-nav-fixed mobile-only" aria-label="Primary">
+    <a href="mobile-input.html" class="bottom-nav-item active"><span class="bn-icon">✈️</span><span data-i18n="bottomNav.decide">Decide</span></a>
+    <button type="button" class="bottom-nav-item bottom-nav-item--soon" data-nav-soon><span class="bn-icon">📅</span><span data-i18n="bottomNav.trips">Week</span></button>
+    <button type="button" class="bottom-nav-item" data-bottom-explore><span class="bn-icon">🧭</span><span data-i18n="bottomNav.explore">Check-in</span></button>
+    <button type="button" class="bottom-nav-item bottom-nav-item--soon" data-nav-soon><span class="bn-icon">★</span><span data-i18n="bottomNav.saved">Saved</span></button>
+    <button type="button" class="bottom-nav-item bottom-nav-item--soon" data-nav-soon><span class="bn-icon">👤</span><span data-i18n="bottomNav.profile">Profile</span></button>
+  </nav>
+
+  <div id="ux-toast" class="ux-toast" hidden role="status"></div>
+</body>
+</html>
