@@ -1,0 +1,8 @@
+{
+  "name": "xingai-travel-ai",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "vercel-build": "node scripts/vercel-build.mjs"
+  }
+}
