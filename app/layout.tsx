@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Inter } from "next/font/google"
+import { Fraunces, Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { AppChrome } from "@/components/app-chrome"
 import { LocaleProvider } from "@/components/locale-provider"
@@ -10,6 +10,12 @@ import "./globals.css"
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
   variable: "--font-inter",
+  display: "swap",
+})
+
+const fraunces = Fraunces({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-display",
   display: "swap",
 })
 
@@ -30,14 +36,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "XingAI Travel AI — Explore Better",
     description: "Compare first, plan second. Choose the right trip before you book.",
-    images: [{ url: "/assets/context-mock.jpg", alt: "Travel destination preview" }],
+    images: [{ url: "/assets/hero-travel-decision.png", alt: "Lisbon travel decision preview" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "XingAI Travel AI",
     description: "Choose the right destination with honest trade-offs and a bookable plan.",
-    images: ["/assets/context-mock.jpg"],
+    images: ["/assets/hero-travel-decision.png"],
   },
   icons: {
     icon: [
@@ -49,6 +55,12 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
   alternates: {
     canonical: "/decide",
+    languages: {
+      "en": "/decide",
+      "zh-Hans": "/decide",
+      "ko": "/decide",
+      "es": "/decide",
+    },
   },
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://travel.xingai.app"),
 }
@@ -64,7 +76,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={inter.variable}>
+    <html lang="en" suppressHydrationWarning className={`light ${inter.variable} ${fraunces.variable}`}>
       <body className="font-sans antialiased">
         <SeoJsonLd />
         <ThemeProvider>

@@ -33,9 +33,9 @@ export function StylePaceSelector({ value, onChange }: StylePaceSelectorProps) {
   }
 
   return (
-    <section className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5">
+    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
       <div className="mb-4 flex items-center gap-2">
-        <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-primary">
           <SlidersHorizontal className="h-4 w-4" aria-hidden />
         </span>
         <h2 className="text-base font-extrabold">2 · {messages.style.title}</h2>
@@ -43,7 +43,7 @@ export function StylePaceSelector({ value, onChange }: StylePaceSelectorProps) {
 
       <div className="space-y-4">
         <div>
-          <p className="mb-2 text-xs font-bold text-foreground">{messages.style.style} <span className="font-medium text-muted-foreground">(up to 2)</span></p>
+          <p className="mb-2 text-xs font-bold text-foreground">{messages.style.style} <span className="font-medium text-muted-foreground">{messages.style.styleHint}</span></p>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {styles.map(({ key, icon: Icon }) => {
               const active = value.style.includes(key)
@@ -53,7 +53,7 @@ export function StylePaceSelector({ value, onChange }: StylePaceSelectorProps) {
                   type="button"
                   onClick={() => toggleStyle(key)}
                   className={cn(
-                    "flex h-11 items-center justify-center gap-2 rounded-xl border px-3 text-sm font-bold transition",
+                    "flex h-11 items-center justify-center gap-2 rounded-md border px-3 text-sm font-bold transition",
                     active ? "border-primary bg-primary/10 text-primary ring-4 ring-primary/10" : "border-border bg-background text-foreground hover:border-primary/40"
                   )}
                   aria-pressed={active}
@@ -77,7 +77,7 @@ export function StylePaceSelector({ value, onChange }: StylePaceSelectorProps) {
                   type="button"
                   onClick={() => onChange({ ...value, pace: key })}
                   className={cn(
-                    "flex h-11 items-center justify-center gap-2 rounded-xl border px-2 text-sm font-bold transition",
+                    "flex h-11 items-center justify-center gap-2 rounded-md border px-2 text-sm font-bold transition",
                     active ? "border-primary bg-primary/10 text-primary ring-4 ring-primary/10" : "border-border bg-background text-foreground hover:border-primary/40"
                   )}
                   aria-pressed={active}

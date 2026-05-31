@@ -13,7 +13,7 @@ export function StepProgress({ active = 1 }: Readonly<{ active?: 1 | 2 | 3 }>) {
   ]
 
   return (
-    <div className="mx-auto mb-6 flex max-w-2xl items-center justify-center rounded-2xl border border-border bg-card/80 p-1 shadow-sm">
+    <div className="mx-auto mb-6 flex max-w-2xl items-center justify-center rounded-md border border-border bg-card/80 p-1 shadow-sm">
       {steps.map((step, index) => {
         const n = (index + 1) as 1 | 2 | 3
         const Icon = step.icon
@@ -21,7 +21,7 @@ export function StepProgress({ active = 1 }: Readonly<{ active?: 1 | 2 | 3 }>) {
           <div key={step.label} className="flex min-w-0 items-center">
             <span
               className={cn(
-                "flex h-8 min-w-0 items-center gap-1.5 rounded-xl px-2.5 text-xs font-bold transition sm:px-4",
+                "flex h-8 min-w-0 items-center gap-1.5 rounded-md px-2.5 text-xs font-bold transition sm:px-4",
                 active === n
                   ? "bg-primary/10 text-primary"
                   : active > n

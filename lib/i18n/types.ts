@@ -18,10 +18,16 @@ export interface Messages {
     terms: string
     disclaimer: string
     affiliate: string
+    exploreBetter: string
+    exploreBetterBody: string
+    continueLastTrip: string
+    continueLastTripBody: string
   }
   home: {
     eyebrow: string
     headline: string
+    headlineLead: string
+    headlineAccent: string
     sub: string
     compare: string
     helper: string
@@ -37,6 +43,10 @@ export interface Messages {
     helpStep3Title: string
     helpStep3Body: string
     trustLine: string
+    modeKnowTrip: string
+    modeSurprise: string
+    inspireCta: string
+    inspireLegal: string
   }
   steps: {
     context: string
@@ -67,6 +77,7 @@ export interface Messages {
   style: {
     title: string
     style: string
+    styleHint: string
     pace: string
     city: string
     beach: string
@@ -79,6 +90,9 @@ export interface Messages {
   result: {
     breadcrumb: string
     preview: string
+    topPick: string
+    previewBadge: string
+    tapCityPreview: string
     bestFit: string
     confidence: string
     whyNot: string
@@ -91,5 +105,38 @@ export interface Messages {
     replan: string
     save: string
     note: string
+    comparing: string
+    tableDestination: string
+    tableOverall: string
+    tableBudget: string
+    tableWeather: string
+    tableFlight: string
+    tableWalkability: string
+    affiliateDisclosure: string
+    bookFlights: string
+    bookHotels: string
+    bookActivities: string
+    dayLabel: string
+    warningSeverityWarning: string
+    warningSeverityCaution: string
+    warningSeverityInfo: string
+    warningsTitle: string
+  }
+  inspire: {
+    title: string
+    subtitle: string
+    vibeLabel: string
+    flightLabel: string
+    priorityLabel: string
+    budgetNote: string
+    gemNote: string
+    budgetDateNote: string
+    editBudgetDates: string
+  }
+  travelers: {
+    solo: string
+    couple: string
+    family: string
+    group: string
   }
 }

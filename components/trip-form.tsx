@@ -31,7 +31,7 @@ function FieldShell({
 }
 
 const inputClass =
-  "h-11 w-full rounded-xl border border-input bg-background px-3 text-sm font-medium outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15"
+  "h-11 w-full rounded-md border border-input bg-background px-3 text-sm font-medium outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15"
 
 export function TripForm({ value, onChange }: TripFormProps) {
   const { messages } = useLocale()
@@ -41,9 +41,9 @@ export function TripForm({ value, onChange }: TripFormProps) {
   }
 
   return (
-    <section className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5">
+    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
       <div className="mb-4 flex items-center gap-2">
-        <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-primary">
           <Plane className="h-4 w-4" aria-hidden />
         </span>
         <h2 className="text-base font-extrabold">1 · {messages.form.title}</h2>
@@ -56,14 +56,26 @@ export function TripForm({ value, onChange }: TripFormProps) {
               className={inputClass}
               type="date"
               value={value.dates.from}
-              onChange={(event) => patch({ dates: { ...value.dates, from: event.target.value } })}
+              onChange={(event) => {
+                const from = event.target.value
+                const nights = value.dates.to
+                  ? Math.max(1, Math.round((new Date(value.dates.to).getTime() - new Date(from).getTime()) / 86400000))
+                  : value.dates.nights
+                patch({ dates: { ...value.dates, from, nights } })
+              }}
             />
             <span className="text-muted-foreground">-</span>
             <input
               className={inputClass}
               type="date"
               value={value.dates.to}
-              onChange={(event) => patch({ dates: { ...value.dates, to: event.target.value } })}
+              onChange={(event) => {
+                const to = event.target.value
+                const nights = value.dates.from
+                  ? Math.max(1, Math.round((new Date(to).getTime() - new Date(value.dates.from).getTime()) / 86400000))
+                  : value.dates.nights
+                patch({ dates: { ...value.dates, to, nights } })
+              }}
             />
           </div>
         </FieldShell>
@@ -92,9 +104,13 @@ export function TripForm({ value, onChange }: TripFormProps) {
               onChange={(event) => patch({ budget: { ...value.budget, currency: event.target.value } })}
             >
               <option>USD</option>
-              <option>CAD</option>
               <option>EUR</option>
+              <option>GBP</option>
+              <option>CAD</option>
+              <option>AUD</option>
               <option>CNY</option>
+              <option>JPY</option>
+              <option>KRW</option>
             </select>
           </div>
         </FieldShell>
@@ -115,10 +131,10 @@ export function TripForm({ value, onChange }: TripFormProps) {
                 patch({ travelers: { ...value.travelers, type: event.target.value as TripContext["travelers"]["type"] } })
               }
             >
-              <option value="solo">Solo</option>
-              <option value="couple">Couple</option>
-              <option value="family">Family</option>
-              <option value="group">Group</option>
+              <option value="solo">{messages.travelers.solo}</option>
+              <option value="couple">{messages.travelers.couple}</option>
+              <option value="family">{messages.travelers.family}</option>
+              <option value="group">{messages.travelers.group}</option>
             </select>
           </div>
         </FieldShell>
@@ -126,7 +142,7 @@ export function TripForm({ value, onChange }: TripFormProps) {
         <label className="block sm:col-span-2">
           <span className="mb-1.5 block text-xs font-bold text-foreground">{messages.form.notes}</span>
           <textarea
-            className="min-h-20 w-full resize-none rounded-xl border border-input bg-background px-3 py-3 text-sm font-medium outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15"
+            className="min-h-20 w-full resize-none rounded-md border border-input bg-background px-3 py-3 text-sm font-medium outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15"
             value={value.notes ?? ""}
             onChange={(event) => patch({ notes: event.target.value })}
             placeholder="Warm weather, walkable cities, great food, minimal driving."

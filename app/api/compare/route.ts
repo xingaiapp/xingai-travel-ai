@@ -1,63 +1,68 @@
 import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
+import OpenAI from "openai"
 import { z } from "zod"
 import { mockCompareResult } from "@/lib/mock-data"
 import { buildComparePrompt } from "@/lib/prompts"
+import { checkDailyLimit, getClientIp } from "@/lib/rate-limit"
 import type { CompareResult, TripContext } from "@/lib/types"
+
+export const runtime = "nodejs"
 
 const tripSchema = z.object({
   dates: z.object({ from: z.string(), to: z.string(), nights: z.number() }),
-  origin: z.string(),
-  budget: z.object({ amount: z.number(), currency: z.string() }),
-  travelers: z.object({ count: z.number(), type: z.enum(["solo", "couple", "family", "group"]) }),
-  notes: z.string().optional(),
-  style: z.array(z.enum(["city", "beach", "nature", "culture"])),
+  origin: z.string().min(1).max(100),
+  budget: z.object({ amount: z.number().min(0).max(1_000_000), currency: z.string().max(10) }),
+  travelers: z.object({ count: z.number().min(1).max(20), type: z.enum(["solo", "couple", "family", "group"]) }),
+  notes: z.string().max(500).optional(),
+  style: z.array(z.enum(["city", "beach", "nature", "culture"])).min(1),
   pace: z.enum(["relaxed", "balanced", "adventure"]),
-  avoid: z.string().optional(),
+  avoid: z.string().max(200).optional(),
   locale: z.enum(["en", "zh", "ko", "es"]).optional(),
 })
 
-async function callClaude(prompt: string): Promise<CompareResult> {
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.ANTHROPIC_API_KEY ?? "",
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-5",
-      max_tokens: 1800,
-      temperature: 0.3,
-      messages: [{ role: "user", content: prompt }],
-    }),
-  })
-  if (!response.ok) throw new Error("Claude request failed")
-  const data = await response.json()
-  const text = data?.content?.find?.((item: { type: string }) => item.type === "text")?.text
-  if (!text) throw new Error("Claude returned no text")
-  return JSON.parse(text) as CompareResult
-}
+export async function POST(request: NextRequest) {
+  const apiKey = process.env.OPENAI_API_KEY?.trim()
+  if (!apiKey) return NextResponse.json(mockCompareResult)
 
-export async function POST(request: Request) {
+  const limited = checkDailyLimit(getClientIp(request))
+  if (limited) return NextResponse.json(limited, { status: 429 })
+
   const parsed = tripSchema.safeParse(await request.json())
   if (!parsed.success) {
-    return NextResponse.json({ message: "Invalid trip context", issues: parsed.error.flatten() }, { status: 400 })
-  }
-
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json(mockCompareResult)
+    return NextResponse.json({ error: "Invalid trip context", code: "BAD_REQUEST" }, { status: 400 })
   }
 
   const prompt = buildComparePrompt(parsed.data as TripContext)
+  const model = process.env.OPENAI_TRAVEL_MODEL?.trim() || "gpt-4o-mini"
+  const openai = new OpenAI({ apiKey })
+
+  async function callOpenAI(): Promise<CompareResult> {
+    const completion = await openai.chat.completions.create({
+      model,
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content: "You are a travel decision advisor. Return only valid JSON matching the requested structure. No markdown fences.",
+        },
+        { role: "user", content: prompt },
+      ],
+      max_tokens: 1800,
+      temperature: 0.3,
+    })
+    const raw = completion.choices[0]?.message?.content ?? ""
+    return JSON.parse(raw) as CompareResult
+  }
+
   try {
-    const result = await callClaude(prompt)
-    return NextResponse.json(result)
+    return NextResponse.json(await callOpenAI())
   } catch {
     try {
-      const retry = await callClaude(`${prompt}\n\nYour previous response was invalid. Return valid JSON only.`)
-      return NextResponse.json(retry)
-    } catch {
-      return NextResponse.json({ message: "Could not compare destinations right now." }, { status: 500 })
+      return NextResponse.json(await callOpenAI())
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "OpenAI request failed"
+      return NextResponse.json({ error: msg, code: "OPENAI_ERROR" }, { status: 502 })
     }
   }
 }

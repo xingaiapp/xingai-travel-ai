@@ -69,9 +69,9 @@ export function LegalPage({ kind }: Readonly<{ kind: LegalPageKind }>) {
 
   return (
     <main className="flex-1 px-4 pb-28 pt-8 sm:px-6 lg:px-10 lg:pb-12">
-      <article className="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-8">
+      <article className="mx-auto max-w-3xl rounded-md border border-border bg-card p-5 shadow-sm sm:p-8">
         <div className="mb-6 flex items-start gap-3">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
             <ShieldCheck className="h-5 w-5" aria-hidden />
           </span>
           <div>
@@ -81,7 +81,7 @@ export function LegalPage({ kind }: Readonly<{ kind: LegalPageKind }>) {
           </div>
         </div>
 
-        <div className="mb-6 rounded-xl border border-border bg-muted/60 p-4 text-sm leading-relaxed text-muted-foreground">
+        <div className="mb-6 rounded-md border border-border bg-muted/60 p-4 text-sm leading-relaxed text-muted-foreground">
           <p>
             <strong className="text-foreground">中文：</strong>
             {page.zhTitle}。本页说明 XingAI Travel AI 的基础保护原则；预订前请自行核对实时价格、入境规则、安全信息与可用性。
@@ -102,16 +102,16 @@ export function LegalPage({ kind }: Readonly<{ kind: LegalPageKind }>) {
         </div>
 
         <div className="mt-8 flex flex-wrap gap-2 border-t border-border pt-5">
-          <Link href="/privacy" className="rounded-xl border border-border px-3 py-2 text-sm font-bold text-muted-foreground hover:text-primary">
+          <Link href="/privacy" className="rounded-md border border-border px-3 py-2 text-sm font-bold text-muted-foreground hover:text-primary">
             Privacy
           </Link>
-          <Link href="/terms" className="rounded-xl border border-border px-3 py-2 text-sm font-bold text-muted-foreground hover:text-primary">
+          <Link href="/terms" className="rounded-md border border-border px-3 py-2 text-sm font-bold text-muted-foreground hover:text-primary">
             Terms
           </Link>
-          <Link href="/disclaimer" className="rounded-xl border border-border px-3 py-2 text-sm font-bold text-muted-foreground hover:text-primary">
+          <Link href="/disclaimer" className="rounded-md border border-border px-3 py-2 text-sm font-bold text-muted-foreground hover:text-primary">
             Disclaimer
           </Link>
-          <Link href="/affiliate-disclosure" className="rounded-xl border border-border px-3 py-2 text-sm font-bold text-muted-foreground hover:text-primary">
+          <Link href="/affiliate-disclosure" className="rounded-md border border-border px-3 py-2 text-sm font-bold text-muted-foreground hover:text-primary">
             Affiliate
           </Link>
         </div>

@@ -11,7 +11,7 @@ export function LocaleSwitcher({ className }: Readonly<{ className?: string }>) 
   return (
     <label
       className={cn(
-        "inline-flex h-10 items-center gap-1 rounded-xl border border-border bg-card px-2 text-xs font-semibold shadow-sm",
+        "inline-flex h-10 items-center gap-1 rounded-md border border-border bg-card px-2 text-xs font-semibold shadow-sm",
         className
       )}
     >

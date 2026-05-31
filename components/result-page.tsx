@@ -1,58 +1,116 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useReducer } from "react"
+import { BookFirst } from "@/components/book-first"
 import { DestinationCompare } from "@/components/destination-compare"
 import { Itinerary } from "@/components/itinerary"
 import { StepProgress } from "@/components/step-progress"
 import { TradeoffNote } from "@/components/tradeoff-note"
+import { TripWarnings } from "@/components/trip-warnings"
 import { useLocale } from "@/components/locale-provider"
-import { mockCompareResult, mockPlanResult } from "@/lib/mock-data"
-import type { CompareResult, PlanResult } from "@/lib/types"
+import { mockCompareResult, mockPlanResult, defaultTrip } from "@/lib/mock-data"
+import type { CompareResult, PlanResult, TripContext } from "@/lib/types"
 
 const COMPARE_STORAGE = "xingai-travel-compare-result"
-const PLAN_STORAGE = "xingai-travel-plan-result"
+const PLAN_STORAGE    = "xingai-travel-plan-result"
+const TRIP_STORAGE    = "xingai-travel-trip-context"
+
+function readStorage<T>(key: string, fallback: T): T {
+  try { return JSON.parse(sessionStorage.getItem(key) ?? "") as T } catch { return fallback }
+}
+
+interface PageState {
+  compare: CompareResult
+  trip: TripContext
+  plan: PlanResult | null
+  planReady: boolean
+}
+
+type PageAction =
+  | { type: "HYDRATE"; compare: CompareResult; trip: TripContext; plan: PlanResult | null }
+  | { type: "PLAN_READY"; plan: PlanResult }
+
+function pageReducer(state: PageState, action: PageAction): PageState {
+  switch (action.type) {
+    case "HYDRATE":
+      return {
+        ...state,
+        compare: action.compare,
+        trip: action.trip,
+        plan: action.plan,
+        planReady: action.plan !== null,
+      }
+    case "PLAN_READY":
+      return { ...state, plan: action.plan, planReady: true }
+    default:
+      return state
+  }
+}
+
+function PlanSkeleton() {
+  return (
+    <div className="space-y-3 rounded-md border border-border bg-card p-4 sm:p-5">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="h-14 animate-pulse rounded-md bg-muted" />
+      ))}
+    </div>
+  )
+}
 
 export function ResultPage() {
   const { messages } = useLocale()
-  const [compare] = useState<CompareResult>(() => {
-    if (typeof window === "undefined") return mockCompareResult
-    const storedCompare = sessionStorage.getItem(COMPARE_STORAGE)
-    if (storedCompare) {
-      try {
-        return JSON.parse(storedCompare) as CompareResult
-      } catch {
-        return mockCompareResult
-      }
-    }
-    return mockCompareResult
-  })
-  const [plan] = useState<PlanResult>(() => {
-    if (typeof window === "undefined") return mockPlanResult
-    const storedPlan = sessionStorage.getItem(PLAN_STORAGE)
-    if (storedPlan) {
-      try {
-        return JSON.parse(storedPlan) as PlanResult
-      } catch {
-        return mockPlanResult
-      }
-    }
-    return mockPlanResult
+
+  const [state, dispatch] = useReducer(pageReducer, {
+    compare: mockCompareResult,
+    trip: defaultTrip,
+    plan: null,
+    planReady: false,
   })
 
+  // Single hydration effect — one dispatch, no cascading setState
+  useEffect(() => {
+    dispatch({
+      type: "HYDRATE",
+      compare: readStorage(COMPARE_STORAGE, mockCompareResult),
+      trip: readStorage(TRIP_STORAGE, defaultTrip),
+      plan: readStorage<PlanResult | null>(PLAN_STORAGE, null),
+    })
+  }, [])
+
+  // Poll for plan if not yet available (fire-and-forget from decide page)
+  useEffect(() => {
+    if (state.planReady) return
+    const interval = window.setInterval(() => {
+      const stored = readStorage<PlanResult | null>(PLAN_STORAGE, null)
+      if (stored) dispatch({ type: "PLAN_READY", plan: stored })
+    }, 500)
+    const timeout = window.setTimeout(() => {
+      dispatch({ type: "PLAN_READY", plan: mockPlanResult })
+    }, 15000)
+    return () => { window.clearInterval(interval); window.clearTimeout(timeout) }
+  }, [state.planReady])
+
+  const { compare, trip, plan, planReady } = state
   const winner = compare.destinations.find((item) => item.isWinner) ?? compare.destinations[0]
 
   return (
     <main className="decision-grid-bg flex-1 px-4 pb-28 pt-6 sm:px-6 lg:px-10 lg:pb-12">
       <div className="mx-auto max-w-6xl">
         <StepProgress active={3} />
-        <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-muted-foreground">{messages.result.breadcrumb}</p>
+        <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-muted-foreground">
+          {messages.result.breadcrumb}
+        </p>
+
         <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="text-sm font-bold text-primary">{messages.result.bestFit}</p>
             <h1 className="mt-1 text-4xl font-black tracking-tight">{winner.name}, {winner.country}</h1>
           </div>
-          <Link href="/decide" className="inline-flex h-11 items-center rounded-xl border border-border bg-card px-4 text-sm font-extrabold text-primary shadow-sm">
+          <Link
+            href="/decide"
+            className="inline-flex h-11 items-center rounded-md border border-border bg-card px-4 text-sm font-extrabold text-primary shadow-sm"
+          >
             {messages.result.replan}
           </Link>
         </div>
@@ -60,8 +118,28 @@ export function ResultPage() {
         <div className="space-y-4">
           <DestinationCompare result={compare} />
           <TradeoffNote title={messages.result.whyNot}>{compare.whyNotOthers}</TradeoffNote>
-          <Itinerary plan={plan} />
-          <p className="rounded-xl bg-muted p-3 text-center text-xs leading-relaxed text-muted-foreground">{messages.result.note}</p>
+
+          {planReady && plan?.warnings?.length ? (
+            <TripWarnings warnings={plan.warnings} destination={plan.destination} />
+          ) : null}
+
+          <div id="full-plan" className="space-y-4 scroll-mt-24">
+            {planReady && plan ? (
+              <>
+                <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
+                  <h2 className="mb-4 text-base font-extrabold">{messages.result.bookFirst}</h2>
+                  <BookFirst plan={plan} trip={trip} />
+                </section>
+                <Itinerary plan={plan} />
+              </>
+            ) : (
+              <PlanSkeleton />
+            )}
+          </div>
+
+          <p className="rounded-md bg-muted p-3 text-center text-xs leading-relaxed text-muted-foreground">
+            {messages.result.note}
+          </p>
         </div>
       </div>
     </main>

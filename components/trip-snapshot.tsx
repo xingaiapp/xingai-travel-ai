@@ -11,7 +11,8 @@ function formatDates(ctx: TripContext) {
 
 function vibe(notes?: string) {
   if (!notes) return "-"
-  return notes.split(/[,，.]/).map((item) => item.trim()).filter(Boolean).slice(0, 2).join(", ")
+  const parts = notes.split(/[,，.]/).map((item) => item.trim()).filter(Boolean).slice(0, 3).join(", ")
+  return parts.length > 42 ? parts.slice(0, 40) + "…" : parts
 }
 
 export function TripSnapshot({ trip }: Readonly<{ trip: TripContext }>) {
@@ -21,22 +22,22 @@ export function TripSnapshot({ trip }: Readonly<{ trip: TripContext }>) {
     [messages.snapshot.origin, trip.origin || "-"],
     [messages.snapshot.dates, formatDates(trip)],
     [messages.snapshot.budget, `≈ ${trip.budget.currency} ${trip.budget.amount.toLocaleString()}`],
-    [messages.snapshot.travelers, `${trip.travelers.count} ${trip.travelers.type}`],
+    [messages.snapshot.travelers, `${trip.travelers.count} ${messages.travelers[trip.travelers.type]}`],
     [messages.snapshot.vibe, vibe(trip.notes)],
     [messages.snapshot.avoid, trip.avoid || "-"],
   ]
 
   return (
-    <section className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5 lg:sticky lg:top-24">
+    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5 lg:sticky lg:top-24">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-primary">
             <ClipboardCheck className="h-4 w-4" aria-hidden />
           </span>
           <h2 className="text-base font-extrabold">{messages.snapshot.title}</h2>
         </div>
         {complete ? (
-          <span className="rounded-full bg-emerald-500/12 px-2.5 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+          <span className="rounded-md bg-emerald-500/12 px-2.5 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">
             {messages.snapshot.looksGood}
           </span>
         ) : null}
@@ -49,7 +50,7 @@ export function TripSnapshot({ trip }: Readonly<{ trip: TripContext }>) {
           </div>
         ))}
       </dl>
-      {!complete ? <p className="mt-4 rounded-xl bg-muted p-3 text-xs leading-relaxed text-muted-foreground">{messages.snapshot.missing}</p> : null}
+      {!complete ? <p className="mt-4 rounded-md bg-muted p-3 text-xs leading-relaxed text-muted-foreground">{messages.snapshot.missing}</p> : null}
     </section>
   )
 }

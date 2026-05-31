@@ -107,4 +107,30 @@ export const mockPlanResult: PlanResult = {
       detailed: ["One final breakfast", "Pack with buffer", "Avoid far cross-town activities"],
     },
   ],
+  warnings: [
+    {
+      type: "weather",
+      severity: "info",
+      title: "April weather is mild",
+      body: "April in Lisbon averages 18–22°C with occasional light rain — bring a light layer and a compact umbrella.",
+    },
+    {
+      type: "security",
+      severity: "caution",
+      title: "Pickpocket risk in tourist areas",
+      body: "Alfama and the 28 tram are known pickpocket hotspots — keep bags in front and avoid back pockets.",
+    },
+    {
+      type: "visa",
+      severity: "info",
+      title: "US passport — no visa needed",
+      body: "US citizens can stay in Portugal (Schengen) up to 90 days without a visa. ETIAS registration may be required from 2025.",
+    },
+    {
+      type: "crowds",
+      severity: "caution",
+      title: "April is shoulder season",
+      body: "Crowds are lighter than summer but Sintra gets busy on weekends — visit Pena Palace on a weekday morning.",
+    },
+  ],
 }

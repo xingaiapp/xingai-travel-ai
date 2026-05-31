@@ -2,26 +2,79 @@
 
 import Image from "next/image"
 import { CheckCircle2, Star } from "lucide-react"
+import { useState } from "react"
 import { ConfidencePill } from "@/components/confidence-pill"
 import { useLocale } from "@/components/locale-provider"
-import type { CompareResult } from "@/lib/types"
-import { cn } from "@/lib/utils"
+import type { CompareResult, Destination } from "@/lib/types"
+import { cn, getCityImage } from "@/lib/utils"
 
-export function DestinationCompare({ result, compact = false }: Readonly<{ result: CompareResult; compact?: boolean }>) {
+function destinationKey(item: Destination) {
+  return `${item.name}-${item.country}`
+}
+
+// Inner component keyed by result so focused resets when result changes
+function DestinationCompareInner({
+  result,
+  compact,
+  showPlanLink,
+}: { result: CompareResult; compact: boolean; showPlanLink: boolean }) {
   const { messages } = useLocale()
   const winner = result.destinations.find((item) => item.isWinner) ?? result.destinations[0]
+  const [focused, setFocused] = useState(winner)
+
+  const focusedImage = getCityImage(focused.name)
+  const isWinnerFocused = focused.isWinner
+
+  const tableRows: [string, (item: Destination) => string][] = [
+    [messages.result.tableOverall, (item) => "★".repeat(item.scores.overall) + "☆".repeat(5 - item.scores.overall)],
+    [messages.result.tableBudget, (item) => item.scores.budget],
+    [messages.result.tableWeather, (item) => item.scores.weather],
+    [messages.result.tableFlight, (item) => item.scores.flightTime],
+    [messages.result.tableWalkability, (item) => item.scores.walkability],
+  ]
+
+  function columnClass(item: Destination) {
+    const selected = destinationKey(focused) === destinationKey(item)
+    return cn(
+      selected && "bg-primary/10 text-primary",
+      !selected && item.isWinner && "text-primary/70"
+    )
+  }
 
   return (
-    <section className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5">
+    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
       <div className="mb-4 flex items-center gap-2">
         <Star className="h-5 w-5 text-primary" aria-hidden />
         <h2 className="text-base font-extrabold">{messages.result.preview}</h2>
       </div>
 
       <div className={cn("grid gap-5", compact ? "md:grid-cols-[12rem_1fr]" : "lg:grid-cols-[18rem_1fr]")}>
-        <div className="relative min-h-40 overflow-hidden rounded-xl bg-muted">
-          <Image src="/assets/context-mock.jpg" alt="Lisbon travel preview" fill className="object-cover" sizes="(max-width: 768px) 100vw, 18rem" />
-          <span className="absolute right-3 top-3 rounded-lg bg-primary px-2.5 py-1 text-xs font-bold text-primary-foreground">Top pick</span>
+        <div className="relative min-h-44 overflow-hidden rounded-md bg-muted shadow-inner lg:min-h-52">
+          <Image
+            key={focused.name}
+            src={focusedImage}
+            alt={`${focused.name} travel photo`}
+            fill
+            className="object-cover object-center transition-opacity duration-300"
+            sizes="(max-width: 768px) 100vw, 18rem"
+            unoptimized={focusedImage.startsWith("https://images.unsplash.com")}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent" />
+          <span
+            className={cn(
+              "absolute right-3 top-3 rounded-md px-2.5 py-1 text-xs font-bold",
+              isWinnerFocused
+                ? "bg-primary text-primary-foreground"
+                : "border border-white/30 bg-slate-950/55 text-white backdrop-blur-sm"
+            )}
+          >
+            {isWinnerFocused ? messages.result.topPick : messages.result.previewBadge}
+          </span>
+          {!isWinnerFocused ? (
+            <span className="absolute bottom-3 left-3 rounded-md bg-slate-950/55 px-2 py-1 text-xs font-bold text-white backdrop-blur-sm">
+              {focused.name}, {focused.country}
+            </span>
+          ) : null}
         </div>
 
         <div className="min-w-0">
@@ -50,47 +103,81 @@ export function DestinationCompare({ result, compact = false }: Readonly<{ resul
                 ))}
               </ul>
             </div>
-            <a href="#full-plan" className="inline-flex h-10 items-center justify-center rounded-xl border border-border px-4 text-sm font-bold text-primary hover:bg-primary/10">
-              {messages.result.seePlan}
-            </a>
+            {showPlanLink ? (
+              <a href="#full-plan" className="inline-flex h-10 items-center justify-center rounded-md border border-border px-4 text-sm font-bold text-primary hover:bg-primary/10">
+                {messages.result.seePlan}
+              </a>
+            ) : null}
           </div>
         </div>
       </div>
 
       {!compact ? (
-        <div className="mt-5 overflow-x-auto rounded-xl border border-border">
+        <div className="mt-5 overflow-x-auto rounded-md border border-border">
           <table className="w-full min-w-[44rem] border-collapse text-sm">
+            <caption className="sr-only">{messages.result.comparison}</caption>
             <thead className="bg-muted/70 text-xs text-muted-foreground">
               <tr>
-                <th className="p-3 text-left">Destination</th>
-                {result.destinations.map((item) => (
-                  <th key={item.name} className={cn("p-3 text-center", item.isWinner && "bg-primary/10 text-primary")}>
-                    {item.name}
-                  </th>
-                ))}
+                <th className="p-3 text-left">{messages.result.tableDestination}</th>
+                {result.destinations.map((item) => {
+                  const selected = destinationKey(focused) === destinationKey(item)
+                  return (
+                    <th key={item.name} className={cn("p-0 text-center", columnClass(item))}>
+                      <button
+                        type="button"
+                        onClick={() => setFocused(item)}
+                        aria-pressed={selected}
+                        className={cn(
+                          "flex w-full flex-col items-center gap-0.5 px-3 py-3 text-center font-bold transition hover:bg-primary/5",
+                          selected && "bg-primary/10 text-primary"
+                        )}
+                      >
+                        <span>{item.name}</span>
+                        {item.isWinner ? (
+                          <span className={cn("text-[0.65rem] font-semibold uppercase tracking-wide", selected ? "text-primary" : "text-primary/60")}>
+                            {messages.result.topPick}
+                          </span>
+                        ) : null}
+                      </button>
+                    </th>
+                  )
+                })}
               </tr>
             </thead>
             <tbody>
-              {[
-                ["Overall fit", (item: typeof winner) => "★".repeat(item.scores.overall) + "☆".repeat(5 - item.scores.overall)],
-                ["Budget fit", (item: typeof winner) => item.scores.budget],
-                ["Weather", (item: typeof winner) => item.scores.weather],
-                ["Flight time", (item: typeof winner) => item.scores.flightTime],
-                ["Walkability", (item: typeof winner) => item.scores.walkability],
-              ].map(([label, getValue]) => (
-                <tr key={String(label)} className="border-t border-border">
-                  <td className="p-3 font-semibold text-muted-foreground">{String(label)}</td>
+              {tableRows.map(([label, getValue]) => (
+                <tr key={label} className="border-t border-border">
+                  <td className="p-3 font-semibold text-muted-foreground">{label}</td>
                   {result.destinations.map((item) => (
-                    <td key={item.name} className={cn("p-3 text-center font-medium", item.isWinner && "bg-primary/5 text-primary")}>
-                      {(getValue as (item: typeof winner) => string)(item)}
+                    <td key={item.name} className={cn("p-3 text-center font-medium", columnClass(item))}>
+                      {getValue(item)}
                     </td>
                   ))}
                 </tr>
               ))}
             </tbody>
           </table>
+          <p className="border-t border-border bg-muted/40 px-3 py-2 text-center text-xs text-muted-foreground">
+            {messages.result.tapCityPreview}
+          </p>
         </div>
       ) : null}
     </section>
+  )
+}
+
+// Public wrapper — keyed by result.winner so focused state resets when a new result arrives
+export function DestinationCompare({
+  result,
+  compact = false,
+  showPlanLink = true,
+}: Readonly<{ result: CompareResult; compact?: boolean; showPlanLink?: boolean }>) {
+  return (
+    <DestinationCompareInner
+      key={result.winner}
+      result={result}
+      compact={compact}
+      showPlanLink={showPlanLink}
+    />
   )
 }

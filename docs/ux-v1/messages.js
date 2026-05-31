@@ -55,7 +55,7 @@ window.TRAVEL_UX_MESSAGES = {
     },
     landing: {
       eyebrow: "Travel Decision System · Explore Better",
-      headline: "Where should you go — really?",
+      headline: "Where should I go — really?",
       sub: "Describe your real constraints. We'll compare options and give one trip you can actually book.",
       heroCardTag: "Context → compare → plan",
       flowStep1: "① Your trip",
