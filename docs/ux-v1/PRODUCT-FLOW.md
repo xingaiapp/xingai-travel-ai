@@ -1,46 +1,49 @@
 # Travel AI — Product flow (V1)
 
-Decision system modeled on Cook AI / Meal Coach, tuned for **trip context → destination choice → bookable plan**.
+Decision system modeled on Cook AI / Meal Coach, tuned for **trip context → compare destinations → bookable plan**.
+
+**Product soul:** Compare first, plan second — not a generic itinerary generator.
 
 ## Three steps
 
 ### 1 — Your trip
 
-User describes:
+Structured fields (UX V2 mock):
 
 - Dates / window
 - Departure airport or city
 - Budget (total or per person)
 - Who's traveling
-- Vibe (warm, walkable, kid-friendly, food-focused, etc.)
+- Trip notes (vibe, avoid, dietary, etc.)
 
-**Inputs:** paste trip notes (demo) or free-text textarea. Mock parser surfaces understood constraints.
+**Trip snapshot** updates as the user types (mock). **Missing info** lists optional gaps (exact dates, hotel comfort).
 
-### 2 — Recommend a destination (style + pace)
+### 2 — Style & pace
 
 | Control | Options |
 |---------|---------|
-| **Trip style** | City break · Beach · Nature · Culture |
-| **Pace** | Relaxed · Balanced · Adventure (+ city-break preset chip) |
+| **Trip style** | City · Beach · Nature · Culture |
+| **Pace** | Relaxed · Balanced · Adventure |
 
-Optional constraints textarea (no long flights, dietary, crowd avoidance).
+**CTA:** `Compare destinations →` (not "Generate itinerary" / "Plan my trip")
 
-**CTA:** Compare destinations → loading overlay → result screen.
+Loading copy: *Comparing weather, budget, flight friction, and pace fit…*
 
-AI returns **2–3 compared options** with one **winner** and honest trade-offs (mock: Lisbon).
+AI returns **2–3 compared options** with one **winner** and honest trade-offs (demo: Lisbon).
 
-### 3 — Plan it
+### 3 — Plan it (result page)
 
-Turn the pick into action:
+**Winner first** — do not lead with day-by-day itinerary.
 
-| Block | Example (Lisbon) |
-|-------|------------------|
-| **Itinerary snapshot** | Day 1 arrive · Day 2 Alfama · Day 3 Sintra · Day 4 Belém · Day 5 fly home |
-| **Book first** | Flights · hotel · day-trip train |
-| **Day plan** | Simple vs detailed toggle |
-| **Trade-off note** | Why not Barcelona / Porto for this trip |
-
-User can edit trip context or compare other destinations.
+| Block | Content |
+|-------|---------|
+| **Best fit** | Destination + one-line meta |
+| **Why this wins** | 3 bullets |
+| **Trade-offs** | 2 bullets |
+| **Match strength** | Strong fit + disclaimer (not live prices) |
+| **Compare options** | Table: Destination · Fit · Trade-off · Verdict |
+| **Book first** | Numbered list (flights, hotel area, day-trip) |
+| **Itinerary** | Simple / Detailed toggle (mobile: collapsed fold) |
 
 **Later (post-V1):** save trips, price alerts, share itinerary, live booking links.
 
@@ -49,7 +52,7 @@ User can edit trip context or compare other destinations.
 - Static HTML/CSS/JS gallery (`docs/ux-v1/`)
 - i18n: EN, 中文, 한국어, Español
 - Light / dark theme (sky-blue accent)
-- No API — illustrative copy and Lisbon demo result
+- No API — illustrative Lisbon demo
 
 ## Implementation path
 

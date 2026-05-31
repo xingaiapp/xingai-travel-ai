@@ -1,6 +1,6 @@
 # Travel AI — UX V1 (sign-off)
 
-Interactive HTML mocks for **XingAI Travel AI**: trip context → destination recommendation → bookable plan.
+Interactive HTML mocks aligned with **compare first, plan second** wireframe.
 
 ## Preview locally
 
@@ -11,16 +11,17 @@ python3 -m http.server 8765
 
 Open **http://localhost:8765/mobile-input.html** (or `index.html` for the gallery).
 
-Hard refresh after changes: **Cmd+Shift+R**.
-
 ## What to verify
 
-Open **`mobile-input.html`** — header should say **Travel · Decide** (sky-blue accent), not Cook (orange) or Routine (green).
+- **Input:** Structured trip fields + live **Trip snapshot** + style/pace + CTA `Compare destinations →`
+- **Result (mobile):** Winner hero first (why + trade-offs + match strength) → **folds** for compare / book-first / itinerary
+- **Result (desktop):** Same hierarchy, compare **table**, book-first + itinerary side by side
+- **Nav:** Decide · Trips · Saved · Profile (Trips/Saved/Profile/Save trip = Soon)
+- **i18n:** EN / 中文 / 한국어 / Español · light/dark
 
-- **3-step flow:** Your trip → Recommend a destination → Plan it
-- **Nav:** Decide · Trips · Explore · Saved · Profile (Trips/Saved/Profile = Soon)
-- **Explore** scrolls to trip context on the input page
-- **Result demo:** Lisbon, itinerary snapshot, book-first list, day plan toggle
+## Demo scenario
+
+April · 5 days · SFO · ~$2k · couple · city + relaxed → **Lisbon** wins over Barcelona / Porto
 
 ## Files
 

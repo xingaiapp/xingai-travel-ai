@@ -17,7 +17,9 @@
       if (val == null) return
       if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") {
         if (el.hasAttribute("data-i18n-placeholder")) el.placeholder = val
-        else el.value = val
+        else if (!el.hasAttribute("data-trip-field") || el.type === "button") el.value = val
+      } else if (el.tagName === "OPTION") {
+        el.textContent = val
       } else {
         el.textContent = val
       }
@@ -27,6 +29,12 @@
       if (!key) return
       const val = getNested(pack, key)
       if (val != null) el.placeholder = val
+    })
+    document.querySelectorAll("[data-i18n-value]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-value")
+      if (!key) return
+      const val = getNested(pack, key)
+      if (val != null && el.hasAttribute("data-trip-field")) el.value = val
     })
     document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
       const key = el.getAttribute("data-i18n-alt")
@@ -43,8 +51,8 @@
     document.documentElement.lang = locale === "zh" ? "zh-Hans" : locale
     document.querySelectorAll("#theme-select, [data-theme-select]").forEach((themeSel) => {
       if (themeSel.options.length >= 2 && pack.chrome) {
-        themeSel.options[0].text = pack.chrome.themeLight
-        themeSel.options[1].text = pack.chrome.themeDark
+        if (pack.chrome.themeLight) themeSel.options[0].text = pack.chrome.themeLight
+        if (pack.chrome.themeDark) themeSel.options[1].text = pack.chrome.themeDark
       }
     })
     const brandFull = pack.chrome?.brandFull
@@ -54,6 +62,7 @@
       })
     }
     if (typeof window.travelUxApplySeo === "function") window.travelUxApplySeo(locale)
+    updateTripSnapshot()
   }
 
   function applyTheme(theme) {
@@ -61,11 +70,6 @@
     document.querySelectorAll(".chrome-logo, .nav-drawer-logo, .mobile-header-logo").forEach((img) => {
       const light = img.getAttribute("data-logo-light") || "assets/logo-light.png"
       const dark = img.getAttribute("data-logo-dark") || "assets/logo-dark.png"
-      img.src = theme === "dark" ? dark : light
-    })
-    document.querySelectorAll(".hero-photo[data-hero-light]").forEach((img) => {
-      const light = img.getAttribute("data-hero-light") || "assets/hero-photo-light.jpg"
-      const dark = img.getAttribute("data-hero-dark") || "assets/hero-photo-dark.jpg"
       img.src = theme === "dark" ? dark : light
     })
   }
@@ -107,47 +111,12 @@
     applyTranslations(locale)
   }
 
-  function initHelpGuide() {
-    const section = document.getElementById("page-help-guide")
-    const trigger = document.getElementById("help-guide-trigger")
-    const panel = document.getElementById("help-guide-panel")
-    if (!section || !trigger || !panel) return
-
-    function setOpen(open) {
-      section.classList.toggle("is-open", open)
-      trigger.setAttribute("aria-expanded", open ? "true" : "false")
-      panel.hidden = !open
-    }
-
-    trigger.addEventListener("click", () => {
-      setOpen(!section.classList.contains("is-open"))
-    })
-
-    section.querySelectorAll('a[href^="#"]').forEach((link) => {
-      link.addEventListener("click", () => {
-        const drawer = document.getElementById("nav-drawer")
-        if (drawer?.classList.contains("is-open")) {
-          document.getElementById("nav-close-btn")?.click()
-        }
-      })
-    })
-  }
-
   function initMobileNav() {
     const drawer = document.getElementById("nav-drawer")
     const backdrop = document.getElementById("nav-backdrop")
     const openBtn = document.getElementById("menu-btn")
     const closeBtn = document.getElementById("nav-close-btn")
     if (!drawer || !backdrop) return
-
-    function open() {
-      drawer.classList.add("is-open")
-      backdrop.classList.add("is-open")
-      backdrop.hidden = false
-      drawer.setAttribute("aria-hidden", "false")
-      openBtn?.setAttribute("aria-expanded", "true")
-      document.body.style.overflow = "hidden"
-    }
 
     function close() {
       drawer.classList.remove("is-open")
@@ -156,6 +125,15 @@
       drawer.setAttribute("aria-hidden", "true")
       openBtn?.setAttribute("aria-expanded", "false")
       document.body.style.overflow = ""
+    }
+
+    function open() {
+      drawer.classList.add("is-open")
+      backdrop.classList.add("is-open")
+      backdrop.hidden = false
+      drawer.setAttribute("aria-hidden", "false")
+      openBtn?.setAttribute("aria-expanded", "true")
+      document.body.style.overflow = "hidden"
     }
 
     openBtn?.addEventListener("click", open)
@@ -186,67 +164,84 @@
   }
 
   function setFlowStep(step) {
-    const steps = document.querySelectorAll("[data-flow-step]")
-    steps.forEach((el) => {
+    document.querySelectorAll("[data-flow-step]").forEach((el) => {
       const n = Number(el.getAttribute("data-flow-step"))
       el.classList.toggle("active", n === step)
       el.classList.toggle("is-done", n < step)
     })
   }
 
-  function initContext() {
-    const section = document.querySelector("[data-context-section]")
-    if (!section) return
-    const scanBtn = document.getElementById("btn-paste-trip")
-    const input = document.getElementById("context-input")
-    const empty = document.getElementById("context-empty")
-    const box = document.getElementById("context-box")
-    const loading = document.getElementById("context-loading")
-    const thumb = section.querySelector(".context-thumb")
+  function fieldValue(idPrefix) {
+    const el =
+      document.getElementById(idPrefix) ||
+      document.getElementById(idPrefix + "-d") ||
+      document.querySelector(`[id^="${idPrefix}"]`)
+    return el?.value?.trim() || ""
+  }
 
-    function revealContext() {
-      if (loading) {
-        loading.hidden = true
-        loading.classList.add("is-hidden")
-      }
-      if (empty) {
-        empty.classList.add("is-hidden")
-        empty.hidden = true
-      }
-      if (box) {
-        box.classList.remove("is-hidden")
-        box.hidden = false
-      }
-      if (thumb) thumb.classList.add("has-photo")
-      setFlowStep(2)
-    }
+  function updateTripSnapshot() {
+    const from = fieldValue("field-from") || t("landing.fieldFromValue")
+    const budget = fieldValue("field-budget") || t("landing.fieldBudgetValue")
+    const travelers = fieldValue("field-travelers") || t("landing.fieldTravelersValue")
+    const notes = fieldValue("field-notes") || ""
 
-    function showLoading() {
-      if (loading) {
-        loading.classList.remove("is-hidden")
-        loading.hidden = false
+    let vibe = t("landing.snapshotVibeVal")
+    let avoid = t("landing.snapshotAvoidVal")
+    if (notes) {
+      const parts = notes.split(/[,，·]/).map((s) => s.trim()).filter(Boolean)
+      if (parts.length) vibe = parts.slice(0, 2).join(", ")
+      const lower = notes.toLowerCase()
+      if (lower.includes("avoid") || lower.includes("long flight") || notes.includes("避免")) {
+        avoid = notes.match(/avoid[^,，]*/i)?.[0] || notes.match(/避免[^,，]*/)?.[0] || avoid
       }
     }
 
-    scanBtn?.addEventListener("click", () => {
-      showLoading()
-      scanBtn.disabled = true
-      setTimeout(() => {
-        scanBtn.disabled = false
-        revealContext()
-      }, 1200)
-    })
-
-    input?.addEventListener("blur", () => {
-      if (input.value.trim().length >= 3) revealContext()
-    })
-    input?.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && input.value.trim().length >= 3) revealContext()
+    const map = { origin: from, budget: budget.replace(" total", "").replace("总计", ""), travelers, vibe, avoid }
+    Object.entries(map).forEach(([key, val]) => {
+      document.querySelectorAll(`[data-snapshot="${key}"]`).forEach((node) => {
+        node.textContent = val
+      })
     })
   }
 
-  function chipLabelText(chip) {
-    return chip.querySelector(".chip-label")?.textContent.trim() || chip.textContent.trim()
+  function initTripSnapshot() {
+    document.querySelectorAll("[data-trip-field]").forEach((el) => {
+      el.addEventListener("input", updateTripSnapshot)
+      el.addEventListener("change", updateTripSnapshot)
+    })
+    updateTripSnapshot()
+
+    const pasteBtn = document.getElementById("btn-paste-trip")
+    const loading = document.getElementById("context-loading")
+    pasteBtn?.addEventListener("click", () => {
+      if (loading) {
+        loading.hidden = false
+        loading.classList.remove("is-hidden")
+      }
+      pasteBtn.disabled = true
+      setTimeout(() => {
+        const loc = localStorage.getItem(STORAGE_LOCALE) || DEFAULT_LOCALE
+        document.querySelectorAll("[data-i18n-value]").forEach((el) => {
+          const key = el.getAttribute("data-i18n-value")
+          const val = getNested(window.TRAVEL_UX_MESSAGES?.[loc] || window.TRAVEL_UX_MESSAGES.en, key)
+          if (val != null) el.value = val
+        })
+        const notes = document.getElementById("field-notes") || document.getElementById("field-notes-d")
+        if (notes) {
+          notes.value =
+            loc === "zh"
+              ? "温暖、可步行、美食、避免长途飞行"
+              : "Warm, walkable, food-focused, avoid long flights"
+        }
+        updateTripSnapshot()
+        setFlowStep(2)
+        if (loading) {
+          loading.hidden = true
+          loading.classList.add("is-hidden")
+        }
+        pasteBtn.disabled = false
+      }, 900)
+    })
   }
 
   function setCadenceChipState(chip, on) {
@@ -255,25 +250,9 @@
   }
 
   function initStyleAndPace() {
-    const constraints = document.getElementById("constraints-input")
     document.querySelectorAll(".pace-chip").forEach((chip) => {
       chip.addEventListener("click", () => {
-        if (chip.dataset.preset === "balanced") {
-          document.querySelectorAll(".pace-chip").forEach((c) => setCadenceChipState(c, c === chip))
-          if (constraints) {
-            const loc = localStorage.getItem(STORAGE_LOCALE) || DEFAULT_LOCALE
-            constraints.value = t("landing.presetBalanced", loc) || "City break · balanced pace · walkable"
-          }
-          document.querySelector('.style-slot[data-style="city"]')?.click()
-          return
-        }
-        setCadenceChipState(chip, !chip.classList.contains("selected"))
-        const selected = [...document.querySelectorAll(".pace-chip.selected")]
-          .filter((c) => !c.dataset.preset)
-          .map(chipLabelText)
-        if (constraints && selected.length) {
-          constraints.value = selected.join(" · ")
-        }
+        document.querySelectorAll(".pace-chip").forEach((c) => setCadenceChipState(c, c === chip))
       })
     })
 
@@ -287,12 +266,6 @@
         slot.setAttribute("aria-pressed", "true")
       })
     })
-
-    const city = document.querySelector('.style-slot[data-style="city"]')
-    if (city && !document.querySelector(".style-slot.selected[data-style]")) {
-      city.classList.add("selected")
-      city.setAttribute("aria-pressed", "true")
-    }
   }
 
   function initRecommend() {
@@ -318,14 +291,6 @@
         showToast(msg())
       })
     })
-    document.querySelector('[data-bottom-explore]')?.addEventListener("click", (e) => {
-      const target = document.getElementById("section-context")
-      if (target) {
-        e.preventDefault()
-        target.scrollIntoView({ behavior: "smooth" })
-        document.getElementById("btn-paste-trip")?.focus()
-      }
-    })
   }
 
   function initPlanStepMode() {
@@ -347,46 +312,42 @@
 
     simpleBtn.addEventListener("click", () => setMode("simple"))
     detailBtn.addEventListener("click", () => setMode("detail"))
-    document.querySelectorAll(".btn-timer").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const loc = localStorage.getItem(STORAGE_LOCALE) || DEFAULT_LOCALE
-        showToast(t("result.timerDemo", loc))
-      })
-    })
     document.querySelectorAll('[data-i18n="result.ctaAnother"]').forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const loc = localStorage.getItem(STORAGE_LOCALE) || DEFAULT_LOCALE
-        showToast(t("result.loadingTitle", loc))
-      })
+      btn.addEventListener("click", () => showToast(t("result.loadingTitle")))
     })
     setMode("simple")
+  }
+
+  function initResultFolds() {
+    document.querySelectorAll("[data-result-fold]").forEach((fold) => {
+      const trigger = fold.querySelector(".result-fold-trigger")
+      const panel = fold.querySelector(".result-fold-panel")
+      if (!trigger || !panel) return
+
+      trigger.addEventListener("click", () => {
+        const open = fold.classList.toggle("is-open")
+        trigger.setAttribute("aria-expanded", open ? "true" : "false")
+        panel.hidden = !open
+      })
+    })
   }
 
   function initInputPage() {
     if (!document.querySelector("[data-context-section]")) return
     setFlowStep(1)
-    initContext()
+    initTripSnapshot()
     initStyleAndPace()
     initRecommend()
     initNavSoon()
-    const constraints = document.getElementById("constraints-input")
-    const chipRelaxed = document.querySelector('.pace-chip[data-pace="relaxed"]')
-    const chipBalanced = document.querySelector('.pace-chip[data-pace="balanced"]')
-    if (constraints && chipRelaxed && chipBalanced && !constraints.value) {
-      setCadenceChipState(chipRelaxed, true)
-      setCadenceChipState(chipBalanced, true)
-      const loc = localStorage.getItem(STORAGE_LOCALE) || DEFAULT_LOCALE
-      constraints.value = [chipLabelText(chipRelaxed), chipLabelText(chipBalanced)].join(" · ")
-    }
   }
 
   function init() {
     initLocaleTheme()
-    initHelpGuide()
     initMobileNav()
     initInputPage()
     initPlanStepMode()
-    if (document.getElementById("section-plan") && !document.querySelector("[data-context-section]")) {
+    initResultFolds()
+    if (document.querySelector(".winner-hero") && !document.querySelector("[data-context-section]")) {
       setFlowStep(3)
       initNavSoon()
     }
