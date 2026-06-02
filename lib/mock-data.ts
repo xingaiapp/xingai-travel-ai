@@ -3,6 +3,7 @@ import type { CompareResult, PlanResult, TripContext } from "@/lib/types"
 export const defaultTrip: TripContext = {
   dates: { from: "2026-04-12", to: "2026-04-16", nights: 5 },
   origin: "San Francisco (SFO)",
+  region: "anywhere",
   budget: { amount: 2000, currency: "USD" },
   travelers: { count: 2, type: "couple" },
   notes: "Warm weather, walkable cities, great food, minimal driving.",

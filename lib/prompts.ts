@@ -1,5 +1,16 @@
 import type { InspireContext, TripContext } from "@/lib/types"
 
+const regionNames: Record<NonNullable<TripContext["region"]>, string> = {
+  anywhere: "Anywhere",
+  europe: "Europe",
+  asia: "Asia",
+  north_america: "North America",
+  latin_america: "Latin America",
+  middle_east: "Middle East",
+  africa: "Africa",
+  oceania: "Oceania",
+}
+
 function responseLanguage(locale?: TripContext["locale"]) {
   if (locale === "zh") return "Simplified Chinese"
   if (locale === "ko") return "Korean"
@@ -15,6 +26,8 @@ Return JSON only. Respond in ${responseLanguage(ctx.locale)}.
 Trip context:
 - Dates: ${ctx.dates.from} to ${ctx.dates.to} (${ctx.dates.nights} nights)
 - Origin: ${ctx.origin}
+- Destination range: ${regionNames[ctx.region] ?? "Anywhere"}
+- Places already in mind: ${ctx.placesInMind || "none"}
 - Budget: ${ctx.budget.amount} ${ctx.budget.currency} total
 - Travelers: ${ctx.travelers.count} ${ctx.travelers.type}
 - Style preference: ${ctx.style.join(", ")}
@@ -47,6 +60,8 @@ Return this exact JSON structure:
 }
 
 Be honest about trade-offs. Do not recommend a destination that does not fit the budget.
+If places already in mind are provided, compare those first unless they clearly violate the trip constraints.
+If no places are provided, use the destination range as the search boundary.
 `.trim()
 }
 
@@ -58,6 +73,8 @@ Return JSON only. Respond in ${responseLanguage(ctx.locale)}.
 Trip context:
 - Dates: ${ctx.dates.from} to ${ctx.dates.to} (${ctx.dates.nights} nights)
 - Origin: ${ctx.origin}
+- Destination range: ${regionNames[ctx.region] ?? "Anywhere"}
+- Places already in mind: ${ctx.placesInMind || "none"}
 - Budget: ${ctx.budget.amount} ${ctx.budget.currency} total
 - Travelers: ${ctx.travelers.count} ${ctx.travelers.type}
 - Style preference: ${ctx.style.join(", ")}
@@ -108,6 +125,9 @@ export function buildInspirePrompt(ctx: InspireContext): string {
   const dateNote = ctx.dates
     ? `Travel window: ${ctx.dates.from} to ${ctx.dates.to} (${ctx.dates.nights} nights)`
     : "Dates: flexible"
+  const priorityNote = ctx.priority === "kids_friendly"
+    ? "kids-friendly places, easy logistics, safe pacing, short transfers, and activities children can enjoy"
+    : ctx.priority
 
   return `
 You are a travel inspiration advisor. The user has no specific destination in mind and wants to discover somewhere new.
@@ -117,7 +137,7 @@ Return JSON only. Respond in ${lang}.
 User preferences:
 - Vibe: ${ctx.vibe} (recharge = slow/relaxing, explore = new discovery, culture = deep history/arts, adventure = active/outdoors)
 - Max flight range: ${flightLabel}
-- Top priority: ${ctx.priority}
+- Top priority: ${priorityNote}
 - Budget: ${ctx.budget.amount} ${ctx.budget.currency} total
 - Travelers: ${ctx.travelers.count} ${ctx.travelers.type}
 - ${originNote}

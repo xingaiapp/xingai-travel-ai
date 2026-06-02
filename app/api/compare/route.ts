@@ -12,6 +12,8 @@ export const runtime = "nodejs"
 const tripSchema = z.object({
   dates: z.object({ from: z.string(), to: z.string(), nights: z.number() }),
   origin: z.string().min(1).max(100),
+  region: z.enum(["anywhere", "europe", "asia", "north_america", "latin_america", "middle_east", "africa", "oceania"]).default("anywhere"),
+  placesInMind: z.string().max(240).optional(),
   budget: z.object({ amount: z.number().min(0).max(1_000_000), currency: z.string().max(10) }),
   travelers: z.object({ count: z.number().min(1).max(20), type: z.enum(["solo", "couple", "family", "group"]) }),
   notes: z.string().max(500).optional(),

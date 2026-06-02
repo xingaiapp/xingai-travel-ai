@@ -12,7 +12,7 @@ export const runtime = "nodejs"
 const schema = z.object({
   vibe: z.enum(["recharge", "explore", "culture", "adventure"]),
   flightRange: z.enum(["short", "medium", "long"]),
-  priority: z.enum(["food", "history", "nature", "nightlife", "family"]),
+  priority: z.enum(["food", "history", "nature", "nightlife", "family", "kids_friendly"]),
   budget: z.object({ amount: z.number().min(0).max(1_000_000), currency: z.string().max(10) }),
   travelers: z.object({ count: z.number().min(1).max(20), type: z.enum(["solo", "couple", "family", "group"]) }),
   dates: z.object({ from: z.string(), to: z.string(), nights: z.number() }).optional(),

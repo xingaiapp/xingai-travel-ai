@@ -28,13 +28,24 @@ const defaultInspire: InspireContext = {
   travelers: { count: 2, type: "couple" },
 }
 
+function normalizeTrip(value: TripContext): TripContext {
+  return {
+    ...defaultTrip,
+    ...value,
+    dates: { ...defaultTrip.dates, ...value.dates },
+    budget: { ...defaultTrip.budget, ...value.budget },
+    travelers: { ...defaultTrip.travelers, ...value.travelers },
+    region: value.region ?? defaultTrip.region,
+  }
+}
+
 export function DecidePage() {
   const router = useRouter()
   const { messages, locale } = useLocale()
 
   const [trip, setTrip] = useState<TripContext>(() => {
     if (typeof window === "undefined") return defaultTrip
-    try { return JSON.parse(sessionStorage.getItem(TRIP_STORAGE) ?? "") as TripContext } catch { return defaultTrip }
+    try { return normalizeTrip(JSON.parse(sessionStorage.getItem(TRIP_STORAGE) ?? "") as TripContext) } catch { return defaultTrip }
   })
 
   // Inspire Me mode

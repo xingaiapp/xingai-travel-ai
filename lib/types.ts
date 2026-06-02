@@ -1,5 +1,14 @@
 export type TripStyle = "city" | "beach" | "nature" | "culture"
 export type TripPace = "relaxed" | "balanced" | "adventure"
+export type TripRegion =
+  | "anywhere"
+  | "europe"
+  | "asia"
+  | "north_america"
+  | "latin_america"
+  | "middle_east"
+  | "africa"
+  | "oceania"
 export type Confidence = "high" | "medium" | "low"
 export type WarningSeverity = "info" | "caution" | "warning"
 export type WarningType = "weather" | "security" | "visa" | "crowds" | "health"
@@ -7,6 +16,8 @@ export type WarningType = "weather" | "security" | "visa" | "crowds" | "health"
 export interface TripContext {
   dates: { from: string; to: string; nights: number }
   origin: string
+  region: TripRegion
+  placesInMind?: string
   budget: { amount: number; currency: string }
   travelers: { count: number; type: "solo" | "couple" | "family" | "group" }
   notes?: string
@@ -19,7 +30,7 @@ export interface TripContext {
 // Inspire Me — lightweight preference form when user has no destination idea
 export type InspireVibe = "recharge" | "explore" | "culture" | "adventure"
 export type InspireFlightRange = "short" | "medium" | "long"
-export type InspirePriority = "food" | "history" | "nature" | "nightlife" | "family"
+export type InspirePriority = "food" | "history" | "nature" | "nightlife" | "family" | "kids_friendly"
 
 export interface InspireContext {
   vibe: InspireVibe

@@ -1,7 +1,7 @@
 "use client"
 
 import {
-  BookOpen, DollarSign, Flame, Leaf, Moon, Plane,
+  Baby, BookOpen, DollarSign, Flame, Leaf, Moon, Plane,
   Sparkles, TreePine, Utensils, Users2, Waves,
 } from "lucide-react"
 import { useLocale } from "@/components/locale-provider"
@@ -16,6 +16,7 @@ interface InspireFormProps {
 }
 
 type ChipOption<T> = { key: T; label: string; icon: React.ReactNode }
+type PriorityOption = { key: InspirePriority; labelKey: keyof ReturnType<typeof useLocale>["messages"]["inspire"]["priorities"]; icon: React.ReactNode }
 
 function ChipGroup<T extends string>({
   label,
@@ -70,12 +71,13 @@ const FLIGHT_RANGES: ChipOption<InspireFlightRange>[] = [
   { key: "long",   label: "9h+",    icon: <Plane className="h-4 w-4" aria-hidden /> },
 ]
 
-const PRIORITIES: ChipOption<InspirePriority>[] = [
-  { key: "food",      label: "Food",      icon: <Utensils className="h-4 w-4" aria-hidden /> },
-  { key: "history",   label: "History",   icon: <BookOpen className="h-4 w-4" aria-hidden /> },
-  { key: "nature",    label: "Nature",    icon: <TreePine className="h-4 w-4" aria-hidden /> },
-  { key: "nightlife", label: "Nightlife", icon: <Moon className="h-4 w-4" aria-hidden /> },
-  { key: "family",    label: "Family",    icon: <Users2 className="h-4 w-4" aria-hidden /> },
+const PRIORITIES: PriorityOption[] = [
+  { key: "food",          labelKey: "food",          icon: <Utensils className="h-4 w-4" aria-hidden /> },
+  { key: "history",       labelKey: "history",       icon: <BookOpen className="h-4 w-4" aria-hidden /> },
+  { key: "nature",        labelKey: "nature",        icon: <TreePine className="h-4 w-4" aria-hidden /> },
+  { key: "nightlife",     labelKey: "nightlife",     icon: <Moon className="h-4 w-4" aria-hidden /> },
+  { key: "family",        labelKey: "family",        icon: <Users2 className="h-4 w-4" aria-hidden /> },
+  { key: "kids_friendly", labelKey: "kidsFriendly",  icon: <Baby className="h-4 w-4" aria-hidden /> },
 ]
 
 export function InspireForm({ value, onChange, tripBudget, tripTravelers }: InspireFormProps) {
@@ -114,7 +116,7 @@ export function InspireForm({ value, onChange, tripBudget, tripTravelers }: Insp
 
         <ChipGroup<InspirePriority>
           label={messages.inspire.priorityLabel}
-          options={PRIORITIES}
+          options={PRIORITIES.map((option) => ({ ...option, label: messages.inspire.priorities[option.labelKey] }))}
           value={value.priority}
           onChange={(v) => patch({ priority: v })}
         />

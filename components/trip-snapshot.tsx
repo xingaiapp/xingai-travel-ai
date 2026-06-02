@@ -1,7 +1,8 @@
 "use client"
 
 import { ClipboardCheck } from "lucide-react"
-import type { TripContext } from "@/lib/types"
+import type { TripContext, TripRegion } from "@/lib/types"
+import type { Messages } from "@/lib/i18n/types"
 import { useLocale } from "@/components/locale-provider"
 
 function formatDates(ctx: TripContext) {
@@ -15,11 +16,24 @@ function vibe(notes?: string) {
   return parts.length > 42 ? parts.slice(0, 40) + "…" : parts
 }
 
+const regionLabelKeys: Record<TripRegion, keyof Messages["form"]["regions"]> = {
+  anywhere: "anywhere",
+  europe: "europe",
+  asia: "asia",
+  north_america: "northAmerica",
+  latin_america: "latinAmerica",
+  middle_east: "middleEast",
+  africa: "africa",
+  oceania: "oceania",
+}
+
 export function TripSnapshot({ trip }: Readonly<{ trip: TripContext }>) {
   const { messages } = useLocale()
   const complete = !!trip.origin && !!trip.dates.from && !!trip.dates.to && trip.budget.amount > 0 && trip.travelers.count > 0
   const rows = [
     [messages.snapshot.origin, trip.origin || "-"],
+    [messages.snapshot.region, messages.form.regions[regionLabelKeys[trip.region ?? "anywhere"]]],
+    [messages.snapshot.placesInMind, trip.placesInMind || "-"],
     [messages.snapshot.dates, formatDates(trip)],
     [messages.snapshot.budget, `≈ ${trip.budget.currency} ${trip.budget.amount.toLocaleString()}`],
     [messages.snapshot.travelers, `${trip.travelers.count} ${messages.travelers[trip.travelers.type]}`],

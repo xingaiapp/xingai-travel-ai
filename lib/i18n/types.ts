@@ -57,6 +57,30 @@ export interface Messages {
     title: string
     dates: string
     from: string
+    region: string
+    regionHint: string
+    placesInMind: string
+    placesPlaceholder: string
+    regions: {
+      anywhere: string
+      europe: string
+      asia: string
+      northAmerica: string
+      latinAmerica: string
+      middleEast: string
+      africa: string
+      oceania: string
+    }
+    regionExamples: {
+      anywhere: string
+      europe: string
+      asia: string
+      northAmerica: string
+      latinAmerica: string
+      middleEast: string
+      africa: string
+      oceania: string
+    }
     budget: string
     travelers: string
     notes: string
@@ -67,6 +91,8 @@ export interface Messages {
     title: string
     looksGood: string
     origin: string
+    region: string
+    placesInMind: string
     dates: string
     budget: string
     travelers: string
@@ -128,6 +154,14 @@ export interface Messages {
     vibeLabel: string
     flightLabel: string
     priorityLabel: string
+    priorities: {
+      food: string
+      history: string
+      nature: string
+      nightlife: string
+      family: string
+      kidsFriendly: string
+    }
     budgetNote: string
     gemNote: string
     budgetDateNote: string
