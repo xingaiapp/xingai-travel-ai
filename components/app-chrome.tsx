@@ -264,6 +264,19 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
               ))}
             </nav>
           </div>
+          {/* XingAI family links: plain anchors so crawlers follow them. */}
+          <div className="mx-auto mt-3 flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/60 pt-3">
+            <span>
+              Part of{" "}
+              <a href="https://xingai.app/" className="font-semibold text-foreground hover:text-primary">
+                XingAI
+              </a>
+            </span>
+            <a href="https://cook.xingai.app/" title="What to cook tonight" className="hover:text-primary">Cook AI</a>
+            <a href="https://wear.xingai.app/" title="What to wear today" className="hover:text-primary">Wear AI</a>
+            <a href="https://invest.xingai.app/ai-map" title="AI supply-chain research" className="hover:text-primary">Invest AI</a>
+            <a href="https://xingai.app/apps" className="hover:text-primary">All apps</a>
+          </div>
         </footer>
       </div>
 

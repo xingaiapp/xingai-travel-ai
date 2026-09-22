@@ -21,6 +21,14 @@ Primary pages:
 Product principle:
 - Decision quality comes first.
 - Affiliate links may appear after the recommendation and should not influence destination ranking, winner selection, confidence, or trade-off explanations.
+
+Publisher: XingAI (https://xingai.app/) — AI decision systems for everyday life.
+
+Related XingAI apps:
+- Cook AI: https://cook.xingai.app/
+- Wear AI: https://wear.xingai.app/
+- Invest AI (research, not investment advice): https://invest.xingai.app/ai-map
+- All apps: https://xingai.app/apps
 `,
     { headers: { "Content-Type": "text/plain; charset=utf-8" } }
   )
