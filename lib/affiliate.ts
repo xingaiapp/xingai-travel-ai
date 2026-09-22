@@ -36,6 +36,8 @@ export function buildAffiliateLinks(params: {
 }): AffiliateLinks {
   const { originCode, destinationCity, destinationCode, dates, suggestedActivities = [] } = params
   const citySlug = destinationCity.toLowerCase().replace(/\s+/g, "-")
+  // Shared trip links carry no dates; send partners a plain city search then.
+  const hasDates = Boolean(dates.checkIn && dates.checkOut)
 
   const flights: AffiliateLink[] = [
     {
@@ -57,14 +59,14 @@ export function buildAffiliateLinks(params: {
       platform: "Booking.com",
       label: `${destinationCity} — Booking.com`,
       url: cfg.booking
-        ? `https://www.booking.com/searchresults.html?ss=${enc(destinationCity)}&checkin=${dates.checkIn}&checkout=${dates.checkOut}&aid=${cfg.booking}`
+        ? `https://www.booking.com/searchresults.html?ss=${enc(destinationCity)}${hasDates ? `&checkin=${dates.checkIn}&checkout=${dates.checkOut}` : ""}&aid=${cfg.booking}`
         : `https://www.booking.com/searchresults.html?ss=${enc(destinationCity)}`,
     },
     {
       platform: "Expedia",
       label: `${destinationCity} — Expedia`,
       url: cfg.expedia
-        ? `https://www.expedia.com/Hotel-Search?destination=${enc(destinationCity)}&startDate=${dates.checkIn}&endDate=${dates.checkOut}&cid=${cfg.expedia}`
+        ? `https://www.expedia.com/Hotel-Search?destination=${enc(destinationCity)}${hasDates ? `&startDate=${dates.checkIn}&endDate=${dates.checkOut}` : ""}&cid=${cfg.expedia}`
         : `https://www.expedia.com/Hotel-Search?destination=${enc(destinationCity)}`,
     },
   ]

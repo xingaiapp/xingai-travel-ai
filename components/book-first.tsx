@@ -50,7 +50,8 @@ function trackClick(platform: string, type: string, destination: string) {
 
 interface BookFirstProps {
   plan: PlanResult
-  trip: TripContext
+  /** Null on shared links: no origin or dates, so flights are skipped. */
+  trip: TripContext | null
 }
 
 export function BookFirst({ plan, trip }: BookFirstProps) {
@@ -58,18 +59,19 @@ export function BookFirst({ plan, trip }: BookFirstProps) {
   const winner = plan.destination
 
   const affiliateLinks = useMemo(() => {
-    const originCode = extractOriginCode(trip.origin)
+    const originCode = trip ? extractOriginCode(trip.origin) : ""
     const destCode = guessIata(winner)
     return buildAffiliateLinks({
       originCode,
       destinationCity: winner.split(",")[0].trim(),
       destinationCode: destCode,
-      dates: { checkIn: trip.dates.from, checkOut: trip.dates.to },
+      dates: { checkIn: trip?.dates.from ?? "", checkOut: trip?.dates.to ?? "" },
     })
-  }, [trip.origin, trip.dates.from, trip.dates.to, winner])
+  }, [trip, winner])
 
   return (
     <div className="space-y-4">
+      {trip ? (
       <div>
         <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
           {messages.result.bookFlights}
@@ -85,6 +87,7 @@ export function BookFirst({ plan, trip }: BookFirstProps) {
           ))}
         </div>
       </div>
+      ) : null}
 
       <div>
         <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">

@@ -147,6 +147,14 @@ export interface Messages {
     warningSeverityCaution: string
     warningSeverityInfo: string
     warningsTitle: string
+    share: string
+    shareCopied: string
+    shareFailed: string
+    sharedBadge: string
+    sharedFrom: string
+    sharedCta: string
+    sharedInvalidTitle: string
+    sharedInvalidBody: string
   }
   inspire: {
     title: string
