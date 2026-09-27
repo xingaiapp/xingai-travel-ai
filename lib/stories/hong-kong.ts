@@ -6,6 +6,7 @@ import type { StoryEpisode, StorySeason } from "@/lib/stories/types"
 // - Every photo goes through scripts/process-story-photos.mjs (strips EXIF/GPS).
 
 function shot(
+  episode: string,
   name: string,
   width: number,
   height: number,
@@ -15,7 +16,7 @@ function shot(
   captionZh?: string,
 ): StoryEpisode["cover"] {
   return {
-    src: `/stories/hong-kong/01/${name}`,
+    src: `/stories/hong-kong/${episode}/${name}`,
     width,
     height,
     alt: { en: altEn, zh: altZh },
@@ -36,6 +37,7 @@ const ep01: StoryEpisode = {
   },
   cover: {
     ...shot(
+      "01",
       "waterfront-walk",
       960,
       1706,
@@ -57,6 +59,7 @@ const ep01: StoryEpisode = {
     {
       type: "photo",
       photo: shot(
+        "01",
         "at-the-table",
         960,
         1706,
@@ -93,6 +96,7 @@ const ep01: StoryEpisode = {
     {
       type: "photo",
       photo: shot(
+        "01",
         "north-point-boardwalk",
         960,
         1706,
@@ -103,6 +107,7 @@ const ep01: StoryEpisode = {
     {
       type: "photo",
       photo: shot(
+        "01",
         "north-point-map",
         960,
         1706,
@@ -123,6 +128,7 @@ const ep01: StoryEpisode = {
     {
       type: "photo",
       photo: shot(
+        "01",
         "roast-meat-rice",
         1320,
         1760,
@@ -133,6 +139,7 @@ const ep01: StoryEpisode = {
     {
       type: "photo",
       photo: shot(
+        "01",
         "roast-platter",
         1320,
         1760,
@@ -153,6 +160,7 @@ const ep01: StoryEpisode = {
     {
       type: "photo",
       photo: shot(
+        "01",
         "harbour-red-sail",
         960,
         1706,
@@ -173,6 +181,7 @@ const ep01: StoryEpisode = {
     {
       type: "photo",
       photo: shot(
+        "01",
         "egret-on-the-steps",
         960,
         1706,
@@ -193,6 +202,7 @@ const ep01: StoryEpisode = {
     {
       type: "photo",
       photo: shot(
+        "01",
         "family-afternoon",
         1376,
         1824,
@@ -213,6 +223,7 @@ const ep01: StoryEpisode = {
     {
       type: "photo",
       photo: shot(
+        "01",
         "bridge-from-the-car",
         960,
         1706,
@@ -283,6 +294,235 @@ const ep01: StoryEpisode = {
   ],
 }
 
+const ep02: StoryEpisode = {
+  number: 2,
+  slug: "02-the-harbor-i-kept-coming-back-to",
+  status: "published",
+  publishedAt: "2026-09-26",
+  title: { en: "The Harbor I Kept Coming Back To", zh: "我一次次回来的海港" },
+  dek: {
+    en: "People say Hong Kong's soul is in Victoria Harbour. After six months, I believed it. Not a guidebook — why I kept coming back.",
+    zh: "有人说，香港的魂在维港。住了半年，我信了。这篇不讲攻略，讲我为什么一次次回来。",
+  },
+  cover: {
+    ...shot(
+      "02",
+      "cover-waterfront",
+      512,
+      910,
+      "Victoria Harbour waterfront promenade and the skyline across the water",
+      "维多利亚港海滨长廊与远处的城市天际线",
+    ),
+  },
+  blocks: [
+    { type: "heading", body: { en: "01 — Tourist mindset", zh: "01 · 游客心态" } },
+    {
+      type: "text",
+      body: {
+        en: "The first time I went to the harbour, I was a tourist: take a photo, leave. Beautiful in the frame. That was about it.",
+        zh: "我第一次去维港，是游客心态，拍张照就走。照片里很美，但也就那样。",
+      },
+    },
+    {
+      type: "photo",
+      photo: shot(
+        "02",
+        "harbour-overcast",
+        512,
+        910,
+        "Victoria Harbour and the skyline under low cloud",
+        "阴云下开阔的维多利亚港与城市天际线",
+      ),
+    },
+    { type: "heading", body: { en: "02 — After I lived here", zh: "02 · 住下来之后" } },
+    {
+      type: "text",
+      body: {
+        en: "After I lived here, I came back again and again — not for photos. Passing by. Bringing friends. Needing wind when my head felt heavy.",
+        zh: "住下来之后才发现，我会一次次回来，不是为了拍照。是路过顺便看看，是朋友来了带他们去，是心里有点闷想吹吹风。",
+      },
+    },
+    { type: "heading", body: { en: "03 — Morning on the waterfront", zh: "03 · 早晨的海滨" } },
+    {
+      type: "text",
+      body: {
+        en: "In the morning the promenade is quiet, the water flat, the city not awake yet. That hour of the harbour belongs to locals — not crowded, calm.",
+        zh: "早上，海滨长廊没什么人，海是平的，城市还没醒。这个时间的维港是本地人的，不挤，安静。",
+      },
+    },
+    {
+      type: "photo",
+      photo: shot(
+        "02",
+        "morning-calm",
+        512,
+        910,
+        "A calm morning looking out over Victoria Harbour",
+        "晴朗早晨从海滨望向平静的维多利亚港",
+      ),
+    },
+    { type: "heading", body: { en: "04 — The ferry", zh: "04 · 渡轮" } },
+    {
+      type: "text",
+      body: {
+        en: "Ferries leave one after another. A few minutes and you are on the other side. A few dollars for a ticket — the best-value “cruise” I have taken.",
+        zh: "渡轮一班接一班，几分钟就晃到对岸。几块钱的船票，是我坐过性价比最高的“游船”。",
+      },
+    },
+    {
+      type: "photo",
+      photo: shot(
+        "02",
+        "ferry-crossing",
+        512,
+        910,
+        "A ferry crossing Victoria Harbour with towers on the far shore",
+        "维多利亚港水面上的渡轮与远岸楼群",
+      ),
+    },
+    { type: "heading", body: { en: "05 — The red-sail junk", zh: "05 · 红帆船" } },
+    {
+      type: "text",
+      body: {
+        en: "The red-sail junk is still the same, slow, as if time costs nothing on that deck. Every time I see it, I stop and look a little longer.",
+        zh: "红帆船还是老样子，慢悠悠的，好像时间在它那儿不值钱。每次看到它，我都会停下来多看一会儿。",
+      },
+    },
+    {
+      type: "photo",
+      photo: shot(
+        "02",
+        "red-sail-junk",
+        512,
+        910,
+        "A red-sail junk on Victoria Harbour",
+        "维多利亚港上的红帆船与远处城市楼群",
+      ),
+    },
+    { type: "heading", body: { en: "06 — Everyone busy", zh: "06 · 各忙各的" } },
+    {
+      type: "text",
+      body: {
+        en: "Fishing boats, freighters, tour boats — each doing its own work, nobody in anyone else's way. The harbour feels like a big living room. There is room for every kind of boat.",
+        zh: "渔船、货船、游船，各忙各的，谁也不打扰谁。海港像个大客厅，什么船都有位置。",
+      },
+    },
+    {
+      type: "photo",
+      photo: shot(
+        "02",
+        "harbour-boats",
+        512,
+        910,
+        "Boats on Victoria Harbour with towers on both shores",
+        "维多利亚港上的船只与两岸楼群",
+      ),
+    },
+    { type: "heading", body: { en: "07 — Cloudy days count", zh: "07 · 阴天也行" } },
+    {
+      type: "text",
+      body: {
+        en: "Cloudy days work too. Clouds sit low, and the harbour has more mood. Don't only come on bright days — overcast Victoria Harbour holds its own.",
+        zh: "阴天来也行，云压得很低，海港反而更有味道。别只挑大晴天来，维港阴天不输。",
+      },
+    },
+    { type: "heading", body: { en: "08 — Victoria Harbour", zh: "08 · 维多利亚港" } },
+    {
+      type: "text",
+      body: {
+        en: "The railing says VICTORIA HARBOUR. The name is not modest. It earns it.",
+        zh: "栏杆上刻着 VICTORIA HARBOUR，这名字起得真不客气，但也真配。它确实担得起。",
+      },
+    },
+    {
+      type: "photo",
+      photo: shot(
+        "02",
+        "victoria-harbour-sign",
+        512,
+        910,
+        "A VICTORIA HARBOUR sign on the waterfront railing",
+        "海滨栏杆上的 VICTORIA HARBOUR 标识",
+      ),
+    },
+    { type: "heading", body: { en: "09 — Bringing friends", zh: "09 · 带朋友来" } },
+    {
+      type: "text",
+      body: {
+        en: "Whenever friends visit Hong Kong, I bring them here. I don't need to say much. The harbour speaks for itself.",
+        zh: "每次有朋友来香港，我都带他们来这儿，什么都不用说。海港自己会说话。",
+      },
+    },
+    { type: "heading", body: { en: "10 — Sun and cloud", zh: "10 · 晴天阴天" } },
+    {
+      type: "text",
+      body: {
+        en: "Clear days have their look. Cloudy days have theirs. I came here countless times in six months. Not once was I disappointed.",
+        zh: "晴天有晴天的看头，阴天有阴天的看头。半年里我来了无数次，没一次失望的。",
+      },
+    },
+    { type: "heading", body: { en: "11 — Closing", zh: "11 · 结语" } },
+    {
+      type: "quote",
+      body: {
+        en: "Some places are enough once. The harbour is not. It is the kind of place you keep coming back to.",
+        zh: "有些地方去一次就够了。维港不是，它是那种你会一次次回来的地方。",
+      },
+    },
+    {
+      type: "verdict",
+      intro: {
+        en: "Not a guidebook conclusion. The answers left after coming back again and again.",
+        zh: "不是攻略结论，是一次次回来以后留下的答案。",
+      },
+      rows: [
+        {
+          label: { en: "Worth it", zh: "值不值得" },
+          body: {
+            en: "Worth it — go, and go again. A Hong Kong trip without the harbour is half a trip.",
+            zh: "值得，一去再去。香港之行不来维港等于没来。",
+          },
+        },
+        {
+          label: { en: "Who it's for", zh: "适合谁" },
+          body: {
+            en: "First-timers. People who live here. Anyone bringing friends or family.",
+            zh: "第一次来香港的人；住下来的人；带朋友、带家人的人。",
+          },
+        },
+        {
+          label: { en: "Budget", zh: "预算" },
+          body: {
+            en: "The promenade is free. Star Ferry is a few Hong Kong dollars. Red-sail tours follow the operator's price — check ahead (as of 2026).",
+            zh: "海滨散步免费；天星小轮几块钱；红帆船游船按船公司定价，提前查（2026）。",
+          },
+        },
+        {
+          label: { en: "Time", zh: "时间" },
+          body: {
+            en: "Morning is quieter. Dusk into dark, when the lights come on, is the best look. Leave at least half a day — don't rush.",
+            zh: "早晨人少安静；傍晚到天黑灯亮起来最好看；至少留半天，别赶。",
+          },
+        },
+        {
+          label: { en: "The catch", zh: "有没有坑" },
+          body: {
+            en: "Holidays and evenings are crowded — go off-peak. Windy by the water; bring a layer on cloudy days. Don't only walk the Tsim Sha Tsui side — Central and North Point waterfronts are worth it too. Red-sail sailings are limited; check times if you want to ride.",
+            zh: "节假日和晚上人多，错峰；海边风大，阴天带件外套；别只走尖沙咀一侧，对岸的中环／北角海滨也值得走；红帆船班次有限，想坐提前查时间。",
+          },
+        },
+      ],
+    },
+    {
+      type: "text",
+      body: {
+        en: "Next episode: what I actually ate in Hong Kong.",
+        zh: "下一集，讲我在香港真正吃过的东西。",
+      },
+    },
+  ],
+}
+
 function planned(number: number, slug: string, en: string, zh: string, dekEn: string, dekZh: string): StoryEpisode {
   return {
     number,
@@ -307,6 +547,7 @@ export const hongKong: StorySeason = {
     zh: "八个短故事，来自半年里一次次回到同一座城市——我看到的、吃到的，以及我会换一种方式做的事。最后是一个问题：你的香港应该是什么样子？",
   },
   cover: shot(
+    "01",
     "harbour-red-sail",
     960,
     1706,
@@ -315,8 +556,7 @@ export const hongKong: StorySeason = {
   ),
   episodes: [
     ep01,
-    planned(2, "02-the-harbor-i-kept-coming-back-to", "The Harbor I Kept Coming Back To", "我一再回去的维港",
-      "Skyline, red sails, ferries, and why the waterfront pulled me back every time.", "天际线、红帆船、渡轮，以及为什么海滨总把我拉回去。"),
+    ep02,
     planned(3, "03-what-i-actually-ate", "What I Actually Ate in Hong Kong", "我在香港真正吃过的东西",
       "Not a top-ten list. Roast meats, double-egg rice, dim sum, and ordinary places.", "不是十大榜单。烧味、双蛋饭、点心，和普通的小店。"),
     planned(4, "04-hong-kong-in-motion", "Hong Kong in Motion", "流动的香港",
