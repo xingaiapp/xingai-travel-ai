@@ -36,3 +36,11 @@ export function getCityImage(cityName: string): string {
   }
   return "/assets/destination-lisbon-card.webp"
 }
+
+/** Help entry points link to /decide#how-to-use; this event expands the panel when already on /decide. */
+export const HELP_ANCHOR = "how-to-use"
+export const OPEN_HELP_EVENT = "travel:open-help"
+
+export function openHelp() {
+  window.dispatchEvent(new Event(OPEN_HELP_EVENT))
+}

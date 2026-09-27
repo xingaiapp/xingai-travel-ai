@@ -3,7 +3,7 @@ import { ResultPage } from "@/components/result-page"
 
 export const metadata: Metadata = {
   title: "Your travel decision",
-  description: "See the best-fit destination, comparison, book-first checklist, and itinerary.",
+  description: "See the best-fit destination, comparison, booking checklist, and itinerary.",
   robots: { index: false, follow: false },
 }
 

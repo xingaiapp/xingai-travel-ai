@@ -28,6 +28,7 @@ Next.js App Router 会 **服务端渲染** 客户端组件。若在首次客户�
 | `xingai-travel-plan-result` | `sessionStorage` | `PlanResult`（可能异步到达） |
 | `xingai-travel-locale` | `localStorage` | `en` \| `zh` \| `ko` \| `es` |
 | `theme` | `localStorage` | `light` \| `dark` \| `system` |
+| `xingai-travel-trip-history` | `localStorage` | `/trips` 的最近决策（最多 12 条），见 [ADR 0007](./0007-local-trip-history.zh.md) |
 
 ###  hydration 安全写法
 

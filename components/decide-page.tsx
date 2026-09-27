@@ -12,12 +12,10 @@ import { TripSnapshot } from "@/components/trip-snapshot"
 import { useLocale } from "@/components/locale-provider"
 import { defaultTrip, mockCompareResult, mockPlanResult } from "@/lib/mock-data"
 import type { CompareResult, InspireContext, TripContext } from "@/lib/types"
-import { cn } from "@/lib/utils"
+import { addDecision, attachPlan, COMPARE_STORAGE, fetchPlan, PLAN_STORAGE, TRIP_STORAGE, winnerOf } from "@/lib/trip-history"
+import { cn, HELP_ANCHOR, OPEN_HELP_EVENT } from "@/lib/utils"
 import { useEffect, useState, useRef } from "react"
 
-const TRIP_STORAGE = "xingai-travel-trip-context"
-const COMPARE_STORAGE = "xingai-travel-compare-result"
-const PLAN_STORAGE = "xingai-travel-plan-result"
 const COMPARE_UPDATED_EVENT = "xingai-travel-compare-updated"
 
 const defaultInspire: InspireContext = {
@@ -141,19 +139,19 @@ export function DecidePage() {
       window.dispatchEvent(new Event(COMPARE_UPDATED_EVENT))
       setLiveResult(data)
 
-      const winner = data.destinations.find((d) => d.isWinner) ?? data.destinations[0]
+      const winner = winnerOf(data)
       if (winner) {
         // For inspire mode: use trip dates/origin if filled, else defaultTrip as fallback
         const planCtx = inspireMode
           ? { ...defaultTrip, ...( trip.dates.from ? { dates: trip.dates, origin: trip.origin } : {}), budget: inspireWithTrip.budget, travelers: inspireWithTrip.travelers, locale }
           : { ...trip, locale }
-        fetch("/api/plan", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ destination: `${winner.name}, ${winner.country}`, tripContext: planCtx }),
-        })
-          .then((r) => r.json())
-          .then((plan) => sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(plan)))
+        // Only live results go into Trips history; the preview fallback below is never saved.
+        const historyId = addDecision({ mode: inspireMode ? "inspire" : "compare", trip: planCtx, compare: data })
+        fetchPlan(`${winner.name}, ${winner.country}`, planCtx)
+          .then((plan) => {
+            sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(plan))
+            attachPlan(historyId, plan)
+          })
           .catch(() => sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(mockPlanResult)))
       }
     } catch {
@@ -253,7 +251,8 @@ export function DecidePage() {
             </p>
           </div>
 
-          <div className="space-y-4">
+          {/* Sticky as one column so cards below the snapshot never slide underneath it. */}
+          <div className="space-y-4 lg:sticky lg:top-24 lg:self-start">
             <TripSnapshot trip={trip} />
             {!inspireMode && <StylePaceSelector value={trip} onChange={setTrip} />}
             {inspireMode && (
@@ -302,6 +301,17 @@ export function DecidePage() {
 function HeroIntro() {
   const { messages } = useLocale()
   const [helpOpen, setHelpOpen] = useState(false)
+
+  useEffect(() => {
+    const reveal = () => {
+      setHelpOpen(true)
+      requestAnimationFrame(() => document.getElementById(HELP_ANCHOR)?.scrollIntoView({ behavior: "smooth", block: "start" }))
+    }
+    if (window.location.hash === `#${HELP_ANCHOR}`) reveal()
+    window.addEventListener(OPEN_HELP_EVENT, reveal)
+    return () => window.removeEventListener(OPEN_HELP_EVENT, reveal)
+  }, [])
+
   const helpSteps = [
     [messages.home.helpStep1Title, messages.home.helpStep1Body],
     [messages.home.helpStep2Title, messages.home.helpStep2Body],
@@ -347,7 +357,7 @@ function HeroIntro() {
             </p>
           </div>
 
-          <div id="how-to-use" className="flex items-center scroll-mt-24">
+          <div id={HELP_ANCHOR} className="flex items-center scroll-mt-24">
             <div className="hero-help-panel w-full rounded-md border bg-white/[.16] p-4 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-5 dark:bg-slate-950/34">
               <button
                 type="button"

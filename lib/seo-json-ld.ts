@@ -88,7 +88,7 @@ export const seoJsonLdGraph = {
         {
           "@type": "HowToStep",
           position: 3,
-          name: "Use the book-first plan",
+          name: "Book the key pieces first",
           text: "Book flights, hotel area, and key activities after checking live availability.",
           url: "https://travel.xingai.app/result#full-plan",
         },

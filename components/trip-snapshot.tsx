@@ -42,7 +42,7 @@ export function TripSnapshot({ trip }: Readonly<{ trip: TripContext }>) {
   ]
 
   return (
-    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5 lg:sticky lg:top-24">
+    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-primary">
