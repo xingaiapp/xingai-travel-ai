@@ -82,13 +82,6 @@ const ep01: StoryEpisode = {
         zh: "我住在炮台山。每天从地铁 B 出口出来，这条路我走了半年。炮台山不在游客的行程上，但它安静、方便，楼下什么都有。住久了你会发现，香港真正的生活感，都藏在这种地方。",
       },
     },
-    {
-      type: "photo",
-      photo: {
-        alt: { en: "A Fortress Hill street with no readable building name", zh: "炮台山街道，画面里没有可读的楼名" },
-        shot: "Held back: the exit B frame shows the estate name on the sign. Replace it with a photo that does not name the building.",
-      },
-    },
     { type: "heading", body: { en: "02 — North Point", zh: "02 — 北角 · North Point" } },
     {
       type: "text",
