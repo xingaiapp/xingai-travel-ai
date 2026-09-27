@@ -27,7 +27,8 @@ function shot(
 const ep01: StoryEpisode = {
   number: 1,
   slug: "01-the-hong-kong-i-called-home",
-  status: "draft",
+  status: "published",
+  publishedAt: "2026-09-26",
   title: { en: "The Hong Kong I Called Home", zh: "我叫它家的地方" },
   dek: {
     en: "Six months in Hong Kong. This is the city I lived in, not the one visitors pass through.",
