@@ -8,14 +8,12 @@ import {
   ChevronDown,
   CircleHelp,
   Compass,
-  Heart,
   Menu,
   PanelLeftClose,
   PanelLeftOpen,
   Plane,
   Settings,
   ShieldCheck,
-  UserRound,
   X,
 } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -24,11 +22,12 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { useLocale } from "@/components/locale-provider"
 import type { Messages } from "@/lib/i18n/types"
 import { visibleSeasons } from "@/lib/stories"
-import { cn, getCityImage } from "@/lib/utils"
+import { COMPARE_STORAGE } from "@/lib/trip-history"
+import { cn, getCityImage, HELP_ANCHOR, openHelp } from "@/lib/utils"
 
 type NavItem = {
   href: string
-  key: "decide" | "stories" | "trips" | "saved" | "profile"
+  key: "decide" | "stories" | "trips"
   icon: typeof Compass
   soon?: boolean
 }
@@ -36,9 +35,8 @@ type NavItem = {
 const navItems: readonly NavItem[] = [
   { href: "/decide", key: "decide", icon: Compass },
   { href: "/stories", key: "stories", icon: BookOpen, soon: visibleSeasons().length === 0 },
-  { href: "/trips", key: "trips", icon: BriefcaseBusiness, soon: true },
-  { href: "/saved", key: "saved", icon: Heart, soon: true },
-  { href: "/profile", key: "profile", icon: UserRound, soon: true },
+  // Saved / Profile stay out of the nav until they exist — no dead entries.
+  { href: "/trips", key: "trips", icon: BriefcaseBusiness },
 ]
 
 const legalLinks = [
@@ -55,6 +53,7 @@ function mobileHeaderTitle(pathname: string, messages: Messages) {
   const legal = legalLinks.find((item) => pathname === item.href)
   if (legal) return messages.chrome[legal.key]
   if (pathname.startsWith("/stories")) return messages.chrome.stories
+  if (pathname.startsWith("/trips")) return messages.chrome.trips
   return messages.chrome.decide
 }
 
@@ -67,7 +66,6 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`)
 }
 
-const COMPARE_STORAGE = "xingai-travel-compare-result"
 const COMPARE_UPDATED_EVENT = "xingai-travel-compare-updated"
 
 type LastDecision = {
@@ -203,10 +201,14 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                 ))}
               </div>
             </div>
-            <button type="button" className="mt-5 flex items-center gap-2 text-sm text-muted-foreground">
+            <Link
+              href={`/decide#${HELP_ANCHOR}`}
+              onClick={openHelp}
+              className="mt-5 flex items-center gap-2 text-sm text-muted-foreground transition hover:text-primary"
+            >
               <CircleHelp className="h-4 w-4" aria-hidden />
-              Help & FAQ
-            </button>
+              {messages.chrome.help}
+            </Link>
           </>
         ) : (
           <div className="mt-5 flex flex-col items-center gap-2 border-t border-border pt-4">
@@ -218,14 +220,15 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
               <ShieldCheck className="h-5 w-5" aria-hidden />
               <span className="sr-only">{messages.chrome.legal}</span>
             </Link>
-            <button
-              type="button"
-              title="Help & FAQ"
+            <Link
+              href={`/decide#${HELP_ANCHOR}`}
+              onClick={openHelp}
+              title={messages.chrome.help}
               className="flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-primary"
             >
               <CircleHelp className="h-5 w-5" aria-hidden />
-              <span className="sr-only">Help & FAQ</span>
-            </button>
+              <span className="sr-only">{messages.chrome.help}</span>
+            </Link>
           </div>
         )}
         </div>
@@ -407,7 +410,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
 
                 <DrawerAccordion
                   id="drawer-help"
-                  title="Help & FAQ"
+                  title={messages.chrome.help}
                   icon={CircleHelp}
                   open={helpOpen}
                   onToggle={() => setHelpOpen((value) => !value)}
@@ -417,6 +420,16 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                   <p className="rounded-md border border-border bg-muted/40 px-3 py-2 text-sm leading-relaxed text-muted-foreground">
                     {messages.chrome.exploreBetterBody}
                   </p>
+                  <Link
+                    href={`/decide#${HELP_ANCHOR}`}
+                    onClick={() => {
+                      setOpen(false)
+                      openHelp()
+                    }}
+                    className="mt-2 block rounded-md border border-border px-3 py-2 text-sm font-semibold text-muted-foreground transition hover:border-primary/40 hover:text-primary"
+                  >
+                    {messages.chrome.helpHowItWorks} →
+                  </Link>
                 </DrawerAccordion>
               </div>
             </div>

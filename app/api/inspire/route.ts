@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server"
 import OpenAI from "openai"
 import { z } from "zod"
 import { mockCompareResult } from "@/lib/mock-data"
+import { inspireViolations } from "@/lib/inspire-validate"
 import { buildInspirePrompt } from "@/lib/prompts"
 import { checkDailyLimit, getClientIp } from "@/lib/rate-limit"
 import type { CompareResult, InspireContext } from "@/lib/types"
@@ -36,7 +37,10 @@ export async function POST(request: NextRequest) {
   const model = process.env.OPENAI_TRAVEL_MODEL?.trim() || "gpt-4o-mini"
   const openai = new OpenAI({ apiKey })
 
-  async function callOpenAI(): Promise<CompareResult> {
+  async function callOpenAI(feedback: string[]): Promise<CompareResult> {
+    const retryNote = feedback.length
+      ? `\n\nYour previous answer broke these hard constraints — fix all of them:\n- ${feedback.join("\n- ")}`
+      : ""
     const completion = await openai.chat.completions.create({
       model,
       response_format: { type: "json_object" },
@@ -45,7 +49,7 @@ export async function POST(request: NextRequest) {
           role: "system",
           content: "You are a travel inspiration advisor. Return only valid JSON matching the requested structure. No markdown fences.",
         },
-        { role: "user", content: prompt },
+        { role: "user", content: prompt + retryNote },
       ],
       max_tokens: 1800,
       temperature: 0.5,
@@ -54,14 +58,20 @@ export async function POST(request: NextRequest) {
     return JSON.parse(raw) as CompareResult
   }
 
-  try {
-    return NextResponse.json(await callOpenAI())
-  } catch {
+  // A suggestion that breaks the user's hard limits is worse than none: validate, retry with feedback, else fail.
+  const MAX_ATTEMPTS = 3
+  let feedback: string[] = []
+  let lastError = "OpenAI request failed"
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
     try {
-      return NextResponse.json(await callOpenAI())
+      const result = await callOpenAI(feedback)
+      const problems = inspireViolations(result, parsed.data.flightRange)
+      if (problems.length === 0) return NextResponse.json(result)
+      feedback = problems
+      lastError = `Constraint violations: ${problems.join(" ")}`
     } catch (e) {
-      const msg = e instanceof Error ? e.message : "OpenAI request failed"
-      return NextResponse.json({ error: msg, code: "OPENAI_ERROR" }, { status: 502 })
+      lastError = e instanceof Error ? e.message : lastError
     }
   }
+  return NextResponse.json({ error: lastError, code: "INSPIRE_CONSTRAINTS" }, { status: 502 })
 }

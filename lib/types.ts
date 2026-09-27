@@ -48,6 +48,8 @@ export interface Destination {
   country: string
   isWinner: boolean
   confidence: Confidence
+  /** Inspire mode: approx one-way hours from origin incl. connections (validated server-side). */
+  flightHours?: number
   whyWins: string[]
   tradeoffs: string[]
   scores: {

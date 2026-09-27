@@ -136,7 +136,7 @@ Return JSON only. Respond in ${lang}.
 
 User preferences:
 - Vibe: ${ctx.vibe} (recharge = slow/relaxing, explore = new discovery, culture = deep history/arts, adventure = active/outdoors)
-- Max flight range: ${flightLabel}
+- Max flight range: ${flightLabel} — HARD LIMIT. Every destination must fit, counting connections and layovers from the origin.
 - Top priority: ${priorityNote}
 - Budget: ${ctx.budget.amount} ${ctx.budget.currency} total
 - Travelers: ${ctx.travelers.count} ${ctx.travelers.type}
@@ -149,6 +149,8 @@ Rules:
 - If a destination is slightly over budget, flag it honestly in tradeoffs
 - Avoid repeating same country unless strongly justified
 - whyWins should explain why this place specifically matches the vibe and priority
+- flightHours = realistic one-way door-to-door flight time in hours from the origin, including connections (number, not text)
+- Exactly one destination has isWinner: true, and "winner" equals its name
 
 Return this exact JSON:
 {
@@ -161,6 +163,7 @@ Return this exact JSON:
       "country": "Country",
       "isWinner": true,
       "confidence": "high|medium|low",
+      "flightHours": 5.5,
       "whyWins": ["why it matches the vibe", "what makes it special", "why these dates work"],
       "tradeoffs": ["honest limitation 1", "honest limitation 2"],
       "scores": {

@@ -14,7 +14,7 @@ const copy = {
       ["What we collect", "Trip inputs such as dates, origin, budget, travelers, style, pace, and notes you submit."],
       ["How we use it", "To compare destinations, generate itineraries, improve product reliability, and protect the service from abuse."],
       ["What we do not do", "We do not sell personal trip context. We do not use affiliate commission to change destination recommendations."],
-      ["Your control", "You can avoid entering sensitive information. Local preview data may be stored in your browser session."],
+      ["Your control", "You can avoid entering sensitive information. Local preview data may be stored in your browser session. Recent decisions for the Trips page are kept only in this browser, and you can remove them there at any time."],
     ],
   },
   terms: {

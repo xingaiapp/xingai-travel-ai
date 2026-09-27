@@ -23,6 +23,8 @@ export interface Messages {
     exploreBetterBody: string
     continueLastTrip: string
     continueLastTripBody: string
+    help: string
+    helpHowItWorks: string
   }
   home: {
     eyebrow: string
@@ -175,6 +177,20 @@ export interface Messages {
     gemNote: string
     budgetDateNote: string
     editBudgetDates: string
+  }
+  trips: {
+    title: string
+    subtitle: string
+    localOnly: string
+    emptyTitle: string
+    emptyBody: string
+    emptyCta: string
+    open: string
+    remove: string
+    clearAll: string
+    clearConfirm: string
+    savedOn: string
+    count: string
   }
   travelers: {
     solo: string

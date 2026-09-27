@@ -12,11 +12,9 @@ import { RelatedStories } from "@/components/related-stories"
 import { ShareTripButton } from "@/components/share-trip-button"
 import { useLocale } from "@/components/locale-provider"
 import { mockCompareResult, mockPlanResult, defaultTrip } from "@/lib/mock-data"
+import { COMPARE_STORAGE, PLAN_STORAGE, TRIP_STORAGE } from "@/lib/trip-history"
 import type { CompareResult, PlanResult, TripContext } from "@/lib/types"
 
-const COMPARE_STORAGE = "xingai-travel-compare-result"
-const PLAN_STORAGE    = "xingai-travel-plan-result"
-const TRIP_STORAGE    = "xingai-travel-trip-context"
 
 function readStorage<T>(key: string, fallback: T): T {
   try { return JSON.parse(sessionStorage.getItem(key) ?? "") as T } catch { return fallback }
