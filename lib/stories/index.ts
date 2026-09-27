@@ -32,7 +32,10 @@ export function getEpisode(season: StorySeason, slug: string) {
 }
 
 export function pickText(text: StoryText, locale: Locale) {
-  return locale === "zh" && text.zh ? text.zh : text.en
+  if (locale === "zh" && text.zh) return text.zh
+  if (locale === "ko" && text.ko) return text.ko
+  if (locale === "es" && text.es) return text.es
+  return text.en
 }
 
 export function episodeLabel(episode: StoryEpisode) {

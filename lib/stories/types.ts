@@ -1,7 +1,7 @@
 import type { TripRegion } from "@/lib/types"
 
-/** Story copy is written in English first; zh is optional and ko/es fall back to en. */
-export type StoryText = { en: string; zh?: string }
+/** Story copy is written in English first; zh/ko/es are optional and fall back to en. */
+export type StoryText = { en: string; zh?: string; ko?: string; es?: string }
 
 export interface StoryPhoto {
   /** Base path without size suffix, e.g. "/stories/hong-kong/01/harbour-dusk". Omit until the photo is processed. */

@@ -1,6 +1,6 @@
 # Travel Stories — authoring guide
 
-Stories live in `lib/stories/<season>.ts`, render at `/stories/<season>/<episode>`, and end with a link to `/decide` for the reader's own trip. Product boundary: [ADR 0006](../adr/0006-stories-after-decision.md) — stories are read after a decision, never scored.
+Stories live in `lib/stories/<season>.ts`, render at `/stories/<season>/<episode>`, and end with a link to `/decide` for the reader's own trip. Season copy ships in **en / zh / ko / es** where authored. Product boundary: [ADR 0006](../adr/0006-stories-after-decision.md) — stories are read after a decision, never scored.
 
 ## Publishing an episode
 
