@@ -19,16 +19,22 @@ function isLocale(value: string | null): value is Locale {
 }
 
 export function LocaleProvider({ children }: Readonly<{ children: React.ReactNode }>) {
-  const [locale, setLocaleState] = useState<Locale>(() => {
-    if (typeof window === "undefined") return "en"
-    const stored = localStorage.getItem(STORAGE_KEY)
-    return isLocale(stored) ? stored : "en"
-  })
+  // Stable on server and first client render. Reading localStorage here mismatches hydration
+  // (server "Decide", client "Decidir" when the saved locale is es).
+  const [locale, setLocaleState] = useState<Locale>("en")
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (isLocale(stored)) setLocaleState(stored)
+    setReady(true)
+  }, [])
+
+  useEffect(() => {
+    if (!ready) return
     document.documentElement.lang = locale === "zh" ? "zh-Hans" : locale
     localStorage.setItem(STORAGE_KEY, locale)
-  }, [locale])
+  }, [locale, ready])
 
   const value = useMemo(
     () => ({ locale, setLocale: setLocaleState, messages: resolveMessages(locale) }),

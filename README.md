@@ -12,7 +12,7 @@ XingAI Travel AI is a **travel decision system**, not an OTA or price-comparison
 
 | Area | State |
 |------|--------|
-| **App shell** | Next.js 16 App Router, React 19, Tailwind 4 |
+| **App shell** | Next.js 16 App Router, React 19, Tailwind 4. On desktop the sidebar stays fixed and the main column scrolls. |
 | **Core flow** | `/decide` → compare or inspire → `/result` with plan |
 | **Stories** | `/stories` after the decision ([ADR 0006](./docs/adr/0006-stories-after-decision.md)). Hong Kong EP01 is still a draft, so it 404s in production until `status: "published"`. |
 | **AI backend** | OpenAI JSON (`gpt-4o-mini` default), mock fallback when no API key |

@@ -125,10 +125,10 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
   }
 
   return (
-    <div className={cn("min-h-[100dvh] lg:grid", desktopNavOpen ? "lg:grid-cols-[15rem_1fr]" : "lg:grid-cols-[4.75rem_1fr]")}>
+    <div className={cn("min-h-[100dvh] lg:grid lg:h-dvh lg:overflow-hidden", desktopNavOpen ? "lg:grid-cols-[15rem_1fr]" : "lg:grid-cols-[4.75rem_1fr]")}>
       <aside
         className={cn(
-          "relative hidden border-r border-border bg-card/82 backdrop-blur transition-[width,padding] duration-200 lg:flex lg:flex-col",
+          "relative hidden h-dvh border-r border-border bg-card/82 backdrop-blur transition-[width,padding] duration-200 lg:flex lg:flex-col",
           desktopNavOpen ? "p-5" : "items-center px-3 py-5"
         )}
       >
@@ -142,6 +142,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           {desktopNavOpen ? <PanelLeftClose className="h-4 w-4" aria-hidden /> : <PanelLeftOpen className="h-4 w-4" aria-hidden />}
         </button>
 
+        <div className={cn("flex min-h-0 flex-1 flex-col overflow-y-auto", !desktopNavOpen && "w-full items-center")}>
         <Link href="/decide" aria-label="XingAI Travel AI" className={cn("flex items-center", !desktopNavOpen && "justify-center")}>
           <BrandMark className="h-10 w-10 shrink-0 shadow-sm" />
         </Link>
@@ -227,9 +228,10 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             </button>
           </div>
         )}
+        </div>
       </aside>
 
-      <div className="flex min-w-0 flex-col">
+      <div className="flex min-w-0 flex-col lg:h-dvh lg:overflow-y-auto">
         <header className="sticky top-0 z-40 flex h-14 items-center gap-2 border-b border-border bg-background/90 px-4 backdrop-blur lg:h-16 lg:justify-between lg:px-8">
           <button
             type="button"

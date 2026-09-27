@@ -60,12 +60,8 @@ export function DecidePage() {
   const router = useRouter()
   const { messages, locale } = useLocale()
 
-  const [trip, setTrip] = useState<TripContext>(() => {
-    if (typeof window === "undefined") return defaultTrip
-    let stored = defaultTrip
-    try { stored = normalizeTrip(JSON.parse(sessionStorage.getItem(TRIP_STORAGE) ?? "") as TripContext) } catch { /* keep default */ }
-    return withLinkPrefill(stored)
-  })
+  const [trip, setTrip] = useState<TripContext>(defaultTrip)
+  const [tripReady, setTripReady] = useState(false)
 
   // Inspire Me mode
   const [inspireMode, setInspireMode] = useState(false)
@@ -84,8 +80,18 @@ export function DecidePage() {
   const inspireWithTrip: InspireContext = { ...inspire, budget: trip.budget, travelers: trip.travelers }
 
   useEffect(() => {
+    let stored = defaultTrip
+    try {
+      stored = normalizeTrip(JSON.parse(sessionStorage.getItem(TRIP_STORAGE) ?? "") as TripContext)
+    } catch { /* keep default */ }
+    setTrip(withLinkPrefill(stored))
+    setTripReady(true)
+  }, [])
+
+  useEffect(() => {
+    if (!tripReady) return
     sessionStorage.setItem(TRIP_STORAGE, JSON.stringify({ ...trip, locale }))
-  }, [trip, locale])
+  }, [trip, locale, tripReady])
 
   async function runCompare() {
     if (controllerRef.current) controllerRef.current.abort()
