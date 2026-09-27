@@ -4,6 +4,7 @@ export const zh: Messages = {
   chrome: {
     brand: "XingAI Travel AI",
     decide: "决策",
+    stories: "故事",
     trips: "旅程",
     saved: "收藏",
     profile: "我的",

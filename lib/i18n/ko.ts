@@ -4,6 +4,7 @@ export const ko: Messages = {
   chrome: {
     brand: "XingAI Travel AI",
     decide: "결정",
+    stories: "이야기",
     trips: "여행",
     saved: "저장",
     profile: "프로필",

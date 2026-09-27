@@ -8,12 +8,13 @@ XingAI Travel AI is a **travel decision system**, not an OTA or price-comparison
 
 ---
 
-## Status (May 2026)
+## Status (September 2026)
 
 | Area | State |
 |------|--------|
 | **App shell** | Next.js 16 App Router, React 19, Tailwind 4 |
 | **Core flow** | `/decide` → compare or inspire → `/result` with plan |
+| **Stories** | `/stories` after the decision ([ADR 0006](./docs/adr/0006-stories-after-decision.md)). Hong Kong EP01 is still a draft, so it 404s in production until `status: "published"`. |
 | **AI backend** | OpenAI JSON (`gpt-4o-mini` default), mock fallback when no API key |
 | **i18n** | English, 中文, 한국어, Español |
 | **Theme** | Light / dark, custom provider (React 19–safe) |
@@ -33,6 +34,7 @@ Full copy: [`docs/PRODUCT-PRINCIPLES.md`](./docs/PRODUCT-PRINCIPLES.md)
 3. **One clear winner.** Three options max; one recommended; alternatives explained honestly.
 4. **Book-first on the result page.** Flights, hotel area, and key activity before day-by-day detail.
 5. **Legal and affiliate disclosure** on dedicated pages and near booking links.
+6. **Stories after the decision.** First-hand episodes never change the winner, ranking, confidence, or trade-offs. See [ADR 0006](./docs/adr/0006-stories-after-decision.md) and [docs/stories/README.md](./docs/stories/README.md).
 
 Chinese shorthand used internally: **赚钱靠决策质量，联盟靠事后。**
 

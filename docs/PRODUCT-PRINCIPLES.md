@@ -21,7 +21,8 @@ Chinese product shorthand:
 3. Booking links may appear only after the user has seen the recommendation, alternatives, trade-offs, and book-first checklist.
 4. Booking links are execution tools, not recommendation reasons.
 5. Pages with affiliate links must include clear disclosure.
-6. The product should reduce tab overload by giving one clear decision path, not by becoming another inventory wall.
+6. Travel Stories are optional reading after the decision; they never influence winner, ranking, confidence, or trade-offs (ADR 0006).
+7. The product should reduce tab overload by giving one clear decision path, not by becoming another inventory wall.
 
 ## Core Flow
 

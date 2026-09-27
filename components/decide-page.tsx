@@ -39,13 +39,32 @@ function normalizeTrip(value: TripContext): TripContext {
   }
 }
 
+const REGIONS: TripContext["region"][] = [
+  "anywhere", "europe", "asia", "north_america", "latin_america", "middle_east", "africa", "oceania",
+]
+
+// Travel Stories link here with ?places=Hong%20Kong&region=asia so the reader starts from their own constraints.
+function withLinkPrefill(trip: TripContext): TripContext {
+  const params = new URLSearchParams(window.location.search)
+  const places = params.get("places")?.trim().slice(0, 120)
+  const region = params.get("region") as TripContext["region"] | null
+  if (!places && !region) return trip
+  return {
+    ...trip,
+    ...(places ? { placesInMind: places } : {}),
+    ...(region && REGIONS.includes(region) ? { region } : {}),
+  }
+}
+
 export function DecidePage() {
   const router = useRouter()
   const { messages, locale } = useLocale()
 
   const [trip, setTrip] = useState<TripContext>(() => {
     if (typeof window === "undefined") return defaultTrip
-    try { return normalizeTrip(JSON.parse(sessionStorage.getItem(TRIP_STORAGE) ?? "") as TripContext) } catch { return defaultTrip }
+    let stored = defaultTrip
+    try { stored = normalizeTrip(JSON.parse(sessionStorage.getItem(TRIP_STORAGE) ?? "") as TripContext) } catch { /* keep default */ }
+    return withLinkPrefill(stored)
   })
 
   // Inspire Me mode

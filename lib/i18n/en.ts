@@ -4,6 +4,7 @@ export const en: Messages = {
   chrome: {
     brand: "XingAI Travel AI",
     decide: "Decide",
+    stories: "Stories",
     trips: "Trips",
     saved: "Saved",
     profile: "Profile",

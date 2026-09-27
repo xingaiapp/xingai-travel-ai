@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
+  BookOpen,
   BriefcaseBusiness,
   ChevronDown,
   CircleHelp,
@@ -22,17 +23,19 @@ import { LocaleSwitcher } from "@/components/locale-switcher"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { useLocale } from "@/components/locale-provider"
 import type { Messages } from "@/lib/i18n/types"
+import { visibleSeasons } from "@/lib/stories"
 import { cn, getCityImage } from "@/lib/utils"
 
 type NavItem = {
   href: string
-  key: "decide" | "trips" | "saved" | "profile"
+  key: "decide" | "stories" | "trips" | "saved" | "profile"
   icon: typeof Compass
   soon?: boolean
 }
 
 const navItems: readonly NavItem[] = [
   { href: "/decide", key: "decide", icon: Compass },
+  { href: "/stories", key: "stories", icon: BookOpen, soon: visibleSeasons().length === 0 },
   { href: "/trips", key: "trips", icon: BriefcaseBusiness, soon: true },
   { href: "/saved", key: "saved", icon: Heart, soon: true },
   { href: "/profile", key: "profile", icon: UserRound, soon: true },
@@ -51,11 +54,17 @@ function mobileHeaderTitle(pathname: string, messages: Messages) {
   }
   const legal = legalLinks.find((item) => pathname === item.href)
   if (legal) return messages.chrome[legal.key]
+  if (pathname.startsWith("/stories")) return messages.chrome.stories
   return messages.chrome.decide
 }
 
 function isDecideRoute(pathname: string) {
   return pathname === "/decide" || pathname === "/" || pathname === "/result"
+}
+
+function isActive(pathname: string, href: string) {
+  if (href === "/decide") return isDecideRoute(pathname)
+  return pathname === href || pathname.startsWith(`${href}/`)
 }
 
 const COMPARE_STORAGE = "xingai-travel-compare-result"
@@ -140,7 +149,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
         <nav className={cn("mt-9 flex flex-1 flex-col gap-2", !desktopNavOpen && "w-full items-center")} aria-label="Primary">
           {navItems.map((item) => {
             const Icon = item.icon
-            const active = pathname === item.href || (item.href === "/decide" && isDecideRoute(pathname))
+            const active = isActive(pathname, item.href)
             const label = messages.chrome[item.key]
             if (item.soon) {
               return (
@@ -284,7 +293,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
         <div className="mx-auto flex max-w-md items-stretch justify-between px-2 py-1.5">
           {navItems.map((item) => {
             const Icon = item.icon
-            const active = pathname === item.href || (item.href === "/decide" && isDecideRoute(pathname))
+            const active = isActive(pathname, item.href)
             const label = messages.chrome[item.key]
             if (item.soon) {
               return (
@@ -328,7 +337,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                 <nav className="grid gap-1" aria-label="Mobile primary">
                   {navItems.map((item) => {
                     const Icon = item.icon
-                    const active = pathname === item.href || (item.href === "/decide" && isDecideRoute(pathname))
+                    const active = isActive(pathname, item.href)
                     const label = messages.chrome[item.key]
 
                     if (item.soon) {

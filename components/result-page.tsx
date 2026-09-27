@@ -8,6 +8,7 @@ import { Itinerary } from "@/components/itinerary"
 import { StepProgress } from "@/components/step-progress"
 import { TradeoffNote } from "@/components/tradeoff-note"
 import { TripWarnings } from "@/components/trip-warnings"
+import { RelatedStories } from "@/components/related-stories"
 import { ShareTripButton } from "@/components/share-trip-button"
 import { useLocale } from "@/components/locale-provider"
 import { mockCompareResult, mockPlanResult, defaultTrip } from "@/lib/mock-data"
@@ -140,6 +141,8 @@ export function ResultPage() {
               <PlanSkeleton />
             )}
           </div>
+
+          <RelatedStories destinations={compare.destinations.map((item) => item.name)} />
 
           <p className="rounded-md bg-muted p-3 text-center text-xs leading-relaxed text-muted-foreground">
             {messages.result.note}

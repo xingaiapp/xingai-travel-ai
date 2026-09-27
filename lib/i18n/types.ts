@@ -4,6 +4,7 @@ export interface Messages {
   chrome: {
     brand: string
     decide: string
+    stories: string
     trips: string
     saved: string
     profile: string

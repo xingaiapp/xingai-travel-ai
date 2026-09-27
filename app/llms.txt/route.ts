@@ -1,3 +1,16 @@
+import { publishedEpisodes, seasons } from "@/lib/stories"
+
+function storiesSection() {
+  const lines = seasons.flatMap((season) =>
+    publishedEpisodes(season).map((episode) => `- /stories/${season.slug}/${episode.slug} — ${episode.title.en}: ${episode.dek.en}`)
+  )
+  if (lines.length === 0) return ""
+  return `
+Travel Stories (first-hand, written by the publisher; each ends with a link to /decide for the reader's own trip):
+${lines.join("\n")}
+`
+}
+
 export function GET() {
   return new Response(
     `# XingAI Travel AI
@@ -17,7 +30,7 @@ Primary pages:
 - /terms
 - /disclaimer
 - /affiliate-disclosure
-
+${storiesSection()}
 Product principle:
 - Decision quality comes first.
 - Affiliate links may appear after the recommendation and should not influence destination ranking, winner selection, confidence, or trade-off explanations.
