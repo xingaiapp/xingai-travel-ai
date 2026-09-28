@@ -10,7 +10,7 @@ function formatDates(ctx: TripContext) {
   return `${ctx.dates.from} → ${ctx.dates.to} (${ctx.dates.nights} nights)`
 }
 
-function vibe(notes?: string) {
+function excerpt(notes?: string) {
   if (!notes) return "-"
   const parts = notes.split(/[,，.]/).map((item) => item.trim()).filter(Boolean).slice(0, 3).join(", ")
   return parts.length > 42 ? parts.slice(0, 40) + "…" : parts
@@ -37,7 +37,9 @@ export function TripSnapshot({ trip }: Readonly<{ trip: TripContext }>) {
     [messages.snapshot.dates, formatDates(trip)],
     [messages.snapshot.budget, `≈ ${trip.budget.currency} ${trip.budget.amount.toLocaleString()}`],
     [messages.snapshot.travelers, `${trip.travelers.count} ${messages.travelers[trip.travelers.type]}`],
-    [messages.snapshot.vibe, vibe(trip.notes)],
+    // Vibe always reflects the Style & Pace picks; free-text wishes get their own row.
+    [messages.snapshot.vibe, [...trip.style.map((s) => messages.style[s]), messages.style[trip.pace]].join(" · ")],
+    [messages.snapshot.notes, excerpt(trip.notes)],
     [messages.snapshot.avoid, trip.avoid || "-"],
   ]
 

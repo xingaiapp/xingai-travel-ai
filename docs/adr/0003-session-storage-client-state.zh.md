@@ -26,6 +26,8 @@ Next.js App Router 会 **服务端渲染** 客户端组件。若在首次客户�
 | `xingai-travel-trip-context` | `sessionStorage` | `TripContext` + locale |
 | `xingai-travel-compare-result` | `sessionStorage` | `CompareResult` |
 | `xingai-travel-plan-result` | `sessionStorage` | `PlanResult`（可能异步到达） |
+| `xingai-travel-inspire-prefs` | `sessionStorage` | 帮我选模式的氛围 / 飞行范围 / 优先项 |
+| `xingai-travel-regenerate` | `sessionStorage` | 一次性标记：`/result` 请 `/decide` 用当前语言重新生成某个模式 |
 | `xingai-travel-locale` | `localStorage` | `en` \| `zh` \| `ko` \| `es` |
 | `theme` | `localStorage` | `light` \| `dark` \| `system` |
 | `xingai-travel-trip-history` | `localStorage` | `/trips` 的最近决策（最多 12 条），见 [ADR 0007](./0007-local-trip-history.zh.md) |

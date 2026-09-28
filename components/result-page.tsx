@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useReducer } from "react"
 import { BookFirst } from "@/components/book-first"
 import { DestinationCompare } from "@/components/destination-compare"
@@ -10,9 +11,10 @@ import { TradeoffNote } from "@/components/tradeoff-note"
 import { TripWarnings } from "@/components/trip-warnings"
 import { RelatedStories } from "@/components/related-stories"
 import { ShareTripButton } from "@/components/share-trip-button"
+import { LanguageMismatch } from "@/components/language-mismatch"
 import { useLocale } from "@/components/locale-provider"
 import { mockCompareResult, mockPlanResult, defaultTrip } from "@/lib/mock-data"
-import { COMPARE_STORAGE, PLAN_STORAGE, TRIP_STORAGE } from "@/lib/trip-history"
+import { COMPARE_STORAGE, PLAN_STORAGE, REGENERATE_STORAGE, TRIP_STORAGE } from "@/lib/trip-history"
 import type { CompareResult, PlanResult, TripContext } from "@/lib/types"
 
 
@@ -59,7 +61,8 @@ function PlanSkeleton() {
 }
 
 export function ResultPage() {
-  const { messages } = useLocale()
+  const { messages, locale } = useLocale()
+  const router = useRouter()
 
   const [state, dispatch] = useReducer(pageReducer, {
     compare: mockCompareResult,
@@ -117,6 +120,18 @@ export function ResultPage() {
             </Link>
           </div>
         </div>
+
+        {compare.generatedLocale && compare.generatedLocale !== locale ? (
+          <div className="mb-4">
+            <LanguageMismatch
+              from={compare.generatedLocale}
+              onRegenerate={() => {
+                sessionStorage.setItem(REGENERATE_STORAGE, compare.mode ?? "compare")
+                router.push("/decide")
+              }}
+            />
+          </div>
+        ) : null}
 
         <div className="space-y-4">
           <DestinationCompare result={compare} />

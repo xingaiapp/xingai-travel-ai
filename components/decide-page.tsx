@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { ArrowDown, ChevronDown, MapPinned, Route, ShieldCheck, Sparkles } from "lucide-react"
 import { DestinationCompare } from "@/components/destination-compare"
 import { InspireForm } from "@/components/inspire-form"
+import { LanguageMismatch } from "@/components/language-mismatch"
 import { StepProgress } from "@/components/step-progress"
 import { StylePaceSelector } from "@/components/style-pace-selector"
 import { TripForm } from "@/components/trip-form"
@@ -12,7 +13,19 @@ import { TripSnapshot } from "@/components/trip-snapshot"
 import { useLocale } from "@/components/locale-provider"
 import { defaultTrip, mockCompareResult, mockPlanResult } from "@/lib/mock-data"
 import type { CompareResult, InspireContext, TripContext } from "@/lib/types"
-import { addDecision, attachPlan, COMPARE_STORAGE, fetchPlan, PLAN_STORAGE, TRIP_STORAGE, winnerOf } from "@/lib/trip-history"
+import {
+  addDecision,
+  attachPlan,
+  COMPARE_STORAGE,
+  fetchPlan,
+  findDecision,
+  INSPIRE_STORAGE,
+  PLAN_STORAGE,
+  REGENERATE_STORAGE,
+  restoreDecision,
+  TRIP_STORAGE,
+  winnerOf,
+} from "@/lib/trip-history"
 import { cn, HELP_ANCHOR, OPEN_HELP_EVENT } from "@/lib/utils"
 import { useEffect, useState, useRef } from "react"
 
@@ -25,6 +38,9 @@ const defaultInspire: InspireContext = {
   budget: { amount: 2000, currency: "USD" },
   travelers: { count: 2, type: "couple" },
 }
+
+type Mode = "compare" | "inspire"
+type ModeResult = { data: CompareResult; trip: TripContext; historyId?: string }
 
 function normalizeTrip(value: TripContext): TripContext {
   return {
@@ -69,9 +85,16 @@ export function DecidePage() {
     travelers: defaultTrip.travelers,
   }))
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
-  const [liveResult, setLiveResult] = useState<CompareResult | null>(null)
+  // Each mode keeps its own result, so running Surprise me never wipes the comparison (and vice versa).
+  const mode: Mode = inspireMode ? "inspire" : "compare"
+  const [loadingMode, setLoadingMode] = useState<Mode | null>(null)
+  const [errors, setErrors] = useState<Partial<Record<Mode, string>>>({})
+  const [results, setResults] = useState<Partial<Record<Mode, ModeResult>>>({})
+  const current = results[mode]
+  const loading = loadingMode === mode
+  const error = errors[mode] ?? ""
+  // Which mode's result is currently in the /result session keys.
+  const sessionModeRef = useRef<Mode | null>(null)
   const controllerRef = useRef<AbortController | null>(null)
 
   // Derive inspire budget/travelers from trip form (no setState in effect needed)
@@ -82,6 +105,10 @@ export function DecidePage() {
     try {
       stored = normalizeTrip(JSON.parse(sessionStorage.getItem(TRIP_STORAGE) ?? "") as TripContext)
     } catch { /* keep default */ }
+    try {
+      const prefs = JSON.parse(sessionStorage.getItem(INSPIRE_STORAGE) ?? "") as Pick<InspireContext, "vibe" | "flightRange" | "priority">
+      if (prefs?.vibe && prefs.flightRange && prefs.priority) setInspire((prev) => ({ ...prev, ...prefs }))
+    } catch { /* keep default */ }
     setTrip(withLinkPrefill(stored))
     setTripReady(true)
   }, [])
@@ -91,20 +118,38 @@ export function DecidePage() {
     sessionStorage.setItem(TRIP_STORAGE, JSON.stringify({ ...trip, locale }))
   }, [trip, locale, tripReady])
 
-  async function runCompare() {
+  useEffect(() => {
+    const { vibe, flightRange, priority } = inspire
+    sessionStorage.setItem(INSPIRE_STORAGE, JSON.stringify({ vibe, flightRange, priority }))
+  }, [inspire])
+
+  // Arriving from /result via "Regenerate in <language>": rerun that mode once the form is hydrated.
+  useEffect(() => {
+    if (!tripReady) return
+    const pending = sessionStorage.getItem(REGENERATE_STORAGE) as Mode | null
+    if (pending !== "compare" && pending !== "inspire") return
+    sessionStorage.removeItem(REGENERATE_STORAGE)
+    queueMicrotask(() => {
+      setInspireMode(pending === "inspire")
+      void runCompare(pending)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run once after hydration
+  }, [tripReady])
+
+  async function runCompare(runMode: Mode = mode) {
     if (controllerRef.current) controllerRef.current.abort()
     const controller = new AbortController()
     controllerRef.current = controller
-    setLoading(true)
-    setError("")
-    setLiveResult(null)
+    const isInspire = runMode === "inspire"
+    setLoadingMode(runMode)
+    setErrors((prev) => ({ ...prev, [runMode]: "" }))
 
     try {
       const timeout = window.setTimeout(() => controller.abort(), 30000)
 
       let data: CompareResult
 
-      if (inspireMode) {
+      if (isInspire) {
         // Inspire Me path — use /api/inspire
         const inspirePayload: InspireContext = {
           ...inspireWithTrip,
@@ -135,35 +180,60 @@ export function DecidePage() {
         data = (await res.json()) as CompareResult
       }
 
+      data = { ...data, mode: runMode, generatedLocale: locale }
+      // For inspire mode: use trip dates/origin if filled, else defaultTrip as fallback
+      const planCtx: TripContext = isInspire
+        ? { ...defaultTrip, ...( trip.dates.from ? { dates: trip.dates, origin: trip.origin } : {}), budget: inspireWithTrip.budget, travelers: inspireWithTrip.travelers, locale }
+        : { ...trip, locale }
+
+      sessionStorage.setItem(TRIP_STORAGE, JSON.stringify(planCtx))
       sessionStorage.setItem(COMPARE_STORAGE, JSON.stringify(data))
+      sessionStorage.removeItem(PLAN_STORAGE)
+      sessionModeRef.current = runMode
       window.dispatchEvent(new Event(COMPARE_UPDATED_EVENT))
-      setLiveResult(data)
 
       const winner = winnerOf(data)
-      if (winner) {
-        // For inspire mode: use trip dates/origin if filled, else defaultTrip as fallback
-        const planCtx = inspireMode
-          ? { ...defaultTrip, ...( trip.dates.from ? { dates: trip.dates, origin: trip.origin } : {}), budget: inspireWithTrip.budget, travelers: inspireWithTrip.travelers, locale }
-          : { ...trip, locale }
-        // Only live results go into Trips history; the preview fallback below is never saved.
-        const historyId = addDecision({ mode: inspireMode ? "inspire" : "compare", trip: planCtx, compare: data })
+      // Only live results go into Trips history; the preview fallback below is never saved.
+      const historyId = winner ? addDecision({ mode: runMode, trip: planCtx, compare: data }) : undefined
+      setResults((prev) => ({ ...prev, [runMode]: { data, trip: planCtx, historyId } }))
+      if (winner && historyId) {
         fetchPlan(`${winner.name}, ${winner.country}`, planCtx)
           .then((plan) => {
-            sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(plan))
             attachPlan(historyId, plan)
+            // Don't clobber the session if the user has since opened the other mode's result.
+            if (sessionModeRef.current === runMode) sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(plan))
           })
-          .catch(() => sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(mockPlanResult)))
+          .catch(() => {
+            if (sessionModeRef.current === runMode) sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(mockPlanResult))
+          })
       }
-    } catch {
-      sessionStorage.setItem(COMPARE_STORAGE, JSON.stringify(mockCompareResult))
+    } catch (e) {
+      if (e instanceof DOMException && e.name === "AbortError" && controllerRef.current !== controller) return
+      const fallback: CompareResult = { ...mockCompareResult, mode: runMode, generatedLocale: "en" }
+      sessionStorage.setItem(COMPARE_STORAGE, JSON.stringify(fallback))
       sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(mockPlanResult))
+      sessionModeRef.current = runMode
       window.dispatchEvent(new Event(COMPARE_UPDATED_EVENT))
-      setLiveResult(mockCompareResult)
-      setError("Using preview data because live comparison is unavailable.")
+      setResults((prev) => ({ ...prev, [runMode]: { data: fallback, trip: defaultTrip } }))
+      setErrors((prev) => ({ ...prev, [runMode]: messages.result.previewFallback }))
     } finally {
-      setLoading(false)
+      if (controllerRef.current === controller) setLoadingMode(null)
     }
   }
+
+  function openPlan() {
+    if (!current) return
+    if (sessionModeRef.current !== mode) {
+      const saved = current.historyId ? findDecision(current.historyId) : undefined
+      restoreDecision(saved ?? { trip: current.trip, compare: current.data, plan: current.historyId ? undefined : mockPlanResult }, mockPlanResult)
+      sessionModeRef.current = mode
+      window.dispatchEvent(new Event(COMPARE_UPDATED_EVENT))
+    }
+    router.push("/result")
+  }
+
+  const resultLocale = current?.data.generatedLocale
+  const langMismatch = !!current && !loading && !!resultLocale && resultLocale !== locale
 
   const ctaLabel = inspireMode ? `${messages.home.inspireCta} →` : `${messages.home.compare} →`
 
@@ -230,7 +300,7 @@ export function DecidePage() {
 
             <button
               type="button"
-              onClick={runCompare}
+              onClick={() => runCompare()}
               disabled={loading}
               className={cn(
                 "flex h-12 w-full items-center justify-center gap-2 rounded-md px-5 text-base font-extrabold shadow-lg transition hover:opacity-95 disabled:cursor-wait disabled:opacity-70",
@@ -277,14 +347,18 @@ export function DecidePage() {
           </p>
         ) : null}
 
-        {(loading || liveResult) ? (
+        {langMismatch ? (
+          <LanguageMismatch from={resultLocale} onRegenerate={() => runCompare()} />
+        ) : null}
+
+        {(loading || current) ? (
           <div className="mt-5">
-            {loading ? <CompareSkeleton /> : liveResult ? (
+            {loading ? <CompareSkeleton /> : current ? (
               <div>
-                <DestinationCompare result={liveResult} showPlanLink={false} />
+                <DestinationCompare result={current.data} showPlanLink={false} />
                 <button
                   type="button"
-                  onClick={() => router.push("/result")}
+                  onClick={openPlan}
                   className="mt-4 flex h-11 w-full items-center justify-center rounded-md border border-primary bg-primary/5 text-sm font-extrabold text-primary hover:bg-primary/10"
                 >
                   {messages.result.seePlan} →

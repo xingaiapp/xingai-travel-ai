@@ -8,15 +8,11 @@ import { useLocale } from "@/components/locale-provider"
 import { mockPlanResult } from "@/lib/mock-data"
 import {
   clearHistory,
-  COMPARE_STORAGE,
-  fetchPlan,
-  attachPlan,
   parseHistory,
-  PLAN_STORAGE,
   readHistoryRaw,
   removeDecision,
+  restoreDecision,
   subscribeHistory,
-  TRIP_STORAGE,
   winnerOf,
   type TripHistoryEntry,
 } from "@/lib/trip-history"
@@ -37,21 +33,7 @@ export function TripsPage() {
   const dateFmt = useMemo(() => new Intl.DateTimeFormat(locale, { month: "short", day: "numeric", year: "numeric" }), [locale])
 
   function reopen(entry: TripHistoryEntry) {
-    sessionStorage.setItem(TRIP_STORAGE, JSON.stringify(entry.trip))
-    sessionStorage.setItem(COMPARE_STORAGE, JSON.stringify(entry.compare))
-    if (entry.plan) {
-      sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(entry.plan))
-    } else {
-      // Plan never arrived last time (user left early) — request it again; /result polls PLAN_STORAGE.
-      sessionStorage.removeItem(PLAN_STORAGE)
-      const winner = winnerOf(entry.compare)
-      fetchPlan(`${winner.name}, ${winner.country}`, entry.trip)
-        .then((plan) => {
-          sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(plan))
-          attachPlan(entry.id, plan)
-        })
-        .catch(() => sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(mockPlanResult)))
-    }
+    restoreDecision(entry, mockPlanResult)
     router.push("/result")
   }
 
