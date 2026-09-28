@@ -89,6 +89,8 @@ export interface Messages {
     notes: string
     advanced: string
     avoid: string
+    datesPastError: string
+    datesOrderError: string
   }
   snapshot: {
     title: string
@@ -164,6 +166,7 @@ export interface Messages {
     catActivities: string
     catLocalTransport: string
     budgetFootnote: string
+    budgetAdjustCta: string
     prefilledWith: string
     prefillNoDates: string
     travelerCount: string

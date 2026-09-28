@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s · XingAI Travel AI",
   },
   description:
-    "AI travel decision tool that compares destinations with honest trade-offs and gives one bookable itinerary.",
+    "AI travel decision tool that compares destinations with honest trade-offs, then helps you search partner sites to book the key pieces.",
   keywords: [
     "AI travel planner",
     "destination comparison",

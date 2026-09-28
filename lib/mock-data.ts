@@ -1,8 +1,30 @@
 import { normalizeBudget } from "@/lib/budget"
 import type { CompareResult, PlanResult, TripContext } from "@/lib/types"
 
+function isoDate(date: Date): string {
+  return date.toISOString().slice(0, 10)
+}
+
+/** Default demo window: ~30 days out so the form never ships with past dates. */
+export function defaultFutureDates(nights = 4): TripContext["dates"] {
+  const from = new Date()
+  from.setUTCHours(12, 0, 0, 0)
+  from.setUTCDate(from.getUTCDate() + 30)
+  const to = new Date(from)
+  to.setUTCDate(to.getUTCDate() + nights)
+  return { from: isoDate(from), to: isoDate(to), nights }
+}
+
+export function isPastDate(value: string, today = new Date()): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return true
+  const day = new Date(`${value}T12:00:00Z`)
+  const start = new Date(today)
+  start.setUTCHours(0, 0, 0, 0)
+  return day.getTime() < start.getTime()
+}
+
 export const defaultTrip: TripContext = {
-  dates: { from: "2026-04-12", to: "2026-04-16", nights: 5 },
+  dates: defaultFutureDates(4),
   origin: "San Francisco (SFO)",
   region: "anywhere",
   budget: { amount: 2000, currency: "USD" },

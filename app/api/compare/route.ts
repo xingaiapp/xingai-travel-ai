@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import OpenAI from "openai"
 import { z } from "zod"
+import { normalizeCompareResult } from "@/lib/compare-normalize"
 import { mockCompareResult } from "@/lib/mock-data"
 import { buildComparePrompt } from "@/lib/prompts"
 import { checkDailyLimit, getClientIp } from "@/lib/rate-limit"
@@ -25,7 +26,7 @@ const tripSchema = z.object({
 
 export async function POST(request: NextRequest) {
   const apiKey = process.env.OPENAI_API_KEY?.trim()
-  if (!apiKey) return NextResponse.json(mockCompareResult)
+  if (!apiKey) return NextResponse.json(normalizeCompareResult(mockCompareResult))
 
   const limited = checkDailyLimit(getClientIp(request))
   if (limited) return NextResponse.json(limited, { status: 429 })
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
       temperature: 0.3,
     })
     const raw = completion.choices[0]?.message?.content ?? ""
-    return JSON.parse(raw) as CompareResult
+    return normalizeCompareResult(JSON.parse(raw) as CompareResult)
   }
 
   try {

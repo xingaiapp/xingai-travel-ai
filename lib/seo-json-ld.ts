@@ -23,7 +23,7 @@ export const seoJsonLdGraph = {
       applicationCategory: "TravelApplication",
       operatingSystem: "Web",
       description:
-        "AI travel decision tool that compares destinations with honest trade-offs and gives one bookable itinerary.",
+        "AI travel decision tool that compares destinations with honest trade-offs, then helps you search partner sites to book the key pieces.",
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
       featureList: [
         "Trip context capture",

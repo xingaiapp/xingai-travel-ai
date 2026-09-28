@@ -83,6 +83,7 @@ export function TripForm({ value, onChange }: TripFormProps) {
             <input
               className={inputClass}
               type="date"
+              min={new Date().toISOString().slice(0, 10)}
               value={value.dates.from}
               onChange={(event) => {
                 const from = event.target.value
@@ -96,6 +97,7 @@ export function TripForm({ value, onChange }: TripFormProps) {
             <input
               className={inputClass}
               type="date"
+              min={value.dates.from || new Date().toISOString().slice(0, 10)}
               value={value.dates.to}
               onChange={(event) => {
                 const to = event.target.value

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import OpenAI from "openai"
 import { z } from "zod"
+import { normalizeCompareResult } from "@/lib/compare-normalize"
 import { mockCompareResult } from "@/lib/mock-data"
 import { inspireViolations } from "@/lib/inspire-validate"
 import { buildInspirePrompt } from "@/lib/prompts"
@@ -23,7 +24,7 @@ const schema = z.object({
 
 export async function POST(request: NextRequest) {
   const apiKey = process.env.OPENAI_API_KEY?.trim()
-  if (!apiKey) return NextResponse.json({ ...mockCompareResult, inspireMode: true })
+  if (!apiKey) return NextResponse.json({ ...normalizeCompareResult(mockCompareResult), inspireMode: true })
 
   const limited = checkDailyLimit(getClientIp(request))
   if (limited) return NextResponse.json(limited, { status: 429 })
@@ -64,7 +65,7 @@ export async function POST(request: NextRequest) {
   let lastError = "OpenAI request failed"
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
     try {
-      const result = await callOpenAI(feedback)
+      const result = normalizeCompareResult(await callOpenAI(feedback))
       const problems = inspireViolations(result, parsed.data.flightRange)
       if (problems.length === 0) return NextResponse.json(result)
       feedback = problems

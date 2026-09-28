@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { AlertTriangle, CheckCircle2, CircleAlert, Wallet } from "lucide-react"
 import { useMemo } from "react"
 import { useLocale } from "@/components/locale-provider"
@@ -122,6 +123,16 @@ export function BudgetBreakdown({ estimate, trip }: Readonly<{ estimate: BudgetE
       <p className="mt-4 border-t border-border pt-3 text-xs leading-relaxed text-muted-foreground">
         {r.budgetFootnote.replace("{date}", date)}
       </p>
+      {estimate.verdict === "over" || estimate.verdict === "tight" ? (
+        <p className="mt-3">
+          <Link
+            href="/decide#trip-form"
+            className="inline-flex min-h-11 items-center text-sm font-bold text-primary underline-offset-2 hover:underline"
+          >
+            {r.budgetAdjustCta} →
+          </Link>
+        </p>
+      ) : null}
     </section>
   )
 }

@@ -60,6 +60,10 @@ Return this exact JSON structure:
 
 Be honest about trade-offs. Do not recommend a destination that does not fit the budget.
 - Do not claim a destination "fits the budget" or rate its budget fit; describe relative cost instead (e.g. "cheaper than Porto", "hotels spike in December"). A line-by-line cost estimate is produced later.
+- scores.weather must name the likely weather for THESE travel dates in that city (not blank, not "N/A", not a copy-paste of another city).
+- scores.flightTime must differ when hubs or stops differ (include hours + stops from the given origin).
+- scores.walkability must not be identical across all three unless truly the same — prefer Excellent / Good / Moderate with a short reason only if needed.
+- whyNotOthers must name each runner-up with a different concrete reason (cost, weather, flight friction, or fit) — never three identical lines.
 If places already in mind are provided, compare those first unless they clearly violate the trip constraints.
 If no places are provided, use the destination range as the search boundary.
 `.trim()
@@ -168,6 +172,8 @@ Rules:
 - whyWins should explain why this place specifically matches the vibe and priority
 - flightHours = realistic one-way door-to-door flight time in hours from the origin, including connections (number, not text)
 - Exactly one destination has isWinner: true, and "winner" equals its name
+- scores.weather / flightTime / walkability must be filled and differ across the three picks when the cities differ
+- whyNotOthers must contrast the three picks with concrete differences, not repeated filler
 
 Return this exact JSON:
 {

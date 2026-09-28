@@ -11,7 +11,7 @@ import { StylePaceSelector } from "@/components/style-pace-selector"
 import { TripForm } from "@/components/trip-form"
 import { TripSnapshot } from "@/components/trip-snapshot"
 import { useLocale } from "@/components/locale-provider"
-import { defaultTrip, mockCompareResult, mockPlanResult } from "@/lib/mock-data"
+import { defaultFutureDates, defaultTrip, isPastDate, mockCompareResult, mockPlanResult } from "@/lib/mock-data"
 import type { CompareResult, InspireContext, TripContext } from "@/lib/types"
 import {
   addDecision,
@@ -43,7 +43,7 @@ type Mode = "compare" | "inspire"
 type ModeResult = { data: CompareResult; trip: TripContext; historyId?: string }
 
 function normalizeTrip(value: TripContext): TripContext {
-  return {
+  const merged: TripContext = {
     ...defaultTrip,
     ...value,
     dates: { ...defaultTrip.dates, ...value.dates },
@@ -51,6 +51,10 @@ function normalizeTrip(value: TripContext): TripContext {
     travelers: { ...defaultTrip.travelers, ...value.travelers },
     region: value.region ?? defaultTrip.region,
   }
+  if (isPastDate(merged.dates.from) || isPastDate(merged.dates.to)) {
+    merged.dates = defaultFutureDates(merged.dates.nights || 4)
+  }
+  return merged
 }
 
 const REGIONS: TripContext["region"][] = [
@@ -143,6 +147,19 @@ export function DecidePage() {
     const isInspire = runMode === "inspire"
     setLoadingMode(runMode)
     setErrors((prev) => ({ ...prev, [runMode]: "" }))
+
+    if (!isInspire) {
+      if (!trip.dates.from || !trip.dates.to || isPastDate(trip.dates.from) || isPastDate(trip.dates.to)) {
+        setLoadingMode(null)
+        setErrors((prev) => ({ ...prev, [runMode]: messages.form.datesPastError }))
+        return
+      }
+      if (new Date(trip.dates.to).getTime() < new Date(trip.dates.from).getTime()) {
+        setLoadingMode(null)
+        setErrors((prev) => ({ ...prev, [runMode]: messages.form.datesOrderError }))
+        return
+      }
+    }
 
     try {
       const timeout = window.setTimeout(() => controller.abort(), 30000)

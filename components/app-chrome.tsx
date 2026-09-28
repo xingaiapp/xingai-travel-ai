@@ -12,7 +12,6 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Plane,
-  Settings,
   ShieldCheck,
   X,
 } from "lucide-react"
@@ -259,10 +258,6 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           <div className="hidden items-center gap-2 lg:flex">
             <LocaleSwitcher />
             <ThemeToggle />
-            <button type="button" className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card">
-              <Settings className="h-4 w-4" aria-hidden />
-              <span className="sr-only">{messages.chrome.settings}</span>
-            </button>
           </div>
         </header>
 
