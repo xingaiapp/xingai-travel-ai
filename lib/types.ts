@@ -1,3 +1,5 @@
+import type { BudgetEstimate } from "@/lib/budget"
+
 export type TripStyle = "city" | "beach" | "nature" | "culture"
 export type TripPace = "relaxed" | "balanced" | "adventure"
 export type TripRegion =
@@ -98,4 +100,6 @@ export interface PlanResult {
   bookFirst: BookItem[]
   tradeoffNote: string
   warnings?: TripWarning[]
+  /** Normalized by /api/plan (lib/budget.ts); absent on older plans and shared links. */
+  budgetEstimate?: BudgetEstimate
 }

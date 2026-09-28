@@ -2,7 +2,8 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import OpenAI from "openai"
 import { z } from "zod"
-import { mockPlanResult } from "@/lib/mock-data"
+import { normalizeBudget } from "@/lib/budget"
+import { mockPlanResult, mockRawBudget } from "@/lib/mock-data"
 import { buildPlanPrompt } from "@/lib/prompts"
 import { peekDailyLimit, getClientIp } from "@/lib/rate-limit"
 import type { PlanResult, TripContext } from "@/lib/types"
@@ -30,7 +31,11 @@ const bodySchema = z.object({
 
 export async function POST(request: NextRequest) {
   const apiKey = process.env.OPENAI_API_KEY?.trim()
-  if (!apiKey) return NextResponse.json(mockPlanResult)
+  if (!apiKey) {
+    const preview = bodySchema.safeParse(await request.json().catch(() => null))
+    const budgetEstimate = preview.success ? normalizeBudget(mockRawBudget(), preview.data.tripContext) : mockPlanResult.budgetEstimate
+    return NextResponse.json({ ...mockPlanResult, budgetEstimate })
+  }
 
   // Plan does NOT increment the daily limit — it fires automatically after compare.
   // Use peek (read-only) to block extreme abuse without double-counting.
@@ -62,7 +67,9 @@ export async function POST(request: NextRequest) {
       temperature: 0.35,
     })
     const raw = completion.choices[0]?.message?.content ?? ""
-    return JSON.parse(raw) as PlanResult
+    const plan = JSON.parse(raw) as PlanResult & { budgetEstimate?: unknown }
+    // Totals and the fits/over verdict are arithmetic on validated lines — never the model's own sums.
+    return { ...plan, budgetEstimate: normalizeBudget(plan.budgetEstimate, tripContext) }
   }
 
   try {

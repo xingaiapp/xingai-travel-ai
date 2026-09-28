@@ -94,6 +94,16 @@ Return this exact JSON:
   "itinerary": [
     { "day": 1, "title": "title", "simple": "one sentence", "detailed": ["step 1", "step 2", "step 3"] }
   ],
+  "budgetEstimate": {
+    "currency": "${ctx.budget.currency}",
+    "lines": [
+      { "category": "flights", "low": 0, "high": 0, "note": "assumption, e.g. 2 round-trip economy tickets from the origin" },
+      { "category": "lodging", "low": 0, "high": 0, "note": "e.g. N nights in <area> at ~X–Y per night" },
+      { "category": "food", "low": 0, "high": 0, "note": "e.g. ~X–Y per person per day" },
+      { "category": "activities", "low": 0, "high": 0, "note": "the paid items in this itinerary" },
+      { "category": "local_transport", "low": 0, "high": 0, "note": "transit passes, airport transfers" }
+    ]
+  },
   "warnings": [
     {
       "type": "weather|security|visa|crowds|health",
@@ -103,6 +113,12 @@ Return this exact JSON:
     }
   ]
 }
+
+For budgetEstimate:
+- Amounts are whole numbers in ${ctx.budget.currency} for the WHOLE party (${ctx.travelers.count} travelers) and the WHOLE trip (${ctx.dates.nights} nights), not per person or per day
+- Give a realistic low–high range for these specific dates from typical prices; include all five categories
+- Do NOT bend the numbers to fit the user's budget — if it will likely run over, the estimate must show that
+- Each note states the assumption behind the range in one short phrase
 
 For warnings:
 - severity "warning" = something that could seriously affect the trip (active travel advisories, dangerous weather season, complex visa requirements)
