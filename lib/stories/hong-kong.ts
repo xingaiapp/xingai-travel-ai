@@ -795,16 +795,6 @@ const ep03: StoryEpisode = {
     },
     { type: "heading", body: tx("03 — Char siu + white-cut chicken", "03 · 叉烧白切鸡双拼", "03 · 차슈·백절계 더블", "03 · Char siu y pollo blanco") },
     {
-      type: "photo",
-      photo: shot(
-        "03",
-        "double-rice",
-        1280,
-        1707,
-        tx("Char siu and white-cut chicken double rice", "叉烧白切鸡双拼饭", "차슈와 백절계 더블 라이스", "Arroz doble de char siu y pollo blanco"),
-      ),
-    },
-    {
       type: "text",
       body: tx(
         "Roast-meat rice is still my default — upgraded this time: char siu plus white-cut chicken. The chicken is silky, the char siu sweet, the rice soaked in juice. One bowl, two tastes. Honest food.",
@@ -1088,16 +1078,6 @@ const ep04: StoryEpisode = {
     },
     { type: "heading", body: tx("01 — On the road every day", "01 · 每天都在路上", "01 · 매일 길 위", "01 · En la calle cada día") },
     {
-      type: "photo",
-      photo: shot(
-        "04",
-        "bridge-driving",
-        1080,
-        1920,
-        tx("Driving across a Hong Kong bridge", "开车经过大桥", "홍콩 다리를 차로 건너는 장면", "Cruzando un puente de Hong Kong en coche"),
-      ),
-    },
-    {
       type: "text",
       body: tx(
         "Hong Kong is small, but I was on the road every day. After I lived here I learned: touring and living run on different clocks — visitors chase sights; residents chase the next train, the next boat.",
@@ -1227,16 +1207,6 @@ const ep04: StoryEpisode = {
       ),
     },
     { type: "heading", body: tx("08 — Closing", "08 · 结语", "08 · 마무리", "08 · Cierre") },
-    {
-      type: "photo",
-      photo: shot(
-        "04",
-        "bridge-driving",
-        1080,
-        1920,
-        tx("Still on the road across the bridge", "在路上", "여전히 다리 위 길에서", "Sigo en el camino sobre el puente"),
-      ),
-    },
     {
       type: "text",
       body: tx(
@@ -1400,16 +1370,6 @@ const ep05: StoryEpisode = {
       ),
     },
     { type: "heading", body: tx("02 — Egret on the steps", "02 · 石阶上的白鹭", "02 · 돌계단의 백로", "02 · Garceta en los escalones") },
-    {
-      type: "photo",
-      photo: shot(
-        "05",
-        "egret",
-        1080,
-        1920,
-        tx("An egret daydreaming on seaside stone steps", "海边石阶上发呆的白鹭", "바닷가 돌계단에서 멍하니 선 백로", "Una garceta ensimismada en escalones junto al mar"),
-      ),
-    },
     {
       type: "text",
       body: tx(
@@ -1774,16 +1734,6 @@ const ep06: StoryEpisode = {
     },
     { type: "heading", body: tx("06 — Family album", "06 · 家庭相册", "06 · 가족 앨범", "06 · Álbum familiar") },
     {
-      type: "photo",
-      photo: shot(
-        "06",
-        "family-photo",
-        1080,
-        1920,
-        tx("Family backs to the camera looking at the harbour night view", "家人背影看海湾夜景", "항구 야경을 등지고 바라보는 가족", "Espaldas de la familia mirando la bahía de noche"),
-      ),
-    },
-    {
       type: "text",
       body: tx(
         "In another set, the whole family raises hands for a group shot — sea and towers behind. Behind every group photo is a promise to come again together. Photos age. The promise does not.",
@@ -1936,16 +1886,6 @@ const ep07: StoryEpisode = {
       ),
     },
     { type: "heading", body: tx("01 — Straight talk", "01 · 大实话时间", "01 · 솔직한 시간", "01 · Hablar claro") },
-    {
-      type: "photo",
-      photo: shot(
-        "07",
-        "harbor-night",
-        640,
-        1138,
-        tx("Victoria Harbour at night", "夜色中的维港", "밤의 빅토리아 항구", "Puerto Victoria de noche"),
-      ),
-    },
     {
       type: "text",
       body: tx(
@@ -2224,16 +2164,6 @@ const ep08: StoryEpisode = {
       ),
     },
     { type: "heading", body: tx("01 — Looking back: my Hong Kong", "01 · 回顾：我的香港", "01 · 돌아보기: 내 홍콩", "01 · Mirar atrás: mi Hong Kong") },
-    {
-      type: "photo",
-      photo: shot(
-        "08",
-        "skyline",
-        720,
-        1280,
-        tx("City skyline from the waterfront promenade", "海滨步道看城市天际线", "해안 산책로에서 본 스카이라인", "Skyline desde el paseo marítimo"),
-      ),
-    },
     {
       type: "text",
       body: tx(

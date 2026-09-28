@@ -26,7 +26,7 @@ function useStoryText() {
 export function StoryImage({
   photo,
   className,
-  sizes = "(min-width: 1024px) 48rem, 100vw",
+  sizes = "(min-width: 640px) 22rem, 72vw",
   priority = false,
 }: Readonly<{ photo: StoryPhoto; className?: string; sizes?: string; priority?: boolean }>) {
   const { t } = useStoryText()
@@ -34,7 +34,7 @@ export function StoryImage({
     return (
       <div
         className={cn(
-          "flex aspect-[3/2] flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed border-border bg-muted/60 p-4 text-center text-xs text-muted-foreground",
+          "mx-auto flex aspect-[3/4] max-h-[min(70vh,28rem)] w-full max-w-[22rem] flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed border-border bg-muted/60 p-4 text-center text-xs text-muted-foreground",
           className
         )}
         role="img"
@@ -46,10 +46,10 @@ export function StoryImage({
     )
   }
   return (
-    // Photos are pre-sized WebP from scripts/process-story-photos.mjs, so no runtime optimizer.
+    // Prefer the 800w file; tall phone shots look soft when forced full-bleed at 1600.
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`${photo.src}-1600.webp`}
+      src={`${photo.src}-800.webp`}
       srcSet={`${photo.src}-800.webp 800w, ${photo.src}-1600.webp 1600w`}
       sizes={sizes}
       width={photo.width}
@@ -57,7 +57,10 @@ export function StoryImage({
       alt={t(photo.alt)}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
-      className={cn("h-auto w-full rounded-md bg-muted object-cover", className)}
+      className={cn(
+        "mx-auto h-auto max-h-[min(70vh,28rem)] w-auto max-w-full rounded-md bg-muted object-contain",
+        className,
+      )}
     />
   )
 }
@@ -65,9 +68,9 @@ export function StoryImage({
 function Figure({ photo, wide }: Readonly<{ photo: StoryPhoto; wide?: boolean }>) {
   const { t } = useStoryText()
   return (
-    <figure className={cn("my-8", wide && "lg:-mx-16")}>
-      <StoryImage photo={photo} sizes={wide ? "(min-width: 1024px) 56rem, 100vw" : undefined} />
-      {photo.caption ? <figcaption className="mt-2 text-sm text-muted-foreground">{t(photo.caption)}</figcaption> : null}
+    <figure className={cn("my-6 flex flex-col items-center", wide && "lg:-mx-8")}>
+      <StoryImage photo={photo} sizes={wide ? "(min-width: 1024px) 28rem, 72vw" : undefined} />
+      {photo.caption ? <figcaption className="mt-2 max-w-[22rem] text-center text-sm text-muted-foreground">{t(photo.caption)}</figcaption> : null}
     </figure>
   )
 }
@@ -236,7 +239,7 @@ export function SeasonView({ season, linkable }: Readonly<{ season: StorySeason;
           <h1 className="mt-2 font-display text-4xl font-bold tracking-tight sm:text-5xl">{t(season.title)}</h1>
           <p className="mt-2 font-display text-xl italic text-muted-foreground">{t(season.subtitle)}</p>
         </header>
-        <div className="mt-6">
+        <div className="mt-6 flex justify-center">
           <StoryImage photo={season.cover} priority />
         </div>
         <p className="mt-6 text-lg leading-relaxed text-foreground/90">{t(season.intro)}</p>
@@ -276,16 +279,16 @@ export function EpisodeView({
           <h1 className="mt-2 font-display text-4xl font-bold tracking-tight sm:text-5xl">{t(episode.title)}</h1>
           <p className="mt-3 text-lg leading-relaxed text-muted-foreground">{t(episode.dek)}</p>
         </header>
-        <figure className="mt-6">
+        <figure className="mt-6 flex flex-col items-center">
           {episode.heroVideo ? (
             <video
               controls
               playsInline
               preload="metadata"
-              poster={episode.heroVideo.poster.src ? `${episode.heroVideo.poster.src}-1600.webp` : undefined}
+              poster={episode.heroVideo.poster.src ? `${episode.heroVideo.poster.src}-800.webp` : undefined}
               width={episode.heroVideo.poster.width}
               height={episode.heroVideo.poster.height}
-              className="h-auto w-full rounded-md bg-black"
+              className="mx-auto h-auto max-h-[min(70vh,28rem)] w-auto max-w-full rounded-md bg-black"
             >
               <source src={episode.heroVideo.src} type="video/mp4" />
             </video>
@@ -293,7 +296,7 @@ export function EpisodeView({
             <StoryImage photo={episode.cover} priority />
           )}
           {(episode.heroVideo?.poster.caption ?? episode.cover.caption) ? (
-            <figcaption className="mt-2 text-sm text-muted-foreground">
+            <figcaption className="mt-2 max-w-[22rem] text-center text-sm text-muted-foreground">
               {t(episode.heroVideo?.poster.caption ?? episode.cover.caption!)}
             </figcaption>
           ) : null}
@@ -361,7 +364,7 @@ export function StoriesIndexView({ seasons }: Readonly<{ seasons: { season: Stor
         <div className="mt-8 grid gap-4">
           {seasons.map(({ season, count }) => (
             <Link key={season.slug} href={`/stories/${season.slug}`} className="block overflow-hidden rounded-md border border-border bg-card transition hover:border-primary/40">
-              <StoryImage photo={season.cover} className="rounded-none" />
+              <StoryImage photo={season.cover} className="max-h-56 w-full rounded-none object-cover" sizes="(min-width: 768px) 40rem, 100vw" />
               <div className="p-4">
                 <p className="font-display text-2xl font-bold">{t(season.title)}</p>
                 <p className="mt-1 text-sm text-muted-foreground">
