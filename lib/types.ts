@@ -56,7 +56,8 @@ export interface Destination {
   tradeoffs: string[]
   scores: {
     overall: number
-    budget: "Great" | "Fair" | "Tight" | string
+    /** Legacy: older stored/shared results only. Budget fit now comes from the plan's cost estimate. */
+    budget?: string
     weather: string
     flightTime: string
     walkability: string

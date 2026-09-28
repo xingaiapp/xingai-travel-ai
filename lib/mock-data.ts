@@ -18,18 +18,17 @@ export const mockCompareResult: CompareResult = {
   winner: "Lisbon, Portugal",
   confidence: "high",
   whyNotOthers:
-    "Lisbon has the best balance of April weather, walkability, food, and budget fit; Barcelona is pricier and Porto is rainier.",
+    "Lisbon has the best balance of April weather, walkability, food, and value; Barcelona is pricier and Porto is rainier.",
   destinations: [
     {
       name: "Lisbon",
       country: "Portugal",
       isWinner: true,
       confidence: "high",
-      whyWins: ["Mild April weather", "Walkable neighborhoods", "Fits the budget"],
+      whyWins: ["Mild April weather", "Walkable neighborhoods", "Good value for food and stays"],
       tradeoffs: ["Less beach time than Barcelona", "A longer flight than Mexico City"],
       scores: {
         overall: 5,
-        budget: "Great",
         weather: "Mild, pleasant",
         flightTime: "~11h 40m (1 stop)",
         walkability: "Excellent",
@@ -44,7 +43,6 @@ export const mockCompareResult: CompareResult = {
       tradeoffs: ["Pricier overall", "Busier in April"],
       scores: {
         overall: 4,
-        budget: "Fair",
         weather: "Warm, some rain",
         flightTime: "~11h 25m (1 stop)",
         walkability: "Good",
@@ -59,7 +57,6 @@ export const mockCompareResult: CompareResult = {
       tradeoffs: ["Cooler weather", "More rainy days, less variety"],
       scores: {
         overall: 3,
-        budget: "Great",
         weather: "Cooler, more rain",
         flightTime: "~11h 55m (1 stop)",
         walkability: "Good",

@@ -13,9 +13,6 @@ export const LOCALE_NAMES: Record<Locale, string> = { en: "English", zh: "中文
 export function localizeRating(value: string, messages: Messages) {
   const key = value.trim().toLowerCase()
   const map: Record<string, string> = {
-    great: messages.result.ratingGreat,
-    fair: messages.result.ratingFair,
-    tight: messages.result.ratingTight,
     excellent: messages.result.ratingExcellent,
     good: messages.result.ratingGood,
     moderate: messages.result.ratingModerate,

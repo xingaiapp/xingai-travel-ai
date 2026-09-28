@@ -28,7 +28,6 @@ function DestinationCompareInner({
 
   const tableRows: [string, (item: Destination) => string][] = [
     [messages.result.tableOverall, (item) => "★".repeat(item.scores.overall) + "☆".repeat(5 - item.scores.overall)],
-    [messages.result.tableBudget, (item) => localizeRating(item.scores.budget, messages)],
     [messages.result.tableWeather, (item) => item.scores.weather],
     [messages.result.tableFlight, (item) => item.scores.flightTime],
     [messages.result.tableWalkability, (item) => localizeRating(item.scores.walkability, messages)],
@@ -160,7 +159,7 @@ function DestinationCompareInner({
           </table>
           <div className="space-y-1 border-t border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
             <p>{messages.result.confidenceHelp}</p>
-            <p>{messages.result.budgetHelp}</p>
+            <p>{messages.result.costSeePlan}</p>
             <p className="text-center">{messages.result.tapCityPreview}</p>
           </div>
         </div>
