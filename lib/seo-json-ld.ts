@@ -13,7 +13,7 @@ export const seoJsonLdGraph = {
       name: "XingAI Travel AI",
       url: "https://travel.xingai.app",
       publisher: { "@id": "https://travel.xingai.app/#organization" },
-      inLanguage: ["en", "zh-Hans", "ko"],
+      inLanguage: ["en", "zh-CN", "ko", "es"],
     },
     {
       "@type": "WebApplication",
@@ -34,7 +34,7 @@ export const seoJsonLdGraph = {
         "Light and dark themes",
         "English, Chinese, and Korean language support",
       ],
-      inLanguage: ["en", "zh-Hans", "ko"],
+      inLanguage: ["en", "zh-CN", "ko", "es"],
     },
     {
       "@type": "FAQPage",

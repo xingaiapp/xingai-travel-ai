@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "XingAI Travel AI",
-    description: "Choose the right destination with honest trade-offs and a bookable plan.",
+    title: "XingAI Travel AI — Explore Better",
+    description: "Compare first, plan second. Choose the right trip before you book.",
     images: ["/assets/hero-travel-decision.png"],
   },
   icons: {
@@ -56,10 +56,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/decide",
     languages: {
-      "en": "/decide",
-      "zh-Hans": "/decide",
-      "ko": "/decide",
-      "es": "/decide",
+      en: "/decide",
+      "zh-CN": "/decide",
+      ko: "/decide",
+      es: "/decide",
+      "x-default": "/decide",
     },
   },
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://travel.xingai.app"),

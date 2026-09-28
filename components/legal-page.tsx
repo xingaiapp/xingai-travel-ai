@@ -112,7 +112,7 @@ export function LegalPage({ kind }: Readonly<{ kind: LegalPageKind }>) {
             Disclaimer
           </Link>
           <Link href="/affiliate-disclosure" className="rounded-md border border-border px-3 py-2 text-sm font-bold text-muted-foreground hover:text-primary">
-            Affiliate
+            Affiliate disclosure
           </Link>
         </div>
       </article>
