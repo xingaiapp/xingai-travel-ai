@@ -127,11 +127,8 @@ export interface Messages {
     confidenceHigh: string
     confidenceMedium: string
     confidenceLow: string
+    costSeePlan: string
     confidenceHelp: string
-    budgetHelp: string
-    ratingGreat: string
-    ratingFair: string
-    ratingTight: string
     ratingExcellent: string
     ratingGood: string
     ratingModerate: string
@@ -151,7 +148,6 @@ export interface Messages {
     comparing: string
     tableDestination: string
     tableOverall: string
-    tableBudget: string
     tableWeather: string
     tableFlight: string
     tableWalkability: string
