@@ -60,37 +60,6 @@ const ep01: StoryEpisode = {
     ),
   },
   blocks: [
-    { type: "heading", body: tx("Opening · At the Table", "开场 · At the Table", "오프닝 · 식탁 앞에서", "Apertura · En la mesa") },
-    {
-      type: "text",
-      body: tx(
-        "A lot of my memories of Hong Kong start with a meal. The city gave me more than food.",
-        "在香港，我的很多记忆，都是从一顿饭开始的。但这座城市给我的，远不止吃的。",
-        "홍콩에 대한 내 기억 많은 것이 한 끼 식사에서 시작된다. 이 도시는 음식 이상을 주었다.",
-        "Muchos recuerdos de Hong Kong empiezan con una comida. La ciudad me dio más que comida.",
-      ),
-    },
-    {
-      type: "photo",
-      photo: shot(
-        "01",
-        "at-the-table",
-        960,
-        1706,
-        tx(
-          "Recording a moment at a Hong Kong restaurant before dinner",
-          "在香港餐厅里对着镜头记录晚饭前的一刻",
-          "저녁 전 홍콩 식당에서 순간을 담는 모습",
-          "Grabando un momento en un restaurante de Hong Kong antes de cenar",
-        ),
-        tx(
-          "This opening is a clip I shot at the table, after I had ordered, pointed at the camera.",
-          "开场这段，是我在餐厅点完晚饭，随手对着镜头录的。",
-          "오프닝은 주문을 마친 뒤 식탁에서 카메라를 향해 찍은 영상이다.",
-          "Este inicio es un clip que grabé en la mesa, después de pedir, señalando la cámara.",
-        ),
-      ),
-    },
     {
       type: "heading",
       body: tx("Prologue · The Hong Kong I Lived", "序 · The Hong Kong I Lived", "프롤로그 · 내가 살던 홍콩", "Prólogo · El Hong Kong en el que viví"),
@@ -98,10 +67,10 @@ const ep01: StoryEpisode = {
     {
       type: "text",
       body: tx(
-        "People ask me what Hong Kong is actually like. For me it was not the visitor's Hong Kong. It was a home I lived in for half a year. Living there for six months and visiting for three days are two different cities. This episode is the one I lived in.",
-        "很多人问我，香港到底是什么样。对我来说，它不是游客的香港，是我住过半年的家。住半年和玩三天，看到的是两个香港。这一集，讲我住过的那个。",
-        "사람들은 홍콩이 어떤 곳인지 묻는다. 나에게는 관광객의 홍콩이 아니었다. 반년을 살던 집이었다. 여섯 달 살기와 사흘 여행은 다른 도시다. 이 에피소드는 내가 살던 그쪽이다.",
-        "Me preguntan cómo es Hong Kong de verdad. Para mí no era el Hong Kong del visitante: fue un hogar donde viví medio año. Seis meses viviendo y tres días de turismo son dos ciudades distintas. Este episodio es la que viví.",
+        "A lot of my memories of Hong Kong start with a meal — but the city gave me more than food. People ask me what Hong Kong is actually like. For me it was not the visitor's Hong Kong. It was a home I lived in for half a year. Living there for six months and visiting for three days are two different cities. This episode is the one I lived in.",
+        "在香港，我的很多记忆都是从一顿饭开始的——但这座城市给我的，远不止吃的。很多人问我，香港到底是什么样。对我来说，它不是游客的香港，是我住过半年的家。住半年和玩三天，看到的是两个香港。这一集，讲我住过的那个。",
+        "홍콩에 대한 내 기억 많은 것이 한 끼에서 시작된다 — 하지만 이 도시는 음식 이상을 주었다. 사람들은 홍콩이 어떤 곳인지 묻는다. 나에게는 관광객의 홍콩이 아니었다. 반년을 살던 집이었다. 여섯 달 살기와 사흘 여행은 다른 도시다. 이 에피소드는 내가 살던 그쪽이다.",
+        "Muchos recuerdos de Hong Kong empiezan con una comida — pero la ciudad me dio más que comida. Me preguntan cómo es Hong Kong de verdad. Para mí no era el Hong Kong del visitante: fue un hogar donde viví medio año. Seis meses viviendo y tres días de turismo son dos ciudades distintas. Este episodio es la que viví.",
       ),
     },
     { type: "heading", body: tx("01 — Fortress Hill", "01 — 炮台山 · Fortress Hill", "01 — 포트리스 힐", "01 — Fortress Hill") },
