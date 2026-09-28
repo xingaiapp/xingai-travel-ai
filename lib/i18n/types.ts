@@ -168,6 +168,9 @@ export interface Messages {
     catActivities: string
     catLocalTransport: string
     budgetFootnote: string
+    prefilledWith: string
+    prefillNoDates: string
+    travelerCount: string
     affiliateDisclosure: string
     bookFlights: string
     bookHotels: string
