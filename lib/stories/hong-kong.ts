@@ -1323,16 +1323,1101 @@ const ep04: StoryEpisode = {
   ],
 }
 
-function planned(number: number, slug: string, title: StoryText, dek: StoryText): StoryEpisode {
-  return {
-    number,
-    slug,
-    status: "draft",
-    title,
-    dek,
-    cover: { alt: title, shot: `Cover for EP${String(number).padStart(2, "0")}` },
-    blocks: [],
-  }
+const ep05: StoryEpisode = {
+  number: 5,
+  slug: "05-small-moments-i-didnt-plan",
+  status: "published",
+  publishedAt: "2026-09-28",
+  title: tx(
+    "Small Moments I Didn't Plan",
+    "没计划的小时刻：行程表上找不到的香港",
+    "계획하지 않은 작은 순간: 일정표에 없는 홍콩",
+    "Pequeños momentos que no planeé",
+  ),
+  dek: tx(
+    "Before Hong Kong I made a list. What I remember most was never on it — an egret, a cloudy harbour, horse statues, a plaque I finally read.",
+    "来香港之前我列过一张清单，但现在记得最牢的，都是清单上没有的东西：白鹭、阴天、马雕像、第一次认真读的维多利亚港铭牌。",
+    "홍콩 오기 전 리스트를 적었다. 가장 또렷한 건 리스트에 없었다 — 백로, 흐린 항구, 말 조각상, 처음으로 읽은 빅토리아 항구 명판.",
+    "Antes de Hong Kong hice una lista. Lo que más recuerdo no estaba en ella: una garceta, un puerto nublado, estatuas de caballos, una placa que por fin leí.",
+  ),
+  cover: {
+    ...shot(
+      "05",
+      "egret",
+      1080,
+      1920,
+      tx(
+        "An egret standing still on stone steps by the sea",
+        "海边石阶上发呆的白鹭",
+        "바닷가 돌계단에 가만히 선 백로",
+        "Una garceta quieta en escalones de piedra junto al mar",
+      ),
+    ),
+  },
+  heroVideo: {
+    src: "/stories/hong-kong/05/hero.mp4",
+    poster: shot(
+      "05",
+      "egret",
+      1080,
+      1920,
+      tx(
+        "An egret standing still on stone steps by the sea",
+        "海边石阶上发呆的白鹭",
+        "바닷가 돌계단에 가만히 선 백로",
+        "Una garceta quieta en escalones de piedra junto al mar",
+      ),
+    ),
+  },
+  blocks: [
+    {
+      type: "text",
+      body: tx(
+        "Before Hong Kong I made a list. What I remember most was never on it — egret, cloudy day, horse statues, spiral tower, and the Victoria Harbour plaque I finally read carefully. These are the small moments you cannot plan.",
+        "来香港之前，我列过一张清单。但现在记得最牢的，都是清单上没有的东西——白鹭、阴天、马雕像、螺旋塔，和第一次认真读的维多利亚港铭牌。这篇写的就是这些没法计划的小时刻。",
+        "홍콩 오기 전 리스트를 적었다. 가장 또렷한 건 리스트에 없었다 — 백로, 흐린 날, 말 조각상, 나선 타워, 처음으로 꼼꼼히 읽은 빅토리아 항구 명판. 계획할 수 없는 작은 순간들이다.",
+        "Antes de Hong Kong hice una lista. Lo que más recuerdo no estaba: garceta, día nublado, caballos, torre en espiral y la placa del puerto Victoria que por fin leí. Son los momentos pequeños que no se planean.",
+      ),
+    },
+    { type: "heading", body: tx("01 — Off the list", "01 · 清单之外", "01 · 리스트 밖", "01 · Fuera de la lista") },
+    {
+      type: "photo",
+      photo: shot(
+        "05",
+        "glimpse",
+        1080,
+        1920,
+        tx("A glimpse of the harbour", "海港一瞥", "항구 한 장면", "Un vistazo al puerto"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Guides tell you where to go. They do not tell you which glance will make you stop. This episode is not the attractions on a list — it is the moments that bumped into me off the list.",
+        "攻略只告诉你去哪，却不告诉你哪一眼会让你停下来。这篇不写清单上的景点，写那些在清单之外撞上我的瞬间。",
+        "가이드는 어디로 갈지만 알려 준다. 어떤 시선이 멈출지는 말하지 않는다. 이 편은 리스트의 명소가 아니라, 리스트 밖에서 부딪힌 순간이다.",
+        "Las guías dicen adónde ir. No dicen qué mirada te detiene. Este episodio no son las atracciones de una lista — son los momentos que me chocaron fuera de ella.",
+      ),
+    },
+    { type: "heading", body: tx("02 — Egret on the steps", "02 · 石阶上的白鹭", "02 · 돌계단의 백로", "02 · Garceta en los escalones") },
+    {
+      type: "photo",
+      photo: shot(
+        "05",
+        "egret",
+        1080,
+        1920,
+        tx("An egret daydreaming on seaside stone steps", "海边石阶上发呆的白鹭", "바닷가 돌계단에서 멍하니 선 백로", "Una garceta ensimismada en escalones junto al mar"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "An egret stood on the stone steps by the sea, not moving. It looked at the water more calmly than I did. I watched it through my phone for a long time — and suddenly the schedule on my list felt less important.",
+        "一只白鹭站在海边的石阶上发呆，一动不动。它看海的样子，比我还悠闲。我举着手机看了它很久，忽然觉得行程表上那点安排，好像也没那么重要了。",
+        "백로 한 마리가 바닷가 돌계단에 서서 움직이지 않았다. 바다를 보는 모습이 나보다 여유롭다. 폰을 들고 오래 보다가 — 일정표의 그 약간의 계획이 덜 중요해 보였다.",
+        "Una garceta en los escalones junto al mar, sin moverse. Miraba el agua con más calma que yo. La miré largo rato con el teléfono — y de pronto el horario de la lista importaba menos.",
+      ),
+    },
+    { type: "heading", body: tx("03 — Cloudy harbour", "03 · 阴天的海港", "03 · 흐린 항구", "03 · Puerto nublado") },
+    {
+      type: "photo",
+      photo: shot(
+        "05",
+        "cloudy-harbor",
+        1080,
+        1920,
+        tx("Cloudy harbour with boats and piers", "阴天的海港，船只和码头", "흐린 항구, 배와 부두", "Puerto nublado con barcos y muelles"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "That day the harbour was cloudy. No postcard blue sky — the water looked veiled, boats and docks softened. Later I learned: overcast Victoria Harbour has another kind of beauty. Visitor guides rarely mention it.",
+        "那天的海港是阴天。没有蓝天明信片式的风景，整座海像蒙了层纱，船只和码头都变得柔和起来。后来我才发现，阴天的维港有另一种好看，游客攻略里很少提。",
+        "그날 항구는 흐렸다. 엽서 같은 파란 하늘이 없다 — 바다가 얇은 베일을 쓴 듯, 배와 부두가 부드러워졌다. 나중에 알았다: 흐린 빅토리아 항구엔 다른 아름다움이 있다. 관광 가이드엔 거의 없다.",
+        "Ese día el puerto estaba nublado. Sin cielo azul de postal — el agua velada, barcos y muelles suaves. Después lo vi: el puerto Victoria nublado tiene otra belleza. Las guías de visitante casi no lo dicen.",
+      ),
+    },
+    { type: "heading", body: tx("04 — Red-sail junk", "04 · 红帆船", "04 · 붉은 돛 정", "04 · Junk de vela roja") },
+    {
+      type: "photo",
+      photo: shot(
+        "05",
+        "sail-junk",
+        1080,
+        1920,
+        tx("A red-sail junk with residential towers behind it", "红帆船与住宅楼群", "붉은 돛 정과 뒤편 주거 타워", "Un junk de vela roja con torres residenciales detrás"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "A red-sail junk drifted past, dense housing towers behind it. Old and new packed into one frame, neither giving way. That contrast is not something you plan — you bump into it.",
+        "一艘红帆船慢慢晃过去，远处是密密的住宅楼。新和旧就这么挤在一个画面里，谁也不让谁。这种反差，计划是计划不出来的，只能碰运气撞上。",
+        "붉은 돛 정이 천천히 지나가고, 뒤엔 빽빽한 주거 타워. 새것과 옛것이 한 화면에 붙어서 양보하지 않는다. 그 대비는 계획할 수 없다 — 우연히 부딪힌다.",
+        "Un junk de vela roja pasó despacio, torres densas detrás. Lo nuevo y lo viejo en el mismo encuadre, sin ceder. Ese contraste no se planea — te lo encuentras.",
+      ),
+    },
+    { type: "heading", body: tx("05 — Horses on the corner", "05 · 街角的马", "05 · 모퉁이의 말", "05 · Caballos en la esquina") },
+    {
+      type: "photo",
+      photo: shot(
+        "05",
+        "horse-statues",
+        1080,
+        1920,
+        tx("Red and brown horse statues on a street corner", "街角的红色马雕像", "거리 모퉁이의 빨간·갈색 말 조각상", "Estatuas de caballos rojas y marrones en una esquina"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Two horse statues appeared on a corner — one red, one brown — standing straight as if on guard. No queue for photos, no plaque explaining who they are. That kind of encounter makes you look twice.",
+        "街角突然冒出两匹马雕像，一红一棕，站得笔直，像在站岗。没人排队拍照，也没人介绍它们是谁——但就是这种不期而遇，让人忍不住多看两眼。",
+        "모퉁이에 말 조각상 두 마리가 갑자기 나왔다 — 하나 빨강, 하나 갈색 — 경비처럼 곧게 서 있다. 사진 줄도 없고, 누군지 소개도 없다. 그런 우연이 한 번 더 보게 한다.",
+        "Dos estatuas de caballo en una esquina — una roja, una marrón — erguidas como de guardia. Sin cola para fotos, sin placa que diga quiénes son. Ese encuentro te hace mirar dos veces.",
+      ),
+    },
+    { type: "heading", body: tx("06 — Spiral tower", "06 · 螺旋塔", "06 · 나선 타워", "06 · Torre en espiral") },
+    {
+      type: "photo",
+      photo: shot(
+        "05",
+        "spiral-tower",
+        1080,
+        1920,
+        tx("Looking up at a spiral tower", "螺旋塔仰拍", "나선 타워를 올려다본 장면", "Mirando hacia arriba una torre en espiral"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Look up at the spiral tower from another angle and it feels almost alien. The same building from far away and from under your chin are two different things. Sometimes the view is fine — you just have not found the angle.",
+        "螺旋塔换个角度抬头看，有点像外星建筑。同一栋楼，站远了看和仰着脖子看，完全是两个东西。有时候不是风景不够好，是角度没找对。",
+        "나선 타워를 다른 각도로 올려다보면 외계 건물 같다. 같은 건물도 멀리서 볼 때와 목 빼고 볼 때는 다르다. 가끔 풍경이 부족한 게 아니라, 각도를 못 찾은 것이다.",
+        "Mira la torre en espiral desde otro ángulo y parece casi alienígena. El mismo edificio de lejos y desde abajo son dos cosas. A veces la vista está bien — solo no has encontrado el ángulo.",
+      ),
+    },
+    { type: "heading", body: tx("07 — The plaque I finally read", "07 · 第一次认真读的铭牌", "07 · 처음으로 읽은 명판", "07 · La placa que por fin leí") },
+    {
+      type: "photo",
+      photo: shot(
+        "05",
+        "plaque",
+        1080,
+        1920,
+        tx("Victoria Harbour railing plaque and a life ring", "维多利亚港栏杆铭牌与救生圈", "빅토리아 항구 난간 명판과 구명부환", "Placa del puerto Victoria y un salvavidas"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "The plaque says Victoria Harbour. I had passed it a hundred times before I read it carefully. The red-and-white life ring on the rail photographs well. After living here I got it: familiar places deserve a second look.",
+        "铭牌上写着维多利亚港，我路过一百次，第一次认真读它。旁边的救生圈红白相间，挂在栏杆上特别上镜。住下来之后才懂：熟悉的地方，也值得重新看一遍。",
+        "명판에는 빅토리아 항구라고 쓰여 있다. 백 번 지나치고 나서야 처음으로 꼼꼼히 읽었다. 옆 빨간·흰 구명부환이 난간에 걸려 잘 찍힌다. 여기 살고 나서야 안다: 익숙한 곳도 다시 볼 가치가 있다.",
+        "La placa dice Victoria Harbour. La pasé cien veces antes de leerla con cuidado. El salvavidas rojo y blanco en la barandilla queda bien en foto. Tras vivir aquí lo entendí: lo familiar también merece otra mirada.",
+      ),
+    },
+    { type: "heading", body: tx("08 — Closing", "08 · 结语", "08 · 마무리", "08 · Cierre") },
+    {
+      type: "photo",
+      photo: shot(
+        "05",
+        "promenade",
+        1080,
+        1920,
+        tx("Distant view along the harbour promenade", "海港远景", "항구 산책로 먼 풍경", "Vista lejana del paseo del puerto"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "None of these moments can be planned, and none come back the same way. So now I leave blank space on the schedule — for egret, for cloudy days, for horses that appear on a corner. The part of Hong Kong that moves you most often hides in that blank space.",
+        "这些时刻都没法计划，也没法重来。所以行程表上，我现在都会留一点空白——给白鹭，给阴天，给街角突然冒出来的马。香港真正动人的部分，往往就藏在这些空白里。",
+        "이 순간들은 계획할 수 없고, 같은 방식으로 다시 오지도 않는다. 그래서 이제 일정에 빈칸을 둔다 — 백로에게, 흐린 날에게, 모퉁이에 갑자기 나타난 말에게. 홍콩에서 가장 마음을 움직이는 부분은 그 빈칸에 숨는 경우가 많다.",
+        "Ninguno de estos momentos se planea, y ninguno vuelve igual. Así que ahora dejo huecos en el horario — para la garceta, para días nublados, para caballos que salen en una esquina. Lo más conmovedor de Hong Kong suele esconderse en ese hueco.",
+      ),
+    },
+    {
+      type: "verdict",
+      intro: tx(
+        "Not a guidebook conclusion. The answers left after leaving blank space on purpose.",
+        "不是攻略结论，是故意留白以后留下的答案。",
+        "가이드북 결론이 아니다. 일부러 빈칸을 둔 뒤 남은 답이다.",
+        "No es la conclusión de una guía. Las respuestas que quedaron tras dejar huecos a propósito.",
+      ),
+      rows: [
+        {
+          label: tx("Worth it", "值不值得", "갈 만한가", "¿Merece la pena?"),
+          body: tx(
+            "Worth it. A list is a floor. Memory is what surprise gives you — the blank part of the trip is often what sticks.",
+            "值得。清单是用来保底的，但记忆是意外给的——留白的那部分行程，往往是整趟旅行里印象最深的。",
+            "갈 만하다. 리스트는 바닥이다. 기억은 우연이 준다 — 여행의 빈칸이 종종 가장 오래 남는다.",
+            "Merece la pena. La lista es el suelo. La memoria la da la sorpresa — lo en blanco del viaje suele ser lo que más queda.",
+          ),
+        },
+        {
+          label: tx("Who it's for", "适合谁", "누구에게", "Para quién"),
+          body: tx(
+            "People who are not rushing. Anyone staying more than a week who wants out of the visitor lens. People who like to shoot and note as they go.",
+            "不赶行程、愿意慢慢逛的人；住下来超过一周、想跳出游客视角的人；喜欢随手拍、随手记录的人。",
+            "일정을 서두르지 않고 천천히 걷는 사람. 일주일 넘게 머물며 관광객 시선을 벗어나고 싶은 사람. 지나가며 찍고 적는 사람.",
+            "Quien no va con prisa. Quien se queda más de una semana y quiere salir del ángulo de turista. Quien gusta de disparar y anotar al paso.",
+          ),
+        },
+        {
+          label: tx("Budget", "预算", "예산", "Presupuesto"),
+          body: tx(
+            "Almost zero. Egret, cloudy days, corner statues take no ticket. Waterfront and piers are free to walk. (as of 2026)",
+            "几乎为零。白鹭、阴天、街角雕像都不收门票；海滨步道、码头随便走，全程免费。（2026）",
+            "거의 0. 백로, 흐린 날, 모퉁이 조각상은 입장료가 없다. 해안·부두는 공짜로 걷는다. (2026년 기준)",
+            "Casi cero. Garceta, días nublados, estatuas de esquina no cobran. Paseo y muelles se caminan gratis. (a 2026)",
+          ),
+        },
+        {
+          label: tx("Time", "时间", "시간", "Tiempo"),
+          body: tx(
+            "Do not fill every day. Leave 1–2 hours of aimless time in the morning or evening. On cloudy days do not hide in the hotel — the harbour looks different then.",
+            "别把每天排满，上午或傍晚留 1–2 小时“无目的时间”；阴天别躲酒店，阴天的海港有另一种好看。",
+            "매일 꽉 채우지 마라. 아침이나 저녁에 1–2시간 ‘목적 없는 시간’을 남겨라. 흐린 날 호텔에 숨지 마라 — 그때 항구가 다르게 보인다.",
+            "No llenes cada día. Deja 1–2 horas sin objetivo por la mañana o la tarde. En días nublados no te escondas en el hotel — el puerto se ve distinto.",
+          ),
+        },
+        {
+          label: tx("The catch", "有没有坑", "주의할 점", "El truco"),
+          body: tx(
+            "Blank space is not lying down — still bring an umbrella and water. Wildlife like egrets: watch, do not disturb, do not get too close. Corner statues are often in commercial streets; do not block the path for photos.",
+            "留白不等于躺平，出门还是要带伞和水；白鹭这类野生动物只看不打扰，别靠太近；街角雕像多在商业区，拍照注意别挡路。",
+            "빈칸이 드러누움은 아니다 — 우산과 물은 챙겨라. 백로 같은 야생동물은 보기만 하고 방해하지 말고, 너무 가까이 가지 마라. 모퉁이 조각상은 상업 거리에 많다 — 사진 찍을 때 길을 막지 마라.",
+            "Hueco no es tumbarse — lleva paraguas y agua. Fauna como garcetas: mira, no molestes, no te acerques demasiado. Las estatuas de esquina suelen estar en zonas comerciales; no bloquees el paso para la foto.",
+          ),
+        },
+      ],
+    },
+    {
+      type: "text",
+      body: tx(
+        "Next episode: Hong Kong with family.",
+        "下一集，讲和家人一起的香港。",
+        "다음 에피소드: 가족과 함께한 홍콩.",
+        "Próximo episodio: Hong Kong con la familia.",
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "BGM: Meditation Impromptu 01 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM：Meditation Impromptu 01 by Kevin MacLeod (incompetech.com)，CC BY 4.0。",
+        "BGM: Meditation Impromptu 01 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM: Meditation Impromptu 01 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+      ),
+    },
+  ],
+}
+
+const ep06: StoryEpisode = {
+  number: 6,
+  slug: "06-hong-kong-with-family",
+  status: "published",
+  publishedAt: "2026-09-28",
+  title: tx(
+    "Hong Kong With Family",
+    "和家人的香港：一座城市好不好玩，取决于和谁一起",
+    "가족과 함께한 홍콩: 도시가 재미있는지는 누구와 함께냐에 달렸다",
+    "Hong Kong con la familia: si una ciudad divierte depende de con quién vas",
+  ),
+  dek: tx(
+    "People ask where Hong Kong is most fun. I cannot name a place. I remember who held whose hand. Flip the photos — people are the subject.",
+    "有人问我香港最好玩的是哪里，我想了想，还真说不上来。倒是记得谁牵着谁的手。照片翻出来一看，人才是主角。",
+    "사람들이 홍콩에서 어디가 제일 재미있냐고 묻는다. 장소는 말 못 하겠다. 누가 누구 손을 잡았는지는 기억난다. 사진을 넘기면 — 사람이 주인공이다.",
+    "Preguntan dónde es más divertido Hong Kong. No sé nombrar un sitio. Recuerdo quién tomó de la mano a quién. Pasa las fotos — la gente es el sujeto.",
+  ),
+  cover: {
+    ...shot(
+      "06",
+      "family-photo",
+      1080,
+      1920,
+      tx(
+        "Family looking out at the harbour night view from behind",
+        "家人背影看海湾夜景",
+        "항구 야경을 등지고 바라보는 가족",
+        "Familia de espaldas mirando la bahía de noche",
+      ),
+    ),
+  },
+  heroVideo: {
+    src: "/stories/hong-kong/06/hero.mp4",
+    poster: shot(
+      "06",
+      "family-photo",
+      1080,
+      1920,
+      tx(
+        "Family looking out at the harbour night view from behind",
+        "家人背影看海湾夜景",
+        "항구 야경을 등지고 바라보는 가족",
+        "Familia de espaldas mirando la bahía de noche",
+      ),
+    ),
+  },
+  blocks: [
+    {
+      type: "text",
+      body: tx(
+        "People ask where Hong Kong is most fun. I think about it and cannot really say. What I remember is who held whose hand. This episode is not about attractions. It is Hong Kong with family — because what stays is never only the view.",
+        "有人问我香港最好玩的是哪里，我想了想，还真说不上来。倒是记得，谁牵着谁的手。这一篇不讲景点，讲和家人一起的香港——因为最后留下来的，从来都不是风景。",
+        "사람들이 홍콩에서 어디가 제일 재미있냐고 묻는다. 생각해 봐도 잘 말 못 하겠다. 기억나는 건 누가 누구 손을 잡았는지다. 이 편은 명소가 아니다. 가족과 함께한 홍콩이다 — 남는 건 풍경만이 아니니까.",
+        "Preguntan dónde es más divertido Hong Kong. Lo pienso y no sé decirlo. Recuerdo quién tomó de la mano a quién. Este episodio no va de atracciones. Es Hong Kong con la familia — porque lo que queda nunca es solo el paisaje.",
+      ),
+    },
+    { type: "heading", body: tx("01 — Where is the most fun?", "01 · 最好玩的是哪里", "01 · 어디가 제일 재미있나", "01 · ¿Dónde es más divertido?") },
+    {
+      type: "photo",
+      photo: shot(
+        "06",
+        "walk-together",
+        1080,
+        1920,
+        tx("An adult and a child walking side by side on a brick pedestrian street", "母子在步行街上并肩同行", "벽돌 보행로에서 나란히 걷는 어른과 아이", "Un adulto y un niño caminando juntos en una calle peatonal de ladrillo"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "People ask where Hong Kong is most fun. I cannot really say. What I remember is who held whose hand. On a brick pedestrian street, one tall and one small walking forward — you do not need to look back to know the other is there.",
+        "有人问我香港最好玩的是哪里，我想了想，还真说不上来。倒是记得，谁牵着谁的手。砖砌步行街上，一大一小并肩往前走，不用回头也知道对方在。",
+        "사람들이 홍콩에서 어디가 제일 재미있냐고 묻는다. 잘 말 못 하겠다. 기억나는 건 누가 누구 손을 잡았는지다. 벽돌 보행로에서 큰 사람과 작은 사람이 나란히 앞으로 — 뒤돌아보지 않아도 상대가 있다.",
+        "Preguntan dónde es más divertido Hong Kong. No sé decirlo. Recuerdo quién tomó de la mano a quién. En una peatonal de ladrillo, uno alto y uno pequeño hacia delante — no hace falta mirar atrás para saber que el otro está.",
+      ),
+    },
+    { type: "heading", body: tx("02 — An old couple, slow", "02 · 慢慢走的老夫妇", "02 · 천천히 걷는 노부부", "02 · Una pareja mayor, despacio") },
+    {
+      type: "photo",
+      photo: shot(
+        "06",
+        "old-couple",
+        1080,
+        1920,
+        tx("An older couple walking slowly on a pedestrian street, seen from behind", "老夫妇在步行街上慢慢走", "보행로에서 천천히 걷는 노부부 뒷모습", "Una pareja mayor caminando despacio por una peatonal, de espaldas"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "An older couple walks ahead, slow, not rushing. Hong Kong is fast, but some people keep their own pace. Watching their backs, the city feels gentler than its reputation.",
+        "老夫妇在前面慢慢走，不赶时间。香港节奏快，但总有人用自己的步速过日子。看着他们的背影，会觉得这座城市其实挺温柔的。",
+        "노부부가 앞에서 천천히 걷는다. 서두르지 않는다. 홍콩은 빠르지만, 자기 걸음으로 사는 사람이 있다. 그 뒷모습을 보면 도시가 생각보다 다정하다.",
+        "Una pareja mayor va delante, despacio, sin prisa. Hong Kong es rápido, pero hay quien vive a su paso. Al ver sus espaldas, la ciudad se siente más suave de lo que dicen.",
+      ),
+    },
+    { type: "heading", body: tx("03 — People in the photos", "03 · 照片里的人", "03 · 사진 속 사람", "03 · La gente en las fotos") },
+    {
+      type: "photo",
+      photo: shot(
+        "06",
+        "photo-montage",
+        1080,
+        1920,
+        tx("Daytime bay and distinctive architecture from the trip album", "白天海湾和特色建筑", "여행 앨범의 낮 항구와 개성 있는 건물", "Bahía de día y arquitectura distintiva del álbum del viaje"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Flip through the photos from this stretch and people are the subject. The scenery returns every year. The people you share it with do not always. By the end of the album, what you remember is faces.",
+        "这趟的照片翻出来，一张张看过去，人才是主角。风景年年都在，可一起看风景的人不常在。相册翻到最后，记住的全是人。",
+        "이번 사진을 넘기다 보면 사람이 주인공이다. 풍경은 해마다 있지만, 함께 본 사람은 늘 있지 않다. 앨범 끝에서 남는 건 얼굴이다.",
+        "Pasa las fotos de este tramo y la gente es el sujeto. El paisaje vuelve cada año. Quien lo comparte, no siempre. Al final del álbum, lo que queda son caras.",
+      ),
+    },
+    { type: "heading", body: tx("04 — A child's Hong Kong", "04 · 孩子的香港", "04 · 아이의 홍콩", "04 · El Hong Kong de un niño") },
+    {
+      type: "photo",
+      photo: shot(
+        "06",
+        "playground",
+        1080,
+        1920,
+        tx("Children's playground under an overpass with a red slide", "高架桥下的儿童游乐场", "고가 아래 빨간 미끄럼틀이 있는 어린이 놀이터", "Parque infantil bajo un paso elevado con tobogán rojo"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "With a child, Hong Kong is a big playground. Under the overpass: a kids' park, red slide, purple mascot — laughter louder than the slide. Adults watch the city. Kids watch the fun.",
+        "和孩子来，香港就是个大游乐场。高架桥下的儿童乐园，红色滑梯，紫色吉祥物——孩子的笑声比滑梯还高。大人看的是城市，孩子看的全是乐子。",
+        "아이와 오면 홍콩은 큰 놀이터다. 고가 아래 어린이 공원, 빨간 미끄럼틀, 보라 마스코트 — 웃음이 미끄럼틀보다 높다. 어른은 도시를 보고, 아이는 재미만 본다.",
+        "Con un niño, Hong Kong es un parque grande. Bajo el paso elevado: parque infantil, tobogán rojo, mascota púrpura — risas más altas que el tobogán. Los adultos miran la ciudad. Los niños, la diversión.",
+      ),
+    },
+    { type: "heading", body: tx("05 — Shiba and the whole family", "05 · 柴犬和全家", "05 · 시바와 온 가족", "05 · Shiba y toda la familia") },
+    {
+      type: "photo",
+      photo: shot(
+        "06",
+        "shiba",
+        1080,
+        1920,
+        tx("A giant sleeping Shiba sculpture with family around it", "巨型睡觉柴犬和家庭场景", "거대한 잠자는 시바 조형물과 그 주변 가족", "Una escultura gigante de Shiba dormido con la familia alrededor"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "A giant Shiba sprawled asleep, the whole family laughing around it. The loosest moments on a trip often have nothing to do with attractions — the fun stuff is frequently off the plan.",
+        "一只巨型柴犬睡得四仰八叉，全家都围着它笑。旅行里最松弛的时刻，往往和景点一点关系都没有——好玩的东西，常常是计划之外的。",
+        "거대한 시바가 뻗어 자고, 온 가족이 둘러싸고 웃는다. 여행에서 가장 느슨한 순간은 명소와 무관한 경우가 많다 — 재미있는 건 종종 계획 밖이다.",
+        "Un Shiba gigante dormido de cualquier manera, toda la familia riéndose alrededor. Los momentos más sueltos de un viaje casi no tienen que ver con atracciones — lo divertido suele estar fuera del plan.",
+      ),
+    },
+    { type: "heading", body: tx("06 — Family album", "06 · 家庭相册", "06 · 가족 앨범", "06 · Álbum familiar") },
+    {
+      type: "photo",
+      photo: shot(
+        "06",
+        "family-photo",
+        1080,
+        1920,
+        tx("Family backs to the camera looking at the harbour night view", "家人背影看海湾夜景", "항구 야경을 등지고 바라보는 가족", "Espaldas de la familia mirando la bahía de noche"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "In another set, the whole family raises hands for a group shot — sea and towers behind. Behind every group photo is a promise to come again together. Photos age. The promise does not.",
+        "另一组照片里，全家举手合影，背后是海和对岸的楼。每张合影背后，都是一次“下次还一起来”的约定。照片会旧，约定不会。",
+        "다른 묶음에선 온 가족이 손을 들고 단체 사진 — 뒤는 바다와 맞은편 빌딩. 단체 사진마다 ‘다음에 또 같이’라는 약속이 있다. 사진은 낡는다. 약속은 안 낡는다.",
+        "En otro set, toda la familia levanta las manos para la foto — mar y torres detrás. Detrás de cada foto de grupo hay un “volvamos juntos”. Las fotos envejecen. La promesa no.",
+      ),
+    },
+    { type: "heading", body: tx("07 — Closing", "07 · 结语", "07 · 마무리", "07 · Cierre") },
+    {
+      type: "photo",
+      photo: shot(
+        "06",
+        "rooftop",
+        1080,
+        1920,
+        tx("City view from a rooftop lookout", "天台观景台俯瞰城市", "옥상 전망대에서 본 도시", "Vista de la ciudad desde un mirador en azotea"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Whether a city is fun really depends on who you are with. With kids, Hong Kong is a playground. With family, it is the park near home. Next time, bring the people who matter.",
+        "一座城市好不好玩，真的取决于和谁一起。和孩子来，香港是游乐场；和家人来，香港就是家附近的公园。下次来，把重要的人带上。",
+        "도시가 재미있는지는 정말 누구와 함께냐에 달렸다. 아이와 오면 홍콩은 놀이터. 가족과 오면 집 근처 공원. 다음에는 중요한 사람을 데려와라.",
+        "Si una ciudad divierte depende de verdad de con quién vas. Con niños, Hong Kong es un parque. Con la familia, el parque cerca de casa. La próxima vez, trae a quien importa.",
+      ),
+    },
+    {
+      type: "verdict",
+      intro: tx(
+        "Not a guidebook conclusion. The answers left after sharing the city with family.",
+        "不是攻略结论，是和家人一起走过以后留下的答案。",
+        "가이드북 결론이 아니다. 가족과 도시를 나눈 뒤 남은 답이다.",
+        "No es la conclusión de una guía. Las respuestas que quedaron tras compartir la ciudad con la familia.",
+      ),
+      rows: [
+        {
+          label: tx("Worth it", "值不值得", "갈 만한가", "¿Merece la pena?"),
+          body: tx(
+            "Worth it. Attractions get old. People do not — Hong Kong with family doubles the experience.",
+            "值得。景点会看腻，人不会——和家人在一起的香港，体验是加倍的。",
+            "갈 만하다. 명소는 질린다. 사람은 안 질린다 — 가족과 함께한 홍콩은 경험이 두 배다.",
+            "Merece la pena. Las atracciones se gastan. La gente no — Hong Kong con la familia duplica la experiencia.",
+          ),
+        },
+        {
+          label: tx("Who it's for", "适合谁", "누구에게", "Para quién"),
+          body: tx(
+            "Family trips with kids or parents. Anyone who wants travel to feel like living — slow walks, not a checklist.",
+            "带孩子、带父母的家庭游；想把旅行过成生活、慢慢逛的人。",
+            "아이·부모님과 가는 가족 여행. 여행을 생활처럼, 천천히 걷고 싶은 사람.",
+            "Viajes en familia con niños o padres. Quien quiera que el viaje se sienta como vivir — paseos lentos, no checklist.",
+          ),
+        },
+        {
+          label: tx("Budget", "预算", "예산", "Presupuesto"),
+          body: tx(
+            "Playgrounds and many rooftop lookouts are free or low-cost. The big spend on a family trip is food and transport — scale to taste. (as of 2026)",
+            "游乐场、天台观景台大多免费或低消费；家庭出游的大头花在吃和交通上，丰俭由人。（2026）",
+            "놀이터와 많은 옥상 전망대는 무료이거나 저렴하다. 가족 여행의 큰 지출은 식비와 교통 — 취향대로. (2026년 기준)",
+            "Parques y muchos miradores son gratis o baratos. El gasto gordo en familia es comida y transporte — a tu gusto. (a 2026)",
+          ),
+        },
+        {
+          label: tx("Time", "时间", "시간", "Tiempo"),
+          body: tx(
+            "With elders or kids, slow down — one or two stops a day is enough. Playgrounds on weekdays: fewer people, more room to play.",
+            "带老人小孩节奏放慢，一天一两个点就够；游乐场挑工作日去，人少玩得开。",
+            "어르신·아이와 가면 속도를 낮춰라 — 하루에 한두 곳이면 충분. 놀이터는 평일 — 사람 적고 더 놀 수 있다.",
+            "Con mayores o niños, baja el ritmo — uno o dos puntos al día bastan. Parques entre semana: menos gente, más espacio.",
+          ),
+        },
+        {
+          label: tx("The catch", "有没有坑", "주의할 점", "El truco"),
+          body: tx(
+            "Summer outdoors: sunscreen and water. With elders or kids, skip peak crowds. Check age and height limits on play gear. Do not only shoot scenery — get yourselves in the frame.",
+            "夏天户外一定注意防晒和补水；带老人小孩尽量避开人流高峰；游乐设施留意年龄和身高限制；拍照别只顾着拍风景，记得自己也入镜。",
+            "여름 야외: 선크림과 물. 어르신·아이와는 피크 인파를 피하라. 놀이기구 나이·키 제한 확인. 풍경만 찍지 마라 — 너희도 프레임에 넣어라.",
+            "Verano al aire libre: protector y agua. Con mayores o niños, evita picos de gente. Mira límites de edad y altura en juegos. No dispares solo paisaje — entrad vosotros también.",
+          ),
+        },
+      ],
+    },
+    {
+      type: "text",
+      body: tx(
+        "Next episode: what I'd do again — and differently.",
+        "下一集，讲我会再做的，和会换个方式做的。",
+        "다음 에피소드: 다시 할 것, 다르게 할 것.",
+        "Próximo episodio: lo que repetiría — y lo que haría distinto.",
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "BGM: Meditation Impromptu 02 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM：Meditation Impromptu 02 by Kevin MacLeod (incompetech.com)，CC BY 4.0。",
+        "BGM: Meditation Impromptu 02 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM: Meditation Impromptu 02 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+      ),
+    },
+  ],
+}
+
+const ep07: StoryEpisode = {
+  number: 7,
+  slug: "07-what-id-do-again-and-differently",
+  status: "published",
+  publishedAt: "2026-09-28",
+  title: tx(
+    "What I'd Do Again — and Differently",
+    "再来一次，我会…：半年香港的 verdict",
+    "다시 한다면…: 반년 홍콩의 verdict",
+    "Lo que repetiría — y lo que haría distinto",
+  ),
+  dek: tx(
+    "After six months in Hong Kong: would return (harbour, dai pai dong, waterfront), would skip (viral queues), surprises, and advice for whoever comes next.",
+    "在香港住满半年，终于敢说几句大实话：还会再来的维港、大排档、海滨步道；不会再去的排长队网红店；以及白鹭、阴天这些意外之喜。",
+    "홍콩에서 반년을 산 뒤: 다시 갈 곳(항구, 대파이동, 해안), 건너뛸 곳(바이럴 줄), 뜻밖의 기쁨, 나중에 올 사람을 위한 조언.",
+    "Tras seis meses en Hong Kong: volvería (puerto, dai pai dong, paseo), saltaría (colas virales), sorpresas y consejos para quien venga después.",
+  ),
+  cover: {
+    ...shot(
+      "07",
+      "harbor-night",
+      640,
+      1138,
+      tx("Victoria Harbour at night", "夜色中的维港", "밤의 빅토리아 항구", "Puerto Victoria de noche"),
+    ),
+  },
+  heroVideo: {
+    src: "/stories/hong-kong/07/hero.mp4",
+    poster: shot(
+      "07",
+      "harbor-night",
+      640,
+      1138,
+      tx("Victoria Harbour at night", "夜色中的维港", "밤의 빅토리아 항구", "Puerto Victoria de noche"),
+    ),
+  },
+  blocks: [
+    {
+      type: "text",
+      body: tx(
+        "After six months living in Hong Kong, I finally dare a few plain truths. This episode is not attractions — it is judgment: what I would return to, what I would skip, surprises I did not plan, and advice for whoever comes next.",
+        "在香港住满半年，终于敢说几句大实话。这一集不讲景点，讲判断：还会再来的、不会再去的、没想到的惊喜，还有给后来人的建议。",
+        "홍콩에서 반년을 산 뒤, 드디어 몇 마디 솔직한 말을 할 수 있다. 이 편은 명소가 아니다 — 판단이다: 다시 갈 것, 건너뛸 것, 계획에 없던 놀라움, 나중에 올 사람을 위한 조언.",
+        "Tras seis meses viviendo en Hong Kong, por fin me atrevo a unas verdades planas. Este episodio no es atracciones — es juicio: a qué volvería, qué saltaría, sorpresas no planeadas y consejos para quien venga después.",
+      ),
+    },
+    { type: "heading", body: tx("01 — Straight talk", "01 · 大实话时间", "01 · 솔직한 시간", "01 · Hablar claro") },
+    {
+      type: "photo",
+      photo: shot(
+        "07",
+        "harbor-night",
+        640,
+        1138,
+        tx("Victoria Harbour at night", "夜色中的维港", "밤의 빅토리아 항구", "Puerto Victoria de noche"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Stay long enough and your view changes. At first everything is new. After half a year you can tell what you actually like from what was only novelty. This episode is that half-year verdict.",
+        "住得久了，看法会变。刚来的时候什么都新鲜，住满半年之后，反而能分清楚：哪些是真的喜欢，哪些只是图个新鲜。这一集，就是这半年的 verdict。",
+        "오래 살면 시선이 바뀐다. 처음엔 전부 새롭다. 반년이 지나면 진짜 좋아하는 것과 새로움만인 것을 가른다. 이 편이 그 반년의 verdict다.",
+        "Si te quedas, la mirada cambia. Al principio todo es nuevo. Tras medio año separas lo que de verdad te gusta de lo que solo era novedad. Este episodio es ese veredicto de medio año.",
+      ),
+    },
+    { type: "heading", body: tx("02 — Would return: the harbour", "02 · 还会再来：维港", "02 · 다시 갈 곳: 항구", "02 · Volvería: el puerto") },
+    {
+      type: "photo",
+      photo: shot(
+        "07",
+        "harbor-pan",
+        640,
+        1138,
+        tx("Night view across both shores of Victoria Harbour", "维港两岸夜景", "빅토리아 항구 양안 야경", "Vista nocturna de ambas orillas del puerto Victoria"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Would return: Victoria Harbour first. Clear days for light on the water. Cloudy days for low cloud. I never get tired of it — probably the place I went most in Hong Kong.",
+        "还会再来的，维港排第一个。晴天去，看阳光洒在海面上；阴天也去，看云压得很低。怎么看都不腻——这大概是我在香港去得最多的地方。",
+        "다시 갈 곳: 빅토리아 항구가 첫 번째. 맑은 날은 수면 위 빛. 흐린 날은 낮은 구름. 질리지 않는다 — 홍콩에서 가장 많이 간 곳일 것이다.",
+        "Volvería: puerto Victoria el primero. Días claros, luz en el agua. Días nublados, nubes bajas. Nunca me canso — probablemente el sitio al que más fui en Hong Kong.",
+      ),
+    },
+    { type: "heading", body: tx("03 — Would return: smoke and the walk", "03 · 还会再来：烟火气与步道", "03 · 다시 갈 곳: 연기와 산책로", "03 · Volvería: humo y paseo") },
+    {
+      type: "photo",
+      photo: shot(
+        "07",
+        "food-street",
+        640,
+        1138,
+        tx("Pier and boats along the working waterfront", "码头与船只", "부두와 배들", "Muelle y barcos en el frente de trabajo"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Dai pai dong — sit on a plastic stool and the street energy comes back. The waterfront walk is the same: go when you need air, costs nothing. One feeds the stomach. One feeds the head.",
+        "大排档，塑料凳一坐，烟火气就全回来了。海滨步道也一样，想散心就去走一段，不花一分钱。这两样，一个管胃，一个管心。",
+        "대파이동 — 플라스틱 의자에 앉으면 연기와 사람 기운이 돌아온다. 해안 산책도 같다: 마음이 답답할 때 가면 되고, 공짜다. 하나는 배를, 하나는 머리를 먹인다.",
+        "Dai pai dong — te sientas en un taburete de plástico y vuelve el humo de la calle. El paseo marítimo igual: vas cuando necesitas aire, no cuesta nada. Uno alimenta el estómago. Otro, la cabeza.",
+      ),
+    },
+    { type: "heading", body: tx("04 — Would skip: viral queues", "04 · 不会再去：排长队的网红店", "04 · 건너뛸 곳: 바이럴 줄", "04 · Lo saltaría: colas virales") },
+    {
+      type: "photo",
+      photo: shot(
+        "07",
+        "city-blocks",
+        640,
+        1138,
+        tx("Dense blocks of city towers", "城市里的楼群", "빽빽한 도시 타워 군", "Bloques densos de torres urbanas"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Would not go again: viral spots with long queues. Forty minutes in line, then one bite — fame belongs to someone else; the stomach is yours. Fame is not the same as liking the food. That lesson came from standing in line.",
+        "不会再去的：排长队的网红店。排了四十分钟，吃进嘴里才发现——名气是别人的，胃是自己的。名气大不等于对胃口，这个道理是排队排出来的。",
+        "다시 안 갈 곳: 줄 긴 바이럴 가게. 사십 분 줄 서서 한 입 — 유명은 남의 것, 위장은 내 것. 유명하다고 입에 맞는 건 아니다. 그 교훈은 줄에서 나왔다.",
+        "No volvería: sitios virales con cola larga. Cuarenta minutos en fila, un bocado — la fama es de otro; el estómago es tuyo. Fama no es lo mismo que que te guste. Esa lección salió de la cola.",
+      ),
+    },
+    { type: "heading", body: tx("05 — Surprise: the egret", "05 · 意外之喜：白鹭", "05 · 뜻밖의 기쁨: 백로", "05 · Sorpresa: la garceta") },
+    {
+      type: "photo",
+      photo: shot(
+        "07",
+        "egret",
+        640,
+        1138,
+        tx("An egret standing on a shallow shore", "浅滩上的白鹭", "얕은 물가에 선 백로", "Una garceta en la orilla baja"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "The surprises were never on the itinerary. One egret on the shallows stuck with me more than many attractions. The less you plan, the more often you bump into moments like that.",
+        "意外之喜，都是没在行程表上的东西。一只白鹭，站在浅滩上，比很多景点都让我难忘。越是没计划，越容易撞见这种时刻。",
+        "뜻밖의 기쁨은 일정표에 없었다. 얕은 물가의 백로 한 마리가 많은 명소보다 오래 남았다. 계획할수록 덜, 그런 순간에 더 자주 부딪힌다.",
+        "Las sorpresas no estaban en el itinerario. Una garceta en lo bajo me quedó más que muchas atracciones. Cuanto menos planeas, más a menudo te topas con momentos así.",
+      ),
+    },
+    { type: "heading", body: tx("06 — Surprise: cloudy days", "06 · 意外之喜：阴天", "06 · 뜻밖의 기쁨: 흐린 날", "06 · Sorpresa: días nublados") },
+    {
+      type: "photo",
+      photo: shot(
+        "07",
+        "cloudy-harbor",
+        640,
+        1138,
+        tx("Harbour under low cloud", "阴天下的海港", "낮은 구름 아래 항구", "Puerto bajo nubes bajas"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "And cloudy days. Before Hong Kong I thought travel needed sun. Then I found cloudy Hong Kong has another taste: cloud low, fewer people, the city half a beat slower.",
+        "还有阴天。没来香港之前，我以为旅行一定要晴天。后来发现，阴天的香港有另一种味道：云很低，人很少，整座城市慢了半拍。",
+        "그리고 흐린 날. 홍콩 오기 전엔 여행엔 해가 필요하다고 생각했다. 그러다 흐린 홍콩엔 다른 맛이 있다는 걸 알았다: 구름이 낮고, 사람이 적고, 도시가 반 박자 느리다.",
+        "Y los días nublados. Antes de Hong Kong creía que viajar pedía sol. Luego vi que el Hong Kong nublado tiene otro sabor: nubes bajas, menos gente, la ciudad medio tiempo más lenta.",
+      ),
+    },
+    { type: "heading", body: tx("07 — Lesson: leave blank space", "07 · 教训：留白", "07 · 교훈: 빈칸 남기기", "07 · Lección: deja hueco") },
+    {
+      type: "photo",
+      photo: shot(
+        "07",
+        "keep-space",
+        640,
+        1138,
+        tx("A sailboat on open water", "海上的帆船", "바다 위 요트", "Un velero en aguas abiertas"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Lesson: do not pack the schedule. The fuller it is, the easier you miss what was never planned. Leave blank space if you want to bump into surprise — I believe that now.",
+        "教训也有：行程千万别排太满。排得越满，越容易错过那些计划外的好东西。留白，才能撞见惊喜——这句话我现在是真信了。",
+        "교훈도 있다: 일정을 너무 꽉 채우지 마라. 찰수록 계획에 없던 좋은 것을 놓치기 쉽다. 빈칸을 남겨야 놀라움에 부딪힌다 — 이제 진짜 믿는다.",
+        "Lección: no llenes el horario. Cuanto más lleno, más fácil perder lo no planeado. Deja hueco si quieres toparte con sorpresa — ahora sí lo creo.",
+      ),
+    },
+    { type: "heading", body: tx("08 — Closing: one line", "08 · 结语：一句话总结", "08 · 마무리: 한 줄", "08 · Cierre: una línea") },
+    {
+      type: "photo",
+      photo: shot(
+        "07",
+        "pier",
+        640,
+        1138,
+        tx("Harbour and boats from the pier", "海港与船只", "부두에서 본 항구와 배", "Puerto y barcos desde el muelle"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "One line: Hong Kong is worth it — but at your own pace, slow. Other people's guides are theirs. Your Hong Kong only shows up after you walk it yourself.",
+        "一句话总结：香港值得，但要用自己的节奏，慢慢来。别人的攻略是别人的，你的香港，得自己走一遍才知道。",
+        "한 줄: 홍콩은 갈 만하다 — 단 네 박자로, 천천히. 남의 가이드는 남의 것. 네 홍콩은 네가 걸어 봐야 안다.",
+        "Una línea: Hong Kong merece la pena — pero a tu ritmo, despacio. Las guías de otros son de otros. Tu Hong Kong solo aparece cuando lo caminas tú.",
+      ),
+    },
+    {
+      type: "verdict",
+      intro: tx(
+        "Not a guidebook conclusion. Six months of judgment, plain.",
+        "不是攻略结论，是住满半年之后留下的判断。",
+        "가이드북 결론이 아니다. 반년을 산 뒤 남은 판단이다.",
+        "No es la conclusión de una guía. Seis meses de juicio, en claro.",
+      ),
+      rows: [
+        {
+          label: tx("Would return", "还会再来", "다시 갈 것", "Volvería"),
+          body: tx(
+            "Victoria Harbour — clear or cloudy, I never tire of it. Dai pai dong: plastic stool, street energy back. Waterfront walk: go when you need air, free.",
+            "维港——晴天阴天都去，怎么看都不腻；大排档，塑料凳一坐烟火气全回来；海滨步道，想散心就去走一段，不花一分钱。",
+            "빅토리아 항구 — 맑든 흐리든 질리지 않는다. 대파이동: 플라스틱 의자, 연기와 사람 기운. 해안 산책: 답답할 때 가면 되고, 공짜.",
+            "Puerto Victoria — claro o nublado, no me canso. Dai pai dong: taburete de plástico, vuelve el humo. Paseo marítimo: ve cuando necesites aire, gratis.",
+          ),
+        },
+        {
+          label: tx("Would skip", "不会再去", "건너뛸 것", "Lo saltaría"),
+          body: tx(
+            "Viral spots with long queues. Forty minutes later you learn: fame is someone else's; the stomach is yours — fame is not the same as liking the food.",
+            "排长队的网红店。排了四十分钟才明白：名气是别人的，胃是自己的——名气大不等于对胃口。",
+            "줄 긴 바이럴 가게. 사십 분 뒤에 안다: 유명은 남의 것, 위장은 내 것 — 유명하다고 입에 맞는 건 아니다.",
+            "Sitios virales con cola larga. Tras cuarenta minutos lo ves: la fama es de otro; el estómago es tuyo — fama no es que te guste.",
+          ),
+        },
+        {
+          label: tx("Surprises", "意外之喜", "뜻밖의 기쁨", "Sorpresas"),
+          body: tx(
+            "An egret on the shallows stuck more than many sights. Cloudy Hong Kong has another taste. Corner things that were never on the list.",
+            "一只站在浅滩上的白鹭，比很多景点都难忘；阴天的香港有另一种味道；街角那些没在行程表上的小东西。",
+            "얕은 물가의 백로가 많은 명소보다 오래 남았다. 흐린 홍콩엔 다른 맛이 있다. 일정표에 없던 모퉁이 것들.",
+            "Una garceta en lo bajo me quedó más que muchas vistas. El Hong Kong nublado tiene otro sabor. Cosas de esquina que nunca estaban en la lista.",
+          ),
+        },
+        {
+          label: tx("Time", "时间建议", "시간 제안", "Tiempo"),
+          body: tx(
+            "Do not pack the schedule — blank space is how you meet surprise. Harbour at dusk is best. Leave a full one or two hours for the waterfront walk.",
+            "行程千万别排太满，留白才能撞见惊喜。维港傍晚去最好；海滨步道留出完整的一两个小时慢慢走。",
+            "일정을 너무 채우지 마라 — 빈칸이 있어야 놀라움에 부딪힌다. 항구는 해 질 녘이 최고. 해안 산책은 온전한 한두 시간을 남겨라.",
+            "No llenes el horario — el hueco es cómo te topas con sorpresa. El puerto al atardecer es lo mejor. Deja una o dos horas enteras para el paseo.",
+          ),
+        },
+        {
+          label: tx("The catch", "给后来人的坑", "나중에 올 사람을 위한 함정", "El truco"),
+          body: tx(
+            "Do not let queue length decide for you — the longer the wait, the higher the hope, the easier the letdown. Do not stuff the itinerary; blank space is not wasted time. On cloudy days do not hide in the hotel — cloudy Hong Kong is worth seeing.",
+            "别被排队长度绑架，排得越长期望越高，越容易失望；别把行程塞满，留白不是浪费时间；阴天别躲在酒店，出来走走，香港的阴天值得看。",
+            "줄 길이에 끌려가지 마라 — 기다릴수록 기대가 커지고, 실망도 쉽다. 일정을 가득 채우지 마라. 빈칸은 낭비 시간이 아니다. 흐린 날 호텔에 숨지 마라 — 흐린 홍콩도 볼 만하다.",
+            "No dejes que la longitud de la cola decida — cuanto más esperas, más esperas, más fácil la decepción. No atestes el itinerario; el hueco no es tiempo perdido. En días nublados no te escondas en el hotel — el Hong Kong nublado merece verse.",
+          ),
+        },
+      ],
+    },
+    {
+      type: "text",
+      body: tx(
+        "Next episode: your Hong Kong, not mine.",
+        "下一集，讲你的香港，不是我的。",
+        "다음 에피소드: 당신의 홍콩, 내 것이 아닌.",
+        "Próximo episodio: tu Hong Kong, no el mío.",
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "BGM: Meditation Impromptu 01 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM：Meditation Impromptu 01 by Kevin MacLeod (incompetech.com)，CC BY 4.0。",
+        "BGM: Meditation Impromptu 01 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM: Meditation Impromptu 01 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+      ),
+    },
+  ],
+}
+
+const ep08: StoryEpisode = {
+  number: 8,
+  slug: "08-your-hong-kong",
+  status: "published",
+  publishedAt: "2026-09-28",
+  title: tx("Your Hong Kong, Not Mine", "你的香港，不是我的", "당신의 홍콩, 내 것이 아닌", "Tu Hong Kong, no el mío"),
+  dek: tx(
+    "The first seven episodes were my Hong Kong. This one passes the mic: where you fly from, who comes, your budget, what you care about — then build your own decision.",
+    "前七集，我讲的是我的香港。这一集，把话筒递给你：你从哪座城市出发？和谁一起？预算多少？你在乎的是吃，是景，还是慢下来？",
+    "앞 일곱 편은 내 홍콩이었다. 이번엔 마이크를 넘긴다: 어디서 출발하나, 누구와, 예산, 무엇을 중시하나 — 그다음 네 결정을 만들어라.",
+    "Los primeros siete episodios fueron mi Hong Kong. Este pasa el micrófono: desde dónde vuelas, quién viene, presupuesto, qué te importa — y construye tu decisión.",
+  ),
+  cover: {
+    ...shot(
+      "08",
+      "skyline",
+      720,
+      1280,
+      tx(
+        "City skyline from the waterfront promenade",
+        "海滨步道看城市天际线",
+        "해안 산책로에서 본 스카이라인",
+        "Skyline desde el paseo marítimo",
+      ),
+    ),
+  },
+  heroVideo: {
+    src: "/stories/hong-kong/08/hero.mp4",
+    poster: shot(
+      "08",
+      "skyline",
+      720,
+      1280,
+      tx(
+        "City skyline from the waterfront promenade",
+        "海滨步道看城市天际线",
+        "해안 산책로에서 본 스카이라인",
+        "Skyline desde el paseo marítimo",
+      ),
+    ),
+  },
+  blocks: [
+    {
+      type: "text",
+      body: tx(
+        "The first seven episodes were my Hong Kong: wind on the harbour, boats at the pier, a late bowl of noodles. This episode hands you the mic — because your Hong Kong should not be a copy of mine.",
+        "前七集，我讲的是我的香港：维港的风、码头的船、深夜的一碗面。这一集，把话筒递给你——因为你的香港，不该是我的复制品。",
+        "앞 일곱 편은 내 홍콩이었다: 항구의 바람, 부두의 배, 늦은 국수 한 그릇. 이번엔 마이크를 넘긴다 — 네 홍콩은 내 것의 복사본이 아니어야 하니까.",
+        "Los primeros siete fueron mi Hong Kong: viento en el puerto, barcos en el muelle, un bowl de fideos de noche. Este episodio te pasa el micrófono — porque tu Hong Kong no debería ser una copia del mío.",
+      ),
+    },
+    { type: "heading", body: tx("01 — Looking back: my Hong Kong", "01 · 回顾：我的香港", "01 · 돌아보기: 내 홍콩", "01 · Mirar atrás: mi Hong Kong") },
+    {
+      type: "photo",
+      photo: shot(
+        "08",
+        "skyline",
+        720,
+        1280,
+        tx("City skyline from the waterfront promenade", "海滨步道看城市天际线", "해안 산책로에서 본 스카이라인", "Skyline desde el paseo marítimo"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Seven episodes later, my Hong Kong looks about like this: skyline from the waterfront walk, a red-sail junk heading out, lights on both shores at night. Scenery is what Hong Kong never lacks — but after living here you learn scenery is only the base layer.",
+        "七集走下来，我的香港大概就是这样：海滨步道上的天际线，出海的红帆船，夜里两岸的灯。风景是香港最不缺的东西，但住下来才发现，风景只是底色。",
+        "일곱 편을 지나니 내 홍콩은 대략 이렇다: 해안 산책의 스카이라인, 나가는 붉은 돛 정, 밤 양안의 불. 풍경은 홍콩에 가장 부족한 게 아니다 — 여기 살고 나서야 풍경은 바탕색일 뿐이라는 걸 안다.",
+        "Tras siete episodios, mi Hong Kong es más o menos esto: skyline desde el paseo, un junk de vela roja saliendo, luces en ambas orillas de noche. Paisaje es lo que a Hong Kong no le falta — pero tras vivir aquí ves que el paisaje es solo la base.",
+      ),
+    },
+    { type: "heading", body: tx("02 — Night harbour, never tired", "02 · 夜维港，看不腻", "02 · 밤 항구, 질리지 않음", "02 · Puerto de noche, sin cansancio") },
+    {
+      type: "photo",
+      photo: shot(
+        "08",
+        "night-harbor",
+        720,
+        1280,
+        tx("Victoria Harbour at night", "夜晚的维多利亚港", "밤의 빅토리아 항구", "Puerto Victoria de noche"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "I have shot the night harbour many times. The angle is usually similar — and it still feels worth it. Some views work like that: visitors check in once; people who live here look a hundred times.",
+        "夜维港我拍过很多次，每次角度都差不多，但每次看还是觉得值。有些风景就是这样：游客打卡一次，住下来的人看一百次。",
+        "밤 항구를 여러 번 찍었다. 각도는 비슷한데, 볼 때마다 값하다. 어떤 풍경은 그렇다: 관광객은 한 번 체크인하고, 사는 사람은 백 번 본다.",
+        "He fotografiado el puerto de noche muchas veces. El ángulo suele ser parecido — y sigue valiendo. Hay vistas así: el visitante hace check-in una vez; quien vive mira cien.",
+      ),
+    },
+    { type: "heading", body: tx("03 — Small moments and family", "03 · 小时刻和家人", "03 · 작은 순간과 가족", "03 · Momentos chicos y familia") },
+    {
+      type: "photo",
+      photo: shot(
+        "08",
+        "egret",
+        720,
+        1280,
+        tx("An egret skimming over the water", "白鹭掠过水面", "수면 위를 스치는 백로", "Una garceta rozando el agua"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Besides the big views there are small moments: an egret over the water, family laughter, the Shiba that never runs far. The city is large. What you remember is often these small things.",
+        "除了大风景，还有小时刻：白鹭掠过水面，家人的笑声，那只总跑不远的柴犬。城市很大，记住它的往往是这些很小的东西。",
+        "큰 풍경 말고도 작은 순간이 있다: 수면 위 백로, 가족 웃음, 멀리 안 뛰는 시바. 도시는 크다. 기억하는 건 종종 이런 작은 것들이다.",
+        "Además de las grandes vistas hay momentos chicos: una garceta sobre el agua, risas de familia, el Shiba que nunca corre lejos. La ciudad es grande. Lo que recuerdas suele ser esto pequeño.",
+      ),
+    },
+    { type: "heading", body: tx("04 — Turn: your turn", "04 · 转向：该你了", "04 · 전환: 네 차례", "04 · Giro: te toca") },
+    {
+      type: "photo",
+      photo: shot(
+        "08",
+        "pier-day",
+        720,
+        1280,
+        tx("Daytime view from the pier", "码头日景", "부두 낮 풍경", "Vista diurna desde el muelle"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "This was my list, my pace, my Hong Kong. When you come, do not copy my list. No matter how detailed someone else's guide is, it cannot answer one question: what kind of trip do you actually want?",
+        "这是我的清单，我的节奏，我的香港。但你来，不该照抄我的清单。别人的攻略再详细，也回答不了一个问题：你到底想要一趟什么样的旅行？",
+        "이건 내 리스트, 내 박자, 내 홍콩이다. 네가 올 때는 내 리스트를 베끼지 마라. 남의 가이드가 아무리 자세해도 한 질문엔 답 못 한다: 너는 어떤 여행을 원하는가?",
+        "Esta fue mi lista, mi ritmo, mi Hong Kong. Cuando vengas, no copies mi lista. Por detallada que sea la guía de otro, no responde una pregunta: ¿qué viaje quieres de verdad?",
+      ),
+    },
+    { type: "heading", body: tx("05 — Four questions", "05 · 四个问题", "05 · 네 가지 질문", "05 · Cuatro preguntas") },
+    {
+      type: "photo",
+      photo: shot(
+        "08",
+        "victoria-night",
+        720,
+        1280,
+        tx("Victoria Harbour at night", "夜维港", "밤의 빅토리아 항구", "Puerto Victoria de noche"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Do not rush the itinerary. Answer four questions first: Which city do you fly from? Who is coming? What is the budget? Do you care most about food, views, or slowing down? Honest answers to these beat ten guide articles.",
+        "别急着做行程，先回答四个问题：你从哪座城市出发？和谁一起？预算多少？你在乎的是吃，是景，还是慢下来？诚实回答这四个，比看十篇攻略都有用。",
+        "일정을 서두르지 마라. 먼저 네 가지에 답하라: 어느 도시에서 출발하나? 누구와? 예산은? 가장 중요한 게 먹거리, 풍경, 아니면 천천히인가? 이 넷에 솔직히 답하는 게 가이드 열 편보다 낫다.",
+        "No apresures el itinerario. Responde primero cuatro: ¿Desde qué ciudad vuelas? ¿Quién viene? ¿Cuál es el presupuesto? ¿Te importa más la comida, la vista o ir despacio? Respuestas honestas a esto ganan a diez guías.",
+      ),
+    },
+    { type: "heading", body: tx("06 — Your story starts now", "06 · 你的故事，该开始了", "06 · 네 이야기는 지금부터", "06 · Tu historia empieza ahora") },
+    {
+      type: "photo",
+      photo: shot(
+        "08",
+        "fishing-boat",
+        720,
+        1280,
+        tx("Fishing boats in the harbour", "海港渔船", "항구의 어선", "Barcos de pesca en el puerto"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Tell XingAI those answers. It will build a Hong Kong decision for you — not a copy of mine, but one from your departure city, companions, budget, and preferences. My story is done. Yours should start.",
+        "把这些告诉星AI，它会帮你生成一份属于你的香港决策——不是复制我的，是按你的出发城市、同行的人、预算和偏好算出来的。我的故事讲完了，你的故事，该开始了。",
+        "그 답을 별AI에 알려라. 네 홍콩 결정을 만들어 줄 것이다 — 내 것의 복사가 아니라, 출발 도시·동행·예산·선호로 계산한 것. 내 이야기는 끝났다. 네 이야기가 시작될 때다.",
+        "Cuéntale eso a XingAI. Hará una decisión de Hong Kong para ti — no una copia de la mía, sino desde tu ciudad de salida, compañía, presupuesto y preferencias. Mi historia terminó. La tuya debería empezar.",
+      ),
+    },
+    {
+      type: "verdict",
+      intro: tx(
+        "Before you book anything — answer these four.",
+        "出发前，先回答这四个问题。",
+        "출발 전에 — 이 넷에 답하라.",
+        "Antes de reservar nada — responde estas cuatro.",
+      ),
+      rows: [
+        {
+          label: tx("Where from", "你从哪出发", "어디서 출발", "Desde dónde"),
+          body: tx(
+            "Your departure city sets flight time and price, and how many days you really have. Lock this first, then talk itinerary.",
+            "出发城市决定了航班时长和价格，也决定了你有几天可玩。先定这个，再谈行程。",
+            "출발 도시가 비행 시간과 가격, 그리고 실제로 며칠 있는지를 정한다. 먼저 이걸 잠그고, 그다음 일정.",
+            "La ciudad de salida fija duración y precio del vuelo, y cuántos días tienes de verdad. Fija esto primero, luego el itinerario.",
+          ),
+        },
+        {
+          label: tx("Who with", "和谁一起", "누구와", "Con quién"),
+          body: tx(
+            "Solo, two people, elders or kids — the pace is completely different. Who comes decides the speed of the trip.",
+            "一个人、两个人、带老人小孩，节奏完全不一样。同行的人，决定了这趟旅行的速度。",
+            "혼자, 둘, 어르신·아이 — 박자가 완전히 다르다. 동행이 여행의 속도를 정한다.",
+            "Solo, dos, mayores o niños — el ritmo es otro. Quien viene decide la velocidad del viaje.",
+          ),
+        },
+        {
+          label: tx("Budget", "预算多少", "예산", "Presupuesto"),
+          body: tx(
+            "Hong Kong can be expensive or thrifty. Set a total first, then split stay, food, transport, and play — each has its own way to open.",
+            "香港可贵可省。先定总预算，再分配给住、吃、行、玩，每一项都有对应的打开方式。",
+            "홍콩은 비쌀 수도 알뜰할 수도 있다. 총액을 먼저 정하고, 숙·식·교·놀이에 나눠라 — 항목마다 여는 방식이 있다.",
+            "Hong Kong puede ser caro o ahorrado. Fija un total, luego reparte alojamiento, comida, transporte y ocio — cada uno tiene su forma de abrirse.",
+          ),
+        },
+        {
+          label: tx("What matters", "你在乎什么", "무엇을 중시하나", "Qué te importa"),
+          body: tx(
+            "Food, views, or slowing down? Prioritise one first. Clear priority keeps the itinerary from biting off more than it can chew.",
+            "吃，是景，还是慢下来？只能先顾一个。想清楚优先级，行程才不会贪多嚼不烂。",
+            "먹거리, 풍경, 아니면 천천히? 하나만 먼저 챙겨라. 우선순위가 분명해야 일정이 욕심을 덜 부린다.",
+            "¿Comida, vistas o ir despacio? Prioriza uno primero. Con prioridad clara el itinerario no muerde más de lo que puede.",
+          ),
+        },
+        {
+          label: tx("Next step", "下一步", "다음 단계", "Siguiente paso"),
+          body: tx(
+            "Give XingAI these four answers and build your Hong Kong decision.",
+            "把这四个答案告诉星AI，生成我的香港决策。",
+            "이 네 답을 별AI에 주고, 네 홍콩 결정을 만들어라.",
+            "Dale a XingAI estas cuatro respuestas y construye tu decisión sobre Hong Kong.",
+          ),
+        },
+      ],
+    },
+    {
+      type: "quote",
+      body: tx(
+        "My story is done. Yours should start.",
+        "我的故事讲完了，你的故事，该开始了。",
+        "내 이야기는 끝났다. 네 이야기가 시작될 때다.",
+        "Mi historia terminó. La tuya debería empezar.",
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "BGM: George Street Shuffle by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM：George Street Shuffle by Kevin MacLeod (incompetech.com)，CC BY 4.0。",
+        "BGM: George Street Shuffle by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM: George Street Shuffle by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+      ),
+    },
+  ],
 }
 
 export const hongKong: StorySeason = {
@@ -1365,49 +2450,9 @@ export const hongKong: StorySeason = {
     ep02,
     ep03,
     ep04,
-    planned(
-      5,
-      "05-small-moments-i-didnt-plan",
-      tx("Small Moments I Didn't Plan", "我没计划到的小瞬间", "계획하지 않은 작은 순간", "Pequeños momentos que no planeé"),
-      tx(
-        "Egrets, mist, weather, and street corners no itinerary would list.",
-        "白鹭、云雾、天气，以及行程表上不会出现的街角。",
-        "백로, 안개, 날씨, 일정표에 없는 거리 모퉁이.",
-        "Garzas, niebla, clima y esquinas que ningún itinerario incluiría.",
-      ),
-    ),
-    planned(
-      6,
-      "06-hong-kong-with-family",
-      tx("Hong Kong With Family", "和家人一起的香港", "가족과 함께한 홍콩", "Hong Kong con la familia"),
-      tx(
-        "What a city leaves you with is the people you shared it with.",
-        "一座城市最后留下的，是一起经历它的人。",
-        "도시가 남기는 것은 함께한 사람들이다.",
-        "Lo que una ciudad te deja son las personas con las que la compartiste.",
-      ),
-    ),
-    planned(
-      7,
-      "07-what-id-do-again",
-      tx("What I'd Do Again — and Differently", "我会再做的，和会换个方式做的", "다시 할 것, 다르게 할 것", "Lo que repetiría — y lo que haría distinto"),
-      tx(
-        "Six months of judgment: would return, would skip, hidden gems, and lessons.",
-        "半年后留下的判断：会再去、会跳过、私藏好地方，以及教训。",
-        "반년의 판단: 다시 갈 곳, 건너뛸 곳, 숨은 보석, 교훈.",
-        "Seis meses de juicio: volvería, saltaría, joyas escondidas y lecciones.",
-      ),
-    ),
-    planned(
-      8,
-      "08-your-hong-kong",
-      tx("Your Hong Kong, Not Mine", "你的香港，不是我的", "당신의 홍콩, 내 것이 아닌", "Tu Hong Kong, no el mío"),
-      tx(
-        "My Hong Kong shouldn't be a copy for yours. Start with your own constraints.",
-        "你的香港不该是我的复制品。从你自己的条件开始。",
-        "내 홍콩을 당신 것의 복사본으로 삼지 마라. 당신의 조건에서 시작하라.",
-        "Mi Hong Kong no debería ser la copia del tuyo. Empieza por tus propias condiciones.",
-      ),
-    ),
+    ep05,
+    ep06,
+    ep07,
+    ep08,
   ],
 }
