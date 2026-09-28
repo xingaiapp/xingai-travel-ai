@@ -702,6 +702,627 @@ const ep02: StoryEpisode = {
   ],
 }
 
+const ep03: StoryEpisode = {
+  number: 3,
+  slug: "03-what-i-actually-ate",
+  status: "published",
+  publishedAt: "2026-09-28",
+  title: tx("What I Actually Ate in Hong Kong", "我真正在香港吃的东西", "홍콩에서 내가 실제로 먹은 것", "Lo que comí de verdad en Hong Kong"),
+  dek: tx(
+    "Not a top-ten list — meals I actually ate, with photos: dai pai dong, double rice, steamed fish, roast meats, roujiamo.",
+    "不是十大美食榜单，而是有照片为证的一顿顿饭：大排档、双拼饭、清蒸鱼、烧肉、肉夹馍。",
+    "탑텐 리스트가 아니다. 사진이 있는 진짜 한 끼들: 대파이동, 더블 라이스, 찐 생선, 훈제, 러우자모.",
+    "No es un top ten: comidas que sí hice, con fotos — dai pai dong, arroz doble, pescado al vapor, asados, roujiamo.",
+  ),
+  cover: {
+    ...shot(
+      "03",
+      "double-rice",
+      1280,
+      1707,
+      tx(
+        "Char siu and white-cut chicken double rice",
+        "叉烧白切鸡双拼饭",
+        "차슈와 백절계 더블 라이스",
+        "Arroz doble de char siu y pollo blanco",
+      ),
+    ),
+  },
+  heroVideo: {
+    src: "/stories/hong-kong/03/hero.mp4",
+    poster: shot(
+      "03",
+      "double-rice",
+      1280,
+      1707,
+      tx(
+        "Char siu and white-cut chicken double rice",
+        "叉烧白切鸡双拼饭",
+        "차슈와 백절계 더블 라이스",
+        "Arroz doble de char siu y pollo blanco",
+      ),
+    ),
+  },
+  blocks: [
+    {
+      type: "text",
+      body: tx(
+        "At the gate I ate a bagel and thought: wait for me, Hong Kong. After landing — dai pai dong beer, char siu and white-cut chicken double rice, steamed fish, roujiamo — this is not a ranking. It is what I actually ate, with photos.",
+        "登机前，我在机场啃 bagel，心想：等着吧，香港。落地之后，从大排档啤酒到叉烧白切鸡双拼，从清蒸鱼到肉夹馍——这篇不写榜单，写我真正吃过的东西，有照片为证。",
+        "탑승구에서 베이글을 씹으며 생각했다: 기다려라, 홍콩. 착륙 뒤 — 대파이동 맥주, 차슈·백절계 더블 라이스, 찐 생선, 러우자모. 순위가 아니라, 내가 실제로 먹은 것. 사진이 있다.",
+        "En la puerta comí un bagel y pensé: espérame, Hong Kong. Tras aterrizar — cerveza en dai pai dong, arroz doble de char siu y pollo blanco, pescado al vapor, roujiamo. No es un ranking. Es lo que comí de verdad, con fotos.",
+      ),
+    },
+    { type: "heading", body: tx("01 — Bagel at the gate", "01 · 登机口的 bagel", "01 · 탑승구 베이글", "01 · Bagel en la puerta") },
+    {
+      type: "photo",
+      photo: shot(
+        "03",
+        "bagel",
+        1080,
+        1920,
+        tx("Eating a bagel at a United gate before boarding", "机场登机口啃 bagel", "유나이티드 탑승구에서 베이글", "Comiendo un bagel en la puerta de United"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "At United gate 27 I chewed a bagel and thought: wait for me, Hong Kong. After landing, the bagel was already a joke — the contrast was brutal.",
+        "登机前，我在 United 27 号登机口啃 bagel，心想：等着吧，香港。没想到落地之后，bagel 很快就被抛在脑后了——对比太惨烈。",
+        "유나이티드 27번 탑승구에서 베이글을 씹으며 생각했다: 기다려라, 홍콩. 착륙하니 베이글은 금방 잊혔다 — 대비가 너무 심했다.",
+        "En la puerta 27 de United mordí un bagel y pensé: espérame, Hong Kong. Tras aterrizar, el bagel ya era una broma — el contraste fue brutal.",
+      ),
+    },
+    { type: "heading", body: tx("02 — First meal: dai pai dong", "02 · 落地第一顿：大排档", "02 · 첫 끼: 대파이동", "02 · Primera comida: dai pai dong") },
+    {
+      type: "photo",
+      photo: shot(
+        "03",
+        "dai-pai-dong",
+        1080,
+        1920,
+        tx("Round table and beer at a dai pai dong", "大排档圆桌啤酒", "대파이동 원탁과 맥주", "Mesa redonda y cerveza en un dai pai dong"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "First meal after landing: dai pai dong. Round table, beer, cheers first. At places like this, friends matter more than the menu — though the food is fine too.",
+        "落地第一顿，大排档走起。圆桌，啤酒，先干为敬。这种港式小店，朋友聚一块，气氛比什么都重要，菜反而是其次——当然菜也不差。",
+        "착륙 후 첫 끼는 대파이동. 원탁, 맥주, 먼저 건배. 이런 가게에선 메뉴보다 친구가 중요하다 — 물론 음식도 나쁘지 않다.",
+        "Primera comida tras aterrizar: dai pai dong. Mesa redonda, cerveza, brindis primero. En sitios así importan más los amigos que la carta — aunque la comida también vale.",
+      ),
+    },
+    { type: "heading", body: tx("03 — Char siu + white-cut chicken", "03 · 叉烧白切鸡双拼", "03 · 차슈·백절계 더블", "03 · Char siu y pollo blanco") },
+    {
+      type: "photo",
+      photo: shot(
+        "03",
+        "double-rice",
+        1280,
+        1707,
+        tx("Char siu and white-cut chicken double rice", "叉烧白切鸡双拼饭", "차슈와 백절계 더블 라이스", "Arroz doble de char siu y pollo blanco"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Roast-meat rice is still my default — upgraded this time: char siu plus white-cut chicken. The chicken is silky, the char siu sweet, the rice soaked in juice. One bowl, two tastes. Honest food.",
+        "烧味饭还是我的标配，不过这次升级了：叉烧加白切鸡，来个双拼。白切鸡滑，叉烧甜，饭吸饱了汁，一碗两吃，特别实在。",
+        "훈제 고기 덮밥은 여전히 기본 — 이번엔 업그레이드: 차슈에 백절계. 닭은 부드럽고, 차슈는 달고, 밥이 국물을 먹는다. 한 그릇에 두 맛. 실하다.",
+        "El arroz de asado sigue siendo mi base — esta vez subido: char siu más pollo blanco. El pollo seda, el char siu dulce, el arroz empapado. Un bowl, dos sabores. Comida honesta.",
+      ),
+    },
+    { type: "heading", body: tx("04 — Steamed fish", "04 · 清蒸鱼", "04 · 찐 생선", "04 · Pescado al vapor") },
+    {
+      type: "photo",
+      photo: shot(
+        "03",
+        "steamed-fish",
+        1080,
+        1920,
+        tx("Steamed fish with scallion oil", "清蒸鱼", "파기름 찐 생선", "Pescado al vapor con aceite de cebolleta"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Steamed fish, scallions hit with hot oil — the flesh barely holds on chopsticks. Steaming shows how fresh a fish is. A shop that dares to steam usually has the goods.",
+        "清蒸鱼，葱丝一爆，鱼肉嫩得筷子都夹不住。清蒸最见一条鱼新不新鲜，敢清蒸的店，食材一般都有底气。",
+        "찐 생선, 파에 뜨거운 기름 — 살이 젓가락에 안 잡힐 만큼 연하다. 찜은 신선도를 드러낸다. 찜을 하는 가게는 재료에 자신이 있다.",
+        "Pescado al vapor, cebolleta con aceite caliente — la carne casi no se sujeta al palillo. El vapor delata frescura. Quien se atreve a vapor, suele tener materia.",
+      ),
+    },
+    { type: "heading", body: tx("05 — Fermented-bean pepper shrimp", "05 · 豉椒炒虾", "05 · 두반장 고추 새우", "05 · Gambas al pimiento y douban") },
+    {
+      type: "photo",
+      photo: shot(
+        "03",
+        "shrimp",
+        1280,
+        1707,
+        tx("Stir-fried shrimp with fermented black bean and pepper", "豉椒炒虾", "두반장·고추 볶음 새우", "Gambas salteadas con douban y pimiento"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Fermented-bean pepper shrimp with Blue Girl — each bite opens the appetite more. Half the joy of a dai pai dong is the dish; half is cold beer. Big shrimp, wok heat on the pepper.",
+        "豉椒炒虾，就着 Blue Girl，越吃越开胃。大排档的快乐，一半在菜，一半在冰啤酒。虾要大只，豉椒要够镬气。",
+        "두반장 고추 새우에 Blue Girl — 먹을수록 입맛이 열린다. 대파이동의 즐거움은 반이 요리, 반이 차가운 맥주. 새우는 크고, 고추는 웍 기운이 있어야 한다.",
+        "Gambas al douban y pimiento con Blue Girl — cada bocado abre más el apetito. La mitad del dai pai dong es el plato; la otra, cerveza fría. Gambas grandes, fuego de wok en el pimiento.",
+      ),
+    },
+    { type: "heading", body: tx("06 — Small plates tell the truth", "06 · 小碟见真功夫", "06 · 작은 접시가 실력", "06 · Los platos chicos dicen la verdad") },
+    {
+      type: "photo",
+      photo: shot(
+        "03",
+        "cucumber",
+        1280,
+        1707,
+        tx("Smashed cucumber cold dish", "拍黄瓜", "찍은 오이 냉채", "Pepino aplastado en frío"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Don't only watch the big dishes. Smashed cucumber, garlic greens — small plates show the craft. Seasoning and heat: one cold bite tells you everything.",
+        "别光盯着大菜。拍黄瓜、蒜蓉菜心，这种小碟才见真功夫。调味准不准、火候到不到位，一口凉菜全交代了。",
+        "큰 요리만 보지 마라. 찍은 오이, 마늘 청경채 — 작은 접시가 실력을 보여준다. 간과 불 — 찬 한 입이 다 말한다.",
+        "No mires solo los platos grandes. Pepino aplastado, verdura al ajo — los chicos muestran oficio. Sazón y fuego: un bocado frío lo dice todo.",
+      ),
+    },
+    { type: "heading", body: tx("07 — Japanese yakiniku", "07 · 日式烧肉", "07 · 일식 야키니쿠", "07 · Yakiniku japonés") },
+    {
+      type: "photo",
+      photo: shot(
+        "03",
+        "yakiniku",
+        1280,
+        1707,
+        tx("Japanese yakiniku wagyu on the grill", "日式烧肉和牛", "그릴 위 와규 야키니쿠", "Wagyu de yakiniku japonés en la parrilla"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Japanese yakiniku was on the list too. Wagyu hits the grill and sizzles. In Hong Kong you can eat almost any cuisine — Japanese, Korean, Southeast Asian. That range is the point.",
+        "日式烧肉也安排过。和牛往烤盘上一放，滋滋冒油。在香港想吃什么菜系都有，日料韩料东南亚菜全得很，这就是它的好。",
+        "일식 야키니쿠도 했다. 와규가 그릴에 닿으면 지글거린다. 홍콩에선 거의 모든 요리를 먹을 수 있다 — 일식, 한식, 동남아. 그 폭이 장점이다.",
+        "También hubo yakiniku japonés. El wagyu toca la parrilla y chisporrotea. En Hong Kong puedes comer casi cualquier cocina — japonesa, coreana, sudeste asiático. Ese abanico es el punto.",
+      ),
+    },
+    { type: "heading", body: tx("08 — Roujiamo and pepper pork", "08 · 肉夹馍和青椒炒肉", "08 · 러우자모와 청고추 돼지고기", "08 · Roujiamo y cerdo al pimiento") },
+    {
+      type: "photo",
+      photo: shot(
+        "03",
+        "roujiamo",
+        1280,
+        1707,
+        tx("Tongguan roujiamo", "潼关肉夹馍", "퉁관 러우자모", "Roujiamo de Tongguan"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Tongguan roujiamo — perfect for a craving in Hong Kong. And green-pepper stir-fried pork, hammered wok brought to the table, full of wok heat. Hometown flavours show up everywhere; Hong Kong's range is wider than you think.",
+        "潼关肉夹馍，在香港解馋一流。还有青椒炒肉，锤纹小锅直接上桌，镬气十足。家乡味在哪儿都找得到，香港的包容度比想象中大。",
+        "퉁관 러우자모 — 홍콩에서 땡길 때 최고. 청고추 돼지고기볶음은 망치 무늬 웍이 그대로 나오고 웍 기운이 있다. 고향 맛은 어디서든 찾을 수 있고, 홍콩의 폭은 생각보다 크다.",
+        "Roujiamo de Tongguan — ideal para un antojo en Hong Kong. Y cerdo al pimiento verde, wok martillado a la mesa, fuego de wok. Los sabores de casa aparecen en todas partes; Hong Kong abarca más de lo que crees.",
+      ),
+    },
+    { type: "heading", body: tx("09 — Red and white", "09 · 红的白的", "09 · 빨간 것과 흰 것", "09 · Tinto y blanco") },
+    {
+      type: "photo",
+      photo: shot(
+        "03",
+        "baijiu",
+        1280,
+        1707,
+        tx("Red Star erguotou on the table", "红星二锅头", "탁자 위 홍성 얼궈터우", "Erguotou Red Star en la mesa"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Red and white both showed up: Red Star erguotou at 56°, Rémy Martin cognac — anything can be talked through at the table. In Hong Kong, the meal table is the best social room. Deals and friendships happen over dinner.",
+        "红的白的都上过：红星二锅头五十六度，路易老爷干邑——酒桌上什么都能聊。在香港，饭桌是最好的社交场，谈事交朋友都在一顿饭里。",
+        "빨간 것과 흰 것 둘 다: 홍성 얼궈터우 56도, 레미 마틴 코냑 — 술상에서는 뭐든 이야기할 수 있다. 홍콩에서 밥상은 최고의 사교장. 일과 친구는 한 끼 안에 있다.",
+        "Tinto y blanco: erguotou Red Star a 56°, cognac Rémy Martin — en la mesa se puede hablar de todo. En Hong Kong, la mesa es el mejor salón social. Negocios y amistades caben en una comida.",
+      ),
+    },
+    { type: "heading", body: tx("10 — Noodles and taste", "10 · 汤面和味道", "10 · 국수와 맛", "10 · Fideos y sabor") },
+    {
+      type: "photo",
+      photo: shot(
+        "03",
+        "noodles",
+        1280,
+        1707,
+        tx("Home-style soup noodles with tofu and carrot", "家常汤面", "두부·당근 가정식 국수", "Fideos de caldo caseros con tofu y zanahoria"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Home-style soup noodles — tofu cubes, shredded carrot — that solid kind of meal. So don't only chase lists. In Hong Kong, remembering a city starts with remembering how it tastes.",
+        "家常汤面，豆腐丁胡萝卜丝，吃的是个踏实。所以别光盯着榜单——在香港，记住一座城市，是从记住它的味道开始的。",
+        "가정식 국수 — 두부 알갱이, 당근 채 — 든든한 한 끼. 그러니 리스트만 쫓지 마라. 홍콩에서 도시를 기억하는 일은, 그 맛을 기억하는 일에서 시작한다.",
+        "Fideos de caldo caseros — tofu en dados, zanahoria en tiras — esa comida sólida. Así que no persigas solo listas. En Hong Kong, recordar una ciudad empieza por recordar cómo sabe.",
+      ),
+    },
+    {
+      type: "verdict",
+      intro: tx(
+        "Not a guidebook conclusion. The answers left after eating through the city.",
+        "不是攻略结论，是真正吃过以后留下的答案。",
+        "가이드북 결론이 아니다. 도시를 먹어 본 뒤 남은 답이다.",
+        "No es la conclusión de una guía. Las respuestas que quedaron tras comerse la ciudad.",
+      ),
+      rows: [
+        {
+          label: tx("Worth it", "值不值得", "갈 만한가", "¿Merece la pena?"),
+          body: tx(
+            "Worth it. Hong Kong's eating is not on the lists — it is in dai pai dongs, neighbourhood shops, and honest bowls of rice.",
+            "值得。香港的“吃”不在榜单里，在大排档、街坊小店和一碗碗实在的饭里。",
+            "갈 만하다. 홍콩의 ‘먹’은 리스트가 아니라 대파이동, 동네 가게, 실한 밥그릇에 있다.",
+            "Merece la pena. El comer de Hong Kong no está en las listas — está en dai pai dongs, tiendas del barrio y bowls honestos.",
+          ),
+        },
+        {
+          label: tx("Who it's for", "适合谁", "누구에게", "Para quién"),
+          body: tx(
+            "First-timers. People who live here. Anyone who wants solid food without spending big — and anyone curious about every cuisine at once.",
+            "第一次来香港的人；住下来的人；不想花大钱、想吃得实在的人；什么菜系都想试的人。",
+            "처음 온 사람. 여기 사는 사람. 큰돈 없이 실하게 먹고 싶은 사람. 온갖 요리를 다 맛보고 싶은 사람.",
+            "Primera visita. Quien vive aquí. Quien quiere comer bien sin gastar mucho — y quien quiera probar de todo.",
+          ),
+        },
+        {
+          label: tx("Budget", "预算", "예산", "Presupuesto"),
+          body: tx(
+            "Double rice and noodle bowls: a few dozen HKD. Dai pai dong: tens to a bit over a hundred per person. Yakiniku and finer roast: from about one to two hundred up. Michelin is optional, not required. (as of 2026)",
+            "双拼饭、粉面几十块港币一份；大排档人均几十到一百多；烧肉、日料人均一两百起；米其林另算，但不是必须。（2026）",
+            "더블 라이스·국수 한 그릇 수십 홍콩 달러. 대파이동 인당 수십~백여. 야키니쿠·고급 훈제는 백~이백부터. 미슐랭은 선택, 필수는 아니다. (2026년 기준)",
+            "Arroz doble y fideos: unas decenas de HK$. Dai pai dong: de decenas a algo más de cien por persona. Yakiniku y asados mejores: desde unos cien o doscientos. Michelin es opcional. (a 2026)",
+          ),
+        },
+        {
+          label: tx("Time", "时间", "시간", "Tiempo"),
+          body: tx(
+            "Lunch or dinner both work. Skip the 12:00–13:00 office rush and queues shrink. Dai pai dongs get better after dark.",
+            "午市晚市都行；避开 12:00–13:00 写字楼午饭高峰，排队少很多；大排档越夜越有气氛。",
+            "점심·저녁 모두 괜찮다. 12:00–13:00 오피스 러시를 피하면 줄이 줄어든다. 대파이동은 밤이 더 분위기 있다.",
+            "Comida o cena valen. Evita el pico de oficina 12:00–13:00 y hay menos cola. Los dai pai dong ganan de noche.",
+          ),
+        },
+        {
+          label: tx("The catch", "有没有坑", "주의할 점", "El truco"),
+          body: tx(
+            "Viral spots mean long queues and easy disappointment. Many street shops take cash or Octopus only — bring a way to pay. Sharing tables in cha chaan tengs is normal. Skip food that is too spicy or too raw if your stomach disagrees.",
+            "网红店排队久、期望容易落空；街边小店大多只收现金或八达通，备好支付方式；茶餐厅拼桌是常态，别介意；太辣的、太生的看自己肠胃，别硬撑。",
+            "바이럴 가게는 줄이 길고 기대가 쉽게 무너진다. 길거리 가게는 현금·옥토퍼스만 받는 곳이 많다. 차찬텡 합석은 일상. 너무 맵거나 날것은 위장에 맞춰라.",
+            "Los sitios virales tienen cola larga y decepción fácil. Muchas tiendas de calle solo cash u Octopus. Compartir mesa en cha chaan teng es normal. Si es demasiado picante o crudo, no fuerces el estómago.",
+          ),
+        },
+      ],
+    },
+    {
+      type: "text",
+      body: tx(
+        "Next episode: Hong Kong in motion.",
+        "下一集，讲流动的香港。",
+        "다음 에피소드: 움직이는 홍콩.",
+        "Próximo episodio: Hong Kong en movimiento.",
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "BGM: Meditation Impromptu 03 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM：Meditation Impromptu 03 by Kevin MacLeod (incompetech.com)，CC BY 4.0。",
+        "BGM: Meditation Impromptu 03 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM: Meditation Impromptu 03 by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+      ),
+    },
+  ],
+}
+
+const ep04: StoryEpisode = {
+  number: 4,
+  slug: "04-hong-kong-in-motion",
+  status: "published",
+  publishedAt: "2026-09-28",
+  title: tx(
+    "Hong Kong in Motion",
+    "行走的香港：我怎样穿过这座城市",
+    "움직이는 홍콩: 내가 이 도시를 가로지른 방식",
+    "Hong Kong en movimiento: cómo crucé la ciudad",
+  ),
+  dek: tx(
+    "Hong Kong is small, but I was on the road every day. Bridges, ferries, the waterfront walk — how I actually crossed the city.",
+    "香港很小，但我每天都在路上。开车过桥、坐渡轮过海、沿海滨步道——地铁、渡轮、大桥和双脚，这就是我穿过香港的方式。",
+    "홍콩은 작지만 매일 길 위에 있었다. 다리, 페리, 해안 산책 — 내가 실제로 도시를 가로지른 방식.",
+    "Hong Kong es pequeño, pero yo iba por la calle cada día. Puentes, ferries, el paseo marítimo — cómo crucé la ciudad de verdad.",
+  ),
+  cover: {
+    ...shot(
+      "04",
+      "bridge-driving",
+      1080,
+      1920,
+      tx(
+        "Driving across a Hong Kong bridge",
+        "开车经过大桥",
+        "홍콩 다리를 차로 건너는 장면",
+        "Cruzando un puente de Hong Kong en coche",
+      ),
+    ),
+  },
+  heroVideo: {
+    src: "/stories/hong-kong/04/hero.mp4",
+    poster: shot(
+      "04",
+      "bridge-driving",
+      1080,
+      1920,
+      tx(
+        "Driving across a Hong Kong bridge",
+        "开车经过大桥",
+        "홍콩 다리를 차로 건너는 장면",
+        "Cruzando un puente de Hong Kong en coche",
+      ),
+    ),
+  },
+  blocks: [
+    {
+      type: "text",
+      body: tx(
+        "Hong Kong is small, but I was on the road every day. MTR, ferry, bridges, and my own feet — this is not about attractions. It is how I crossed the city, and the other Hong Kong you see from the road.",
+        "香港很小，但我每天都在路上。地铁、渡轮、大桥和双脚——这篇不写景点，写我穿过这座城市的方式，以及在路上看到的另一座香港。",
+        "홍콩은 작지만 매일 길 위에 있었다. MTR, 페리, 다리, 두 발 — 명소 이야기가 아니다. 도시를 가로지른 방식, 그리고 길에서 본 다른 홍콩.",
+        "Hong Kong es pequeño, pero yo iba por la calle cada día. MTR, ferry, puentes y mis pies — no es sobre atracciones. Es cómo crucé la ciudad, y el otro Hong Kong que se ve desde el camino.",
+      ),
+    },
+    { type: "heading", body: tx("01 — On the road every day", "01 · 每天都在路上", "01 · 매일 길 위", "01 · En la calle cada día") },
+    {
+      type: "photo",
+      photo: shot(
+        "04",
+        "bridge-driving",
+        1080,
+        1920,
+        tx("Driving across a Hong Kong bridge", "开车经过大桥", "홍콩 다리를 차로 건너는 장면", "Cruzando un puente de Hong Kong en coche"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Hong Kong is small, but I was on the road every day. After I lived here I learned: touring and living run on different clocks — visitors chase sights; residents chase the next train, the next boat.",
+        "香港很小，但我每天都在路上。住下来之后才发现，逛这座城市和旅游时完全是两种节奏——游客赶景点，住下来的人赶的是下一班车、下一班船。",
+        "홍콩은 작지만 매일 길 위에 있었다. 여기 살고 나서 알았다: 관광과 살기는 다른 박자다 — 관광객은 명소를 쫓고, 사는 사람은 다음 차·다음 배를 쫓는다.",
+        "Hong Kong es pequeño, pero yo iba por la calle cada día. Tras vivir aquí lo vi: turistear y vivir van a otro ritmo — el visitante persigue vistas; quien vive persigue el siguiente tren, el siguiente barco.",
+      ),
+    },
+    { type: "heading", body: tx("02 — Hong Kong from the bridge", "02 · 桥上的香港", "02 · 다리 위 홍콩", "02 · Hong Kong desde el puente") },
+    {
+      type: "photo",
+      photo: shot(
+        "04",
+        "cable-bridge",
+        1080,
+        1920,
+        tx("Cable-stayed bridge and freighters on the water", "斜拉桥与海面货船", "사장교와 바다 위 화물선", "Puente atirantado y cargueros en el agua"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Driving a bridge is another feeling. Once you are up, the city spreads under you: homes on this side, docks on that, hills farther out. Hong Kong has many bridges and tunnels — you often come out into a different scene.",
+        "开车过桥是另一种感觉。桥一上去，城市就在脚下铺开：桥这边是住宅，那边是码头，再远一点就是山。香港的桥多，隧道也多，钻出来常常是另一番景象。",
+        "다리를 차로 건너는 건 다른 감각이다. 올라가면 도시가 발밑에 펼쳐진다: 이쪽은 주택, 저쪽은 부두, 더 멀리 산. 홍콩은 다리와 터널이 많다 — 나오면 종종 다른 풍경이다.",
+        "Cruzar un puente en coche es otra sensación. Arriba, la ciudad se abre bajo ti: casas a un lado, muelles al otro, montañas más lejos. Hong Kong tiene muchos puentes y túneles — sales a menudo a otra escena.",
+      ),
+    },
+    { type: "heading", body: tx("03 — Ferry: a few minutes off", "03 · 渡轮：几分钟的假期", "03 · 페리: 몇 분의 휴가", "03 · Ferry: unos minutos libres") },
+    {
+      type: "photo",
+      photo: shot(
+        "04",
+        "ferry",
+        1080,
+        1920,
+        tx("Crossing the harbour on a ferry", "坐渡轮过海", "페리로 항구를 건너는 장면", "Cruzando el puerto en ferry"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "When I want a view, I take the ferry. Crossing only takes a few minutes; the towers slide back. Sit by the rail, feel the wind — a short break for the head. Probably the best-value “trip” in the whole city.",
+        "想看风景的时候，我就坐渡轮。过海其实只要几分钟，船一开，两岸的楼就往后退。坐在船边吹吹风，短短几分钟，像给脑子放了个假——这大概是全香港性价比最高的“旅行”。",
+        "풍경이 보고 싶으면 페리를 탄다. 건너는 데 몇 분이면 되고, 양안의 빌딩이 뒤로 밀린다. 난간에 앉아 바람 — 머리에 짧은 휴가. 아마 도시 전체에서 가성비 최고인 ‘여행’.",
+        "Cuando quiero vista, cojo el ferry. Cruzar son unos minutos; las torres se van atrás. Siéntate al borde, viento — un descanso corto para la cabeza. Probablemente el “viaje” con mejor precio de toda la ciudad.",
+      ),
+    },
+    { type: "heading", body: tx("04 — Measuring by foot", "04 · 用脚丈量", "04 · 발로 재다", "04 · Medir a pie") },
+    {
+      type: "photo",
+      photo: shot(
+        "04",
+        "waterfront-walk",
+        1080,
+        1920,
+        tx("Walking the waterfront promenade", "海滨步道", "해안 산책로를 걷는 장면", "Caminando por el paseo marítimo"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "On the ground I use two feet. The waterfront walk can take one or two hours — no rush, and you see more. Many “photo spots” visitors chase are just what locals see on a daily stroll.",
+        "到了地面就靠两条腿。海滨步道一走就是一两个小时，不赶时间，反而看得更多。很多游客打卡的机位，其实都是本地人散步时随手看到的日常。",
+        "땅에 내려오면 두 발이다. 해안 산책은 한두 시간 — 서두르지 않으면 더 보인다. 관광객이 찍는 ‘포토 스팟’ 많은 것이 현지인이 산책하다 보는 일상이다.",
+        "En tierra uso dos pies. El paseo marítimo puede llevar una o dos horas — sin prisa, y ves más. Muchos “sitios de foto” que persiguen los visitantes son lo que un local ve en un paseo diario.",
+      ),
+    },
+    { type: "heading", body: tx("05 — A layered city", "05 · 立体的城市", "05 · 입체 도시", "05 · Una ciudad en capas") },
+    {
+      type: "photo",
+      photo: shot(
+        "04",
+        "overpass",
+        1080,
+        1920,
+        tx("Urban space under an overpass", "高架桥下的城市空间", "고가 아래의 도시 공간", "Espacio urbano bajo un paso elevado"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Keep walking and you notice the city is layered: skybridges, lifts, hillside paths, all linked. Under the overpass: a pitch and a playground. On a roof: a lookout. Every level has people living their day.",
+        "走着走着会发现，这座城市是立体的：天桥、电梯、山路全连在一起。高架桥下是球场和游乐场，楼顶是观景台，每一层都有人在过自己的生活。",
+        "걷다 보면 도시가 입체라는 걸 안다: 스카이브리지, 엘리베이터, 산길 — 다 이어져 있다. 고가 아래는 운동장과 놀이터, 옥상은 전망대. 층마다 각자의 일상이 있다.",
+        "Si sigues andando ves que la ciudad es por capas: pasarelas, ascensores, caminos de ladera, todo unido. Bajo el paso elevado: campo y parque. En una azotea: un mirador. En cada nivel hay gente viviendo su día.",
+      ),
+    },
+    { type: "heading", body: tx("06 — From the rooftop", "06 · 天台视角", "06 · 옥상 시선", "06 · Desde la azotea") },
+    {
+      type: "photo",
+      photo: shot(
+        "04",
+        "rooftop",
+        1080,
+        1920,
+        tx("City view from a rooftop lookout", "天台观景台俯瞰城市", "옥상 전망대에서 본 도시", "Vista de la ciudad desde un mirador en azotea"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "Sometimes I go up to a rooftop lookout. The whole city opens out, and you finally see how the roads and bridges you just crossed actually connect. Hong Kong is not large — but the density and layers only read from above.",
+        "偶尔上到天台观景台，整座城市摊开在眼前，才意识到刚才穿过的那些路、那些桥，原来是这样连起来的。香港不大，但密度和层次感，站得高才看得全。",
+        "가끔 옥상 전망대에 오른다. 도시 전체가 펼쳐지고, 방금 건넌 길과 다리가 어떻게 이어지는지 보인다. 홍콩은 크지 않다 — 밀도와 층은 위에서야 보인다.",
+        "A veces subo a un mirador de azotea. La ciudad se abre, y ves cómo se conectan las calles y puentes que acabas de cruzar. Hong Kong no es grande — pero la densidad y las capas solo se leen desde arriba.",
+      ),
+    },
+    { type: "heading", body: tx("07 — The industrial shore", "07 · 工业岸线的另一面", "07 · 공업 해안의 다른 면", "07 · La orilla industrial") },
+    {
+      type: "photo",
+      photo: shot(
+        "04",
+        "industrial",
+        1080,
+        1920,
+        tx("Industrial waterfront and working harbour", "工业岸线", "공업 해안과 일하는 항구", "Frente industrial y puerto en marcha"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "It is not only Central towers. Drive the industrial shore and the container yards — that is the other side of how the city runs. Visitors rarely come. People who live here know: Hong Kong is not only finance and shopping. It also works.",
+        "不止有中环的高楼。开车经过工业岸线、货柜码头，才是这座城市运转的另一面。游客很少来，但住下来的人都知道：香港不只有金融和购物，还有实实在在干活的样子。",
+        "센트럴 타워만이 아니다. 공업 해안과 컨테이너 야드를 차로 지나면 — 도시가 돌아가는 다른 면이다. 관광객은 거의 안 온다. 사는 사람은 안다: 홍콩은 금융과 쇼핑만이 아니다. 일도 한다.",
+        "No son solo las torres de Central. Pasa en coche por la orilla industrial y los contenedores — esa es la otra cara de cómo funciona la ciudad. Los visitantes casi no vienen. Quien vive aquí lo sabe: Hong Kong no es solo finanzas y compras. También trabaja.",
+      ),
+    },
+    { type: "heading", body: tx("08 — Closing", "08 · 结语", "08 · 마무리", "08 · Cierre") },
+    {
+      type: "photo",
+      photo: shot(
+        "04",
+        "bridge-driving",
+        1080,
+        1920,
+        tx("Still on the road across the bridge", "在路上", "여전히 다리 위 길에서", "Sigo en el camino sobre el puente"),
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "MTR, ferry, bridges, feet — that is how I crossed Hong Kong, and how I remember it. Next time you come, don't only stare at the MTR map. Take one ferry. Walk one stretch of waterfront. Hong Kong will feel different.",
+        "地铁、渡轮、大桥、双脚，这就是我穿过香港的方式，也是我记住它的方式。下次你来，别只盯着地铁线路图——坐一回渡轮，走一段海滨步道，香港会不一样。",
+        "MTR, 페리, 다리, 두 발 — 그렇게 홍콩을 가로질렀고, 그렇게 기억한다. 다음에 오면 MTR 노선도만 보지 마라. 페리 한 번. 해안 한 구간. 홍콩이 달라 보일 것이다.",
+        "MTR, ferry, puentes, pies — así crucé Hong Kong, y así lo recuerdo. La próxima vez, no mires solo el mapa del MTR. Coge un ferry. Camina un tramo de paseo. Hong Kong se sentirá distinto.",
+      ),
+    },
+    {
+      type: "verdict",
+      intro: tx(
+        "Not a guidebook conclusion. The answers left after crossing the city this way.",
+        "不是攻略结论，是这样穿过城市以后留下的答案。",
+        "가이드북 결론이 아니다. 이렇게 도시를 가로지른 뒤 남은 답이다.",
+        "No es la conclusión de una guía. Las respuestas que quedaron tras cruzar la ciudad así.",
+      ),
+      rows: [
+        {
+          label: tx("Worth it", "值不值得", "갈 만한가", "¿Merece la pena?"),
+          body: tx(
+            "Worth it. Attractions are for visitors; the roads are for people who live here — change how you move, and you change which city you see.",
+            "值得。景点是给游客的，路是给住下来的人的——换一种交通方式，等于换一座城市看。",
+            "갈 만하다. 명소는 관광객용이고, 길은 사는 사람용이다 — 이동 방식을 바꾸면 보이는 도시가 바뀐다.",
+            "Merece la pena. Las atracciones son para visitantes; las calles, para quien vive — cambia cómo te mueves y cambias qué ciudad ves.",
+          ),
+        },
+        {
+          label: tx("Who it's for", "适合谁", "누구에게", "Para quién"),
+          body: tx(
+            "Anyone who wants more than check-ins. People with time to walk slowly. Families with kids or elders who need an easier pace.",
+            "不止打卡、想真正感受城市的人；时间充裕、愿意慢慢走的人；带老人小孩、需要轻松节奏的家庭。",
+            "체크인만이 아니라 도시를 느끼고 싶은 사람. 천천히 걸을 시간이 있는 사람. 아이·어르신이 있어 편한 리듬이 필요한 가족.",
+            "Quien quiera más que fotos de checklist. Quien tenga tiempo para ir despacio. Familias con niños o mayores que necesiten un ritmo fácil.",
+          ),
+        },
+        {
+          label: tx("Budget", "预算", "예산", "Presupuesto"),
+          body: tx(
+            "Harbour ferry: a few HKD — best value in town. MTR by distance: roughly a dozen to twenty in the urban area. Waterfront walks and many rooftop lookouts: free. (as of 2026)",
+            "渡轮过海几块钱港币，是全城性价比最高的体验；地铁按里程计费，市区内十几二十块；海滨步道和天台观景台免费。（2026）",
+            "항구 페리 몇 홍콩 달러 — 도시 최고 가성비. MTR은 거리별, 시내는 대략 십여~이십. 해안 산책과 많은 옥상 전망대는 무료. (2026년 기준)",
+            "Ferry del puerto: unos HK$ — el mejor precio de la ciudad. MTR por distancia: unos diez a veinte en zona urbana. Paseos marítimos y muchos miradores: gratis. (a 2026)",
+          ),
+        },
+        {
+          label: tx("Time", "时间", "시간", "Tiempo"),
+          body: tx(
+            "Ferry at dusk for the best light. Leave 1–2 hours for the waterfront walk. Drive bridges off peak — otherwise you mostly see brake lights.",
+            "渡轮挑傍晚，光线最好；海滨步道留 1–2 小时慢慢走；开车过桥避开早晚高峰，不然只看得到车尾灯。",
+            "페리는 해 질 녘이 빛이 좋다. 해안 산책은 1–2시간. 다리는 출퇴근을 피하라 — 아니면 브레이크등만 보인다.",
+            "Ferry al atardecer, mejor luz. Deja 1–2 horas para el paseo. Cruza puentes fuera de hora punta — si no, solo verás luces de freno.",
+          ),
+        },
+        {
+          label: tx("The catch", "有没有坑", "주의할 점", "El truco"),
+          body: tx(
+            "Ferry frequency drops at night — check the last sailing. Summer walks need water and a hat; UV is harsh. Some rooftop lookouts need a booking or a purchase — check ahead. Tunnels and bridges jam at peak; pad your time.",
+            "渡轮班次晚上会减少，查好末班船时间；夏天暴走记得带水和帽子，紫外线很毒；天台观景台有的需要预约或消费，提前查；隧道和大桥堵车时段很磨人，时间预算打宽一点。",
+            "페리 밤에는 줄어든다 — 막차 확인. 여름 산책은 물과 모자; 자외선이 세다. 옥상 전망대는 예약·소비가 필요한 곳 있음 — 미리 확인. 터널·다리는 피크에 막힌다; 시간을 넉넉히.",
+            "De noche hay menos ferries — mira la última. En verano lleva agua y gorra; el UV pega. Algunos miradores piden reserva o consumo — mira antes. Túneles y puentes se atascan en punta; deja margen.",
+          ),
+        },
+      ],
+    },
+    {
+      type: "text",
+      body: tx(
+        "Next episode: small moments I didn't plan.",
+        "下一集，讲我没计划到的小瞬间。",
+        "다음 에피소드: 계획하지 않은 작은 순간.",
+        "Próximo episodio: pequeños momentos que no planeé.",
+      ),
+    },
+    {
+      type: "text",
+      body: tx(
+        "BGM: George Street Shuffle by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM：George Street Shuffle by Kevin MacLeod (incompetech.com)，CC BY 4.0。",
+        "BGM: George Street Shuffle by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+        "BGM: George Street Shuffle by Kevin MacLeod (incompetech.com), CC BY 4.0.",
+      ),
+    },
+  ],
+}
+
 function planned(number: number, slug: string, title: StoryText, dek: StoryText): StoryEpisode {
   return {
     number,
@@ -742,28 +1363,8 @@ export const hongKong: StorySeason = {
   episodes: [
     ep01,
     ep02,
-    planned(
-      3,
-      "03-what-i-actually-ate",
-      tx("What I Actually Ate in Hong Kong", "我在香港真正吃过的东西", "홍콩에서 실제로 먹은 것", "Lo que comí de verdad en Hong Kong"),
-      tx(
-        "Not a top-ten list. Roast meats, double-egg rice, dim sum, and ordinary places.",
-        "不是十大榜单。烧味、双蛋饭、点心，和普通的小店。",
-        "탑텐 리스트가 아니다. 훈제, 계란 두 개 밥, 딤섬, 평범한 가게.",
-        "No es un top ten. Asados, arroz con dos huevos, dim sum y sitios normales.",
-      ),
-    ),
-    planned(
-      4,
-      "04-hong-kong-in-motion",
-      tx("Hong Kong in Motion", "流动的香港", "움직이는 홍콩", "Hong Kong en movimiento"),
-      tx(
-        "MTR, ferries, bridges, and walking — how I actually crossed the city.",
-        "地铁、渡轮、桥和步行——我真正穿过这座城市的方式。",
-        "MTR, 페리, 다리, 걷기 — 내가 실제로 도시를 가로지른 방식.",
-        "MTR, ferries, puentes y a pie — cómo crucé la ciudad de verdad.",
-      ),
-    ),
+    ep03,
+    ep04,
     planned(
       5,
       "05-small-moments-i-didnt-plan",

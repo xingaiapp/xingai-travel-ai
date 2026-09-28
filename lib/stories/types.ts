@@ -33,6 +33,8 @@ export interface StoryEpisode {
   title: StoryText
   dek: StoryText
   cover: StoryPhoto
+  /** When set, the episode page plays this instead of the static cover image (cover still used for cards / OG). */
+  heroVideo?: { src: string; poster: StoryPhoto }
   blocks: StoryBlock[]
 }
 

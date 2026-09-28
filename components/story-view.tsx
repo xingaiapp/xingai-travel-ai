@@ -277,9 +277,25 @@ export function EpisodeView({
           <p className="mt-3 text-lg leading-relaxed text-muted-foreground">{t(episode.dek)}</p>
         </header>
         <figure className="mt-6">
-          <StoryImage photo={episode.cover} priority />
-          {episode.cover.caption ? (
-            <figcaption className="mt-2 text-sm text-muted-foreground">{t(episode.cover.caption)}</figcaption>
+          {episode.heroVideo ? (
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              poster={episode.heroVideo.poster.src ? `${episode.heroVideo.poster.src}-1600.webp` : undefined}
+              width={episode.heroVideo.poster.width}
+              height={episode.heroVideo.poster.height}
+              className="h-auto w-full rounded-md bg-black"
+            >
+              <source src={episode.heroVideo.src} type="video/mp4" />
+            </video>
+          ) : (
+            <StoryImage photo={episode.cover} priority />
+          )}
+          {(episode.heroVideo?.poster.caption ?? episode.cover.caption) ? (
+            <figcaption className="mt-2 text-sm text-muted-foreground">
+              {t(episode.heroVideo?.poster.caption ?? episode.cover.caption!)}
+            </figcaption>
           ) : null}
         </figure>
 
