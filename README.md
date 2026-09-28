@@ -16,6 +16,7 @@ XingAI Travel AI is a **travel decision system**, not an OTA or price-comparison
 | **Core flow** | `/decide` → compare or inspire → `/result` with plan |
 | **Stories** | `/stories` after the decision ([ADR 0006](./docs/adr/0006-stories-after-decision.md)). **My Hong Kong** Season 1 replaced from HTML sources (2026-09-28): EP01 Victoria Harbour + EP02 streets/food/people only — old long-form EP03–08 media removed. en / 中文 / 한국어 / Español. **My Macau** Season 1 EP01–EP02 published. Story photos processed (EXIF stripped), contained display, no clear-face stills. |
 | **Compare quality** | Prompt + normalize pass require non-blank, distinct weather / flight / walkability rows; Hero copy says compare-then-search (not “actually book”). Past dates blocked; dead Settings control removed. Trip cards pick a city photo by name (EN/中文/한국어 aliases) instead of falling back to Lisbon for every unknown destination. Taipei / Shanghai / New Orleans use local `/assets/destination-*-card.webp` (dead Unsplash IDs were 404). |
+| **Layla round (2026-09-28)** | Moat deepen, not booking race: result **uncertainty panel**, **Print/PDF**, compare table shows **full trade-offs per city**. Research: [`docs/research/2026-09-layla-vs-travel-ai.md`](./docs/research/2026-09-layla-vs-travel-ai.md). No fake chat agent / Expedia booking. |
 | **AI backend** | OpenAI JSON (`gpt-4o-mini` default), mock fallback when no API key |
 | **i18n** | English, 中文, 한국어, Español (including published Travel Stories) |
 | **Theme** | Light / dark, custom provider (React 19–safe) |
@@ -70,9 +71,11 @@ flowchart LR
 
 ### Step 3 — Result (`/result`)
 
-- **DestinationCompare** — winner hero, trade-offs, scrollable comparison table; tap a column to preview that city’s photo (recommendation copy stays on winner).
+- **DestinationCompare** — winner hero, trade-offs, scrollable comparison table; tap a column to preview that city’s photo and see **full whyWins + trade-offs** for the focused city.
+- **UncertaintyNotes** — honest soft spots (estimates vs live quotes; itinerary is a draft; booking links are partner search).
 - **BookFirst** — affiliate-aware outbound links (Skyscanner, Booking.com, Expedia, Viator, GetYourGuide).
 - **Itinerary** — simple + detailed day blocks; trip warnings when present.
+- **Share / Print** — shareable link (no personal trip context) + Print/PDF via the browser dialog.
 - **Replan** — back to `/decide` with trip context restored from storage.
 
 ---

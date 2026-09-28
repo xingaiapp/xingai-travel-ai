@@ -184,6 +184,18 @@ export const zh: Messages = {
     sharedCta: "我也来规划一趟",
     sharedInvalidTitle: "这个链接打不开行程",
     sharedInvalidBody: "链接可能不完整。请让对方重新发一次，或者自己规划一趟。",
+    printPdf: "打印 / PDF",
+    uncertainty: {
+      title: "哪些地方还不确定",
+      lead: "我们优先把「去哪」讲清楚——不是假装成实时订票柜台。",
+      prices: "费用是常见区间估算，不是实时报价或库存。",
+      flights: "飞行时间是规划估算。真实班次以合作站点为准。",
+      itinerary: "日程是起点草案。要换活动请点「重新规划」——我们不做半路聊天自动改行程。",
+      booking: "优先预订链接打开合作方搜索页，并在可能时预填你的日期。",
+    },
+    focusedWins: "这座城市为什么合适",
+    focusedTradeoffs: "这座城市的取舍",
+    tapCityTradeoffs: "点击城市列可看完整取舍，不只一行摘要。",
   },
   inspire: {
     title: "给我灵感",

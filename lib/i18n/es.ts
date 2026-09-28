@@ -184,6 +184,18 @@ export const es: Messages = {
     sharedCta: "Planea tu propio viaje",
     sharedInvalidTitle: "Este enlace no abre un viaje",
     sharedInvalidBody: "Puede estar cortado. Pide el enlace otra vez o planea tu propio viaje.",
+    printPdf: "Imprimir / PDF",
+    uncertainty: {
+      title: "Qué es aproximado aquí",
+      lead: "Priorizamos una decisión honesta de destino — no un mostrador de reservas en vivo.",
+      prices: "Los costos son rangos típicos, no tarifas ni inventario en vivo.",
+      flights: "Los tiempos de vuelo son estimaciones de planificación. Los horarios reales están en los socios.",
+      itinerary: "El plan diario es un borrador inicial. Para cambiar días usa Replanificar — no reescribimos en chat.",
+      booking: "Los enlaces de reservar primero abren búsquedas de socios, con fechas prefills cuando es posible.",
+    },
+    focusedWins: "Por qué encaja esta ciudad",
+    focusedTradeoffs: "Trade-offs de esta ciudad",
+    tapCityTradeoffs: "Selecciona una columna de ciudad para ver los trade-offs completos, no solo un resumen.",
   },
   inspire: {
     title: "Inspírame",

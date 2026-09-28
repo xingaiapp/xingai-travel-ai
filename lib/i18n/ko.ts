@@ -184,6 +184,18 @@ export const ko: Messages = {
     sharedCta: "나도 여행 계획하기",
     sharedInvalidTitle: "이 링크로 여행을 열 수 없습니다",
     sharedInvalidBody: "링크가 잘렸을 수 있습니다. 다시 받거나 직접 계획해 보세요.",
+    printPdf: "인쇄 / PDF",
+    uncertainty: {
+      title: "여기서 불확실한 것",
+      lead: "실시간 예약 창구가 아니라, 솔직한 목적지 결정을 우선합니다.",
+      prices: "비용은 일반 구간 추정치이며 실시간 요금·재고가 아닙니다.",
+      flights: "비행 시간은 계획용 추정입니다. 실제 스케줄은 파트너 사이트에서 확인하세요.",
+      itinerary: "일정은 시작 초안입니다. 활동을 바꾸려면 다시 계획하세요 — 채팅으로 자동 재배열하지 않습니다.",
+      booking: "먼저 예약 링크는 가능하면 날짜가 채워진 파트너 검색 페이지를 엽니다.",
+    },
+    focusedWins: "이 도시가 맞는 이유",
+    focusedTradeoffs: "이 도시의 트레이드오프",
+    tapCityTradeoffs: "도시 열을 선택하면 한 줄 요약이 아닌 전체 트레이드오프를 볼 수 있습니다.",
   },
   inspire: {
     title: "영감 받기",

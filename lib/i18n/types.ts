@@ -187,6 +187,18 @@ export interface Messages {
     sharedCta: string
     sharedInvalidTitle: string
     sharedInvalidBody: string
+    printPdf: string
+    uncertainty: {
+      title: string
+      lead: string
+      prices: string
+      flights: string
+      itinerary: string
+      booking: string
+    }
+    focusedWins: string
+    focusedTradeoffs: string
+    tapCityTradeoffs: string
   }
   inspire: {
     title: string

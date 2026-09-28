@@ -160,10 +160,39 @@ function DestinationCompareInner({
           <div className="space-y-1 border-t border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
             <p>{messages.result.confidenceHelp}</p>
             <p>{messages.result.costSeePlan}</p>
-            <p className="text-center">{messages.result.tapCityPreview}</p>
+            <p className="text-center">{messages.result.tapCityTradeoffs}</p>
           </div>
         </div>
       ) : null}
+
+      <div className="mt-4 grid gap-4 rounded-md border border-border bg-muted/30 p-4 sm:grid-cols-2">
+        <div>
+          <h4 className="text-sm font-extrabold">
+            {messages.result.focusedWins}
+            <span className="ml-1 font-semibold text-primary">· {focused.name}</span>
+          </h4>
+          <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+            {focused.whyWins.length > 0 ? (
+              focused.whyWins.map((reason) => <li key={reason}>• {reason}</li>)
+            ) : (
+              <li>• {focused.name}, {focused.country}</li>
+            )}
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-sm font-extrabold">
+            {messages.result.focusedTradeoffs}
+            <span className="ml-1 font-semibold text-muted-foreground">· {focused.name}</span>
+          </h4>
+          <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+            {focused.tradeoffs.length > 0 ? (
+              focused.tradeoffs.map((item) => <li key={item}>• {item}</li>)
+            ) : (
+              <li>• —</li>
+            )}
+          </ul>
+        </div>
+      </div>
     </section>
   )
 }

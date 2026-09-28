@@ -12,6 +12,8 @@ import { TradeoffNote } from "@/components/tradeoff-note"
 import { TripWarnings } from "@/components/trip-warnings"
 import { RelatedStories } from "@/components/related-stories"
 import { ShareTripButton } from "@/components/share-trip-button"
+import { PrintTripButton } from "@/components/print-trip-button"
+import { UncertaintyNotes } from "@/components/uncertainty-notes"
 import { LanguageMismatch } from "@/components/language-mismatch"
 import { useLocale } from "@/components/locale-provider"
 import { mockCompareResult, mockPlanResult, defaultTrip } from "@/lib/mock-data"
@@ -111,8 +113,9 @@ export function ResultPage() {
             <p className="text-sm font-bold text-primary">{messages.result.bestFit}</p>
             <h1 className="mt-1 text-4xl font-black tracking-tight">{winner.name}, {winner.country}</h1>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 no-print">
             <ShareTripButton compare={compare} plan={planReady ? plan : null} title={`${winner.name}, ${winner.country}`} />
+            <PrintTripButton />
             <Link
               href="/decide"
               className="inline-flex h-11 items-center rounded-md border border-border bg-card px-4 text-sm font-extrabold text-primary shadow-sm"
@@ -137,6 +140,7 @@ export function ResultPage() {
         <div className="space-y-4">
           <DestinationCompare result={compare} />
           <TradeoffNote title={messages.result.whyNot}>{compare.whyNotOthers}</TradeoffNote>
+          <UncertaintyNotes />
 
           {planReady && plan?.warnings?.length ? (
             <TripWarnings warnings={plan.warnings} destination={plan.destination} />

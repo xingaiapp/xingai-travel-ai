@@ -5,11 +5,10 @@ import { AlertTriangle, CheckCircle2, CircleAlert, Wallet } from "lucide-react"
 import { useMemo } from "react"
 import { useLocale } from "@/components/locale-provider"
 import type { BudgetCategory, BudgetEstimate, BudgetVerdict } from "@/lib/budget"
-import type { Messages } from "@/lib/i18n/types"
 import type { TripContext } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
-const categoryKey: Record<BudgetCategory, keyof Messages["result"]> = {
+const categoryKey: Record<BudgetCategory, "catFlights" | "catLodging" | "catFood" | "catActivities" | "catLocalTransport"> = {
   flights: "catFlights",
   lodging: "catLodging",
   food: "catFood",
@@ -18,7 +17,7 @@ const categoryKey: Record<BudgetCategory, keyof Messages["result"]> = {
 }
 
 // Status colors ship with an icon + label, never color alone.
-const verdictStyle: Record<BudgetVerdict, { key: keyof Messages["result"]; icon: typeof CheckCircle2; className: string }> = {
+const verdictStyle: Record<BudgetVerdict, { key: "verdictWithin" | "verdictTight" | "verdictOver"; icon: typeof CheckCircle2; className: string }> = {
   within: { key: "verdictWithin", icon: CheckCircle2, className: "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300" },
   tight: { key: "verdictTight", icon: AlertTriangle, className: "bg-amber-500/15 text-amber-800 dark:text-amber-200" },
   over: { key: "verdictOver", icon: CircleAlert, className: "bg-red-500/12 text-red-700 dark:text-red-300" },

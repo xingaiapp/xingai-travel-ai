@@ -184,6 +184,18 @@ export const en: Messages = {
     sharedCta: "Plan your own trip",
     sharedInvalidTitle: "This link doesn't open a trip",
     sharedInvalidBody: "It may be cut off. Ask for the link again, or plan your own trip.",
+    printPdf: "Print / PDF",
+    uncertainty: {
+      title: "What is soft here",
+      lead: "We optimize for an honest destination decision — not a live booking desk.",
+      prices: "Cost estimates are typical ranges, not live quotes or inventory.",
+      flights: "Flight times are planning estimates. Real schedules change on partner sites.",
+      itinerary: "The day plan is a starting draft. Swap days by Replan — we do not auto-rewrite mid-chat.",
+      booking: "Book-first links open partner search pages with your dates prefilled when possible.",
+    },
+    focusedWins: "Why this city fits",
+    focusedTradeoffs: "Trade-offs for this city",
+    tapCityTradeoffs: "Select a city column to see full trade-offs — not just the one-line summary.",
   },
   inspire: {
     title: "Inspire me",
