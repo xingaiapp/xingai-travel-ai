@@ -21,7 +21,7 @@ const DestinationSchema = z.object({
   tradeoffs: list(300, 8),
   scores: z.object({
     overall: z.number().int().min(0).max(5), // stars; the table renders "☆".repeat(5 - overall)
-    budget: text(40),
+    budget: text(40).optional(), // legacy links only; no longer encoded
     weather: text(80),
     flightTime: text(60),
     walkability: text(60),
@@ -102,7 +102,6 @@ function fitTrip(compare: CompareResult, plan: PlanResult | null) {
         tradeoffs: clipList(d.tradeoffs, 300, 8),
         scores: {
           overall: Math.max(0, Math.min(5, Math.round(d.scores.overall))),
-          budget: clip(String(d.scores.budget), 40),
           weather: clip(d.scores.weather, 80),
           flightTime: clip(d.scores.flightTime, 60),
           walkability: clip(d.scores.walkability, 60),

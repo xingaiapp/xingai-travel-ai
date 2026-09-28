@@ -49,7 +49,6 @@ Return this exact JSON structure:
       "tradeoffs": ["tradeoff 1", "tradeoff 2"],
       "scores": {
         "overall": 5,
-        "budget": "Great",
         "weather": "Mild, pleasant",
         "flightTime": "~11h (1 stop)",
         "walkability": "Excellent"
@@ -60,6 +59,7 @@ Return this exact JSON structure:
 }
 
 Be honest about trade-offs. Do not recommend a destination that does not fit the budget.
+- Do not claim a destination "fits the budget" or rate its budget fit; describe relative cost instead (e.g. "cheaper than Porto", "hotels spike in December"). A line-by-line cost estimate is produced later.
 If places already in mind are provided, compare those first unless they clearly violate the trip constraints.
 If no places are provided, use the destination range as the search boundary.
 `.trim()
@@ -163,6 +163,7 @@ Rules:
 - Match the vibe honestly — not just the most popular cities
 - Include at least one lesser-known gem if vibe is "explore" or "adventure"
 - If a destination is slightly over budget, flag it honestly in tradeoffs
+- Do not claim a destination "fits the budget" or rate its budget fit; describe relative cost instead (e.g. "cheaper than Porto", "hotels spike in December"). A line-by-line cost estimate is produced later.
 - Avoid repeating same country unless strongly justified
 - whyWins should explain why this place specifically matches the vibe and priority
 - flightHours = realistic one-way door-to-door flight time in hours from the origin, including connections (number, not text)
@@ -184,7 +185,6 @@ Return this exact JSON:
       "tradeoffs": ["honest limitation 1", "honest limitation 2"],
       "scores": {
         "overall": 5,
-        "budget": "Great|Fair|Tight",
         "weather": "description for travel dates",
         "flightTime": "~Xh from nearest hub (stops)",
         "walkability": "Excellent|Good|Moderate"
