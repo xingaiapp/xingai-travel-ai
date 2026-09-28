@@ -40,9 +40,12 @@ export const CITY_IMAGES: Record<string, string> = {
   伊斯坦布尔: unsplash("photo-1524231757912-21f4fe3a7200"),
 
   // Asia
-  "hong kong": unsplash("photo-1536599018102-9f803c140fc1"),
-  hongkong: unsplash("photo-1536599018102-9f803c140fc1"),
-  香港: unsplash("photo-1536599018102-9f803c140fc1"),
+  "hong kong": "/stories/hong-kong/01/red-sail-junk-800.webp",
+  hongkong: "/stories/hong-kong/01/red-sail-junk-800.webp",
+  香港: "/stories/hong-kong/01/red-sail-junk-800.webp",
+  홍콩: "/stories/hong-kong/01/red-sail-junk-800.webp",
+  "victoria harbour": "/stories/hong-kong/01/harbour-promenade-skyline-800.webp",
+  维港: "/stories/hong-kong/01/harbour-promenade-skyline-800.webp",
   홍콩: unsplash("photo-1536599018102-9f803c140fc1"),
   macau: "/stories/macau/01/londoner-big-ben-800.webp",
   macao: "/stories/macau/01/londoner-big-ben-800.webp",
