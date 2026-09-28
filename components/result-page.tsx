@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useReducer } from "react"
 import { BookFirst } from "@/components/book-first"
+import { BudgetBreakdown } from "@/components/budget-breakdown"
 import { DestinationCompare } from "@/components/destination-compare"
 import { Itinerary } from "@/components/itinerary"
 import { StepProgress } from "@/components/step-progress"
@@ -144,6 +145,7 @@ export function ResultPage() {
           <div id="full-plan" className="space-y-4 scroll-mt-24">
             {planReady && plan ? (
               <>
+                {plan.budgetEstimate ? <BudgetBreakdown estimate={plan.budgetEstimate} trip={trip} /> : null}
                 <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
                   <h2 className="mb-4 text-base font-extrabold">{messages.result.bookFirst}</h2>
                   <BookFirst plan={plan} trip={trip} />

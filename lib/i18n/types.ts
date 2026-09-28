@@ -155,6 +155,19 @@ export interface Messages {
     tableWeather: string
     tableFlight: string
     tableWalkability: string
+    budgetTitle: string
+    budgetScope: string
+    budgetTotal: string
+    budgetYours: string
+    verdictWithin: string
+    verdictTight: string
+    verdictOver: string
+    catFlights: string
+    catLodging: string
+    catFood: string
+    catActivities: string
+    catLocalTransport: string
+    budgetFootnote: string
     affiliateDisclosure: string
     bookFlights: string
     bookHotels: string

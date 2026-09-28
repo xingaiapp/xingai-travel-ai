@@ -1,3 +1,4 @@
+import { normalizeBudget } from "@/lib/budget"
 import type { CompareResult, PlanResult, TripContext } from "@/lib/types"
 
 export const defaultTrip: TripContext = {
@@ -67,6 +68,20 @@ export const mockCompareResult: CompareResult = {
   ],
 }
 
+/** Raw model-shaped estimate for the preview plan; /api/plan re-normalizes it against the real trip. */
+export function mockRawBudget() {
+  return {
+    currency: "USD",
+    lines: [
+      { category: "flights", low: 1400, high: 1900, note: "2 round-trip economy tickets SFO–LIS, 1 stop" },
+      { category: "lodging", low: 600, high: 900, note: "5 nights in Chiado/Baixa at ~$120–180 per night" },
+      { category: "food", low: 400, high: 600, note: "~$40–60 per person per day" },
+      { category: "activities", low: 150, high: 300, note: "Sintra day trip, a museum or two, fado night" },
+      { category: "local_transport", low: 60, high: 120, note: "Metro/tram passes and one airport taxi" },
+    ],
+  }
+}
+
 export const mockPlanResult: PlanResult = {
   destination: "Lisbon, Portugal",
   tradeoffNote:
@@ -134,4 +149,5 @@ export const mockPlanResult: PlanResult = {
       body: "Crowds are lighter than summer but Sintra gets busy on weekends — visit Pena Palace on a weekday morning.",
     },
   ],
+  budgetEstimate: normalizeBudget(mockRawBudget(), defaultTrip, new Date("2026-04-01T00:00:00Z")),
 }
