@@ -52,7 +52,7 @@ export function BudgetBreakdown({ estimate, trip }: Readonly<{ estimate: BudgetE
   const totalMax = Math.max(estimate.totalHigh, estimate.budget, 1) * 1.08
   const verdict = estimate.verdict ? verdictStyle[estimate.verdict] : null
   const VerdictIcon = verdict?.icon
-  const people = `${trip.travelers.count} ${messages.travelers[trip.travelers.type]}`
+  const people = r.travelerCount.replace("{n}", String(trip.travelers.count))
   const date = new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(estimate.estimatedAt))
 
   return (
