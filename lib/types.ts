@@ -66,6 +66,9 @@ export interface CompareResult {
   confidence: Confidence
   destinations: Destination[]
   whyNotOthers: string
+  // Stamped client-side when the result arrives, so the UI can tell which mode / language produced it.
+  mode?: "compare" | "inspire"
+  generatedLocale?: TripContext["locale"]
 }
 
 export interface ItineraryDay {

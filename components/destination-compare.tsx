@@ -5,6 +5,7 @@ import { CheckCircle2, Star } from "lucide-react"
 import { useState } from "react"
 import { ConfidencePill } from "@/components/confidence-pill"
 import { useLocale } from "@/components/locale-provider"
+import { localizeRating } from "@/lib/i18n"
 import type { CompareResult, Destination } from "@/lib/types"
 import { cn, getCityImage } from "@/lib/utils"
 
@@ -27,10 +28,10 @@ function DestinationCompareInner({
 
   const tableRows: [string, (item: Destination) => string][] = [
     [messages.result.tableOverall, (item) => "★".repeat(item.scores.overall) + "☆".repeat(5 - item.scores.overall)],
-    [messages.result.tableBudget, (item) => item.scores.budget],
+    [messages.result.tableBudget, (item) => localizeRating(item.scores.budget, messages)],
     [messages.result.tableWeather, (item) => item.scores.weather],
     [messages.result.tableFlight, (item) => item.scores.flightTime],
-    [messages.result.tableWalkability, (item) => item.scores.walkability],
+    [messages.result.tableWalkability, (item) => localizeRating(item.scores.walkability, messages)],
   ]
 
   function columnClass(item: Destination) {
@@ -157,9 +158,11 @@ function DestinationCompareInner({
               ))}
             </tbody>
           </table>
-          <p className="border-t border-border bg-muted/40 px-3 py-2 text-center text-xs text-muted-foreground">
-            {messages.result.tapCityPreview}
-          </p>
+          <div className="space-y-1 border-t border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
+            <p>{messages.result.confidenceHelp}</p>
+            <p>{messages.result.budgetHelp}</p>
+            <p className="text-center">{messages.result.tapCityPreview}</p>
+          </div>
         </div>
       ) : null}
     </section>

@@ -100,6 +100,7 @@ export interface Messages {
     budget: string
     travelers: string
     vibe: string
+    notes: string
     avoid: string
     missing: string
   }
@@ -123,7 +124,20 @@ export interface Messages {
     previewBadge: string
     tapCityPreview: string
     bestFit: string
-    confidence: string
+    confidenceHigh: string
+    confidenceMedium: string
+    confidenceLow: string
+    confidenceHelp: string
+    budgetHelp: string
+    ratingGreat: string
+    ratingFair: string
+    ratingTight: string
+    ratingExcellent: string
+    ratingGood: string
+    ratingModerate: string
+    langMismatch: string
+    regenerateIn: string
+    previewFallback: string
     whyNot: string
     seePlan: string
     comparison: string

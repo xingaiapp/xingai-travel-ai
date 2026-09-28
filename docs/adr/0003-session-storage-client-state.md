@@ -26,6 +26,8 @@ The sidebar “Continue your last trip” card and locale switcher had the same 
 | `xingai-travel-trip-context` | `sessionStorage` | `TripContext` + locale |
 | `xingai-travel-compare-result` | `sessionStorage` | `CompareResult` |
 | `xingai-travel-plan-result` | `sessionStorage` | `PlanResult` (may arrive async) |
+| `xingai-travel-inspire-prefs` | `sessionStorage` | Surprise me vibe / flight range / priority |
+| `xingai-travel-regenerate` | `sessionStorage` | One-shot flag: `/result` asks `/decide` to rerun a mode in the current language |
 | `xingai-travel-locale` | `localStorage` | `en` \| `zh` \| `ko` \| `es` |
 | `theme` | `localStorage` | `light` \| `dark` \| `system` |
 | `xingai-travel-trip-history` | `localStorage` | Recent decisions for `/trips` (max 12) — see [ADR 0007](./0007-local-trip-history.md) |

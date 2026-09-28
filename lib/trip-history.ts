@@ -4,6 +4,9 @@ import type { CompareResult, PlanResult, TripContext } from "@/lib/types"
 export const TRIP_STORAGE = "xingai-travel-trip-context"
 export const COMPARE_STORAGE = "xingai-travel-compare-result"
 export const PLAN_STORAGE = "xingai-travel-plan-result"
+export const INSPIRE_STORAGE = "xingai-travel-inspire-prefs"
+// Set by /result when the user asks to regenerate in the current UI language; /decide consumes it.
+export const REGENERATE_STORAGE = "xingai-travel-regenerate"
 
 // Recent decisions for /trips — this browser only, no account (see ADR 0007).
 export const HISTORY_STORAGE = "xingai-travel-trip-history"
@@ -80,6 +83,31 @@ export function clearHistory() {
 
 export function winnerOf(compare: CompareResult) {
   return compare.destinations.find((d) => d.isWinner) ?? compare.destinations[0]
+}
+
+/**
+ * Make a decision the one /result shows: write the three session keys. A missing plan
+ * (user left before it arrived) is requested again; /result polls PLAN_STORAGE.
+ */
+export function restoreDecision(entry: { id?: string; trip: TripContext; compare: CompareResult; plan?: PlanResult }, fallbackPlan: PlanResult) {
+  sessionStorage.setItem(TRIP_STORAGE, JSON.stringify(entry.trip))
+  sessionStorage.setItem(COMPARE_STORAGE, JSON.stringify(entry.compare))
+  if (entry.plan) {
+    sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(entry.plan))
+    return
+  }
+  sessionStorage.removeItem(PLAN_STORAGE)
+  const winner = winnerOf(entry.compare)
+  fetchPlan(`${winner.name}, ${winner.country}`, entry.trip)
+    .then((plan) => {
+      sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(plan))
+      if (entry.id) attachPlan(entry.id, plan)
+    })
+    .catch(() => sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(fallbackPlan)))
+}
+
+export function findDecision(id: string) {
+  return parse(readHistoryRaw()).find((e) => e.id === id)
 }
 
 export async function fetchPlan(destination: string, tripContext: TripContext): Promise<PlanResult> {
