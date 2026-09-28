@@ -155,6 +155,9 @@ export interface Messages {
     tableWeather: string
     tableFlight: string
     tableWalkability: string
+    prefilledWith: string
+    prefillNoDates: string
+    travelerCount: string
     affiliateDisclosure: string
     bookFlights: string
     bookHotels: string
