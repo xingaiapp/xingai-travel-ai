@@ -1,9 +1,9 @@
 "use client"
 
 import { useMemo } from "react"
-import { BedDouble, ExternalLink, MapPin, Plane } from "lucide-react"
+import { BedDouble, CalendarCheck, ExternalLink, MapPin, Plane } from "lucide-react"
 import { useLocale } from "@/components/locale-provider"
-import { buildAffiliateLinks, extractOriginCode, guessIata } from "@/lib/affiliate"
+import { buildAffiliateLinks, extractOriginCode, guessIata, usableDates } from "@/lib/affiliate"
 import type { PlanResult, TripContext } from "@/lib/types"
 
 interface BookCardProps {
@@ -55,7 +55,7 @@ interface BookFirstProps {
 }
 
 export function BookFirst({ plan, trip }: BookFirstProps) {
-  const { messages } = useLocale()
+  const { messages, locale } = useLocale()
   const winner = plan.destination
 
   const affiliateLinks = useMemo(() => {
@@ -66,11 +66,35 @@ export function BookFirst({ plan, trip }: BookFirstProps) {
       destinationCity: winner.split(",")[0].trim(),
       destinationCode: destCode,
       dates: { checkIn: trip?.dates.from ?? "", checkOut: trip?.dates.to ?? "" },
+      travelers: trip?.travelers.count,
     })
   }, [trip, winner])
 
+  // Tell the user what the partner sites will open with, so "bookable" is checkable.
+  const prefill = useMemo(() => {
+    if (!trip) return null
+    const dates = usableDates({ checkIn: trip.dates.from, checkOut: trip.dates.to })
+    const people = messages.result.travelerCount.replace("{n}", String(trip.travelers.count))
+    if (!dates) return { ok: false, text: messages.result.prefillNoDates }
+    const fmt = new Intl.DateTimeFormat(locale, { month: "short", day: "numeric", timeZone: "UTC" })
+    const range = `${fmt.format(new Date(`${dates.checkIn}T00:00:00Z`))} – ${fmt.format(new Date(`${dates.checkOut}T00:00:00Z`))}`
+    return { ok: true, text: messages.result.prefilledWith.replace("{summary}", `${range} · ${people}`) }
+  }, [trip, messages, locale])
+
   return (
     <div className="space-y-4">
+      {prefill ? (
+        <p
+          className={
+            prefill.ok
+              ? "flex items-start gap-2 rounded-md bg-primary/5 px-3 py-2 text-xs font-semibold text-primary"
+              : "flex items-start gap-2 rounded-md bg-amber-500/10 px-3 py-2 text-xs font-semibold text-amber-800 dark:text-amber-200"
+          }
+        >
+          <CalendarCheck className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+          {prefill.text}
+        </p>
+      ) : null}
       {trip ? (
       <div>
         <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
