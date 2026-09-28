@@ -4,6 +4,7 @@ import type { StoryEpisode, StorySeason, StoryText } from "@/lib/stories/types"
 // - Neighbourhood / waterfront level only. No estate or building numbers.
 // - Family: backs and distance OK; no clear child faces. Note card shows handwriting only.
 // - Every photo goes through scripts/process-story-photos.mjs (strips EXIF/GPS).
+// Source: my-hong-kong-ep01.html / my-hong-kong-ep02.html (Macau-style short episodes).
 
 function tx(en: string, zh: string, ko: string, es: string): StoryText {
   return { en, zh, ko, es }
@@ -350,7 +351,7 @@ const ep01: StoryEpisode = {
           ),
         },
         {
-          label: tx("The catch", "有什么坑", "주의할 점", "El truco"),
+          label: tx("The catch", "有没有坑", "주의할 점", "El truco"),
           body: tx(
             "Holidays pack the waterfront — shift your hours. Wind picks up at night — bring a layer. Watch your step while you shoot.",
             "节假日海滨人多，可错峰；晚上风大，带件外套；边走边拍注意脚下。",
@@ -359,6 +360,15 @@ const ep01: StoryEpisode = {
           ),
         },
       ],
+    },
+    {
+      type: "text",
+      body: tx(
+        'BGM: "Dream Culture" by Kevin MacLeod (incompetech.com), CC BY 4.0.',
+        "BGM：Dream Culture by Kevin MacLeod (incompetech.com)，CC BY 4.0。",
+        'BGM: "Dream Culture" by Kevin MacLeod (incompetech.com), CC BY 4.0.',
+        'BGM: "Dream Culture" by Kevin MacLeod (incompetech.com), CC BY 4.0.',
+      ),
     },
   ],
 }
@@ -578,14 +588,14 @@ const ep02: StoryEpisode = {
         ),
       ),
     },
-    { type: "heading", body: tx("06 — Night walk with family", "06 · 夜晚的海边", "06 · 밤 해안 산책", "06 — Paseo nocturno en familia") },
+    { type: "heading", body: tx("06 — Night by the water", "06 · 夜晚的海边", "06 · 밤의 바닷가", "06 — Noche junto al agua") },
     {
       type: "text",
       body: tx(
-        "Later, back to the water with family. Same harbour lights — different when you walk them together. Soft minutes, backs to the camera.",
-        "后来又和家人回到海边。灯火还是那些灯火，一起走就不一样。那是这趟旅行里，最柔软的几分钟——背影就够了。",
-        "나중에 가족과 다시 해안. 같은 불빛 — 함께 걸으면 다르다. 이 여행에서 가장 부드러운 몇 분 — 등만으로 충분하다.",
-        "Luego, de vuelta al agua con la familia. Las mismas luces — distintas al caminar juntos. Minutos blandos, de espaldas a la cámara.",
+        "At night by the water, family walks ahead — soft light in the harbour. The softest minute of the trip, shot from behind.",
+        "奶奶在夜晚的海边笑，皱纹里全是光。那是这趟旅行里，最柔软的一分钟。",
+        "밤 해안에서 가족이 앞서 걷는다 — 항구에 부드러운 빛. 이 여행에서 가장 부드러운 1분, 등 뒤에서.",
+        "De noche junto al agua, la familia camina delante — luz blanda en el puerto. El minuto más suave del viaje, de espaldas.",
       ),
     },
     {
@@ -597,15 +607,15 @@ const ep02: StoryEpisode = {
         1280,
         tx(
           "Family walking the waterfront at night with harbour lights across the water",
-          "夜晚的维港海滨，家人背影与对岸灯火",
+          "夜晚的维港，灯火倒映在水里",
           "밤 해안을 걷는 가족 등과 건너편 항구 불빛",
-          "Familia de espaldas en el paseo nocturno con luces del puerto al fondo",
+          "Familia de espaldas en el paseo nocturno con luces del puerto",
         ),
         tx(
-          "Night waterfront — people ahead, lights on the far shore.",
-          "夜晚的海滨，前面是人，对岸是灯。",
-          "밤 해안 — 앞엔 사람, 건너편엔 불빛.",
-          "Frente nocturno — gente delante, luces al otro lado.",
+          "Night harbour — lights sitting in the water.",
+          "夜晚的维港，灯火倒映在水里。",
+          "밤 항구 — 불빛이 물에 앉는다.",
+          "Puerto de noche — luces asentadas en el agua.",
         ),
       ),
     },
@@ -628,13 +638,13 @@ const ep02: StoryEpisode = {
         1173,
         tx(
           "Handwritten note reading To Grandmother with a drawn heart",
-          "孩子写给祖母的字：致祖母与一颗心",
+          "孩子写给祖母的字",
           "아이가 쓴 ‘할머니께’와 하트",
           "Nota manuscrita: A la abuela, con un corazón dibujado",
         ),
         tx(
           "Four characters. One heart.",
-          "四个字，一颗心。",
+          "孩子写给祖母的字。",
           "네 글자. 하트 하나.",
           "Cuatro caracteres. Un corazón.",
         ),
@@ -717,7 +727,7 @@ const ep02: StoryEpisode = {
           ),
         },
         {
-          label: tx("The catch", "有什么坑", "주의할 점", "El truco"),
+          label: tx("The catch", "有没有坑", "주의할 점", "El truco"),
           body: tx(
             "Don’t let viral queues decide for you — neighbourhood shops are often more honest. Ask the seafood price before you order.",
             "别被网红店排队绑架，街边老店往往更地道；海鲜先问价再点。",
@@ -726,15 +736,6 @@ const ep02: StoryEpisode = {
           ),
         },
       ],
-    },
-    {
-      type: "quote",
-      body: tx(
-        "Hong Kong’s face is the harbour. Its heart is these people — and this meal.",
-        "香港的脸是维港，香港的心，是这些人，和这顿饭。",
-        "홍콩의 얼굴은 항구. 마음은 이 사람들 — 그리고 이 한 끼.",
-        "La cara de Hong Kong es el puerto. El corazón son estas personas — y esta comida.",
-      ),
     },
     {
       type: "text",
@@ -761,10 +762,10 @@ export const hongKong: StorySeason = {
     "Primero el puerto, luego las calles",
   ),
   intro: tx(
-    "Two short stories from one Hong Kong — Victoria Harbour as the city’s face, then streets, food, and people as its inside. Then a question: what should your Hong Kong look like?",
-    "一次香港里的两个短故事——维港是这座城的脸，街巷、饭和人是里子。最后是一个问题：你的香港应该是什么样子？",
-    "한 홍콩에서 나온 두 짧은 이야기 — 빅토리아 항구가 얼굴, 골목·밥·사람이 속. 마지막 질문: 당신의 홍콩은 어떤 모습이어야 할까?",
-    "Dos relatos cortos de un Hong Kong — el puerto Victoria como cara, calles, comida y gente como interior. Luego una pregunta: ¿cómo debería ser tu Hong Kong?",
+    "Two short stories from one Hong Kong — Victoria Harbour as the city’s face, then streets, food, and people as its inside.",
+    "一次香港里的两个短故事——维港是这座城的脸，街巷、饭和人是里子。",
+    "한 홍콩에서 나온 두 짧은 이야기 — 빅토리아 항구가 얼굴, 골목·밥·사람이 속.",
+    "Dos relatos cortos de un Hong Kong — el puerto Victoria como cara, calles, comida y gente como interior.",
   ),
   cover: shot(
     "01",

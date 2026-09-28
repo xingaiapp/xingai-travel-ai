@@ -14,7 +14,7 @@ XingAI Travel AI is a **travel decision system**, not an OTA or price-comparison
 |------|--------|
 | **App shell** | Next.js 16 App Router, React 19, Tailwind 4. On desktop the sidebar stays fixed and the main column scrolls. |
 | **Core flow** | `/decide` → compare or inspire → `/result` with plan |
-| **Stories** | `/stories` after the decision ([ADR 0006](./docs/adr/0006-stories-after-decision.md)). **My Hong Kong** Season 1 rebuilt Macau-style (2026-09-28): EP01 Victoria Harbour + EP02 streets/food/people (en / 中文 / 한국어 / Español). **My Macau** Season 1 EP01–EP02 published. Older long-form HK EP03–08 URLs retired. Story photos processed (EXIF stripped), contained display, no clear-face stills. |
+| **Stories** | `/stories` after the decision ([ADR 0006](./docs/adr/0006-stories-after-decision.md)). **My Hong Kong** Season 1 replaced from HTML sources (2026-09-28): EP01 Victoria Harbour + EP02 streets/food/people only — old long-form EP03–08 media removed. en / 中文 / 한국어 / Español. **My Macau** Season 1 EP01–EP02 published. Story photos processed (EXIF stripped), contained display, no clear-face stills. |
 | **Compare quality** | Prompt + normalize pass require non-blank, distinct weather / flight / walkability rows; Hero copy says compare-then-search (not “actually book”). Past dates blocked; dead Settings control removed. Trip cards pick a city photo by name (EN/中文/한국어 aliases) instead of falling back to Lisbon for every unknown destination. |
 | **AI backend** | OpenAI JSON (`gpt-4o-mini` default), mock fallback when no API key |
 | **i18n** | English, 中文, 한국어, Español (including published Travel Stories) |

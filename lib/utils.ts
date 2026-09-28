@@ -46,7 +46,6 @@ export const CITY_IMAGES: Record<string, string> = {
   홍콩: "/stories/hong-kong/01/red-sail-junk-800.webp",
   "victoria harbour": "/stories/hong-kong/01/harbour-promenade-skyline-800.webp",
   维港: "/stories/hong-kong/01/harbour-promenade-skyline-800.webp",
-  홍콩: unsplash("photo-1536599018102-9f803c140fc1"),
   macau: "/stories/macau/01/londoner-big-ben-800.webp",
   macao: "/stories/macau/01/londoner-big-ben-800.webp",
   澳门: "/stories/macau/01/londoner-big-ben-800.webp",
