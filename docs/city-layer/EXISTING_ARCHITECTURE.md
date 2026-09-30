@@ -15,7 +15,7 @@ Step 0 of the Hong Kong first-time decision work. It records what Travel AI alre
 | Validation | `zod` on every API body |
 | AI | `openai` SDK, JSON mode, mock fallback when no key ([ADR 0002](../adr/0002-openai-json-api-fallback.md)) |
 | Storage | None server-side. `sessionStorage` / `localStorage` on the client ([ADR 0003](../adr/0003-session-storage-client-state.md), [ADR 0007](../adr/0007-local-trip-history.md)) |
-| Tests | None. `npm run lint` is the only automated check |
+| Tests | None. `npm run lint` is the only automated check, and at `5bf3768` it already reports 2 errors (`react-hooks/set-state-in-effect` in `decide-page.tsx` and `locale-provider.tsx`) |
 | Deploy | Vercel, `travel.xingai.app` |
 
 ## 2. Routes and pages
@@ -139,6 +139,7 @@ Not touched: `/decide`, compare, inspire and plan APIs and prompts, share codec,
 | Nav (desktop sidebar, mobile bottom bar, drawer) | Same three items |
 | Locale switch en/zh/ko/es, light/dark | No missing strings, no hydration warnings |
 | `sitemap.xml`, `llms.txt`, `robots.txt` | Valid; existing URLs still listed |
-| `npm run lint`, `npm run build` | Pass |
+| `npm run lint` | No new errors beyond the 2 pre-existing ones |
+| `npm run build` (now runs `check:cities` first) | Pass |
 
 Results go into `REGRESSION_REPORT.md` in this folder after implementation.
