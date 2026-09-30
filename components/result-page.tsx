@@ -10,6 +10,7 @@ import { Itinerary } from "@/components/itinerary"
 import { StepProgress } from "@/components/step-progress"
 import { TradeoffNote } from "@/components/tradeoff-note"
 import { TripWarnings } from "@/components/trip-warnings"
+import { CityGuideLink } from "@/components/city/city-guide-link"
 import { RelatedStories } from "@/components/related-stories"
 import { ShareTripButton } from "@/components/share-trip-button"
 import { PrintTripButton } from "@/components/print-trip-button"
@@ -162,6 +163,7 @@ export function ResultPage() {
           </div>
 
           <RelatedStories destinations={compare.destinations.map((item) => item.name)} />
+          <CityGuideLink destinations={compare.destinations.map((item) => item.name)} />
 
           <p className="rounded-md bg-muted p-3 text-center text-xs leading-relaxed text-muted-foreground">
             {messages.result.note}

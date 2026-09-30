@@ -1,6 +1,7 @@
 "use client"
 
 import { ExternalLink } from "lucide-react"
+import { EvidenceBadge } from "@/components/city/evidence-badge"
 import { useLocale } from "@/components/locale-provider"
 import { cityText, fill, mapsUrl } from "@/lib/cities"
 import type { Place } from "@/lib/cities/types"
@@ -29,24 +30,13 @@ export function PlaceCard({ place, clusterName }: Readonly<{ place: Place; clust
         {m.setting[place.setting]} · {m.bestTime[place.bestTime]} ·{" "}
         {fill(m.visitRange, { min: place.visitMinutes.min, max: place.visitMinutes.max })}
       </p>
-      <div className="mt-auto flex flex-wrap items-end justify-between gap-2 border-t border-border pt-2">
-        <p className="text-[0.6875rem] leading-relaxed text-muted-foreground">
-          <span className="font-semibold">{m.sources}:</span>{" "}
-          {place.sources.map((source, index) => (
-            <span key={source.url}>
-              {index > 0 && " · "}
-              <a href={source.url} target="_blank" rel="noopener noreferrer" className="underline decoration-border hover:text-primary">
-                {source.name}
-              </a>
-            </span>
-          ))}{" "}
-          ({fill(m.readOn, { date: place.sources[0].retrievedAt })})
-        </p>
+      <div className="mt-auto flex flex-wrap items-start justify-between gap-2 border-t border-border pt-2">
+        <EvidenceBadge sources={place.sources} />
         <a
           href={mapsUrl(place)}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-primary hover:underline"
+          className="inline-flex min-h-9 shrink-0 items-center gap-1 rounded-md border border-border px-2.5 text-xs font-semibold text-primary hover:border-primary/60"
         >
           {m.openInMaps}
           <ExternalLink className="h-3 w-3" aria-hidden />

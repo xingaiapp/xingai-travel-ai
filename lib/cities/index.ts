@@ -32,3 +32,39 @@ export function mapsUrl(place: Place): string {
   const { lat, lng } = place.coordinates
   return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
 }
+
+/** Fire-and-forget funnel event (ADR 0008 §7). Logged only; never affects any decision. */
+export function trackCityEvent(type: "city_from_result" | "city_route_select", city: string, route?: string) {
+  fetch("/api/track", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ type, city, route }),
+    keepalive: true,
+  }).catch(() => {})
+}
+
+function normalizeName(name: string) {
+  return name.normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim()
+}
+
+/**
+ * Cities for any destination in a finished comparison, in comparison order.
+ * Matches names in every locale (the comparison may come back in Chinese or Korean).
+ * Never used for scoring (ADR 0008 §1.4).
+ */
+export function citiesForDestinations(names: string[]): City[] {
+  const found: City[] = []
+  for (const raw of names) {
+    const wanted = normalizeName(raw)
+    const city = cities.find((item) =>
+      [...Object.values(item.name), item.localName].some((label) => {
+        const target = normalizeName(label)
+        // Latin names need a word boundary ("Hong Kong, China"); CJK names have no spaces ("香港特别行政区").
+        const cjk = !/[a-z]/.test(target)
+        return wanted === target || wanted.startsWith(cjk ? target : `${target} `)
+      })
+    )
+    if (city && !found.includes(city)) found.push(city)
+  }
+  return found
+}

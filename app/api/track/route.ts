@@ -14,12 +14,25 @@ const storySchema = z.object({
   season: z.string().max(60),
 })
 
+// City layer funnel: result → city page, and which reference route people open. See ADR 0008.
+const citySchema = z.object({
+  type:  z.enum(["city_from_result", "city_route_select"]),
+  city:  z.string().max(60),
+  route: z.string().max(60).optional(),
+})
+
 export async function POST(request: NextRequest) {
   try {
     const json = await request.json()
     const story = storySchema.safeParse(json)
     if (story.success) {
       console.log("[story-click]", { ...story.data, timestamp: new Date().toISOString() })
+      return NextResponse.json({ ok: true })
+    }
+
+    const city = citySchema.safeParse(json)
+    if (city.success) {
+      console.log("[city-click]", { ...city.data, timestamp: new Date().toISOString() })
       return NextResponse.json({ ok: true })
     }
 

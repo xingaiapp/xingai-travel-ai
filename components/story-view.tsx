@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, Camera, Compass, Gem, RotateCcw, ThumbsDown, Lightbulb } from "lucide-react"
+import { ArrowLeft, ArrowRight, Camera, Compass, Gem, Map as MapIcon, RotateCcw, ThumbsDown, Lightbulb } from "lucide-react"
 import { useLocale } from "@/components/locale-provider"
+import { citiesForDestinations, fill } from "@/lib/cities"
 import { decideHref, episodeLabel, pickText, trackStoryClick } from "@/lib/stories"
 import type { StoryBlock, StoryEpisode, StoryPhoto, StorySeason, TakeKind } from "@/lib/stories/types"
 import { cn } from "@/lib/utils"
@@ -227,6 +228,23 @@ function EpisodeList({ season, episodes, currentSlug }: Readonly<{ season: Story
   )
 }
 
+/** City layer entry from a story season (ADR 0008 §1.2), when that city has a guide. */
+function CityGuideCta({ season }: Readonly<{ season: StorySeason }>) {
+  const { t } = useStoryText()
+  const { messages } = useLocale()
+  const city = citiesForDestinations([season.destination])[0]
+  if (!city) return null
+  return (
+    <Link
+      href={`/city/${city.slug}`}
+      className="mt-6 flex items-center gap-3 rounded-md border border-border bg-card p-4 text-sm font-extrabold shadow-sm transition hover:border-primary/40"
+    >
+      <MapIcon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+      <span>{fill(messages.city.fromStory, { city: t(city.name) })} →</span>
+    </Link>
+  )
+}
+
 export function SeasonView({ season, linkable }: Readonly<{ season: StorySeason; linkable: string[] }>) {
   const { t, ui } = useStoryText()
   return (
@@ -249,6 +267,7 @@ export function SeasonView({ season, linkable }: Readonly<{ season: StorySeason;
           </h2>
           <EpisodeList season={season} episodes={linkable} />
         </section>
+        <CityGuideCta season={season} />
         <DecideCta season={season} />
       </div>
     </main>

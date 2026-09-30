@@ -26,7 +26,7 @@ Travel AI 回答的是"我该去哪？"（[ADR 0001](./0001-compare-first-produc
 
 1. 路由为 `/city/[slug]`，由城市注册表静态生成。上线时只有香港（`/city/hong-kong`）。
 2. 入口：
-   - `/result` 页，在决策完成之后、"相关故事"旁边。**任何**参与比较、并且有城市页的目的地都会显示，顺序按比较顺序，匹配规则与 `storiesForDestinations()` 相同。
+   - `/result` 页，在决策完成之后、"相关故事"旁边。**任何**参与比较、并且有城市页的目的地都会显示，顺序按比较顺序，匹配规则参照 `storiesForDestinations()`，并扩展到城市在各语言下的名称，因为比较结果可能以中文或韩文返回。
    - 香港故事季的页面。
    - 通过 sitemap 和 `llms.txt`，从搜索直接进入。
 3. 底部导航和侧边导航保持不变（`/decide`、`/stories`、`/trips`），城市层不新增 tab。

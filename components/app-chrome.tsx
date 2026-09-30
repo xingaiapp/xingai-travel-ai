@@ -53,6 +53,7 @@ function mobileHeaderTitle(pathname: string, messages: Messages) {
   if (legal) return messages.chrome[legal.key]
   if (pathname.startsWith("/stories")) return messages.chrome.stories
   if (pathname.startsWith("/trips")) return messages.chrome.trips
+  if (pathname.startsWith("/city/")) return messages.city.eyebrow
   return messages.chrome.decide
 }
 

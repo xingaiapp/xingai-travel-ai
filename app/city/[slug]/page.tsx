@@ -28,5 +28,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CityRoute({ params }: Props) {
   const city = getCity((await params).slug)
   if (!city) notFound()
-  return <CityPage city={city} />
+  // Facts only: names, coordinates and the sources behind them. No ratings, hours or prices.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristDestination",
+    name: city.name.en,
+    description: city.intro.en,
+    url: `https://travel.xingai.app/city/${city.slug}`,
+    includesAttraction: city.places.map((place) => ({
+      "@type": "TouristAttraction",
+      name: place.name.en,
+      description: place.summary.en,
+      geo: { "@type": "GeoCoordinates", latitude: place.coordinates.lat, longitude: place.coordinates.lng },
+      sameAs: place.sources.map((source) => source.url),
+    })),
+  }
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      <CityPage city={city} />
+    </>
+  )
 }

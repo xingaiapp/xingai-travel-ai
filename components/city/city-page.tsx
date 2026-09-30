@@ -1,15 +1,18 @@
 "use client"
 
 import { Compass, Info } from "lucide-react"
-import { useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { useLocale } from "@/components/locale-provider"
+import { AdjustPanel } from "@/components/city/adjust-panel"
 import { CityPhoto } from "@/components/city/city-photo"
 import { PlaceCard } from "@/components/city/place-card"
 import { RouteCard } from "@/components/city/route-card"
 import { RouteExplanation } from "@/components/city/route-explanation"
 import { RouteTimeline } from "@/components/city/route-timeline"
 import { TravelMap } from "@/components/city/travel-map"
-import { cityText, fill } from "@/lib/cities"
+import { UncertaintyNotes } from "@/components/uncertainty-notes"
+import { cityText, fill, trackCityEvent } from "@/lib/cities"
+import { adjustRoute, type AdjustToggle } from "@/lib/cities/adjust"
 import type { City, PlaceCategory } from "@/lib/cities/types"
 import { cn } from "@/lib/utils"
 
@@ -25,16 +28,31 @@ export function CityPage({ city }: Readonly<{ city: City }>) {
   const [filter, setFilter] = useState<PlaceCategory | "all">("iconic")
   const [routeId, setRouteId] = useState(city.routes[0]?.id)
   const [activeStop, setActiveStop] = useState<string | null>(null)
+  const [toggles, setToggles] = useState<ReadonlySet<AdjustToggle>>(new Set())
   const detailRef = useRef<HTMLDivElement>(null)
 
   const route = city.routes.find((item) => item.id === routeId) ?? city.routes[0]
+  const adjusted = useMemo(() => adjustRoute(city, route, toggles), [city, route, toggles])
+  const shownRoute = adjusted.route
   const filters = FILTERS.filter((key) => key === "all" || city.places.some((place) => place.categories.includes(key)))
   const places = filter === "all" ? city.places : city.places.filter((place) => place.categories.includes(filter))
 
   const selectRoute = (id: string) => {
+    if (id !== routeId) trackCityEvent("city_route_select", city.slug, id)
     setRouteId(id)
     setActiveStop(null)
+    setToggles(new Set())
     requestAnimationFrame(() => detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }))
+  }
+
+  const toggle = (key: AdjustToggle) => {
+    setActiveStop(null)
+    setToggles((current) => {
+      const next = new Set(current)
+      if (next.has(key)) next.delete(key)
+      else next.add(key)
+      return next
+    })
   }
 
   const activateFromMap = (placeId: string) => {
@@ -134,22 +152,42 @@ export function CityPage({ city }: Readonly<{ city: City }>) {
 
         {route && (
           <div ref={detailRef} className="mt-8 scroll-mt-20" aria-live="polite">
-            <h2 className="font-display text-2xl font-bold">{cityText(route.name, locale)}</h2>
+            <h2 className="flex flex-wrap items-center gap-2 font-display text-2xl font-bold">
+              {cityText(route.name, locale)}
+              {toggles.size > 0 && !adjusted.rejected && adjusted.changes.length > 0 && (
+                <span className="rounded-md bg-warning/20 px-2 py-0.5 font-sans text-xs font-bold text-foreground">{m.adjusted}</span>
+              )}
+            </h2>
             <p className="mt-1 max-w-3xl text-sm text-muted-foreground">{cityText(route.description, locale)}</p>
             {/* Phone: why → map → stops, so the decision reasons come first. Desktop: map across the top. */}
             <div className="mt-4 grid gap-4 lg:grid-cols-2 lg:items-start">
-              <div className="lg:order-2">
+              <div className="grid gap-4 lg:order-2">
                 <RouteExplanation route={route} />
+                <AdjustPanel
+                  city={city}
+                  active={toggles}
+                  onToggle={toggle}
+                  onReset={() => setToggles(new Set())}
+                  result={adjusted}
+                />
               </div>
               <div className="lg:order-1 lg:col-span-2">
-                <TravelMap city={city} route={route} activeStop={activeStop} onActivate={activateFromMap} />
+                <TravelMap city={city} route={shownRoute} activeStop={activeStop} onActivate={activateFromMap} />
               </div>
               <div className="lg:order-3">
-                <RouteTimeline city={city} route={route} activeStop={activeStop} onActivate={setActiveStop} />
+                <RouteTimeline city={city} route={shownRoute} activeStop={activeStop} onActivate={setActiveStop} />
               </div>
             </div>
           </div>
         )}
+
+        <div className="mt-8">
+          <UncertaintyNotes
+            title={m.notCoveredTitle}
+            lead={m.notCoveredLead}
+            items={[m.notCoveredItems.hours, m.notCoveredItems.prices, m.notCoveredItems.events, m.notCoveredItems.live]}
+          />
+        </div>
       </div>
     </main>
   )

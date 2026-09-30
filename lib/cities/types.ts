@@ -59,6 +59,8 @@ export interface Place {
   setting: PlaceSetting
   weatherSensitive: boolean
   walking: WalkingEffort
+  /** A boarding point (pier, terminus). Part of routes, never offered as a substitute stop. */
+  transport?: true
 }
 
 export interface Cluster {

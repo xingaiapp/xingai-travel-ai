@@ -196,6 +196,8 @@ const places: Place[] = [
     setting: "mixed",
     weatherSensitive: false,
     walking: "easy",
+
+    transport: true,
   },
 
   // ── The Peak ──

@@ -1,6 +1,7 @@
 "use client"
 
 import { Bus, Car, ExternalLink, Footprints, ListOrdered, Mountain, Ship, TrainFront, TramFront } from "lucide-react"
+import { EvidenceBadge } from "@/components/city/evidence-badge"
 import { useLocale } from "@/components/locale-provider"
 import { cityText, fill, formatMinutes, mapsUrl } from "@/lib/cities"
 import type { City, TransportMode, TravelRoute } from "@/lib/cities/types"
@@ -93,7 +94,7 @@ export function RouteTimeline({
                     href={mapsUrl(place)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
+                    className="inline-flex min-h-9 items-center gap-1 rounded-md border border-border px-2.5 font-semibold text-primary hover:border-primary/60"
                   >
                     {m.openInMaps}
                     <ExternalLink className="h-3 w-3" aria-hidden />
@@ -102,6 +103,16 @@ export function RouteTimeline({
                     <span className="text-muted-foreground">{m.approxPoint}</span>
                   )}
                 </div>
+                {/* The reason above is editorial; the facts behind the place are sourced. */}
+                <details className="mt-2 pl-10 text-sm">
+                  <summary className="cursor-pointer py-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground">
+                    {m.aboutPlace}
+                  </summary>
+                  <p className="mt-1.5 leading-relaxed text-foreground/90">{cityText(place.summary, locale)}</p>
+                  <div className="mt-1.5">
+                    <EvidenceBadge sources={place.sources} />
+                  </div>
+                </details>
               </div>
             </li>
           )

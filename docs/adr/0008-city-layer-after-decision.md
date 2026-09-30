@@ -26,7 +26,7 @@ We want to add that layer, with Hong Kong as the first reference city. It is a s
 
 1. Route: `/city/[slug]`, statically generated from a city registry. Hong Kong (`/city/hong-kong`) is the only entry at launch.
 2. Entry points:
-   - `/result`, after the decision and next to Related Stories, for **any** compared destination that has a city page, in comparison order. It uses the same name matching as `storiesForDestinations()`.
+   - `/result`, after the decision and next to Related Stories, for **any** compared destination that has a city page, in comparison order. Name matching is modelled on `storiesForDestinations()` and extended to the city name in every locale, because a comparison may come back in Chinese or Korean.
    - The Hong Kong story season page.
    - Direct landing from search, via the sitemap and `llms.txt`.
 3. The bottom and side navigation stay as they are (`/decide`, `/stories`, `/trips`). The city layer is not a new tab.

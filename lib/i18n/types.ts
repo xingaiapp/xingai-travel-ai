@@ -268,6 +268,35 @@ export interface Messages {
     hoursMinutes: string
     hours: string
     about: string
+    sourceCount: string
+    sourceCountOne: string
+    aboutPlace: string
+    notCoveredTitle: string
+    notCoveredLead: string
+    notCoveredItems: Record<"hours" | "prices" | "events" | "live", string>
+    adjustTitle: string
+    adjustLead: string
+    toggles: Record<"rain" | "easier" | "food" | "shorter", string>
+    reset: string
+    changesTitle: string
+    adjusted: string
+    adjustedNote: string
+    noChanges: string
+    unworkable: string
+    rejected: string
+    change: {
+      swapRain: string
+      removeRain: string
+      removeEasier: string
+      taxi: string
+      addFood: string
+      noFood: string
+      removeShorter: string
+    }
+    fromResultTitle: string
+    fromResultBody: string
+    fromResultCta: string
+    fromStory: string
   }
   travelers: {
     solo: string

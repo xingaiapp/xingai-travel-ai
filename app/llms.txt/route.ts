@@ -1,3 +1,4 @@
+import { cities } from "@/lib/cities"
 import { publishedEpisodes, seasons } from "@/lib/stories"
 
 function storiesSection() {
@@ -7,6 +8,18 @@ function storiesSection() {
   if (lines.length === 0) return ""
   return `
 Travel Stories (first-hand, written by the publisher; each ends with a link to /decide for the reader's own trip):
+${lines.join("\n")}
+`
+}
+
+function citiesSection() {
+  if (cities.length === 0) return ""
+  const lines = cities.map(
+    (city) =>
+      `- /city/${city.slug} — ${city.name.en}: ${city.places.length} places with cited sources, ${city.routes.length} hand-written reference routes (${city.routes.map((route) => route.name.en).join(", ")}), each with why, who it suits and trade-offs.`
+  )
+  return `
+City guides (optional, after the destination decision; stable facts only, no opening hours or prices; never used to rank destinations):
 ${lines.join("\n")}
 `
 }
@@ -30,7 +43,7 @@ Primary pages:
 - /terms
 - /disclaimer
 - /affiliate-disclosure
-${storiesSection()}
+${storiesSection()}${citiesSection()}
 Product principle:
 - Decision quality comes first.
 - Affiliate links may appear after the recommendation and should not influence destination ranking, winner selection, confidence, or trade-off explanations.
