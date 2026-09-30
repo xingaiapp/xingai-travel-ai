@@ -1,4 +1,4 @@
-import type { City, CityText, Cluster, Place, Source, TravelRoute } from "./types"
+import type { City, CityPhoto, CityText, Cluster, Place, Source, TravelRoute } from "./types"
 
 // Hong Kong reference city (ADR 0008).
 // Facts come from the linked Wikipedia articles; coordinates come from the linked Wikidata items.
@@ -522,12 +522,79 @@ const places: Place[] = [
   },
 ]
 
+// First-hand photos from the "My Hong Kong" Travel Story. They set the mood for a route;
+// they do not claim to show any particular stop.
+const storyCredit = {
+  label: t("From the story “My Hong Kong”", "出自故事《我的香港》", "이야기 「나의 홍콩」에서", "De la historia «Mi Hong Kong»"),
+  href: "/stories/hong-kong",
+}
+
+const storyPhoto = (episode: string, name: string, width: number, height: number, alt: CityText): CityPhoto => ({
+  src: `/stories/hong-kong/${episode}/${name}`,
+  width,
+  height,
+  alt,
+  credit: storyCredit,
+})
+
+const photos = {
+  promenade: storyPhoto(
+    "01",
+    "harbour-promenade-skyline",
+    720,
+    1280,
+    t(
+      "Waterfront promenade facing the Victoria Harbour skyline",
+      "面向维多利亚港天际线的海滨长廊",
+      "빅토리아 하버 스카이라인을 마주한 해안 산책로",
+      "Paseo marítimo frente al perfil del puerto Victoria"
+    )
+  ),
+  harbourNight: storyPhoto(
+    "01",
+    "harbour-night-reflection",
+    720,
+    1280,
+    t(
+      "Victoria Harbour night lights reflected on the water",
+      "维多利亚港的夜灯倒映在水面上",
+      "물 위에 비친 빅토리아 하버의 밤 불빛",
+      "Luces nocturnas del puerto Victoria reflejadas en el agua"
+    )
+  ),
+  mural: storyPhoto(
+    "02",
+    "bridge-pillar-mural",
+    720,
+    1280,
+    t(
+      "Painted bridge pillars along a single-lane road under an overpass",
+      "天桥下单行道旁彩绘的桥墩",
+      "고가도로 아래 1차선 도로를 따라 그림이 그려진 교각",
+      "Pilares de un paso elevado pintados junto a una calle de un carril"
+    )
+  ),
+  roastRice: storyPhoto(
+    "02",
+    "roast-meat-rice-eggs",
+    880,
+    1173,
+    t(
+      "Char siu and roast-duck rice with soft-yolk eggs",
+      "叉烧烧鸭饭配溏心蛋",
+      "반숙 달걀을 곁들인 차슈·오리구이 덮밥",
+      "Arroz con char siu y pato asado con huevos de yema blanda"
+    )
+  ),
+}
+
 // Reference routes (ADR 0008 §3). Hand-authored, never generated. Times are estimates.
 // Reasons are editorial; any fact inside them must already be in a place summary above.
 const routes: TravelRoute[] = [
   {
     id: "essentials",
     theme: "essentials",
+    photo: photos.harbourNight,
     name: t("Hong Kong Essentials", "香港经典一日", "홍콩 핵심 코스", "Lo esencial de Hong Kong"),
     description: t(
       "See the city from above, then cross the harbour and end the day looking back at the skyline.",
@@ -664,6 +731,7 @@ const routes: TravelRoute[] = [
   {
     id: "photo",
     theme: "photo",
+    photo: photos.mural,
     name: t("Photo Hong Kong", "拍照香港", "사진으로 보는 홍콩", "Hong Kong en fotos"),
     description: t(
       "Cross Hong Kong Island from east to west: dense housing, old tenements, heritage courtyards and a western sunset.",
@@ -800,6 +868,7 @@ const routes: TravelRoute[] = [
   {
     id: "local",
     theme: "local",
+    photo: photos.roastRice,
     name: t("Local Hong Kong", "在地香港", "로컬 홍콩", "Hong Kong local"),
     description: t(
       "Follow an everyday rhythm: breakfast at a cha chaan teng, an old market, a temple, the ferry, and a night market.",
@@ -953,6 +1022,44 @@ export const hongKong: City = {
   name: t("Hong Kong", "香港", "홍콩", "Hong Kong"),
   localName: "香港",
   country: t("China", "中国", "중국", "China"),
+  intro: t(
+    "Hong Kong's city centre sits on two shores facing each other across Victoria Harbour: Hong Kong Island to the south, Kowloon to the north. A good first day comes down to which parts of each side you see, and crossing the harbour once.",
+    "香港市中心分布在维多利亚港两岸：南边是港岛，北边是九龙。第一次来，关键是决定两边各看哪些地方，然后过一次海。",
+    "홍콩 도심은 빅토리아 하버를 사이에 두고 마주 보는 두 해안에 있습니다. 남쪽이 홍콩섬, 북쪽이 구룡입니다. 첫날은 양쪽에서 어디를 볼지 정하고 항구를 한 번 건너는 것이 핵심입니다.",
+    "El centro de Hong Kong ocupa dos orillas frente a frente en el puerto Victoria: la isla de Hong Kong al sur y Kowloon al norte. Un buen primer día se reduce a elegir qué ver en cada lado y cruzar el puerto una vez."
+  ),
+  hero: photos.promenade,
+  map: {
+    // Rough outline of Victoria Harbour between Kennedy Town and Quarry Bay. Schematic only.
+    water: [
+      [114.119, 22.283],
+      [114.1255, 22.2845],
+      [114.14, 22.2885],
+      [114.15, 22.2893],
+      [114.16, 22.2878],
+      [114.166, 22.2845],
+      [114.1735, 22.2855],
+      [114.185, 22.2855],
+      [114.197, 22.293],
+      [114.212, 22.2895],
+      [114.218, 22.29],
+      [114.218, 22.312],
+      [114.205, 22.308],
+      [114.19, 22.302],
+      [114.18, 22.2948],
+      [114.175, 22.2926],
+      [114.172, 22.2928],
+      [114.166, 22.2935],
+      [114.162, 22.2965],
+      [114.157, 22.299],
+      [114.152, 22.304],
+      [114.14, 22.31],
+      [114.125, 22.318],
+      [114.119, 22.322],
+    ],
+    waterLabel: t("Victoria Harbour", "维多利亚港", "빅토리아 하버", "Puerto Victoria"),
+    waterLabelAt: [114.182, 22.2895],
+  },
   clusters,
   places,
   routes,

@@ -7,11 +7,17 @@
 // missing sources or missing translations. Loads the TypeScript data directly
 // through Node's type stripping, so lib/cities/ must not use `@/` imports.
 
+import { existsSync } from "node:fs"
 import { hongKong } from "../lib/cities/hong-kong.ts"
-import { validateCity } from "../lib/cities/validate.ts"
+import { cityPhotoPaths, validateCity } from "../lib/cities/validate.ts"
 
 const cities = [hongKong]
-const errors = cities.flatMap((city) => validateCity(city))
+const errors = cities.flatMap((city) => [
+  ...validateCity(city),
+  ...cityPhotoPaths(city)
+    .filter((path) => !existsSync(new URL(`../public${path}`, import.meta.url)))
+    .map((path) => `${city.slug} › photo missing on disk: public${path}`),
+])
 
 if (errors.length > 0) {
   console.error(`City data check failed (${errors.length}):`)

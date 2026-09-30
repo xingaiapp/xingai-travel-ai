@@ -86,8 +86,19 @@ export interface RouteStop {
   reason: CityText
 }
 
+/** A processed photo (see scripts/process-story-photos.mjs): `src` is the base path without the -800/-1600 suffix. */
+export interface CityPhoto {
+  src: string
+  width: number
+  height: number
+  alt: CityText
+  /** Where the photo comes from, e.g. a first-hand Travel Story. Photos never claim to show a specific stop. */
+  credit: { label: CityText; href: string }
+}
+
 export interface TravelRoute {
   id: string
+  photo?: CityPhoto
   name: CityText
   theme: "essentials" | "photo" | "local"
   description: CityText
@@ -103,6 +114,17 @@ export interface City {
   name: CityText
   localName: string
   country: CityText
+  /** Orientation for a first-time visitor. Stable facts only. */
+  intro: CityText
+  hero: CityPhoto
+  /** Schematic map data. Not for navigation. */
+  map: {
+    /** Water outline as [lng, lat] points, drawn behind the places. */
+    water: [number, number][]
+    waterLabel: CityText
+    /** [lng, lat] where the water label sits. */
+    waterLabelAt: [number, number]
+  }
   clusters: Cluster[]
   places: Place[]
   routes: TravelRoute[]

@@ -233,6 +233,42 @@ export interface Messages {
     savedOn: string
     count: string
   }
+  city: {
+    eyebrow: string
+    firstTimeTitle: string
+    notCovered: string
+    photoFrom: string
+    placesTitle: string
+    placesLead: string
+    filterAll: string
+    categories: Record<"iconic" | "local" | "culture" | "food" | "photo" | "nature" | "night" | "xing_pick", string>
+    setting: Record<"indoor" | "outdoor" | "mixed", string>
+    bestTime: Record<"morning" | "daytime" | "sunset" | "evening" | "any", string>
+    visitRange: string
+    sources: string
+    readOn: string
+    routesTitle: string
+    routesLead: string
+    stops: string
+    selected: string
+    showRoute: string
+    whyTitle: string
+    goodForTitle: string
+    tradeoffsTitle: string
+    timelineTitle: string
+    estimatesNote: string
+    visitAbout: string
+    travelAbout: string
+    modes: Record<"walk" | "mtr" | "tram" | "peak_tram" | "ferry" | "bus" | "taxi", string>
+    openInMaps: string
+    approxPoint: string
+    mapTitle: string
+    mapNote: string
+    minutes: string
+    hoursMinutes: string
+    hours: string
+    about: string
+  }
   travelers: {
     solo: string
     couple: string

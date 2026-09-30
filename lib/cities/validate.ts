@@ -24,6 +24,11 @@ export function validateCity(city: City): string[] {
 
   text("name", city.name)
   text("country", city.country)
+  text("intro", city.intro)
+  text("hero alt", city.hero.alt)
+  text("hero credit", city.hero.credit.label)
+  text("map waterLabel", city.map.waterLabel)
+  if (city.map.water.length < 3) err("map", "water outline needs at least 3 points")
 
   const clusterIds = new Set<string>()
   for (const cluster of city.clusters) {
@@ -76,6 +81,8 @@ export function validateCity(city: City): string[] {
       if (!ISO_DATE.test(source.retrievedAt)) err(where, `retrievedAt must be YYYY-MM-DD: ${source.retrievedAt}`)
     }
 
+    if (insidePolygon([lng, lat], city.map.water)) err(where, "coordinates fall inside the map's water outline")
+
     const { min, max } = place.visitMinutes
     if (min <= 0 || max < min) err(where, `invalid visitMinutes ${min}–${max}`)
   }
@@ -89,6 +96,10 @@ export function validateCity(city: City): string[] {
     const where = `route ${route.id}`
     text(`${where} name`, route.name)
     text(`${where} description`, route.description)
+    if (route.photo) {
+      text(`${where} photo alt`, route.photo.alt)
+      text(`${where} photo credit`, route.photo.credit.label)
+    }
     for (const [label, list] of [["whyThisRoute", route.whyThisRoute], ["goodFor", route.goodFor], ["tradeoffs", route.tradeoffs]] as const) {
       if (list.length === 0) err(where, `${label} is empty`)
       list.forEach((item, index) => text(`${where} ${label}[${index}]`, item))
@@ -167,4 +178,21 @@ export function validateCity(city: City): string[] {
   }
 
   return errors
+}
+
+/** Ray-casting point-in-polygon on [lng, lat] pairs. */
+function insidePolygon([x, y]: [number, number], polygon: [number, number][]): boolean {
+  let inside = false
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    const [xi, yi] = polygon[i]
+    const [xj, yj] = polygon[j]
+    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside
+  }
+  return inside
+}
+
+/** Every photo path a city uses, for the build script to check on disk. */
+export function cityPhotoPaths(city: City): string[] {
+  const photos = [city.hero, ...city.routes.flatMap((route) => (route.photo ? [route.photo] : []))]
+  return photos.flatMap((photo) => [`${photo.src}-800.webp`, `${photo.src}-1600.webp`])
 }
