@@ -42,6 +42,7 @@ Checked on a local dev server and a production build (`npm run build`), in the i
 | Map ↔ timeline | Tapping a marker highlights and scrolls to the stop; tapping a stop highlights the marker | ✅ |
 | JSON-LD | `TouristDestination` with attractions (name, summary, coordinates, source links); no ratings, hours or prices | ✅ |
 
-## Found outside this change (not fixed here, low risk)
+## Found outside this change (low risk, fixed afterwards)
 
 - `components/destination-compare.tsx:29` renders stars with `"★".repeat(item.scores.overall)`. An `overall` outside 0–5 throws `RangeError: Invalid count value` and takes down `/result`. The compare API (`lib/compare-normalize.ts`) and shared links (`lib/share-codec.ts`) already clamp to 1–5 / 0–5, so this only happens with hand-edited or corrupted `sessionStorage`. Seen while hand-writing a test comparison with `overall: 8`.
+  **Fixed:** the table now clamps the score to 0–5 before drawing stars (`starRating()` in the same file).

@@ -27,7 +27,7 @@ function DestinationCompareInner({
   const isWinnerFocused = focused.isWinner
 
   const tableRows: [string, (item: Destination) => string][] = [
-    [messages.result.tableOverall, (item) => "★".repeat(item.scores.overall) + "☆".repeat(5 - item.scores.overall)],
+    [messages.result.tableOverall, (item) => starRating(item.scores.overall)],
     [messages.result.tableWeather, (item) => item.scores.weather],
     [messages.result.tableFlight, (item) => item.scores.flightTime],
     [messages.result.tableWalkability, (item) => localizeRating(item.scores.walkability, messages)],
@@ -211,4 +211,13 @@ export function DestinationCompare({
       showPlanLink={showPlanLink}
     />
   )
+}
+
+/**
+ * Five-star string for the overall score. Clamped here as well as in compare-normalize / share-codec,
+ * because results restored from sessionStorage skip both: an out-of-range value made repeat() throw.
+ */
+function starRating(overall: number): string {
+  const stars = Math.max(0, Math.min(5, Math.round(Number(overall) || 0)))
+  return "★".repeat(stars) + "☆".repeat(5 - stars)
 }
