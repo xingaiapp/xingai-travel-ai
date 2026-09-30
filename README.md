@@ -256,6 +256,7 @@ cd docs/ux-v1 && python3 -m http.server 8767
 - JSON-LD graph: Organization, WebSite, WebApplication, FAQPage, HowTo (`lib/seo-json-ld.ts`)
 - `/robots.txt`, `/sitemap.xml` (static routes only)
 - `/llms.txt` — plain-text product summary for AI crawlers
+- **IndexNow (Bing):** public key at `/{key}.txt` (same shared XingAI key as xingai.app / invest). After deploy, run `python3 scripts/submit-indexnow.py` to notify engines from the live sitemap. Key is public by protocol; crawl outcomes are not guaranteed.
 
 ---
 
