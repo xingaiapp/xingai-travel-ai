@@ -18,6 +18,7 @@ XingAI Travel AI is a **travel decision system**, not an OTA or price-comparison
 | **Compare quality** | Prompt + normalize pass require non-blank, distinct weather / flight / walkability rows; Hero copy says compare-then-search (not “actually book”). Past dates blocked; dead Settings control removed. Trip cards pick a city photo by name (EN/中文/한국어 aliases) instead of falling back to Lisbon for every unknown destination. Taipei / Shanghai / New Orleans use local `/assets/destination-*-card.webp` (dead Unsplash IDs were 404). |
 | **Layla round (2026-09-28)** | Moat deepen, not booking race: result **uncertainty panel**, **Print/PDF**, compare table shows **full trade-offs per city**. Research: [`docs/research/2026-09-layla-vs-travel-ai.md`](./docs/research/2026-09-layla-vs-travel-ai.md). No fake chat agent / Expedia booking. |
 | **Deep audit (2026-09-28)** | Compare cells no longer append city suffixes on duplicate scores; hreflang uses `zh-CN` + `x-default`; twitter title matches OG; legal link says Affiliate disclosure; GitHub repo public. Stories stay **4 published episodes** (HK×2 + Macau×2) — not 8. |
+| **Catalog honesty (2026-09-30)** | Mother-site Travel features: device-local `/trips` is Free (this browser only). Synced/account history stays Planned — not sold as Pro. |
 | **AI backend** | OpenAI JSON (`gpt-4o-mini` default), mock fallback when no API key |
 | **i18n** | English, 中文, 한국어, Español (including published Travel Stories) |
 | **Theme** | Light / dark, custom provider (React 19–safe) |
