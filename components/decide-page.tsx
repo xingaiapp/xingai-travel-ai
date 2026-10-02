@@ -428,19 +428,22 @@ function HeroIntro() {
               {messages.home.heroBadge}
             </span>
             <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-sky-100">{messages.home.eyebrow}</p>
-            <h1 className="hero-display-title mt-3 max-w-[11ch] text-5xl font-black tracking-normal drop-shadow-sm sm:max-w-[12ch] sm:text-6xl lg:max-w-none lg:text-7xl">
+            <h1 className="hero-display-title mt-3 max-w-[14ch] text-5xl font-black tracking-normal drop-shadow-sm sm:max-w-[16ch] sm:text-6xl lg:max-w-none lg:text-7xl">
               <span className="block text-white">{messages.home.headlineLead}</span>
               <span className="hero-headline-accent">{messages.home.headlineAccent}</span>
             </h1>
             <p className="mt-5 max-w-xl text-base font-medium leading-relaxed text-sky-50/92 sm:text-lg">{messages.home.sub}</p>
-            <div className="mt-6 flex justify-center">
+            <div className="mt-6 flex flex-col items-center gap-3 sm:items-start">
               <a
                 href="#trip-form"
-                className="hero-primary-cta inline-flex h-12 items-center justify-center gap-2 px-5 text-sm font-extrabold shadow-lg transition hover:-translate-y-0.5"
+                className="hero-primary-cta inline-flex h-12 min-h-11 items-center justify-center gap-2 px-5 text-sm font-extrabold shadow-lg transition hover:-translate-y-0.5"
               >
                 {messages.home.primaryCta}
                 <ArrowDown className="h-4 w-4" aria-hidden />
               </a>
+              <p className="text-center text-xs font-extrabold uppercase tracking-[0.12em] text-sky-100/90 sm:text-left">
+                {messages.home.heroProof}
+              </p>
             </div>
             <p className="mt-5 flex max-w-xl items-center gap-2 rounded-md border border-white/18 bg-white/10 px-3 py-2 text-xs font-semibold text-sky-50 backdrop-blur-md">
               <ShieldCheck className="h-4 w-4 shrink-0" aria-hidden />

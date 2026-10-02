@@ -6,11 +6,42 @@ import { useState } from "react"
 import { ConfidencePill } from "@/components/confidence-pill"
 import { useLocale } from "@/components/locale-provider"
 import { localizeRating } from "@/lib/i18n"
+import {
+  computeMatchScore,
+  matchScoreLabelBand,
+  overallTenths,
+  rankedAlternatives,
+  walkabilityTenths,
+} from "@/lib/match-score"
 import type { CompareResult, Destination } from "@/lib/types"
 import { cn, getCityImage } from "@/lib/utils"
 
 function destinationKey(item: Destination) {
   return `${item.name}-${item.country}`
+}
+
+function FactorBar({
+  label,
+  value,
+  detail,
+}: Readonly<{ label: string; value: number; detail?: string }>) {
+  const clamped = Math.max(0, Math.min(10, value))
+  return (
+    <div className="grid gap-1">
+      <div className="flex items-baseline justify-between gap-2 text-xs">
+        <span className="font-semibold text-foreground">{label}</span>
+        <span className="tabular-nums text-muted-foreground">
+          {clamped}/10{detail ? ` · ${detail}` : ""}
+        </span>
+      </div>
+      <div className="h-2 overflow-hidden rounded-full bg-muted" aria-hidden>
+        <div
+          className="h-full rounded-full bg-primary transition-[width] duration-500"
+          style={{ width: `${clamped * 10}%` }}
+        />
+      </div>
+    </div>
+  )
 }
 
 // Inner component keyed by result so focused resets when result changes
@@ -25,6 +56,16 @@ function DestinationCompareInner({
 
   const focusedImage = getCityImage(focused.name)
   const isWinnerFocused = focused.isWinner
+  const winnerScore = computeMatchScore(winner.scores.overall, winner.confidence)
+  const scoreBand = matchScoreLabelBand(winnerScore)
+  const scoreBandLabel =
+    scoreBand === "excellent"
+      ? messages.result.matchExcellent
+      : scoreBand === "strong"
+        ? messages.result.matchStrong
+        : messages.result.matchFair
+  const walkTenths = walkabilityTenths(winner.scores.walkability)
+  const alternatives = rankedAlternatives(result.destinations)
 
   const tableRows: [string, (item: Destination) => string][] = [
     [messages.result.tableOverall, (item) => starRating(item.scores.overall)],
@@ -85,6 +126,40 @@ function DestinationCompareInner({
             <ConfidencePill value={winner.confidence} />
           </div>
 
+          <div className="mb-4 grid gap-3 rounded-md border border-primary/25 bg-primary/5 p-3 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-5 sm:p-4">
+            <div className="text-center sm:min-w-[7.5rem] sm:text-left">
+              <p className="text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-primary">
+                {messages.result.matchScore}
+              </p>
+              <p className="mt-1 flex items-baseline justify-center gap-1 sm:justify-start">
+                <span className="text-4xl font-black tabular-nums tracking-tight text-foreground">{winnerScore}</span>
+                <span className="text-sm font-semibold text-muted-foreground">{messages.result.matchScoreOutOf}</span>
+              </p>
+              <p className="mt-0.5 text-xs font-bold text-primary">{scoreBandLabel}</p>
+            </div>
+            <div className="grid gap-2.5">
+              <FactorBar label={messages.result.factorOverall} value={overallTenths(winner.scores.overall)} />
+              {walkTenths != null ? (
+                <FactorBar
+                  label={messages.result.factorWalkability}
+                  value={walkTenths}
+                  detail={localizeRating(winner.scores.walkability, messages)}
+                />
+              ) : null}
+              <div className="grid gap-1 text-xs text-muted-foreground sm:grid-cols-2">
+                <p>
+                  <span className="font-semibold text-foreground">{messages.result.factorWeather}: </span>
+                  {winner.scores.weather}
+                </p>
+                <p>
+                  <span className="font-semibold text-foreground">{messages.result.factorFlight}: </span>
+                  {winner.scores.flightTime}
+                </p>
+              </div>
+            </div>
+          </div>
+          <p className="mb-3 text-[0.7rem] leading-relaxed text-muted-foreground">{messages.result.matchHelp}</p>
+
           <ul className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-3">
             {winner.whyWins.map((reason) => (
               <li key={reason} className="flex items-start gap-2">
@@ -96,15 +171,28 @@ function DestinationCompareInner({
 
           <div className="mt-5 grid gap-4 border-t border-border pt-4 lg:grid-cols-[1fr_auto]">
             <div>
-              <h4 className="text-sm font-extrabold">{messages.result.whyNot}</h4>
-              <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-                {result.destinations.filter((item) => !item.isWinner).map((item) => (
-                  <li key={item.name}>• {item.name}: {item.tradeoffs[0]}</li>
+              <h4 className="text-sm font-extrabold">{messages.result.alternativesTitle}</h4>
+              <ul className="mt-2 space-y-3">
+                {alternatives.map(({ item, score }, index) => (
+                  <li key={item.name} className="rounded-md border border-border/80 bg-muted/20 px-3 py-2.5">
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <p className="text-sm font-extrabold text-foreground">
+                        #{index + 2} {item.name}
+                        <span className="ml-1 font-semibold text-muted-foreground">— {score}/100</span>
+                      </p>
+                    </div>
+                    <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-amber-700 dark:text-amber-400">
+                      {messages.result.whyNotCity.replace("{city}", item.name)}
+                    </p>
+                    <p className="mt-0.5 text-sm text-muted-foreground">
+                      {item.tradeoffs[0] || result.whyNotOthers || "—"}
+                    </p>
+                  </li>
                 ))}
               </ul>
             </div>
             {showPlanLink ? (
-              <a href="#full-plan" className="inline-flex h-10 items-center justify-center rounded-md border border-border px-4 text-sm font-bold text-primary hover:bg-primary/10">
+              <a href="#full-plan" className="inline-flex h-10 items-center justify-center self-start rounded-md border border-border px-4 text-sm font-bold text-primary hover:bg-primary/10">
                 {messages.result.seePlan}
               </a>
             ) : null}
@@ -133,6 +221,9 @@ function DestinationCompareInner({
                         )}
                       >
                         <span>{item.name}</span>
+                        <span className="text-[0.65rem] font-semibold tabular-nums text-muted-foreground">
+                          {computeMatchScore(item.scores.overall, item.confidence)}/100
+                        </span>
                         {item.isWinner ? (
                           <span className={cn("text-[0.65rem] font-semibold uppercase tracking-wide", selected ? "text-primary" : "text-primary/60")}>
                             {messages.result.topPick}

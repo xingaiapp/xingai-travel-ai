@@ -37,6 +37,7 @@ export interface Messages {
     heroBadge: string
     primaryCta: string
     secondaryCta: string
+    heroProof: string
     helpTitle: string
     helpSub: string
     helpStep1Title: string
@@ -126,6 +127,18 @@ export interface Messages {
     previewBadge: string
     tapCityPreview: string
     bestFit: string
+    matchScore: string
+    matchScoreOutOf: string
+    matchExcellent: string
+    matchStrong: string
+    matchFair: string
+    matchHelp: string
+    factorOverall: string
+    factorWalkability: string
+    factorWeather: string
+    factorFlight: string
+    alternativesTitle: string
+    whyNotCity: string
     confidenceHigh: string
     confidenceMedium: string
     confidenceLow: string
