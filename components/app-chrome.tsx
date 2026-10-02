@@ -141,8 +141,17 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
         </button>
 
         <div className={cn("flex min-h-0 flex-1 flex-col overflow-y-auto", !desktopNavOpen && "w-full items-center")}>
-        <Link href="/decide" aria-label="XingAI Travel AI" className={cn("flex items-center", !desktopNavOpen && "justify-center")}>
+        <Link
+          href="/decide"
+          aria-label={messages.chrome.brand}
+          className={cn("flex min-w-0 items-center gap-3", !desktopNavOpen && "justify-center")}
+        >
           <BrandMark className="h-10 w-10 shrink-0 shadow-sm" />
+          {desktopNavOpen ? (
+            <span className="min-w-0 truncate text-sm font-extrabold leading-tight tracking-tight text-foreground">
+              {messages.chrome.brandShort}
+            </span>
+          ) : null}
         </Link>
 
         <nav className={cn("mt-9 flex flex-1 flex-col gap-2", !desktopNavOpen && "w-full items-center")} aria-label="Primary">

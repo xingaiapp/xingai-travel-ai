@@ -3,6 +3,7 @@ import type { Messages } from "@/lib/i18n/types"
 export const ko: Messages = {
   chrome: {
     brand: "XingAI Travel AI",
+    brandShort: "XingAI Travel",
     decide: "결정",
     stories: "이야기",
     trips: "여행",

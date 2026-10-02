@@ -3,6 +3,7 @@ import type { Messages } from "@/lib/i18n/types"
 export const zh: Messages = {
   chrome: {
     brand: "XingAI Travel AI",
+    brandShort: "XingAI 旅行",
     decide: "决策",
     stories: "故事",
     trips: "旅程",

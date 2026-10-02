@@ -3,6 +3,7 @@ export type Locale = "en" | "zh" | "ko" | "es"
 export interface Messages {
   chrome: {
     brand: string
+    brandShort: string
     decide: string
     stories: string
     trips: string
