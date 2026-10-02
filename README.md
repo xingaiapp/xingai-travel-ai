@@ -12,7 +12,7 @@ XingAI Travel AI is a **travel decision system**, not an OTA or price-comparison
 
 | Area | State |
 |------|--------|
-| **Decision result (2026-10-02)** | Result shows **XingAI Match Score** (0–100 from overall stars + confidence), factor bars for overall/walkability, ranked alternatives with **Why not {city}?**. Hero is result-oriented: “Stop searching. Start deciding.” + proof line (en / zh / ko / es). |
+| **Decision result (2026-10-02)** | Result shows **XingAI Match Score** (0–100 from overall stars + confidence), factor bars for overall/walkability, ranked alternatives with **Why not {city}?**. Hero is result-oriented: “Stop searching. Start deciding.” + proof line (en / zh / ko / es). **Evidence panel** labels weather / flight / walkability / plan budget / match as estimate·derived·plan (no fake source URLs). Hero “How to use” starts **collapsed** on all breakpoints. |
 | **App shell** | Next.js 16 App Router, React 19, Tailwind 4. On desktop the sidebar stays fixed and the main column scrolls. |
 | **Core flow** | `/decide` → compare or inspire → `/result` with plan |
 | **Stories** | `/stories` after the decision ([ADR 0006](./docs/adr/0006-stories-after-decision.md)). **My Hong Kong** Season 1 replaced from HTML sources (2026-09-28): EP01 Victoria Harbour + EP02 streets/food/people only — old long-form EP03–08 media removed. en / 中文 / 한국어 / Español. **My Macau** Season 1 EP01–EP02 published. Story photos processed (EXIF stripped), contained display, no clear-face stills. |

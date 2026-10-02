@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { BookFirst } from "@/components/book-first"
 import { DestinationCompare } from "@/components/destination-compare"
+import { DecisionEvidence } from "@/components/decision-evidence"
 import { Itinerary } from "@/components/itinerary"
 import { TradeoffNote } from "@/components/tradeoff-note"
 import { TripWarnings } from "@/components/trip-warnings"
@@ -49,6 +50,7 @@ export function SharedTripView({ trip }: { trip: SharedTrip | null }) {
 
         <div className="space-y-4">
           <DestinationCompare result={compare} />
+          <DecisionEvidence winner={winner} budgetEstimate={plan?.budgetEstimate} />
           <TradeoffNote title={r.whyNot}>{compare.whyNotOthers}</TradeoffNote>
           {plan?.warnings?.length ? <TripWarnings warnings={plan.warnings} destination={plan.destination} /> : null}
           {plan ? (

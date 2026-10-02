@@ -458,7 +458,7 @@ function HeroIntro() {
                 onClick={() => setHelpOpen((open) => !open)}
                 aria-expanded={helpOpen}
                 aria-controls="how-to-use-content"
-                className="flex w-full items-start gap-3 text-left lg:pointer-events-none lg:cursor-default"
+                className="flex w-full items-start gap-3 text-left"
               >
                 <span className="hero-help-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-md">
                   <MapPinned className="h-5 w-5" aria-hidden />
@@ -466,13 +466,13 @@ function HeroIntro() {
                 <span className="min-w-0 flex-1">
                   <span className="flex items-center justify-between gap-2">
                     <h2 className="hero-help-title text-lg font-black">{messages.home.helpTitle}</h2>
-                    <ChevronDown className={cn("hero-help-chevron h-4 w-4 shrink-0 transition lg:hidden", helpOpen && "rotate-180")} aria-hidden />
+                    <ChevronDown className={cn("hero-help-chevron h-4 w-4 shrink-0 transition", helpOpen && "rotate-180")} aria-hidden />
                   </span>
-                  <p className={cn("hero-help-sub mt-1 text-sm leading-relaxed", !helpOpen && "hidden lg:block")}>{messages.home.helpSub}</p>
+                  <p className={cn("hero-help-sub mt-1 text-sm leading-relaxed", !helpOpen && "hidden")}>{messages.home.helpSub}</p>
                 </span>
               </button>
 
-              <div id="how-to-use-content" className={cn("mt-4 space-y-3", helpOpen ? "block" : "hidden lg:block")}>
+              <div id="how-to-use-content" className={cn("mt-4 space-y-3", helpOpen ? "block" : "hidden")}>
                 {helpSteps.map(([title, body], index) => (
                   <div key={title} className="hero-help-step grid grid-cols-[2rem_1fr] gap-3 rounded-md border p-3 shadow-sm">
                     <span className="hero-help-step-num flex h-8 w-8 items-center justify-center rounded-full text-sm font-black">
@@ -486,7 +486,7 @@ function HeroIntro() {
                 ))}
               </div>
 
-              <div className={cn("hero-help-footer mt-4 rounded-md border p-3", helpOpen ? "block" : "hidden lg:block")}>
+              <div className={cn("hero-help-footer mt-4 rounded-md border p-3", helpOpen ? "block" : "hidden")}>
                 <p className="flex items-center gap-2 text-xs font-bold">
                   <Route className="hero-help-footer-icon h-4 w-4 shrink-0" aria-hidden />
                   {messages.home.helper}

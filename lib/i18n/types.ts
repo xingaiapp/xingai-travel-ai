@@ -140,6 +140,14 @@ export interface Messages {
     factorFlight: string
     alternativesTitle: string
     whyNotCity: string
+    evidenceTitle: string
+    evidenceBadge: string
+    evidenceLead: string
+    evidenceFootnote: string
+    evidenceKindEstimate: string
+    evidenceKindDerived: string
+    evidenceKindPlan: string
+    evidenceMatchNote: string
     confidenceHigh: string
     confidenceMedium: string
     confidenceLow: string

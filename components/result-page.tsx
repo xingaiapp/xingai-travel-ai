@@ -6,6 +6,7 @@ import { useEffect, useReducer } from "react"
 import { BookFirst } from "@/components/book-first"
 import { BudgetBreakdown } from "@/components/budget-breakdown"
 import { DestinationCompare } from "@/components/destination-compare"
+import { DecisionEvidence } from "@/components/decision-evidence"
 import { Itinerary } from "@/components/itinerary"
 import { StepProgress } from "@/components/step-progress"
 import { TradeoffNote } from "@/components/tradeoff-note"
@@ -140,6 +141,7 @@ export function ResultPage() {
 
         <div className="space-y-4">
           <DestinationCompare result={compare} />
+          <DecisionEvidence winner={winner} budgetEstimate={planReady ? plan?.budgetEstimate : null} />
           <TradeoffNote title={messages.result.whyNot}>{compare.whyNotOthers}</TradeoffNote>
           <UncertaintyNotes />
 
