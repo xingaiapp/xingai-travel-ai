@@ -30,7 +30,7 @@ Do not thrash title / brand strings for ~30 days unless a factual error. Brand n
 
 | Area | State |
 |------|--------|
-| **SEO signals (2026-10-05)** | Brand/title/OG/schema/`llms.txt` aligned to **XingAI Travel**. Chrome, footer, legal, and i18n no longer say “Travel AI” / “Explore Better”. `/faq` and `/how-it-works` expose a visible AEO direct-answer block. Technical crawl of sitemap URLs: see [Indexability notes](#indexability-notes-2026-10-05). Google Search Console coverage still needs human confirmation (`site:` ≠ index). |
+| **SEO signals (2026-10-05)** | Brand/title/OG/schema/`llms.txt` aligned to **XingAI Travel**. Chrome, footer, legal, and i18n no longer say “Travel AI” / “Explore Better”. Sitewide JSON-LD ships in the **first HTML** (not `afterInteractive`). `/decide` adds its own WebPage + WebApplication JSON-LD and self-canonical OG `url`. `/faq` and `/how-it-works` expose a visible AEO direct-answer block. Technical crawl of sitemap URLs: see [Indexability notes](#indexability-notes-2026-10-05). Google Search Console coverage still needs human confirmation (`site:` ≠ index). |
 | **Decision result (2026-10-02)** | Result shows **XingAI Match Score** (0–100 from overall stars + confidence), factor bars for overall/walkability, ranked alternatives with **Why not {city}?**. Hero is result-oriented: “Stop searching. Start deciding.” + proof line (en / zh / ko / es). **Evidence panel** labels weather / flight / walkability / plan budget / match as estimate·derived·plan (no fake source URLs). Hero “How to use” starts **collapsed** on all breakpoints. |
 | **SEO/AEO/GEO content graph (ADR 0009)** | Live intent pages: `/how-it-works`, `/faq`, `/compare` (+ 5 A-vs-B pages), `/guides` (+ 5 intent pages). `/decide` stays the conversion step. Fit labels stay qualitative. `hreflang` no longer points 中文 / 한국어 / Español at the English `/decide` URL. |
 | **Home (2026-10-05)** | `/` is the product landing (hero carousel, how/why/FAQ). Hero is full-bleed **16:9** with **2560×1440** WebP slides (HK / Tokyo / Seoul / Cabo; HK slide keeps the traveler in frame via object-position); first viewport keeps brand + headline + support + CTAs only — chips and decision demo sit below. Site-wide footer banner uses the daytime HK traveler photo (`footer-traveler-hong-kong.webp` → `/decide`). Wired photography must pass `npm run check:assets` (see [`docs/ASSETS.md`](./docs/ASSETS.md)). First-visit polish: trust chips, section icons, looping mini decision demo (Tell → Compare → Winner), How-step line + light-up on scroll, one-shot CTA pulse, ken-burns carousel, scroll-in reveals (honors `prefers-reduced-motion`). `/decide` stays the decision step. Primary CTA is **Make My Travel Decision** (en / zh / ko / es). `/decide` and `/stories` share the same pill CTAs, typography, and light hero treatment as Home. Only live routes are linked: Hong Kong city guide, comparisons, guides, and stories. Tokyo, Seoul, and Los Cabos appear as inspiration imagery only — not as city guides. |
@@ -164,7 +164,7 @@ xingai-travel-ai/
 │   ├── inspire-form.tsx
 │   ├── trip-form.tsx, style-pace-selector.tsx, …
 │   ├── locale-provider.tsx, theme-provider.tsx
-│   └── seo-json-ld.tsx         # JSON-LD via next/script
+│   └── seo-json-ld.tsx         # Sitewide JSON-LD in first HTML
 ├── lib/
 │   ├── types.ts                # TripContext, CompareResult, PlanResult, …
 │   ├── mock-data.ts            # Lisbon demo when API unavailable

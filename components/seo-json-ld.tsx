@@ -1,12 +1,11 @@
-import Script from "next/script"
 import { seoJsonLdHtml } from "@/lib/seo-json-ld"
 
+/** Sitewide graph in the first HTML response — not afterInteractive. */
 export function SeoJsonLd() {
   return (
-    <Script
+    <script
       id="xingai-travel-seo-json-ld"
       type="application/ld+json"
-      strategy="afterInteractive"
       dangerouslySetInnerHTML={{ __html: seoJsonLdHtml }}
     />
   )

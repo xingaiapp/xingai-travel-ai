@@ -110,4 +110,40 @@ export const seoJsonLdGraph = {
   ],
 } as const
 
-export const seoJsonLdHtml = JSON.stringify(seoJsonLdGraph)
+export const seoJsonLdHtml = JSON.stringify(seoJsonLdGraph).replace(/</g, "\\u003c")
+
+const site = "https://travel.xingai.app"
+
+/** Page-level JSON-LD for /decide — SSR with the decision tool route. */
+export const decideJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${site}/decide#webpage`,
+      url: `${site}/decide`,
+      name: "Decide your trip · XingAI Travel",
+      description:
+        "Describe your real constraints, compare destinations with honest trade-offs, then open partner search links to book the key pieces.",
+      isPartOf: { "@id": `${site}/#website` },
+      about: { "@id": `${site}/#app` },
+      inLanguage: "en",
+      primaryImageOfPage: `${site}/assets/home-hero-hong-kong.webp`,
+    },
+    {
+      "@type": "WebApplication",
+      "@id": `${site}/decide#app`,
+      name: "XingAI Travel Decision Tool",
+      url: `${site}/decide`,
+      applicationCategory: "TravelApplication",
+      operatingSystem: "Web",
+      description:
+        "Enter dates, origin, budget, travelers, and style. XingAI Travel compares destinations, names one winner and two alternatives with trade-offs, then shows book-first partner search links.",
+      isPartOf: { "@id": `${site}/#website` },
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      inLanguage: ["en", "zh-CN", "ko", "es"],
+    },
+  ],
+} as const
+
+export const decideJsonLdHtml = JSON.stringify(decideJsonLd).replace(/</g, "\\u003c")
