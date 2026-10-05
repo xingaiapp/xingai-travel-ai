@@ -61,6 +61,9 @@ export const homeCopy = {
     "더 잘 알고 결정하도록 돕습니다. 최종 선택은 당신의 몫입니다.",
     "Te ayudamos a decidir con mejor información. Tú sigues al mando."
   ),
+  heroChipCompare: t("Compare first", "先比较", "먼저 비교", "Compara primero"),
+  heroChipTradeoffs: t("Clear trade-offs", "清晰取舍", "명확한 트레이드오프", "Trade-offs claros"),
+  heroChipYouDecide: t("You decide", "你来定", "당신이 결정", "Tú decides"),
   introTitle: t(
     "Travel planning is full of choices. We help you make them.",
     "旅行计划里全是选择。我们帮你做这些选择。",
