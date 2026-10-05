@@ -31,7 +31,7 @@ DEV-PLAN 曾写 Anthropic Claude；当前实现用 **OpenAI JSON 模式**，并�
 2. 调用模型前用 **Zod** 校验请求体。
 3. **模型** — 环境变量 `OPENAI_TRAVEL_MODEL`，默认 `gpt-4o-mini`。
 4. 解析/网络失败 **重试一次**；仍失败则 `502 OPENAI_ERROR`。
-5. **限流** — `lib/rate-limit.ts`，仅 compare/inspire 计次（`TRAVEL_DEMO_DAILY_LIMIT`，默认 3；`0` 表示本地不限）。
+5. **限流** — `lib/rate-limit.ts`，在 Zod 校验**之后**计数，计数存于共享 Upstash Redis（未配置或不可达时退回内存）：每 IP compare/inspire 上限（`TRAVEL_DEMO_DAILY_LIMIT`，默认 3；`0` 表示本地不限）、每 IP plan 上限（3 倍）、全站花费兜底（`TRAVEL_GLOBAL_DAILY_LIMIT`，默认 300）。*（2026-10-05 更新：原内存 Map 在 Vercel 多实例下不共享，且 plan 实际不限次。）*
 6. **Prompt** — 集中在 `lib/prompts.ts`；回复语言跟随 payload 中的 `locale`。
 
 plan 路由不单独扣日配额（在 compare 成功后由客户端触发）。
@@ -66,4 +66,6 @@ plan 路由不单独扣日配额（在 compare 成功后由客户端触发）。
 |------|------|------|
 | `OPENAI_API_KEY` | — | 线上 AI |
 | `OPENAI_TRAVEL_MODEL` | `gpt-4o-mini` | 模型覆盖 |
-| `TRAVEL_DEMO_DAILY_LIMIT` | `3` | compare/inspire 每 IP 每日上限；`0` 关闭 |
+| `TRAVEL_DEMO_DAILY_LIMIT` | `3` | compare/inspire 每 IP 每日上限（plan 为 3 倍）；`0` 关闭 |
+| `TRAVEL_GLOBAL_DAILY_LIMIT` | `300` | 全站每日 OpenAI 调用上限；`0` 关闭 |
+| `KV_REST_API_URL` / `KV_REST_API_TOKEN` | — | 共享 Upstash Redis 计数 |

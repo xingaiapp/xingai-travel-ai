@@ -31,7 +31,7 @@ Rules:
 2. **Zod validation** on request bodies before any model call.
 3. **Model** — `OPENAI_TRAVEL_MODEL` env, default `gpt-4o-mini`.
 4. **Retry once** on parse/network failure; then `502 OPENAI_ERROR`.
-5. **Rate limit** — `lib/rate-limit.ts`, per-IP daily cap on compare/inspire only (`TRAVEL_DEMO_DAILY_LIMIT`, default 3; `0` = unlimited for local).
+5. **Rate limit** — `lib/rate-limit.ts`, counted **after** Zod validation in a shared Upstash Redis (in-memory fallback when unset/unreachable): per-IP compare/inspire cap (`TRAVEL_DEMO_DAILY_LIMIT`, default 3; `0` = unlimited for local), per-IP plan cap (3×), and an all-IP spend backstop (`TRAVEL_GLOBAL_DAILY_LIMIT`, default 300). *(Updated 2026-10-05: the original in-memory Map did not hold across Vercel instances, and plan was effectively uncapped.)*
 6. **Prompts** — centralized in `lib/prompts.ts`; response language follows `locale` in payload.
 
 Plan route does not increment the daily counter (fired after compare succeeds).
@@ -66,4 +66,6 @@ Plan route does not increment the daily counter (fired after compare succeeds).
 |----------|---------|---------|
 | `OPENAI_API_KEY` | — | Live AI |
 | `OPENAI_TRAVEL_MODEL` | `gpt-4o-mini` | Model override |
-| `TRAVEL_DEMO_DAILY_LIMIT` | `3` | Compare/inspire cap per IP/day; `0` disables |
+| `TRAVEL_DEMO_DAILY_LIMIT` | `3` | Compare/inspire cap per IP/day (plan gets 3×); `0` disables |
+| `TRAVEL_GLOBAL_DAILY_LIMIT` | `300` | All-IP daily OpenAI call cap; `0` disables |
+| `KV_REST_API_URL` / `KV_REST_API_TOKEN` | — | Shared Upstash Redis for counters |

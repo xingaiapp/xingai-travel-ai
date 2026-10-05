@@ -216,7 +216,7 @@ Same fallback, rate limit, and error semantics as compare.
 
 **Response:** `PlanResult` (`itinerary`, `bookFirst`, `warnings`, …)
 
-Triggered automatically after compare on the client. Does not consume an extra rate-limit slot (compare already counted).
+Triggered automatically after compare on the client. Counts against its own per-IP `plan` bucket (3× the compare limit), not the compare quota.
 
 ### `POST /api/track`
 
@@ -251,6 +251,8 @@ Copy [`.env.example`](./.env.example) → `.env.local`.
 | `OPENAI_API_KEY` | For live AI | Without it, all API routes return mock data |
 | `OPENAI_TRAVEL_MODEL` | No | Default `gpt-4o-mini` |
 | `TRAVEL_DEMO_DAILY_LIMIT` | No | `0` = unlimited (local); omit/`3` in production |
+| `TRAVEL_GLOBAL_DAILY_LIMIT` | No | All-IP daily cap on OpenAI calls; default `300`, `0` = off |
+| `KV_REST_API_URL` / `KV_REST_API_TOKEN` | Yes (prod) | Upstash Redis (Vercel Marketplace) for shared rate-limit counters; `UPSTASH_REDIS_REST_*` also accepted. Without it, limits are per-instance only |
 | `NEXT_PUBLIC_APP_URL` | Yes (prod) | Canonical base URL for metadata |
 | `NEXT_PUBLIC_*_AFFILIATE_*` | No | Partner IDs for book-first links |
 
@@ -284,7 +286,7 @@ cd docs/ux-v1 && python3 -m http.server 8767
 ## Deployment (Vercel)
 
 1. Connect repo; set root to `xingai-travel-ai`.
-2. Env: `OPENAI_API_KEY`, `NEXT_PUBLIC_APP_URL=https://travel.xingai.app`, `TRAVEL_DEMO_DAILY_LIMIT=3`.
+2. Env: `OPENAI_API_KEY`, `NEXT_PUBLIC_APP_URL=https://travel.xingai.app`, `TRAVEL_DEMO_DAILY_LIMIT=3`, and an Upstash Redis store from the Vercel Marketplace (injects `KV_REST_API_*`).
 3. Optional affiliate IDs from partner dashboards.
 4. Custom domain: `travel.xingai.app`.
 

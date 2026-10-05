@@ -28,13 +28,13 @@ export async function POST(request: NextRequest) {
   const apiKey = process.env.OPENAI_API_KEY?.trim()
   if (!apiKey) return NextResponse.json({ ...normalizeCompareResult(mockCompareResult), demo: true })
 
-  const limited = checkDailyLimit(getClientIp(request))
-  if (limited) return NextResponse.json(limited, { status: 429 })
-
-  const parsed = tripSchema.safeParse(await request.json())
+  const parsed = tripSchema.safeParse(await request.json().catch(() => null))
   if (!parsed.success) {
     return NextResponse.json({ error: "Invalid trip context", code: "BAD_REQUEST" }, { status: 400 })
   }
+
+  const limited = await checkDailyLimit(getClientIp(request))
+  if (limited) return NextResponse.json(limited, { status: 429 })
 
   const prompt = buildComparePrompt(parsed.data as TripContext)
   const model = process.env.OPENAI_TRAVEL_MODEL?.trim() || "gpt-4o-mini"

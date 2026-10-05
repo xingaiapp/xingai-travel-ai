@@ -5,7 +5,7 @@ import { z } from "zod"
 import { normalizeBudget } from "@/lib/budget"
 import { mockPlanResult, mockRawBudget } from "@/lib/mock-data"
 import { buildPlanPrompt } from "@/lib/prompts"
-import { peekDailyLimit, getClientIp } from "@/lib/rate-limit"
+import { checkDailyLimit, getClientIp } from "@/lib/rate-limit"
 import type { PlanResult, TripContext } from "@/lib/types"
 
 export const runtime = "nodejs"
@@ -37,15 +37,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ...mockPlanResult, budgetEstimate, demo: true })
   }
 
-  // Plan does NOT increment the daily limit — it fires automatically after compare.
-  // Use peek (read-only) to block extreme abuse without double-counting.
-  const limited = peekDailyLimit(getClientIp(request))
-  if (limited) return NextResponse.json(limited, { status: 429 })
-
-  const parsed = bodySchema.safeParse(await request.json())
+  const parsed = bodySchema.safeParse(await request.json().catch(() => null))
   if (!parsed.success) {
     return NextResponse.json({ error: "Invalid plan request", code: "BAD_REQUEST" }, { status: 400 })
   }
+
+  // Plan fires automatically after compare, so it has its own, larger bucket instead of eating the compare quota.
+  const limited = await checkDailyLimit(getClientIp(request), "plan")
+  if (limited) return NextResponse.json(limited, { status: 429 })
 
   const { destination, tripContext } = parsed.data
   const prompt = buildPlanPrompt(destination, tripContext as TripContext)
