@@ -278,9 +278,13 @@ npm run dev
 Open [http://localhost:3000/decide](http://localhost:3000/decide).
 
 ```bash
-npm run build    # production build
-npm run lint     # ESLint
+npm run build      # production build (runs check:cities + check:assets first)
+npm run lint       # ESLint
+npm run typecheck  # tsc --noEmit
+npm test           # Vitest: tests/ — pure lib helpers, rate limit, metrics, /api/compare with a mocked model
 ```
+
+CI (`.github/workflows/ci.yml`) runs typecheck → lint → test → build on every push to `main` and every PR.
 
 ### UX gallery (static mock, no Next.js)
 

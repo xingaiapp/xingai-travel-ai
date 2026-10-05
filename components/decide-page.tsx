@@ -128,6 +128,8 @@ export function DecidePage() {
     } catch { /* keep default */ }
     try {
       const prefs = JSON.parse(sessionStorage.getItem(INSPIRE_STORAGE) ?? "") as Pick<InspireContext, "vibe" | "flightRange" | "priority">
+      // sessionStorage only exists after mount; restoring saved prefs here is intentional.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (prefs?.vibe && prefs.flightRange && prefs.priority) setInspire((prev) => ({ ...prev, ...prefs }))
     } catch { /* keep default */ }
     setTrip(withLinkPrefill(stored))

@@ -26,6 +26,8 @@ export function LocaleProvider({ children }: Readonly<{ children: React.ReactNod
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY)
+    // Restoring the saved locale must wait for mount (see above), so this setState is intentional.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (isLocale(stored)) setLocaleState(stored)
     setReady(true)
   }, [])

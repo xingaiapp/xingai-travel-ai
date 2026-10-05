@@ -22,7 +22,7 @@ import {
   Wallet,
   XCircle,
 } from "lucide-react"
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react"
 import { useLocale } from "@/components/locale-provider"
 import {
   decideSteps,
@@ -141,19 +141,26 @@ function DecisionDemo({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) =
   )
 }
 
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)"
+
+function subscribeReducedMotion(onChange: () => void) {
+  const media = window.matchMedia(REDUCED_MOTION)
+  media.addEventListener("change", onChange)
+  return () => media.removeEventListener("change", onChange)
+}
+
 function HowStepsPlay({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) => string }) {
   const ref = useRef<HTMLDivElement>(null)
   const [playing, setPlaying] = useState(false)
   const [litCount, setLitCount] = useState(0)
+  // Reduced motion shows every step lit at once; false on the server so hydration matches.
+  const reduced = useSyncExternalStore(subscribeReducedMotion, () => window.matchMedia(REDUCED_MOTION).matches, () => false)
+  const isPlaying = playing || reduced
+  const shownCount = reduced ? howSteps.length : litCount
 
   useEffect(() => {
     const el = ref.current
-    if (!el) return
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setPlaying(true)
-      setLitCount(howSteps.length)
-      return
-    }
+    if (!el || reduced) return
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -165,20 +172,18 @@ function HowStepsPlay({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) =
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+  }, [reduced])
 
   useEffect(() => {
-    if (!playing) return
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-    setLitCount(0)
+    if (!playing || reduced) return
     const timers = howSteps.map((_, index) =>
       window.setTimeout(() => setLitCount(index + 1), 280 + index * 420)
     )
     return () => timers.forEach((id) => window.clearTimeout(id))
-  }, [playing])
+  }, [playing, reduced])
 
   return (
-    <div ref={ref} className={cn("home-how", playing && "is-playing")}>
+    <div ref={ref} className={cn("home-how", isPlaying && "is-playing")}>
       <ol className="relative mt-8 grid gap-4 lg:grid-cols-3 lg:gap-5">
         <span
           className="home-how-line pointer-events-none absolute left-[16%] right-[16%] top-9 hidden h-0.5 bg-primary/50 lg:block"
@@ -186,7 +191,7 @@ function HowStepsPlay({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) =
         />
         {howSteps.map((step, index) => {
           const Icon = howIcons[index] ?? CheckCircle2
-          const lit = index < litCount
+          const lit = index < shownCount
           return (
             <li
               key={step.title.en}
