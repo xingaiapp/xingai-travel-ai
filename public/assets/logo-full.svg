@@ -1,6 +1,6 @@
 <svg width="960" height="320" viewBox="0 0 960 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">XingAI Travel AI</title>
-  <desc id="desc">XingAI Travel AI logo with travel decision mark and wordmark.</desc>
+  <title id="title">XingAI Travel</title>
+  <desc id="desc">XingAI Travel logo with travel decision mark and wordmark.</desc>
   <defs>
     <linearGradient id="travelBlue" x1="40" y1="40" x2="280" y2="280" gradientUnits="userSpaceOnUse">
       <stop stop-color="#38BDF8"/>
@@ -16,5 +16,5 @@
   <path d="M136 131L233 89L154 159L188 227L150 175L136 131Z" fill="#BFDBFE"/>
   <path d="M136 131L154 159L80 197L136 131Z" fill="#DBEAFE"/>
   <text x="328" y="145" fill="#0F172A" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="70" font-weight="800" letter-spacing="-1">XingAI</text>
-  <text x="330" y="219" fill="#2563EB" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="52" font-weight="800" letter-spacing="-0.5">Travel AI</text>
+  <text x="330" y="219" fill="#2563EB" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="52" font-weight="800" letter-spacing="-0.5">Travel</text>
 </svg>

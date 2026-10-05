@@ -263,7 +263,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           </div>
           <Link href="/" className="hidden min-w-0 items-center lg:flex">
             <span className="truncate text-base font-bold leading-none">
-              XingAI <span className="text-primary">Travel AI</span>
+              XingAI <span className="text-primary">Travel</span>
             </span>
           </Link>
           <div className="flex shrink-0 items-center gap-1 lg:hidden">
@@ -286,7 +286,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
         {children}
         <footer className="border-t border-border bg-background/70 px-4 py-5 pb-24 text-xs text-muted-foreground lg:px-8 lg:pb-5">
           <div className="mx-auto flex max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="font-semibold">© 2026 XingAI Travel AI · Explore Better</p>
+            <p className="font-semibold">© 2026 XingAI Travel · Make a better travel decision</p>
             <nav className="flex flex-wrap gap-x-4 gap-y-2" aria-label="Footer legal">
               {legalLinks.map((item) => (
                 <Link key={item.href} href={item.href} className="font-semibold transition hover:text-primary">
@@ -353,7 +353,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                 </span>
                 <span className="min-w-0 leading-tight">
                   <span className="block truncate text-sm font-extrabold">XingAI</span>
-                  <span className="block truncate text-xs font-bold text-primary">Travel AI</span>
+                  <span className="block truncate text-xs font-bold text-primary">Travel</span>
                 </span>
               </Link>
               <button type="button" className="rounded-md border border-border p-2" onClick={() => setOpen(false)}>

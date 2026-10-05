@@ -7,7 +7,7 @@ const copy = {
   privacy: {
     title: "Privacy Policy",
     summary:
-      "XingAI Travel AI is designed to collect only the trip context needed to compare destinations and build a practical itinerary.",
+      "XingAI Travel is designed to collect only the trip context needed to compare destinations and build a practical itinerary.",
     zhTitle: "隐私政策",
     koTitle: "개인정보 처리방침",
     sections: [
@@ -20,7 +20,7 @@ const copy = {
   terms: {
     title: "Terms of Use",
     summary:
-      "Use XingAI Travel AI as a decision-support tool. You remain responsible for booking choices, travel documents, and final verification.",
+      "Use XingAI Travel as a decision-support tool. You remain responsible for booking choices, travel documents, and final verification.",
     zhTitle: "使用条款",
     koTitle: "이용약관",
     sections: [
@@ -75,7 +75,7 @@ export function LegalPage({ kind }: Readonly<{ kind: LegalPageKind }>) {
             <ShieldCheck className="h-5 w-5" aria-hidden />
           </span>
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">XingAI Travel AI Legal</p>
+            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">XingAI Travel Legal</p>
             <h1 className="mt-2 text-3xl font-black tracking-tight">{page.title}</h1>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{page.summary}</p>
           </div>
@@ -84,7 +84,7 @@ export function LegalPage({ kind }: Readonly<{ kind: LegalPageKind }>) {
         <div className="mb-6 rounded-md border border-border bg-muted/60 p-4 text-sm leading-relaxed text-muted-foreground">
           <p>
             <strong className="text-foreground">中文：</strong>
-            {page.zhTitle}。本页说明 XingAI Travel AI 的基础保护原则；预订前请自行核对实时价格、入境规则、安全信息与可用性。
+            {page.zhTitle}。本页说明 XingAI Travel 的基础保护原则；预订前请自行核对实时价格、入境规则、安全信息与可用性。
           </p>
           <p className="mt-2">
             <strong className="text-foreground">한국어：</strong>

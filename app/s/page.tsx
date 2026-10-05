@@ -16,7 +16,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   if (!trip) return { title: "Shared trip plan", robots }
   const winner = trip.c.destinations.find((x) => x.isWinner) ?? trip.c.destinations[0]
   const title = `${winner.name}, ${winner.country}`
-  const description = `${winner.whyWins.slice(0, 2).join(" · ")}`.slice(0, 180) || "Trip plan from XingAI Travel AI"
+  const description = `${winner.whyWins.slice(0, 2).join(" · ")}`.slice(0, 180) || "Trip plan from XingAI Travel"
   const image = `/api/og?d=${d}`
   return {
     title,

@@ -3,7 +3,7 @@ import { LegalPage } from "@/components/legal-page"
 
 export const metadata: Metadata = {
   title: "Affiliate Disclosure",
-  description: "Affiliate disclosure for XingAI Travel AI: decision quality first, affiliate links after the decision.",
+  description: "Affiliate disclosure for XingAI Travel: decision quality first, affiliate links after the decision.",
   alternates: { canonical: "/affiliate-disclosure" },
 }
 
