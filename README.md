@@ -284,7 +284,7 @@ npm run typecheck  # tsc --noEmit
 npm test           # Vitest: tests/ — pure lib helpers, rate limit, metrics, /api/compare with a mocked model
 ```
 
-CI (`.github/workflows/ci.yml`) runs typecheck → lint → test → build on every push to `main` and every PR.
+CI (`.github/workflows/ci.yml`) runs typecheck → lint → test → build on every push to `main` and every PR. It uses Node 24 so `npm ci` installs `@next/swc-linux-x64-gnu`. Node 22's npm 10 skipped that optional package, and Turbopack will not build from the WASM fallback.
 
 ### UX gallery (static mock, no Next.js)
 
