@@ -41,19 +41,20 @@ ${guideLines.join("\n")}
 
 export function GET() {
   return new Response(
-    `# XingAI Travel AI
+    `# XingAI Travel
 
-XingAI Travel AI helps you make a better travel decision. Other travel sites help you search. This one helps you compare options and trade-offs. You stay in control. It does not book the trip for you.
+XingAI Travel helps you make a better travel decision. Other travel sites help you search. This one helps you compare options and trade-offs. You stay in control. It does not book the trip for you.
 
 Core flow:
-- Capture real trip constraints: dates, origin, budget, travelers, pace, and preferences.
+- / explains the product (Travel Decision System).
+- /decide captures real trip constraints: dates, origin, budget, travelers, pace, and preferences.
 - Compare destinations with honest trade-offs.
-- Recommend one best-fit destination.
-- Produce a book-first checklist and practical itinerary.
+- Recommend one best-fit destination plus two alternatives.
+- Produce a book-first checklist and practical itinerary. Partner search links appear after the decision.
 
 Primary pages:
-- / (explains the product; primary action is Make My Travel Decision)
-- /decide (the Travel Decision form)
+- / (product home; primary action is Make My Travel Decision)
+- /decide (the Travel Decision form; self-canonical)
 - /privacy
 - /terms
 - /disclaimer

@@ -1,10 +1,28 @@
-# XingAI Travel AI
+# XingAI Travel
 
-**Explore Better** — compare destinations first, plan second.
+**Make a better travel decision** — compare destinations first, plan second.
 
-Production target: [travel.xingai.app](https://travel.xingai.app)
+Production: [travel.xingai.app](https://travel.xingai.app)
 
-XingAI Travel AI is a **travel decision system**, not an OTA or price-comparison wall. Users describe real trip constraints; the product compares a small set of destinations, names one winner with honest trade-offs, then offers a book-first checklist and itinerary. Affiliate links appear **after** the decision — they never influence ranking or confidence.
+XingAI Travel is a **travel decision system**, not an OTA or price-comparison wall. Users describe real trip constraints; the product compares a small set of destinations, names one winner with honest trade-offs, then offers a book-first checklist and itinerary. Affiliate links appear **after** the decision — they never influence ranking or confidence.
+
+### URL architecture (frozen)
+
+| URL | Role | Canonical |
+|-----|------|-----------|
+| `/` | Product home — explain the decision system | self (`/`) |
+| `/decide` | Decision tool — capture constraints and compare | self (`/decide`) |
+| `/result`, `/trips` | Session / this-browser state | `noindex`, not in sitemap |
+
+`/` does **not** redirect to `/decide`. Both return HTTP 200 with their own metadata.
+
+### Title freeze (2026-10-05)
+
+Public default title stays:
+
+> **XingAI Travel — Make a better travel decision**
+
+Do not thrash title / brand strings for ~30 days unless a factual error. Brand name in UI, OG, JSON-LD, and `llms.txt` is **XingAI Travel** (not “Travel AI — Explore Better”).
 
 ---
 
@@ -12,6 +30,7 @@ XingAI Travel AI is a **travel decision system**, not an OTA or price-comparison
 
 | Area | State |
 |------|--------|
+| **SEO signals (2026-10-05)** | Brand/title/OG/schema/`llms.txt` aligned to **XingAI Travel**. `/faq` and `/how-it-works` expose a visible AEO direct-answer block. Technical crawl of sitemap URLs: see [Indexability notes](#indexability-notes-2026-10-05). Google Search Console coverage still needs human confirmation (`site:` ≠ index). |
 | **Decision result (2026-10-02)** | Result shows **XingAI Match Score** (0–100 from overall stars + confidence), factor bars for overall/walkability, ranked alternatives with **Why not {city}?**. Hero is result-oriented: “Stop searching. Start deciding.” + proof line (en / zh / ko / es). **Evidence panel** labels weather / flight / walkability / plan budget / match as estimate·derived·plan (no fake source URLs). Hero “How to use” starts **collapsed** on all breakpoints. |
 | **SEO/AEO/GEO content graph (ADR 0009)** | Live intent pages: `/how-it-works`, `/faq`, `/compare` (+ 5 A-vs-B pages), `/guides` (+ 5 intent pages). `/decide` stays the conversion step. Fit labels stay qualitative. `hreflang` no longer points 中文 / 한국어 / Español at the English `/decide` URL. |
 | **Home (2026-10-05)** | `/` is the product landing (hero carousel, how/why/FAQ). First-visit polish: trust chips, section icons, looping mini decision demo (Tell → Compare → Winner), How-step line + light-up on scroll, one-shot CTA pulse, ken-burns carousel, scroll-in reveals (honors `prefers-reduced-motion`). `/decide` stays the decision step. Primary CTA is **Make My Travel Decision** (en / zh / ko / es). `/decide` and `/stories` share the same pill CTAs, typography, and light hero treatment as Home. Only live routes are linked: Hong Kong city guide, comparisons, guides, and stories. Tokyo, Seoul, and Los Cabos appear as inspiration imagery only — not as city guides. |
@@ -31,6 +50,21 @@ XingAI Travel AI is a **travel decision system**, not an OTA or price-comparison
 | **UX reference** | Static gallery in [`docs/ux-v1/`](./docs/ux-v1/) |
 | **Architecture docs** | [`docs/adr/`](./docs/adr/) |
 | **Tech blog** | [`docs/tech-blog/`](./docs/tech-blog/) (EN + 中文) |
+
+### Indexability notes (2026-10-05)
+
+Technical crawl of all **28** sitemap URLs (HTTP GET, not Search Console):
+
+- Every URL returned **200**
+- No `noindex` in page robots meta (default index)
+- Each page has **1** H1 in the HTML response
+- Self-canonical present on content routes; `/` canonical is `https://travel.xingai.app`
+- `robots.txt` allows `/` and points at `sitemap.xml`
+- `/result` and `/trips` stay out of the sitemap by design
+
+This does **not** prove Google has indexed the site. Confirm with Search Console URL Inspection / Coverage. Public `site:travel.xingai.app` alone is not an indexation verdict.
+
+Honest content expansion stays: deepen Hong Kong, existing compares/guides/stories. Do **not** invent Tokyo/Seoul/Los Cabos city guides just to grow the sitemap.
 
 ---
 

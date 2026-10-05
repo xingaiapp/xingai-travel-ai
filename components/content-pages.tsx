@@ -1,9 +1,20 @@
 "use client"
 
 import Link from "next/link"
-import { ContentHero, ContentShell, DecideCta, FaqBlock, FitPill } from "@/components/content-shell"
+import { ContentHero, ContentShell, DecideCta, DirectAnswer, FaqBlock, FitPill } from "@/components/content-shell"
 import { useLocale } from "@/components/locale-provider"
-import { compares, faqItems, getCompare, getGuide, guides, howItWorksLead, howItWorksSteps, howItWorksTitle } from "@/lib/content"
+import {
+  compares,
+  faqDirectAnswer,
+  faqItems,
+  getCompare,
+  getGuide,
+  guides,
+  howItWorksDirectAnswer,
+  howItWorksLead,
+  howItWorksSteps,
+  howItWorksTitle,
+} from "@/lib/content"
 import { pickLocalized } from "@/lib/content/types"
 
 export function HowItWorksView() {
@@ -14,6 +25,10 @@ export function HowItWorksView() {
         eyebrow={messages.content.howEyebrow}
         title={pickLocalized(howItWorksTitle, locale)}
         oneLiner={pickLocalized(howItWorksLead, locale)}
+      />
+      <DirectAnswer
+        question={pickLocalized(howItWorksTitle, locale)}
+        answer={pickLocalized(howItWorksDirectAnswer, locale)}
       />
       <ol className="space-y-4">
         {howItWorksSteps.map((step) => (
@@ -41,6 +56,18 @@ export function FaqView() {
         eyebrow={messages.content.faqEyebrow}
         title={messages.content.faqNav}
         oneLiner={pickLocalized(howItWorksLead, locale)}
+      />
+      <DirectAnswer
+        question={pickLocalized(
+          {
+            en: "What is XingAI Travel?",
+            zh: "XingAI Travel 是什么？",
+            ko: "XingAI Travel은 무엇인가요?",
+            es: "¿Qué es XingAI Travel?",
+          },
+          locale
+        )}
+        answer={pickLocalized(faqDirectAnswer, locale)}
       />
       <FaqBlock
         items={faqItems.map((item) => ({

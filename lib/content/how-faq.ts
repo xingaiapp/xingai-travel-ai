@@ -16,6 +16,21 @@ export const howItWorksLead = L(
   "Sistema de decisión: primero restricciones, un ganador, dos alternativas, trade-offs claros — luego enlaces de reserva."
 )
 
+/** Short AEO answer shown above the step list (visible + FAQ-aligned). */
+export const howItWorksDirectAnswer = L(
+  "XingAI Travel is an AI travel decision system. It compares destinations against your dates, budget, flights, weather, walkability, and travel style, then recommends one best-fit destination and two alternatives with clear trade-offs — not a long search list.",
+  "XingAI Travel 是一个 AI 旅行决策系统。它按你的日期、预算、航班、天气、步行友好度和旅行风格比较目的地，给出一个最匹配的首选和两个带清晰取舍的备选——不是一长串搜索结果。",
+  "XingAI Travel은 AI 여행 결정 시스템입니다. 날짜, 예산, 항공, 날씨, 도보 이동, 여행 스타일에 맞춰 목적지를 비교한 뒤, 가장 맞는 추천 1개와 명확한 trade-off가 있는 대안 2개를 제시합니다 — 긴 검색 목록이 아닙니다.",
+  "XingAI Travel es un sistema de decisión de viaje con IA. Compara destinos según fechas, presupuesto, vuelos, clima, caminabilidad y estilo de viaje, y recomienda un destino más adecuado y dos alternativas con trade-offs claros — no una lista larga de búsqueda."
+)
+
+export const faqDirectAnswer = L(
+  "XingAI Travel helps you decide where to go first. Booking sites help you buy inventory later. Enter your real constraints on /decide, compare one winner and two alternatives, then open partner search links only after the decision.",
+  "XingAI Travel 先帮你决定去哪。订票网站之后才帮你买库存。在 /decide 填写真实约束，比较一个首选和两个备选，预订搜索链接只在决策之后出现。",
+  "XingAI Travel은 먼저 어디로 갈지 결정하도록 돕습니다. 예약 사이트는 그다음 재고 구매를 돕습니다. /decide에 실제 조건을 입력하고, 추천 1개와 대안 2개를 비교한 뒤, 결정 이후에만 제휴 검색 링크를 엽니다.",
+  "XingAI Travel te ayuda a decidir primero adónde ir. Los sitios de reserva ayudan después a comprar inventario. En /decide introduce tus restricciones reales, compara un ganador y dos alternativas, y abre enlaces de búsqueda de socios solo después de la decisión."
+)
+
 export const howItWorksSteps: HowItWorksStep[] = [
   {
     title: L("1. Understand your constraints", "1. 理解你的约束", "1. 조건 이해하기", "1. Entender tus restricciones"),

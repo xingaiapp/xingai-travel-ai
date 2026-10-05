@@ -43,6 +43,18 @@ export function ContentHero({
   )
 }
 
+/** Visible 40–80 word AEO answer block (same facts as FAQ/schema where possible). */
+export function DirectAnswer({ question, answer }: Readonly<{ question: string; answer: string }>) {
+  return (
+    <section className="mb-8 rounded-2xl border border-primary/25 bg-primary/5 p-5" aria-labelledby="direct-answer-q">
+      <p id="direct-answer-q" className="text-sm font-extrabold text-foreground">
+        {question}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">{answer}</p>
+    </section>
+  )
+}
+
 export function DecideCta({ hint }: Readonly<{ hint?: Localized }>) {
   const { messages, locale } = useLocale()
   return (

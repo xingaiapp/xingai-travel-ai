@@ -1,8 +1,8 @@
 {
-  "name": "XingAI Travel AI",
-  "short_name": "Travel AI",
-  "description": "AI travel decision tool that compares destinations with honest trade-offs.",
-  "start_url": "/decide",
+  "name": "XingAI Travel",
+  "short_name": "Travel",
+  "description": "AI travel decision system — compare destinations with honest trade-offs, then decide.",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#f0f7ff",
   "theme_color": "#2563eb",

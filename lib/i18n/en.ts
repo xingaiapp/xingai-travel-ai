@@ -2,7 +2,7 @@ import type { Messages } from "@/lib/i18n/types"
 
 export const en: Messages = {
   chrome: {
-    brand: "XingAI Travel AI",
+    brand: "XingAI Travel",
     brandShort: "XingAI Travel",
     decide: "Decide",
     home: "Home",

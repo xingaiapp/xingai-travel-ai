@@ -21,29 +21,29 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   title: {
-    default: "XingAI Travel AI — Explore Better",
-    template: "%s · XingAI Travel AI",
+    default: "XingAI Travel — Make a better travel decision",
+    template: "%s · XingAI Travel",
   },
   description:
-    "AI travel decision tool that compares destinations with honest trade-offs, then helps you search partner sites to book the key pieces.",
+    "XingAI Travel is an AI travel decision system. Compare destinations with honest trade-offs, then open partner search links to book the key pieces. You stay in control.",
   keywords: [
-    "AI travel planner",
+    "AI travel decision",
+    "travel decision system",
     "destination comparison",
-    "travel decision tool",
-    "itinerary planner",
-    "XingAI Travel AI",
+    "AI travel planner",
+    "XingAI Travel",
   ],
   openGraph: {
-    title: "XingAI Travel AI — Explore Better",
-    description: "Compare first, plan second. Choose the right trip before you book.",
-    images: [{ url: "/assets/hero-travel-decision.png", alt: "Lisbon travel decision preview" }],
+    title: "XingAI Travel — Make a better travel decision",
+    description: "Compare options and trade-offs so you can decide. Other travel sites help you search. You stay in control.",
+    images: [{ url: "/assets/home-hero-hong-kong.webp", alt: "Traveler overlooking Victoria Harbour at sunset" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "XingAI Travel AI — Explore Better",
-    description: "Compare first, plan second. Choose the right trip before you book.",
-    images: ["/assets/hero-travel-decision.png"],
+    title: "XingAI Travel — Make a better travel decision",
+    description: "Compare options and trade-offs so you can decide. Other travel sites help you search. You stay in control.",
+    images: ["/assets/home-hero-hong-kong.webp"],
   },
   icons: {
     icon: [
