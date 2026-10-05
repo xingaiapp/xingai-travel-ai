@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server"
+import { after, NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import OpenAI from "openai"
 import { z } from "zod"
 import { normalizeBudget } from "@/lib/budget"
 import { mockPlanResult, mockRawBudget } from "@/lib/mock-data"
 import { buildPlanPrompt } from "@/lib/prompts"
+import { recordEvent } from "@/lib/metrics"
 import { checkDailyLimit, getClientIp } from "@/lib/rate-limit"
 import type { PlanResult, TripContext } from "@/lib/types"
 
@@ -71,13 +72,11 @@ export async function POST(request: NextRequest) {
     return { ...plan, budgetEstimate: normalizeBudget(plan.budgetEstimate, tripContext) }
   }
 
-  try {
-    return NextResponse.json(await callOpenAI())
-  } catch {
-    try {
-      return NextResponse.json(await callOpenAI())
-    } catch {
-      return NextResponse.json({ error: "Decision unavailable", code: "OPENAI_ERROR" }, { status: 502 })
-    }
+  const plan = await callOpenAI().catch(() => callOpenAI()).catch(() => null)
+  if (!plan) {
+    after(() => recordEvent("plan_fail"))
+    return NextResponse.json({ error: "Decision unavailable", code: "OPENAI_ERROR" }, { status: 502 })
   }
+  after(() => recordEvent("plan_ok"))
+  return NextResponse.json(plan)
 }

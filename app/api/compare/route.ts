@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server"
+import { after, NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import OpenAI from "openai"
 import { z } from "zod"
 import { normalizeCompareResult } from "@/lib/compare-normalize"
 import { mockCompareResult } from "@/lib/mock-data"
 import { buildComparePrompt } from "@/lib/prompts"
+import { recordEvent } from "@/lib/metrics"
 import { checkDailyLimit, getClientIp } from "@/lib/rate-limit"
 import type { CompareResult, TripContext } from "@/lib/types"
 
@@ -34,7 +35,10 @@ export async function POST(request: NextRequest) {
   }
 
   const limited = await checkDailyLimit(getClientIp(request))
-  if (limited) return NextResponse.json(limited, { status: 429 })
+  if (limited) {
+    after(() => recordEvent("decision_limited", { mode: "compare" }))
+    return NextResponse.json(limited, { status: 429 })
+  }
 
   const prompt = buildComparePrompt(parsed.data as TripContext)
   const model = process.env.OPENAI_TRAVEL_MODEL?.trim() || "gpt-4o-mini"
@@ -58,13 +62,11 @@ export async function POST(request: NextRequest) {
     return normalizeCompareResult(JSON.parse(raw) as CompareResult)
   }
 
-  try {
-    return NextResponse.json(await callOpenAI())
-  } catch {
-    try {
-      return NextResponse.json(await callOpenAI())
-    } catch {
-      return NextResponse.json({ error: "Decision unavailable", code: "OPENAI_ERROR" }, { status: 502 })
-    }
+  const result = await callOpenAI().catch(() => callOpenAI()).catch(() => null)
+  if (!result) {
+    after(() => recordEvent("decision_fail", { mode: "compare" }))
+    return NextResponse.json({ error: "Decision unavailable", code: "OPENAI_ERROR" }, { status: 502 })
   }
+  after(() => recordEvent("decision_ok", { mode: "compare", locale: parsed.data.locale }))
+  return NextResponse.json(result)
 }

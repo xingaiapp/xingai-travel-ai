@@ -220,9 +220,16 @@ Triggered automatically after compare on the client. Counts against its own per-
 
 ### `POST /api/track`
 
-**Body:** `{ platform, type: "flight"|"hotel"|"activity", destination }`
+**Body:** affiliate `{ platform, type: "flight"|"hotel"|"activity", destination }`, story `{ type: "story_from_result"|"story_to_decide", season }`, or city `{ type: "city_from_result"|"city_route_select", city, route? }`.
 
-Logs affiliate clicks to server stdout. Replace with KV/Plausible when ready.
+### Funnel metrics
+
+`lib/metrics.ts` increments aggregate counters in the same Upstash Redis as the rate limiter: one hash per UTC day (`travel:ev:YYYY-MM-DD`, kept ~400 days). Server routes record `decision_ok` / `decision_fail` / `decision_limited` (by mode, locale), `plan_ok` / `plan_fail`; `/api/track` records affiliate (by platform, type), story, and city clicks. No IPs, user agents, or free-text trip input are stored; the free-text affiliate destination is logged only. Writes run in `after()` and never fail the request.
+
+```bash
+vercel env pull .env.local   # brings KV_REST_API_* down
+npm run metrics              # last 7 days; `npm run metrics -- 30` for 30
+```
 
 ---
 

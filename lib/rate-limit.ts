@@ -13,6 +13,8 @@
  * Callers must validate the request body first, so malformed requests never burn a user's quota.
  */
 
+import { redisConfig, redisPipeline } from "@/lib/redis"
+
 export type LimitBucket = "decision" | "plan"
 
 type RateLimitError = { error: string; code: string; limit: number; resetAt: string }
@@ -59,31 +61,13 @@ export const memoryStore: Store = {
   },
 }
 
-function redisConfig(): { url: string; token: string } | null {
-  const url = (process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL)?.trim()
-  const token = (process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN)?.trim()
-  return url && token ? { url: url.replace(/\/$/, ""), token } : null
-}
-
-function redisStore(cfg: { url: string; token: string }): Store {
-  return {
-    async incr(key) {
-      const res = await fetch(`${cfg.url}/pipeline`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${cfg.token}`, "Content-Type": "application/json" },
-        body: JSON.stringify([
-          ["INCR", key],
-          ["EXPIRE", key, "90000"], // 25h: outlives the UTC day the key is named after
-        ]),
-        cache: "no-store",
-        signal: AbortSignal.timeout(1500),
-      })
-      if (!res.ok) throw new Error(`redis ${res.status}`)
-      const [incr] = (await res.json()) as Array<{ result?: number; error?: string }>
-      if (typeof incr?.result !== "number") throw new Error(incr?.error || "redis bad reply")
-      return incr.result
-    },
-  }
+const redisStore: Store = {
+  async incr(key) {
+    // EXPIRE 25h: outlives the UTC day the key is named after.
+    const [count] = await redisPipeline([["INCR", key], ["EXPIRE", key, 90000]])
+    if (typeof count !== "number") throw new Error("redis bad reply")
+    return count
+  },
 }
 
 let storeOverride: Store | null = null
@@ -95,10 +79,9 @@ export function setRateLimitStore(store: Store | null) {
 
 async function incr(key: string): Promise<number> {
   if (storeOverride) return storeOverride.incr(key)
-  const cfg = redisConfig()
-  if (cfg) {
+  if (redisConfig()) {
     try {
-      return await redisStore(cfg).incr(key)
+      return await redisStore.incr(key)
     } catch (err) {
       console.error("[rate-limit] redis unavailable, using in-memory fallback", (err as Error).message)
     }

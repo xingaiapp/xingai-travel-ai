@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { after, NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import OpenAI from "openai"
 import { z } from "zod"
@@ -6,6 +6,7 @@ import { normalizeCompareResult } from "@/lib/compare-normalize"
 import { mockCompareResult } from "@/lib/mock-data"
 import { inspireViolations } from "@/lib/inspire-validate"
 import { buildInspirePrompt } from "@/lib/prompts"
+import { recordEvent } from "@/lib/metrics"
 import { checkDailyLimit, getClientIp } from "@/lib/rate-limit"
 import type { CompareResult, InspireContext } from "@/lib/types"
 
@@ -32,7 +33,10 @@ export async function POST(request: NextRequest) {
   }
 
   const limited = await checkDailyLimit(getClientIp(request))
-  if (limited) return NextResponse.json(limited, { status: 429 })
+  if (limited) {
+    after(() => recordEvent("decision_limited", { mode: "inspire" }))
+    return NextResponse.json(limited, { status: 429 })
+  }
 
   const prompt = buildInspirePrompt(parsed.data as InspireContext)
   const model = process.env.OPENAI_TRAVEL_MODEL?.trim() || "gpt-4o-mini"
@@ -66,11 +70,15 @@ export async function POST(request: NextRequest) {
     try {
       const result = normalizeCompareResult(await callOpenAI(feedback))
       const problems = inspireViolations(result, parsed.data.flightRange)
-      if (problems.length === 0) return NextResponse.json(result)
+      if (problems.length === 0) {
+        after(() => recordEvent("decision_ok", { mode: "inspire", locale: parsed.data.locale }))
+        return NextResponse.json(result)
+      }
       feedback = problems
     } catch {
       feedback = feedback.length ? feedback : ["Return a result that satisfies every hard constraint."]
     }
   }
+  after(() => recordEvent("decision_fail", { mode: "inspire" }))
   return NextResponse.json({ error: "Decision unavailable", code: "INSPIRE_CONSTRAINTS" }, { status: 502 })
 }
