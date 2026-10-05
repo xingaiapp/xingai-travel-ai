@@ -11,6 +11,8 @@
  *   - global:          all IPs, TRAVEL_GLOBAL_DAILY_LIMIT (default 300; 0 = off) — OpenAI spend backstop
  *
  * Callers must validate the request body first, so malformed requests never burn a user's quota.
+ * Quota is consumed only after a successful model response (`consumeDailyLimit`). Failed OpenAI calls
+ * and 429 peeks do not increment — so "Try again" after a 502 still has a chance the same day.
  */
 
 import { redisConfig, redisPipeline } from "@/lib/redis"
@@ -46,18 +48,29 @@ export function bucketLimit(bucket: LimitBucket): number {
 
 // ── Stores ────────────────────────────────────────────────────────────
 
-type Store = { incr(key: string): Promise<number> }
+type Store = {
+  incr(key: string): Promise<number>
+  get(key: string): Promise<number>
+}
 
 const memory = new Map<string, number>()
+
+function pruneStaleMemory(today: string) {
+  for (const k of memory.keys()) if (!k.includes(today)) memory.delete(k)
+}
 
 export const memoryStore: Store = {
   async incr(key) {
     const today = utcDayKey()
-    // Drop yesterday's keys so the Map does not grow forever on a warm instance.
-    for (const k of memory.keys()) if (!k.includes(today)) memory.delete(k)
+    pruneStaleMemory(today)
     const next = (memory.get(key) ?? 0) + 1
     memory.set(key, next)
     return next
+  },
+  async get(key) {
+    const today = utcDayKey()
+    pruneStaleMemory(today)
+    return memory.get(key) ?? 0
   },
 }
 
@@ -68,6 +81,12 @@ const redisStore: Store = {
     if (typeof count !== "number") throw new Error("redis bad reply")
     return count
   },
+  async get(key) {
+    const [raw] = await redisPipeline([["GET", key]])
+    if (raw == null) return 0
+    const n = Number(raw)
+    return Number.isFinite(n) ? n : 0
+  },
 }
 
 let storeOverride: Store | null = null
@@ -77,16 +96,24 @@ export function setRateLimitStore(store: Store | null) {
   storeOverride = store
 }
 
-async function incr(key: string): Promise<number> {
-  if (storeOverride) return storeOverride.incr(key)
+async function withStore<T>(fn: (store: Store) => Promise<T>): Promise<T> {
+  if (storeOverride) return fn(storeOverride)
   if (redisConfig()) {
     try {
-      return await redisStore.incr(key)
+      return await fn(redisStore)
     } catch (err) {
       console.error("[rate-limit] redis unavailable, using in-memory fallback", (err as Error).message)
     }
   }
-  return memoryStore.incr(key)
+  return fn(memoryStore)
+}
+
+async function incr(key: string): Promise<number> {
+  return withStore((store) => store.incr(key))
+}
+
+async function get(key: string): Promise<number> {
+  return withStore((store) => store.get(key))
 }
 
 // ── Public API ────────────────────────────────────────────────────────
@@ -100,24 +127,45 @@ function limitError(limit: number, today: string, code = "RATE_LIMIT"): RateLimi
   }
 }
 
+function keysFor(ip: string, bucket: LimitBucket, today = utcDayKey()) {
+  return {
+    today,
+    ipKey: `travel:rl:${bucket}:${today}:${ip}`,
+    globalKey: `travel:rl:global:${today}`,
+  }
+}
+
 /**
- * Counts one request against `bucket` for this IP and against the global cap.
+ * Peek whether this IP (and the global cap) still have room. Does **not** increment.
  * Returns null if allowed, or an error body for a 429.
  */
 export async function checkDailyLimit(ip: string, bucket: LimitBucket = "decision"): Promise<RateLimitError | null> {
   const perIp = bucketLimit(bucket)
   if (perIp === 0) return null // unlimited (local dev)
 
-  const today = utcDayKey()
-  const count = await incr(`travel:rl:${bucket}:${today}:${ip}`)
-  if (count > perIp) return limitError(perIp, today)
+  const { today, ipKey, globalKey } = keysFor(ip, bucket)
+  const count = await get(ipKey)
+  if (count >= perIp) return limitError(perIp, today)
 
   const globalLimit = parseGlobalLimit()
   if (globalLimit > 0) {
-    const total = await incr(`travel:rl:global:${today}`)
-    if (total > globalLimit) return limitError(globalLimit, today, "RATE_LIMIT")
+    const total = await get(globalKey)
+    if (total >= globalLimit) return limitError(globalLimit, today, "RATE_LIMIT")
   }
   return null
+}
+
+/**
+ * Count one successful OpenAI-backed response against the IP + global buckets.
+ * Call only after a 200 decision/plan payload is ready.
+ */
+export async function consumeDailyLimit(ip: string, bucket: LimitBucket = "decision"): Promise<void> {
+  const perIp = bucketLimit(bucket)
+  if (perIp === 0) return
+
+  const { ipKey, globalKey } = keysFor(ip, bucket)
+  await incr(ipKey)
+  if (parseGlobalLimit() > 0) await incr(globalKey)
 }
 
 export function getClientIp(req: Request): string {

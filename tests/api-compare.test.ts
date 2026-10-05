@@ -26,22 +26,34 @@ const post = (body: unknown, ip = "1.1.1.1") =>
     headers: { "content-type": "application/json", "x-forwarded-for": ip },
     body: typeof body === "string" ? body : JSON.stringify(body),
   }))
-const modelReply = (content: string) => ({ choices: [{ message: { content } }] })
+const modelReply = (content: string, finish_reason = "stop") => ({
+  choices: [{ message: { content }, finish_reason }],
+})
 
 describe("POST /api/compare", () => {
   let counts: Map<string, number>
   beforeEach(() => {
     counts = new Map()
-    setRateLimitStore({ async incr(k) { counts.set(k, (counts.get(k) ?? 0) + 1); return counts.get(k)! } })
+    setRateLimitStore({
+      async incr(k) {
+        counts.set(k, (counts.get(k) ?? 0) + 1)
+        return counts.get(k)!
+      },
+      async get(k) {
+        return counts.get(k) ?? 0
+      },
+    })
     vi.stubEnv("OPENAI_API_KEY", "sk-test")
     vi.stubEnv("TRAVEL_DEMO_DAILY_LIMIT", "1")
     vi.stubEnv("TRAVEL_GLOBAL_DAILY_LIMIT", "0")
     create.mockReset()
     recordEvent.mockReset()
+    vi.spyOn(console, "error").mockImplementation(() => {})
   })
   afterEach(() => {
     setRateLimitStore(null)
     vi.unstubAllEnvs()
+    vi.restoreAllMocks()
   })
 
   it("returns a labeled demo without an API key and never calls the model", async () => {
@@ -63,14 +75,16 @@ describe("POST /api/compare", () => {
     expect(res.status).toBe(200)
     expect((await res.json()).winner).toBe(mockCompareResult.winner)
     expect(recordEvent).toHaveBeenCalledWith("decision_ok", { mode: "compare", locale: "zh" })
+    expect(counts.size).toBeGreaterThan(0)
   })
 
-  it("retries once, then 502 with decision_fail", async () => {
-    create.mockResolvedValue(modelReply("{not json"))
+  it("retries once, then 502 with decision_fail without spending quota", async () => {
+    create.mockResolvedValue(modelReply("{not json", "length"))
     const res = await post(trip)
     expect(res.status).toBe(502)
     expect(create).toHaveBeenCalledTimes(2)
     expect(recordEvent).toHaveBeenCalledWith("decision_fail", { mode: "compare" })
+    expect(counts.size).toBe(0)
   })
 
   it("returns 429 past the daily limit without calling the model", async () => {

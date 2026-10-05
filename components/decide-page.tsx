@@ -110,10 +110,12 @@ export function DecidePage() {
   const mode: Mode = inspireMode ? "inspire" : "compare"
   const [loadingMode, setLoadingMode] = useState<Mode | null>(null)
   const [errors, setErrors] = useState<Partial<Record<Mode, string>>>({})
+  const [errorCodes, setErrorCodes] = useState<Partial<Record<Mode, string>>>({})
   const [results, setResults] = useState<Partial<Record<Mode, ModeResult>>>({})
   const current = results[mode]
   const loading = loadingMode === mode
   const error = errors[mode] ?? ""
+  const errorCode = errorCodes[mode] ?? ""
   // Which mode's result is currently in the /result session keys.
   const sessionModeRef = useRef<Mode | null>(null)
   const controllerRef = useRef<AbortController | null>(null)
@@ -233,6 +235,7 @@ export function DecidePage() {
       const historyId = data.demo || !winner ? undefined : addDecision({ mode: runMode, trip: planCtx, compare: data })
       setResults((prev) => ({ ...prev, [runMode]: { data, trip: planCtx, historyId } }))
       setErrors((prev) => ({ ...prev, [runMode]: "" }))
+      setErrorCodes((prev) => ({ ...prev, [runMode]: "" }))
       if (winner) {
         fetchPlan(`${winner.name}, ${winner.country}`, planCtx)
           .then((plan) => {
@@ -249,6 +252,7 @@ export function DecidePage() {
       const code = e instanceof DecisionRequestError ? e.code : ""
       const message = code === "RATE_LIMIT" ? messages.result.rateLimited : messages.result.decisionFailed
       setErrors((prev) => ({ ...prev, [runMode]: message }))
+      setErrorCodes((prev) => ({ ...prev, [runMode]: code }))
     } finally {
       if (controllerRef.current === controller) setLoadingMode(null)
     }
@@ -383,14 +387,16 @@ export function DecidePage() {
         {error ? (
           <div className="mt-4 rounded-md border border-amber-300 bg-amber-100 px-4 py-3 text-sm font-semibold text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
             <p>{error}</p>
-            <button
-              type="button"
-              onClick={() => runCompare()}
-              disabled={loading}
-              className="mt-3 inline-flex h-11 items-center rounded-md bg-amber-800 px-4 text-sm font-extrabold text-amber-50 disabled:opacity-70 dark:bg-amber-200 dark:text-amber-950"
-            >
-              {messages.result.tryAgain}
-            </button>
+            {errorCode !== "RATE_LIMIT" ? (
+              <button
+                type="button"
+                onClick={() => runCompare()}
+                disabled={loading}
+                className="mt-3 inline-flex h-11 items-center rounded-md bg-amber-800 px-4 text-sm font-extrabold text-amber-50 disabled:opacity-70 dark:bg-amber-200 dark:text-amber-950"
+              >
+                {messages.result.tryAgain}
+              </button>
+            ) : null}
           </div>
         ) : null}
 

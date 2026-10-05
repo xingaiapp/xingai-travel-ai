@@ -35,7 +35,7 @@ Do not thrash title / brand strings for ~30 days unless a factual error. Brand n
 | **SEO/AEO/GEO content graph (ADR 0009)** | Live intent pages: `/how-it-works`, `/faq`, `/compare` (+ 5 A-vs-B pages), `/guides` (+ 5 intent pages). `/decide` stays the conversion step. Fit labels stay qualitative. `hreflang` no longer points 中文 / 한국어 / Español at the English `/decide` URL. |
 | **Home (2026-10-05)** | `/` keeps the **4-slide hero carousel** (HK / Tokyo / Seoul / Cabo, 2560×1440) with a **centered segment bar under the hero** (not over the photo), readable place chips on a light pill, two-line green-accent headline, and mobile-friendly tall stage + light scrim. Place chips stay labels only (destination cards below are the links). Primary Decide CTAs only on **hero**, **How it works**, and **page-end**. Footer traveler banner + localized XingAI family links; `/legal/*` aliases redirect. `check:assets` gates wired photo widths — see [`docs/ASSETS.md`](./docs/ASSETS.md). |
 | **Stories media (2026-10-05)** | All **31** published episode stills (HK×2 + Macau×2) export at **1600×2133** (`-800`/`-1600` WebP). Story UI prefers the 1600w asset on larger screens. Hero videos unchanged. |
-| **Decision honesty (2026-10-05)** | A missing `OPENAI_API_KEY` returns a labeled demo and does not save it as a trip. A failed compare or plan shows a retry and does not substitute the Lisbon sample. API errors stay generic. Partner search links stay up. Revenue stays **NOT AVAILABLE** until a `NEXT_PUBLIC_*` partner id is set; the booking note says XingAI is not earning a commission. |
+| **Decision honesty (2026-10-05)** | A missing `OPENAI_API_KEY` returns a labeled demo and does not save it as a trip. A failed compare or plan shows a retry and does not substitute the Lisbon sample. API errors stay generic; server logs OpenAI status / type / `finish_reason` only. Daily demo quota counts **successful** decisions only; rate-limit UI hides Try again. Partner search links stay up. Revenue stays **NOT AVAILABLE** until a `NEXT_PUBLIC_*` partner id is set; the booking note says XingAI is not earning a commission. |
 | **App shell** | Next.js 16 App Router, React 19, Tailwind 4. On desktop the sidebar stays fixed and the main column scrolls. |
 | **Core flow** | `/` explains the product → `/decide` → compare or inspire → `/result` with plan |
 | **Stories** | `/stories` after the decision ([ADR 0006](./docs/adr/0006-stories-after-decision.md)). **My Hong Kong** Season 1: EP01 Victoria Harbour + EP02 streets/food/people. **My Macau** Season 1 EP01–EP02 published. en / 中文 / 한국어 / Español. Contained display; no clear-face stills in authored copy. |
@@ -199,8 +199,8 @@ xingai-travel-ai/
 
 - No `OPENAI_API_KEY` → returns `mockCompareResult` (200).
 - Invalid body → `400 BAD_REQUEST`.
-- Rate limit exceeded → `429 RATE_LIMIT` (production default: 3/day/IP).
-- OpenAI failure → one retry, then `502 OPENAI_ERROR`.
+- Rate limit exceeded → `429 RATE_LIMIT` (production default: 3 **successful** decisions/day/IP). Failed OpenAI calls do not consume the quota.
+- OpenAI failure → one retry, then `502 OPENAI_ERROR`. Server logs status / error type / `finish_reason` only (no key, no prompt).
 
 ### `POST /api/inspire`
 
@@ -257,7 +257,7 @@ Copy [`.env.example`](./.env.example) → `.env.local`.
 |----------|----------|-------------|
 | `OPENAI_API_KEY` | For live AI | Without it, all API routes return mock data |
 | `OPENAI_TRAVEL_MODEL` | No | Default `gpt-4o-mini` |
-| `TRAVEL_DEMO_DAILY_LIMIT` | No | `0` = unlimited (local); omit/`3` in production |
+| `TRAVEL_DEMO_DAILY_LIMIT` | No | `0` = unlimited (local); omit/`3` in production. Counts **successful** compare/inspire only |
 | `TRAVEL_GLOBAL_DAILY_LIMIT` | No | All-IP daily cap on OpenAI calls; default `300`, `0` = off |
 | `KV_REST_API_URL` / `KV_REST_API_TOKEN` | Yes (prod) | Upstash Redis (Vercel Marketplace) for shared rate-limit counters; `UPSTASH_REDIS_REST_*` also accepted. Without it, limits are per-instance only |
 | `NEXT_PUBLIC_APP_URL` | Yes (prod) | Canonical base URL for metadata |

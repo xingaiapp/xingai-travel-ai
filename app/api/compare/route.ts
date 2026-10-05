@@ -4,9 +4,10 @@ import OpenAI from "openai"
 import { z } from "zod"
 import { normalizeCompareResult } from "@/lib/compare-normalize"
 import { mockCompareResult } from "@/lib/mock-data"
+import { logDecisionModelFailure } from "@/lib/openai-safe-log"
 import { buildComparePrompt } from "@/lib/prompts"
 import { recordEvent } from "@/lib/metrics"
-import { checkDailyLimit, getClientIp } from "@/lib/rate-limit"
+import { checkDailyLimit, consumeDailyLimit, getClientIp } from "@/lib/rate-limit"
 import type { CompareResult, TripContext } from "@/lib/types"
 
 export const runtime = "nodejs"
@@ -34,7 +35,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid trip context", code: "BAD_REQUEST" }, { status: 400 })
   }
 
-  const limited = await checkDailyLimit(getClientIp(request))
+  const ip = getClientIp(request)
+  const limited = await checkDailyLimit(ip)
   if (limited) {
     after(() => recordEvent("decision_limited", { mode: "compare" }))
     return NextResponse.json(limited, { status: 429 })
@@ -44,29 +46,48 @@ export async function POST(request: NextRequest) {
   const model = process.env.OPENAI_TRAVEL_MODEL?.trim() || "gpt-4o-mini"
   const openai = new OpenAI({ apiKey })
 
-  async function callOpenAI(): Promise<CompareResult> {
-    const completion = await openai.chat.completions.create({
-      model,
-      response_format: { type: "json_object" },
-      messages: [
-        {
-          role: "system",
-          content: "You are a travel decision advisor. Return only valid JSON matching the requested structure. No markdown fences.",
-        },
-        { role: "user", content: prompt },
-      ],
-      max_tokens: 1800,
-      temperature: 0.3,
-    })
-    const raw = completion.choices[0]?.message?.content ?? ""
-    return normalizeCompareResult(JSON.parse(raw) as CompareResult)
+  async function callOpenAI(attempt: number): Promise<CompareResult> {
+    let completion
+    try {
+      completion = await openai.chat.completions.create({
+        model,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content: "You are a travel decision advisor. Return only valid JSON matching the requested structure. No markdown fences.",
+          },
+          { role: "user", content: prompt },
+        ],
+        max_tokens: 1800,
+        temperature: 0.3,
+      })
+    } catch (err) {
+      logDecisionModelFailure("compare", err, { attempt })
+      throw err
+    }
+    const choice = completion.choices[0]
+    const raw = choice?.message?.content ?? ""
+    try {
+      return normalizeCompareResult(JSON.parse(raw) as CompareResult)
+    } catch (err) {
+      logDecisionModelFailure("compare", err, {
+        finish_reason: choice?.finish_reason,
+        content_len: raw.length,
+        attempt,
+      })
+      throw err
+    }
   }
 
-  const result = await callOpenAI().catch(() => callOpenAI()).catch(() => null)
+  const result = await callOpenAI(1)
+    .catch(() => callOpenAI(2))
+    .catch(() => null)
   if (!result) {
     after(() => recordEvent("decision_fail", { mode: "compare" }))
     return NextResponse.json({ error: "Decision unavailable", code: "OPENAI_ERROR" }, { status: 502 })
   }
+  await consumeDailyLimit(ip)
   after(() => recordEvent("decision_ok", { mode: "compare", locale: parsed.data.locale }))
   return NextResponse.json(result)
 }

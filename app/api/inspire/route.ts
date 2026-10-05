@@ -5,9 +5,10 @@ import { z } from "zod"
 import { normalizeCompareResult } from "@/lib/compare-normalize"
 import { mockCompareResult } from "@/lib/mock-data"
 import { inspireViolations } from "@/lib/inspire-validate"
+import { logDecisionModelFailure } from "@/lib/openai-safe-log"
 import { buildInspirePrompt } from "@/lib/prompts"
 import { recordEvent } from "@/lib/metrics"
-import { checkDailyLimit, getClientIp } from "@/lib/rate-limit"
+import { checkDailyLimit, consumeDailyLimit, getClientIp } from "@/lib/rate-limit"
 import type { CompareResult, InspireContext } from "@/lib/types"
 
 export const runtime = "nodejs"
@@ -32,7 +33,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid input", code: "BAD_REQUEST" }, { status: 400 })
   }
 
-  const limited = await checkDailyLimit(getClientIp(request))
+  const ip = getClientIp(request)
+  const limited = await checkDailyLimit(ip)
   if (limited) {
     after(() => recordEvent("decision_limited", { mode: "inspire" }))
     return NextResponse.json(limited, { status: 429 })
@@ -42,25 +44,41 @@ export async function POST(request: NextRequest) {
   const model = process.env.OPENAI_TRAVEL_MODEL?.trim() || "gpt-4o-mini"
   const openai = new OpenAI({ apiKey })
 
-  async function callOpenAI(feedback: string[]): Promise<CompareResult> {
+  async function callOpenAI(feedback: string[], attempt: number): Promise<CompareResult> {
     const retryNote = feedback.length
       ? `\n\nYour previous answer broke these hard constraints — fix all of them:\n- ${feedback.join("\n- ")}`
       : ""
-    const completion = await openai.chat.completions.create({
-      model,
-      response_format: { type: "json_object" },
-      messages: [
-        {
-          role: "system",
-          content: "You are a travel inspiration advisor. Return only valid JSON matching the requested structure. No markdown fences.",
-        },
-        { role: "user", content: prompt + retryNote },
-      ],
-      max_tokens: 1800,
-      temperature: 0.5,
-    })
-    const raw = completion.choices[0]?.message?.content ?? ""
-    return JSON.parse(raw) as CompareResult
+    let completion
+    try {
+      completion = await openai.chat.completions.create({
+        model,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content: "You are a travel inspiration advisor. Return only valid JSON matching the requested structure. No markdown fences.",
+          },
+          { role: "user", content: prompt + retryNote },
+        ],
+        max_tokens: 1800,
+        temperature: 0.5,
+      })
+    } catch (err) {
+      logDecisionModelFailure("inspire", err, { attempt })
+      throw err
+    }
+    const choice = completion.choices[0]
+    const raw = choice?.message?.content ?? ""
+    try {
+      return JSON.parse(raw) as CompareResult
+    } catch (err) {
+      logDecisionModelFailure("inspire", err, {
+        finish_reason: choice?.finish_reason,
+        content_len: raw.length,
+        attempt,
+      })
+      throw err
+    }
   }
 
   // A suggestion that breaks the user's hard limits is worse than none: validate, retry with feedback, else fail.
@@ -68,9 +86,10 @@ export async function POST(request: NextRequest) {
   let feedback: string[] = []
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
     try {
-      const result = normalizeCompareResult(await callOpenAI(feedback))
+      const result = normalizeCompareResult(await callOpenAI(feedback, attempt + 1))
       const problems = inspireViolations(result, parsed.data.flightRange)
       if (problems.length === 0) {
+        await consumeDailyLimit(ip)
         after(() => recordEvent("decision_ok", { mode: "inspire", locale: parsed.data.locale }))
         return NextResponse.json(result)
       }

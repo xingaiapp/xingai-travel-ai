@@ -4,9 +4,10 @@ import OpenAI from "openai"
 import { z } from "zod"
 import { normalizeBudget } from "@/lib/budget"
 import { mockPlanResult, mockRawBudget } from "@/lib/mock-data"
+import { logDecisionModelFailure } from "@/lib/openai-safe-log"
 import { buildPlanPrompt } from "@/lib/prompts"
 import { recordEvent } from "@/lib/metrics"
-import { checkDailyLimit, getClientIp } from "@/lib/rate-limit"
+import { checkDailyLimit, consumeDailyLimit, getClientIp } from "@/lib/rate-limit"
 import type { PlanResult, TripContext } from "@/lib/types"
 
 export const runtime = "nodejs"
@@ -43,8 +44,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid plan request", code: "BAD_REQUEST" }, { status: 400 })
   }
 
+  const ip = getClientIp(request)
   // Plan fires automatically after compare, so it has its own, larger bucket instead of eating the compare quota.
-  const limited = await checkDailyLimit(getClientIp(request), "plan")
+  const limited = await checkDailyLimit(ip, "plan")
   if (limited) return NextResponse.json(limited, { status: 429 })
 
   const { destination, tripContext } = parsed.data
@@ -52,31 +54,50 @@ export async function POST(request: NextRequest) {
   const model = process.env.OPENAI_TRAVEL_MODEL?.trim() || "gpt-4o-mini"
   const openai = new OpenAI({ apiKey })
 
-  async function callOpenAI(): Promise<PlanResult> {
-    const completion = await openai.chat.completions.create({
-      model,
-      response_format: { type: "json_object" },
-      messages: [
-        {
-          role: "system",
-          content: "You are a travel planning advisor. Return only valid JSON matching the requested structure. No markdown fences.",
-        },
-        { role: "user", content: prompt },
-      ],
-      max_tokens: 2200,
-      temperature: 0.35,
-    })
-    const raw = completion.choices[0]?.message?.content ?? ""
-    const plan = JSON.parse(raw) as PlanResult & { budgetEstimate?: unknown }
-    // Totals and the fits/over verdict are arithmetic on validated lines — never the model's own sums.
-    return { ...plan, budgetEstimate: normalizeBudget(plan.budgetEstimate, tripContext) }
+  async function callOpenAI(attempt: number): Promise<PlanResult> {
+    let completion
+    try {
+      completion = await openai.chat.completions.create({
+        model,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content: "You are a travel planning advisor. Return only valid JSON matching the requested structure. No markdown fences.",
+          },
+          { role: "user", content: prompt },
+        ],
+        max_tokens: 2200,
+        temperature: 0.35,
+      })
+    } catch (err) {
+      logDecisionModelFailure("plan", err, { attempt })
+      throw err
+    }
+    const choice = completion.choices[0]
+    const raw = choice?.message?.content ?? ""
+    try {
+      const plan = JSON.parse(raw) as PlanResult & { budgetEstimate?: unknown }
+      // Totals and the fits/over verdict are arithmetic on validated lines — never the model's own sums.
+      return { ...plan, budgetEstimate: normalizeBudget(plan.budgetEstimate, tripContext) }
+    } catch (err) {
+      logDecisionModelFailure("plan", err, {
+        finish_reason: choice?.finish_reason,
+        content_len: raw.length,
+        attempt,
+      })
+      throw err
+    }
   }
 
-  const plan = await callOpenAI().catch(() => callOpenAI()).catch(() => null)
+  const plan = await callOpenAI(1)
+    .catch(() => callOpenAI(2))
+    .catch(() => null)
   if (!plan) {
     after(() => recordEvent("plan_fail"))
     return NextResponse.json({ error: "Decision unavailable", code: "OPENAI_ERROR" }, { status: 502 })
   }
+  await consumeDailyLimit(ip, "plan")
   after(() => recordEvent("plan_ok"))
   return NextResponse.json(plan)
 }
