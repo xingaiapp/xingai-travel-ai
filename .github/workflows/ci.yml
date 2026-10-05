@@ -14,10 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: 22
+          # npm 11 (Node 24) matches the npm that writes package-lock.json; Node 22's npm 10
+          # skipped @next/swc-linux-x64-gnu from this lockfile and the build fell back to WASM.
+          node-version: 24
           cache: npm
       - run: npm ci
       - run: npm run typecheck
