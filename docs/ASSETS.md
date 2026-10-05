@@ -6,7 +6,7 @@ All **wired** images under `public/` must meet minimum width before merge. `npm 
 
 | Use | Path pattern | Min width |
 |-----|----------------|-----------|
-| Home hero carousel | `public/assets/home-hero-*.webp` | 2400 (target **2560×1440**, 16:9) |
+| Home hero carousel | `public/assets/home-hero-{hong-kong,tokyo,seoul,los-cabos}.webp` | 2400 (target **2560×1440**, 16:9) |
 | Home destination cards | `public/assets/dest-*-v2.webp` | 1600 (16:10) |
 | Compare / result city cards | `public/assets/destination-*-card.webp` | 1600 |
 | Sidebar trip thumb | `public/assets/destination-lisbon-thumb.webp` | 800 |

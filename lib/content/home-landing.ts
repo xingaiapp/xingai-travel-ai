@@ -17,6 +17,29 @@ export const homeCopy = {
     "여행 검색에서 멈추지 마세요. 더 나은 여행 결정을 하세요.",
     "No te quedes en la búsqueda. Toma una mejor decisión de viaje."
   ),
+  headlineLead: t(
+    "Don’t just search for a trip.",
+    "不只是搜索旅行信息，",
+    "여행 검색에서 멈추지 마세요.",
+    "No te quedes en la búsqueda."
+  ),
+  headlineAccent: t(
+    "Make a better travel decision.",
+    "而是帮助你做出更好的旅行决定。",
+    "더 나은 여행 결정을 하세요.",
+    "Toma una mejor decisión de viaje."
+  ),
+  heroTagline1: t("Real places.", "真实的地方。", "진짜 장소.", "Lugares reales."),
+  heroTagline2: t("Smarter decisions.", "更聪明的决定。", "더 현명한 결정.", "Decisiones más inteligentes."),
+  heroTagline3: t("Better trips.", "更好的旅程。", "더 나은 여행.", "Mejores viajes."),
+  heroPlace: t("Hong Kong", "香港", "홍콩", "Hong Kong"),
+  heroPlaceDetail: t("Victoria Harbour", "维多利亚港", "빅토리아 하버", "Victoria Harbour"),
+  heroPlaceTokyo: t("Tokyo", "东京", "도쿄", "Tokio"),
+  heroPlaceTokyoDetail: t("Tokyo Bay · Fuji", "东京湾 · 富士山", "도쿄만 · 후지산", "Bahía de Tokio · Fuji"),
+  heroPlaceSeoul: t("Seoul", "首尔", "서울", "Seúl"),
+  heroPlaceSeoulDetail: t("Han River · Namsan", "汉江 · 南山", "한강 · 남산", "Río Han · Namsan"),
+  heroPlaceCabo: t("Los Cabos", "洛斯卡沃斯", "로스카보스", "Los Cabos"),
+  heroPlaceCaboDetail: t("El Arco", "拱门岩", "엘 아르코", "El Arco"),
   support: t(
     "Tell us where you're going, who you're traveling with, what matters to you, and what you want to avoid. XingAI Travel helps you compare your options, understand the trade-offs, and decide what fits you best.",
     "告诉我们你要去哪、和谁一起、在意什么、想避开什么。XingAI Travel 帮你比较选项、看清取舍，再决定哪一个更适合你。",

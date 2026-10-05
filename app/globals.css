@@ -341,10 +341,10 @@
 }
 
 .home-hero-full {
-  /* Mobile: tall stage so scenic 16:9 photos read as a full view, not a thin strip */
+  /* Mobile: tall portrait stage matching the Hong Kong harbour hero */
   aspect-ratio: auto;
-  min-height: min(85svh, 38rem);
-  max-height: 92svh;
+  min-height: min(92svh, 44rem);
+  max-height: 96svh;
   width: 100%;
 }
 

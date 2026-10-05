@@ -39,20 +39,6 @@ import {
 import { pickLocalized } from "@/lib/content/types"
 import { cn } from "@/lib/utils"
 
-const heroSlides = [
-  {
-    src: "/assets/home-hero-hong-kong.webp",
-    alt: homeCopy.heroAlt,
-    /** Keep the seated traveler + harbour in frame when the hero crops to 16:9 */
-    objectPosition: "72% 52%",
-  },
-  { src: "/assets/home-hero-tokyo.webp", alt: homeCopy.heroTokyoAlt, objectPosition: "50% 50%" },
-  { src: "/assets/home-hero-seoul.webp", alt: homeCopy.heroSeoulAlt, objectPosition: "50% 50%" },
-  { src: "/assets/home-hero-los-cabos.webp", alt: homeCopy.heroLosCabosAlt, objectPosition: "45% 50%" },
-] as const
-
-const HERO_INTERVAL_MS = 7000
-
 const introIcons = [BedDouble, Sparkles, Wallet, Users, XCircle] as const
 const howIcons = [MessageSquareText, Scale, CheckCircle2] as const
 const questionIcons = [MapPin, Sparkles, BedDouble, Users, Wallet, HelpCircle, Scale, Map, Compass] as const
@@ -231,7 +217,45 @@ function HowStepsPlay({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) =
   )
 }
 
-function HeroCarousel({ labelFor }: { labelFor: (alt: (typeof heroSlides)[number]["alt"]) => string }) {
+
+const heroSlides = [
+  {
+    src: "/assets/home-hero-hong-kong.webp",
+    alt: homeCopy.heroAlt,
+    place: homeCopy.heroPlace,
+    placeDetail: homeCopy.heroPlaceDetail,
+    objectPosition: "72% 52%",
+  },
+  {
+    src: "/assets/home-hero-tokyo.webp",
+    alt: homeCopy.heroTokyoAlt,
+    place: homeCopy.heroPlaceTokyo,
+    placeDetail: homeCopy.heroPlaceTokyoDetail,
+    objectPosition: "50% 50%",
+  },
+  {
+    src: "/assets/home-hero-seoul.webp",
+    alt: homeCopy.heroSeoulAlt,
+    place: homeCopy.heroPlaceSeoul,
+    placeDetail: homeCopy.heroPlaceSeoulDetail,
+    objectPosition: "50% 50%",
+  },
+  {
+    src: "/assets/home-hero-los-cabos.webp",
+    alt: homeCopy.heroLosCabosAlt,
+    place: homeCopy.heroPlaceCabo,
+    placeDetail: homeCopy.heroPlaceCaboDetail,
+    objectPosition: "45% 50%",
+  },
+] as const
+
+const HERO_INTERVAL_MS = 7000
+
+function HeroCarousel({
+  labelFor,
+}: {
+  labelFor: (value: Parameters<typeof pickLocalized>[0]) => string
+}) {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
 
@@ -244,8 +268,10 @@ function HeroCarousel({ labelFor }: { labelFor: (alt: (typeof heroSlides)[number
     return () => window.clearInterval(id)
   }, [paused, index])
 
+  const activeSlide = heroSlides[index]
+
   return (
-    <>
+    <section className="home-hero-full relative w-full overflow-hidden">
       {heroSlides.map((slide, slideIndex) => {
         const active = slideIndex === index
         return (
@@ -266,6 +292,19 @@ function HeroCarousel({ labelFor }: { labelFor: (alt: (typeof heroSlides)[number
           />
         )
       })}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,transparent_38%,color-mix(in_oklch,var(--background)_28%,transparent)_62%,color-mix(in_oklch,var(--background)_78%,transparent)_100%)] sm:bg-[linear-gradient(105deg,color-mix(in_oklch,var(--background)_72%,transparent)_0%,color-mix(in_oklch,var(--background)_36%,transparent)_36%,transparent_68%)]"
+      />
+      <p className="pointer-events-none absolute bottom-28 right-4 z-10 text-right text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.45)] sm:bottom-5 sm:right-20 lg:right-24">
+        <span className="inline-flex items-start gap-1.5">
+          <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+          <span>
+            <span className="block text-sm font-bold leading-tight">{labelFor(activeSlide.place)}</span>
+            <span className="block text-xs font-medium leading-tight opacity-95">{labelFor(activeSlide.placeDetail)}</span>
+          </span>
+        </span>
+      </p>
       <div
         className="absolute right-2 top-2 z-10 flex gap-0.5 sm:bottom-5 sm:right-5 sm:top-auto"
         onMouseEnter={() => setPaused(true)}
@@ -294,7 +333,40 @@ function HeroCarousel({ labelFor }: { labelFor: (alt: (typeof heroSlides)[number
           )
         })}
       </div>
-    </>
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-4 pb-16 pt-8 sm:justify-center sm:px-6 sm:pb-16 sm:pt-14 lg:px-8">
+        <div className="max-w-xl rounded-2xl bg-background/55 p-4 shadow-sm backdrop-blur-[2px] sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none">
+          <p className="home-reveal home-reveal-delay-1 mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-foreground sm:mb-3 sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)]">
+            <Compass className="h-3.5 w-3.5 text-primary" aria-hidden />
+            XingAI Travel
+          </p>
+          <h1 className="home-reveal hero-display-title text-[1.65rem] font-semibold leading-[1.15] tracking-tight sm:text-5xl sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)]">
+            <span className="block text-foreground">{labelFor(homeCopy.headlineLead)}</span>
+            <span className="mt-1 block text-primary">{labelFor(homeCopy.headlineAccent)}</span>
+          </h1>
+          <p className="home-reveal home-reveal-delay-1 mt-3 hidden max-w-xl text-base leading-relaxed text-foreground sm:mt-4 sm:block sm:text-lg sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_75%,transparent)]">
+            {labelFor(homeCopy.support)}
+          </p>
+          <div className="home-reveal home-reveal-delay-2 mt-5 flex flex-col gap-3 sm:mt-6 sm:flex-row">
+            <Link
+              href="/decide"
+              onClick={() => track("home_hero_decide", { target: "/decide" })}
+              className="home-cta-pulse inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-center text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)] motion-safe:transition hover:brightness-105"
+            >
+              {labelFor(homeCopy.primaryCta)}
+              <ArrowRight className="home-cta-arrow h-4 w-4" aria-hidden />
+            </Link>
+            <Link
+              href="/guides"
+              onClick={() => track("home_secondary", { target: "/guides" })}
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-foreground/20 bg-card/90 px-6 text-center text-sm font-bold text-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--foreground)_8%,transparent)] backdrop-blur-sm motion-safe:transition hover:border-primary/50"
+            >
+              <Map className="h-4 w-4 text-primary" aria-hidden />
+              {labelFor(homeCopy.secondaryCta)}
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -310,45 +382,7 @@ export function HomeLanding() {
 
   return (
     <main className="w-full pb-8 sm:pb-12">
-      <section className="home-hero-full relative w-full overflow-hidden">
-        <HeroCarousel labelFor={t} />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,transparent_38%,color-mix(in_oklch,var(--background)_28%,transparent)_62%,color-mix(in_oklch,var(--background)_78%,transparent)_100%)] sm:bg-[linear-gradient(105deg,color-mix(in_oklch,var(--background)_72%,transparent)_0%,color-mix(in_oklch,var(--background)_36%,transparent)_36%,transparent_68%)]"
-        />
-        <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-4 pb-16 pt-8 sm:justify-center sm:px-6 sm:pb-16 sm:pt-14 lg:px-8">
-          <div className="max-w-xl rounded-2xl bg-background/55 p-4 shadow-sm backdrop-blur-[2px] sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none">
-            <p className="home-reveal home-reveal-delay-1 mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-foreground sm:mb-3 sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)]">
-              <Compass className="h-3.5 w-3.5 text-primary" aria-hidden />
-              XingAI Travel
-            </p>
-            <h1 className="home-reveal hero-display-title text-[1.65rem] font-semibold leading-[1.15] tracking-tight text-foreground sm:text-5xl sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)]">
-              {t(homeCopy.headline)}
-            </h1>
-            <p className="home-reveal home-reveal-delay-1 mt-3 hidden max-w-xl text-base leading-relaxed text-foreground sm:mt-4 sm:block sm:text-lg sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_75%,transparent)]">
-              {t(homeCopy.support)}
-            </p>
-            <div className="home-reveal home-reveal-delay-2 mt-5 flex flex-col gap-3 sm:mt-6 sm:flex-row">
-              <Link
-                href="/decide"
-                onClick={() => track("home_hero_decide", { target: "/decide" })}
-                className="home-cta-pulse inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-center text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)] motion-safe:transition hover:brightness-105"
-              >
-                {t(homeCopy.primaryCta)}
-                <ArrowRight className="home-cta-arrow h-4 w-4" aria-hidden />
-              </Link>
-              <Link
-                href="/guides"
-                onClick={() => track("home_secondary", { target: "/guides" })}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-foreground/20 bg-card/90 px-6 text-center text-sm font-bold text-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--foreground)_8%,transparent)] backdrop-blur-sm motion-safe:transition hover:border-primary/50"
-              >
-                <Map className="h-4 w-4 text-primary" aria-hidden />
-                {t(homeCopy.secondaryCta)}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroCarousel labelFor={t} />
 
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
         <section className="mt-8 sm:mt-10" aria-label={t(homeCopy.demoLabel)}>
