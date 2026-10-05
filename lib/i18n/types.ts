@@ -30,6 +30,10 @@ export interface Messages {
     helpHowItWorks: string
     footerTravelerAlt: string
     footerTravelerCaption: string
+    footerCopyright: string
+    footerPartOf: string
+    footerAllApps: string
+    footerFamilyNav: string
   }
   home: {
     eyebrow: string

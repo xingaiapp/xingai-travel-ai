@@ -30,6 +30,10 @@ export const en: Messages = {
     helpHowItWorks: "How XingAI Travel works",
     footerTravelerAlt: "Traveler on a Hong Kong overlook looking at the skyline",
     footerTravelerCaption: "Your next trip starts with a decision",
+    footerCopyright: "© 2026 XingAI Travel · Make a better travel decision",
+    footerPartOf: "Part of",
+    footerAllApps: "All apps",
+    footerFamilyNav: "More XingAI apps",
   },
   home: {
     eyebrow: "Travel Decision System",

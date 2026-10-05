@@ -30,6 +30,10 @@ export const ko: Messages = {
     helpHowItWorks: "XingAI Travel 사용 방법",
     footerTravelerAlt: "홍콩 전망대에 앉아 스카이라인을 바라보는 여행자",
     footerTravelerCaption: "다음 여행은 결정에서 시작합니다",
+    footerCopyright: "© 2026 XingAI Travel · 더 나은 여행 결정",
+    footerPartOf: "소속",
+    footerAllApps: "모든 앱",
+    footerFamilyNav: "다른 XingAI 앱",
   },
   home: {
     eyebrow: "Travel Decision System",

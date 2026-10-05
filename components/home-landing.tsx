@@ -536,14 +536,6 @@ export function HomeLanding() {
                 <h2 className="hero-display-title text-2xl font-semibold tracking-tight sm:text-4xl">{t(homeCopy.introTitle)}</h2>
                 <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">{t(homeCopy.introLead)}</p>
                 <p className="mt-4 text-base font-semibold leading-relaxed text-foreground sm:text-lg">{t(homeCopy.introClose)}</p>
-                <Link
-                  href="/decide"
-                  onClick={() => track("home_how_decide", { target: "/decide", from: "intro" })}
-                  className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)]"
-                >
-                  {t(homeCopy.introCta)}
-                  <ArrowRight className="home-cta-arrow h-4 w-4" aria-hidden />
-                </Link>
               </div>
               <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
                 {introQuestions.map((question, index) => {
@@ -700,14 +692,6 @@ export function HomeLanding() {
                 <span className="mt-1 block text-primary">{t(homeCopy.whyHeadlineAccent)}</span>
               </h2>
               <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">{t(homeCopy.whyBody)}</p>
-              <Link
-                href="/decide"
-                onClick={() => track("home_final_decide", { target: "/decide" })}
-                className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)]"
-              >
-                {t(homeCopy.primaryCta)}
-                <ArrowRight className="home-cta-arrow h-4 w-4" aria-hidden />
-              </Link>
             </div>
           </div>
         </ScrollIn>

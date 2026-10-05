@@ -49,6 +49,13 @@ const legalLinks = [
   { href: "/affiliate-disclosure", key: "affiliate" },
 ] as const
 
+/** Plain <a> targets so crawlers follow family equity back to xingai.app. */
+const familyLinks = [
+  { href: "https://cook.xingai.app/", name: "Cook AI", title: "What to cook tonight" },
+  { href: "https://wear.xingai.app/", name: "Wear AI", title: "What to wear today" },
+  { href: "https://invest.xingai.app/ai-map", name: "Invest AI", title: "AI supply-chain research" },
+] as const
+
 function mobileHeaderTitle(pathname: string, messages: Messages) {
   if (pathname === "/") return messages.chrome.home
   if (pathname === "/result") {
@@ -310,7 +317,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             </Link>
           </div>
           <div className="mx-auto flex max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="font-semibold">© 2026 XingAI Travel · Make a better travel decision</p>
+            <p className="font-semibold">{messages.chrome.footerCopyright}</p>
             <nav className="flex flex-wrap gap-x-4 gap-y-2" aria-label="Footer legal">
               {legalLinks.map((item) => (
                 <Link key={item.href} href={item.href} className="font-semibold transition hover:text-primary">
@@ -326,19 +333,26 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             <Link href="/compare" className="hover:text-primary">{messages.content.compareNav}</Link>
             <Link href="/guides" className="hover:text-primary">{messages.content.guidesNav}</Link>
           </div>
-          {/* XingAI family links: plain anchors so crawlers follow them. */}
-          <div className="mx-auto mt-3 flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/60 pt-3">
+          {/* XingAI family links: plain anchors so crawlers follow them (project-init footer). */}
+          <nav
+            className="mx-auto mt-3 flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/60 pt-3"
+            aria-label={messages.chrome.footerFamilyNav}
+          >
             <span>
-              Part of{" "}
+              {messages.chrome.footerPartOf}{" "}
               <a href="https://xingai.app/" className="font-semibold text-foreground hover:text-primary">
                 XingAI
               </a>
             </span>
-            <a href="https://cook.xingai.app/" title="What to cook tonight" className="hover:text-primary">Cook AI</a>
-            <a href="https://wear.xingai.app/" title="What to wear today" className="hover:text-primary">Wear AI</a>
-            <a href="https://invest.xingai.app/ai-map" title="AI supply-chain research" className="hover:text-primary">Invest AI</a>
-            <a href="https://xingai.app/apps" className="hover:text-primary">All apps</a>
-          </div>
+            {familyLinks.map((app) => (
+              <a key={app.href} href={app.href} title={app.title} className="hover:text-primary">
+                {app.name}
+              </a>
+            ))}
+            <a href="https://xingai.app/apps" className="hover:text-primary">
+              {messages.chrome.footerAllApps}
+            </a>
+          </nav>
         </footer>
       </div>
 
@@ -455,6 +469,26 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                     </Link>
                   ))}
                 </DrawerAccordion>
+
+                <nav
+                  className="mt-3 flex flex-wrap gap-x-3 gap-y-1 border-t border-border pt-3 text-xs text-muted-foreground"
+                  aria-label={messages.chrome.footerFamilyNav}
+                >
+                  <span>
+                    {messages.chrome.footerPartOf}{" "}
+                    <a href="https://xingai.app/" className="font-semibold text-foreground">
+                      XingAI
+                    </a>
+                  </span>
+                  {familyLinks.map((app) => (
+                    <a key={app.href} href={app.href} title={app.title} className="hover:text-primary">
+                      {app.name}
+                    </a>
+                  ))}
+                  <a href="https://xingai.app/apps" className="hover:text-primary">
+                    {messages.chrome.footerAllApps}
+                  </a>
+                </nav>
 
                 <DrawerAccordion
                   id="drawer-help"

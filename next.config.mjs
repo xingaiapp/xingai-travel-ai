@@ -15,6 +15,10 @@ const nextConfig = {
     const ep01 = `${season}/01-victoria-harbour-start-with-the-sea`
     const ep02 = `${season}/02-streets-food-and-people`
     return [
+      // Foundation / project-init legal slugs → local pages (same pattern as Invest).
+      { source: "/legal/privacy", destination: "/privacy", permanent: false },
+      { source: "/legal/terms", destination: "/terms", permanent: false },
+      { source: "/legal/disclaimer", destination: "/disclaimer", permanent: false },
       { source: `${season}/01-the-hong-kong-i-called-home`, destination: ep01, permanent: true },
       { source: `${season}/02-the-harbor-i-kept-coming-back-to`, destination: ep01, permanent: true },
       { source: `${season}/03-what-i-actually-ate`, destination: ep02, permanent: true },

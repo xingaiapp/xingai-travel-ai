@@ -30,6 +30,10 @@ export const es: Messages = {
     helpHowItWorks: "Cómo funciona XingAI Travel",
     footerTravelerAlt: "Viajera en un mirador de Hong Kong mirando el horizonte",
     footerTravelerCaption: "Tu próximo viaje empieza con una decisión",
+    footerCopyright: "© 2026 XingAI Travel · Toma una mejor decisión de viaje",
+    footerPartOf: "Parte de",
+    footerAllApps: "Todas las apps",
+    footerFamilyNav: "Más apps de XingAI",
   },
   home: {
     eyebrow: "Sistema de decisión de viaje",

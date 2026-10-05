@@ -30,6 +30,10 @@ export const zh: Messages = {
     helpHowItWorks: "XingAI Travel 怎么用",
     footerTravelerAlt: "旅行者坐在香港高处眺望城市天际线",
     footerTravelerCaption: "下一次旅行，从做一个决定开始",
+    footerCopyright: "© 2026 XingAI Travel · 做出更好的旅行决定",
+    footerPartOf: "隶属于",
+    footerAllApps: "全部应用",
+    footerFamilyNav: "更多 XingAI 应用",
   },
   home: {
     eyebrow: "旅行决策系统",
