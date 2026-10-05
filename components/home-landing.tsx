@@ -267,7 +267,7 @@ function HeroCarousel({ labelFor }: { labelFor: (alt: (typeof heroSlides)[number
         )
       })}
       <div
-        className="absolute bottom-3 right-3 z-10 flex gap-0.5 sm:bottom-5 sm:right-5"
+        className="absolute right-2 top-2 z-10 flex gap-0.5 sm:bottom-5 sm:right-5 sm:top-auto"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
@@ -314,21 +314,21 @@ export function HomeLanding() {
         <HeroCarousel labelFor={t} />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--background)_55%,transparent)_0%,color-mix(in_oklch,var(--background)_18%,transparent)_42%,color-mix(in_oklch,var(--background)_72%,transparent)_100%)] sm:bg-[linear-gradient(105deg,color-mix(in_oklch,var(--background)_78%,transparent)_0%,color-mix(in_oklch,var(--background)_42%,transparent)_38%,transparent_68%)]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,transparent_38%,color-mix(in_oklch,var(--background)_28%,transparent)_62%,color-mix(in_oklch,var(--background)_78%,transparent)_100%)] sm:bg-[linear-gradient(105deg,color-mix(in_oklch,var(--background)_72%,transparent)_0%,color-mix(in_oklch,var(--background)_36%,transparent)_36%,transparent_68%)]"
         />
-        <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-4 pb-14 pt-10 sm:justify-center sm:px-6 sm:pb-16 sm:pt-14 lg:px-8">
-          <div className="max-w-xl">
-            <p className="home-reveal home-reveal-delay-1 mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)]">
+        <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-4 pb-16 pt-8 sm:justify-center sm:px-6 sm:pb-16 sm:pt-14 lg:px-8">
+          <div className="max-w-xl rounded-2xl bg-background/55 p-4 shadow-sm backdrop-blur-[2px] sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none">
+            <p className="home-reveal home-reveal-delay-1 mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-foreground sm:mb-3 sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)]">
               <Compass className="h-3.5 w-3.5 text-primary" aria-hidden />
               XingAI Travel
             </p>
-            <h1 className="home-reveal hero-display-title text-[1.85rem] font-semibold leading-[1.15] tracking-tight text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)] sm:text-5xl">
+            <h1 className="home-reveal hero-display-title text-[1.65rem] font-semibold leading-[1.15] tracking-tight text-foreground sm:text-5xl sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)]">
               {t(homeCopy.headline)}
             </h1>
-            <p className="home-reveal home-reveal-delay-1 mt-4 max-w-xl text-base leading-relaxed text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_75%,transparent)] sm:text-lg">
+            <p className="home-reveal home-reveal-delay-1 mt-3 hidden max-w-xl text-base leading-relaxed text-foreground sm:mt-4 sm:block sm:text-lg sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_75%,transparent)]">
               {t(homeCopy.support)}
             </p>
-            <div className="home-reveal home-reveal-delay-2 mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className="home-reveal home-reveal-delay-2 mt-5 flex flex-col gap-3 sm:mt-6 sm:flex-row">
               <Link
                 href="/decide"
                 onClick={() => track("home_hero_decide", { target: "/decide" })}

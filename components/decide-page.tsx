@@ -439,23 +439,23 @@ function HeroIntro() {
 
   return (
     <section className="mb-6 overflow-hidden rounded-2xl border border-border bg-card">
-      <div className="relative min-h-[22rem] sm:min-h-[26rem]">
+      <div className="relative min-h-[26rem] sm:min-h-[26rem] lg:min-h-[26rem]">
         <div
           aria-hidden
           className="absolute inset-0 bg-[url('/assets/hero-travel-decision.webp')] bg-cover bg-[72%_center] lg:bg-center dark:brightness-[1.08] dark:saturate-[1.04]"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--background)_42%,transparent)_0%,color-mix(in_oklch,var(--background)_18%,transparent)_55%,transparent_100%)] lg:bg-[linear-gradient(90deg,color-mix(in_oklch,var(--background)_78%,transparent)_0%,color-mix(in_oklch,var(--background)_48%,transparent)_42%,transparent_78%)]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,transparent_35%,color-mix(in_oklch,var(--background)_32%,transparent)_62%,color-mix(in_oklch,var(--background)_82%,transparent)_100%)] lg:bg-[linear-gradient(90deg,color-mix(in_oklch,var(--background)_78%,transparent)_0%,color-mix(in_oklch,var(--background)_48%,transparent)_42%,transparent_78%)]"
         />
-        <div className="relative grid gap-6 px-5 py-8 sm:px-8 lg:min-h-[26rem] lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-10 lg:py-10">
-          <div className="flex max-w-2xl flex-col justify-center">
+        <div className="relative grid gap-6 px-5 pb-8 pt-10 sm:px-8 lg:min-h-[26rem] lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-10 lg:py-10">
+          <div className="flex max-w-2xl flex-col justify-end lg:justify-center">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">{messages.home.eyebrow}</p>
-            <h1 className="hero-display-title mt-3 text-[1.85rem] font-semibold leading-[1.15] tracking-tight text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)] sm:text-5xl">
+            <h1 className="hero-display-title mt-3 text-[1.65rem] font-semibold leading-[1.15] tracking-tight text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)] sm:text-5xl">
               <span className="block">{messages.home.headlineLead}</span>
               <span className="mt-1 block text-primary">{messages.home.headlineAccent}</span>
             </h1>
-            <p className="mt-4 max-w-xl text-base leading-relaxed text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_65%,transparent)] sm:text-lg">
+            <p className="mt-4 hidden max-w-xl text-base leading-relaxed text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_65%,transparent)] sm:block sm:text-lg">
               {messages.home.sub}
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -470,7 +470,13 @@ function HeroIntro() {
                 type="button"
                 onClick={() => {
                   setHelpOpen(true)
-                  requestAnimationFrame(() => document.getElementById(HELP_ANCHOR)?.scrollIntoView({ behavior: "smooth", block: "start" }))
+                  requestAnimationFrame(() => {
+                    const target =
+                      window.matchMedia("(min-width: 1024px)").matches
+                        ? document.getElementById(HELP_ANCHOR)
+                        : document.getElementById("how-to-use-mobile")
+                    target?.scrollIntoView({ behavior: "smooth", block: "start" })
+                  })
                 }}
                 className="inline-flex h-12 items-center justify-center rounded-full border border-foreground/25 bg-card px-6 text-sm font-bold text-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--foreground)_8%,transparent)]"
               >
@@ -483,7 +489,7 @@ function HeroIntro() {
             <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{messages.home.heroProof}</p>
           </div>
 
-          <div id={HELP_ANCHOR} className="flex items-center scroll-mt-24">
+          <div id={HELP_ANCHOR} className="hidden scroll-mt-24 items-center lg:flex">
             <div className="w-full rounded-2xl border border-border/80 bg-card/90 p-4 shadow-sm backdrop-blur-sm sm:p-5">
               <button
                 type="button"
@@ -525,6 +531,41 @@ function HeroIntro() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div id="how-to-use-mobile" className="scroll-mt-24 border-t border-border bg-card px-4 py-4 lg:hidden">
+        <div className="rounded-2xl border border-border/80 bg-card p-4">
+          <button
+            type="button"
+            onClick={() => setHelpOpen((open) => !open)}
+            aria-expanded={helpOpen}
+            aria-controls="how-to-use-content-mobile"
+            className="flex w-full items-start gap-3 text-left"
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-background text-primary">
+              <MapPinned className="h-5 w-5" aria-hidden />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="flex items-center justify-between gap-2">
+                <h2 className="text-lg font-semibold text-foreground">{messages.home.helpTitle}</h2>
+                <ChevronDown className={cn("h-4 w-4 shrink-0 text-muted-foreground transition", helpOpen && "rotate-180")} aria-hidden />
+              </span>
+              <p className={cn("mt-1 text-sm leading-relaxed text-muted-foreground", !helpOpen && "hidden")}>{messages.home.helpSub}</p>
+            </span>
+          </button>
+          <div id="how-to-use-content-mobile" className={cn("mt-4 space-y-3", helpOpen ? "block" : "hidden")}>
+            {helpSteps.map(([title, body], index) => (
+              <div key={title} className="grid grid-cols-[2rem_1fr] gap-3 rounded-xl border border-border/80 bg-background/80 p-3">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                  {index + 1}
+                </span>
+                <span>
+                  <span className="block text-sm font-semibold text-foreground">{title}</span>
+                  <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">{body}</span>
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

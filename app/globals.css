@@ -341,14 +341,16 @@
 }
 
 .home-hero-full {
-  aspect-ratio: 16 / 9;
-  min-height: min(72vh, 28rem);
-  max-height: min(82vh, 44rem);
+  /* Mobile: tall stage so scenic 16:9 photos read as a full view, not a thin strip */
+  aspect-ratio: auto;
+  min-height: min(85svh, 38rem);
+  max-height: 92svh;
   width: 100%;
 }
 
 @media (min-width: 640px) {
   .home-hero-full {
+    aspect-ratio: 16 / 9;
     min-height: min(68vh, 32rem);
     max-height: min(78vh, 48rem);
   }
