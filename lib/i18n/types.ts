@@ -159,6 +159,14 @@ export interface Messages {
     langMismatch: string
     regenerateIn: string
     previewFallback: string
+    decisionFailed: string
+    tryAgain: string
+    demoBanner: string
+    planFailed: string
+    rateLimited: string
+    noDecision: string
+    noDecisionCta: string
+    partnerSearchNote: string
     whyNot: string
     seePlan: string
     comparison: string

@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
   if (!apiKey) {
     const preview = bodySchema.safeParse(await request.json().catch(() => null))
     const budgetEstimate = preview.success ? normalizeBudget(mockRawBudget(), preview.data.tripContext) : mockPlanResult.budgetEstimate
-    return NextResponse.json({ ...mockPlanResult, budgetEstimate })
+    return NextResponse.json({ ...mockPlanResult, budgetEstimate, demo: true })
   }
 
   // Plan does NOT increment the daily limit — it fires automatically after compare.
@@ -77,9 +77,8 @@ export async function POST(request: NextRequest) {
   } catch {
     try {
       return NextResponse.json(await callOpenAI())
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : "OpenAI request failed"
-      return NextResponse.json({ error: msg, code: "OPENAI_ERROR" }, { status: 502 })
+    } catch {
+      return NextResponse.json({ error: "Decision unavailable", code: "OPENAI_ERROR" }, { status: 502 })
     }
   }
 }

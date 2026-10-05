@@ -24,7 +24,7 @@ const schema = z.object({
 
 export async function POST(request: NextRequest) {
   const apiKey = process.env.OPENAI_API_KEY?.trim()
-  if (!apiKey) return NextResponse.json({ ...normalizeCompareResult(mockCompareResult), inspireMode: true })
+  if (!apiKey) return NextResponse.json({ ...normalizeCompareResult(mockCompareResult), inspireMode: true, demo: true })
 
   const limited = checkDailyLimit(getClientIp(request))
   if (limited) return NextResponse.json(limited, { status: 429 })
@@ -62,17 +62,15 @@ export async function POST(request: NextRequest) {
   // A suggestion that breaks the user's hard limits is worse than none: validate, retry with feedback, else fail.
   const MAX_ATTEMPTS = 3
   let feedback: string[] = []
-  let lastError = "OpenAI request failed"
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
     try {
       const result = normalizeCompareResult(await callOpenAI(feedback))
       const problems = inspireViolations(result, parsed.data.flightRange)
       if (problems.length === 0) return NextResponse.json(result)
       feedback = problems
-      lastError = `Constraint violations: ${problems.join(" ")}`
-    } catch (e) {
-      lastError = e instanceof Error ? e.message : lastError
+    } catch {
+      feedback = feedback.length ? feedback : ["Return a result that satisfies every hard constraint."]
     }
   }
-  return NextResponse.json({ error: lastError, code: "INSPIRE_CONSTRAINTS" }, { status: 502 })
+  return NextResponse.json({ error: "Decision unavailable", code: "INSPIRE_CONSTRAINTS" }, { status: 502 })
 }

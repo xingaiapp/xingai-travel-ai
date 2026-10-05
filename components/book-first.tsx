@@ -3,7 +3,7 @@
 import { useMemo } from "react"
 import { BedDouble, CalendarCheck, ExternalLink, MapPin, Plane } from "lucide-react"
 import { useLocale } from "@/components/locale-provider"
-import { buildAffiliateLinks, extractOriginCode, guessIata, usableDates } from "@/lib/affiliate"
+import { affiliateIdsConfigured, buildAffiliateLinks, extractOriginCode, guessIata, usableDates } from "@/lib/affiliate"
 import type { PlanResult, TripContext } from "@/lib/types"
 
 interface BookCardProps {
@@ -12,16 +12,17 @@ interface BookCardProps {
   url: string
   note?: string
   badge?: string
+  sponsored?: boolean
   icon: React.ReactNode
   onClick?: () => void
 }
 
-function BookCard({ platform, label, url, note, badge, icon, onClick }: BookCardProps) {
+function BookCard({ platform, label, url, note, badge, sponsored, icon, onClick }: BookCardProps) {
   return (
     <a
       href={url}
       target="_blank"
-      rel="noopener noreferrer sponsored nofollow"
+      rel={sponsored ? "noopener noreferrer sponsored nofollow" : "noopener noreferrer nofollow"}
       onClick={onClick}
       className="flex items-center gap-3 rounded-md border border-border bg-background p-3 transition hover:border-primary/40 hover:bg-primary/5 group"
     >
@@ -146,7 +147,7 @@ export function BookFirst({ plan, trip }: BookFirstProps) {
       </div>
 
       <p className="text-xs leading-relaxed text-muted-foreground">
-        {messages.result.affiliateDisclosure}
+        {affiliateIdsConfigured() ? messages.result.affiliateDisclosure : messages.result.partnerSearchNote}
       </p>
     </div>
   )

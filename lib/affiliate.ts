@@ -9,6 +9,8 @@ export interface AffiliateLink {
   url: string
   note?: string
   badge?: string
+  /** True only when this URL includes a configured partner id. */
+  sponsored?: boolean
 }
 
 export interface AffiliateLinks {
@@ -26,6 +28,11 @@ const cfg = {
 }
 
 function enc(s: string) { return encodeURIComponent(s) }
+
+/** Revenue stays unavailable until at least one partner id is set at build time. */
+export function affiliateIdsConfigured(): boolean {
+  return Object.values(cfg).some((id) => id.trim().length > 0)
+}
 
 /** Append the partner id only when configured; the search itself never depends on it. */
 function withParam(url: string, key: string, value: string) {
@@ -92,7 +99,7 @@ export function buildAffiliateLinks(params: {
   gyg = withParam(gyg, "partner_id", cfg.gyg)
 
   const flights: AffiliateLink[] = [
-    { platform: "Skyscanner", label: `${originCode} → ${destinationCode}`, url: skyscanner },
+    { platform: "Skyscanner", label: `${originCode} → ${destinationCode}`, url: skyscanner, sponsored: Boolean(cfg.skyscanner.trim()) },
     {
       platform: "Google Flights",
       label: `${originCode} → ${destinationCode}`,
@@ -101,8 +108,8 @@ export function buildAffiliateLinks(params: {
   ]
 
   const hotels: AffiliateLink[] = [
-    { platform: "Booking.com", label: `${destinationCity} — Booking.com`, url: booking },
-    { platform: "Expedia", label: `${destinationCity} — Expedia`, url: expedia },
+    { platform: "Booking.com", label: `${destinationCity} — Booking.com`, url: booking, sponsored: Boolean(cfg.booking.trim()) },
+    { platform: "Expedia", label: `${destinationCity} — Expedia`, url: expedia, sponsored: Boolean(cfg.expedia.trim()) },
   ]
 
   const activities: AffiliateLink[] = [
@@ -110,12 +117,14 @@ export function buildAffiliateLinks(params: {
       platform: "Viator",
       label: `Top tours in ${destinationCity}`,
       url: withParam(`https://www.viator.com/search/${citySlug}`, "pid", cfg.viator),
+      sponsored: Boolean(cfg.viator.trim()),
     },
-    { platform: "GetYourGuide", label: `${destinationCity} experiences`, url: gyg },
+    { platform: "GetYourGuide", label: `${destinationCity} experiences`, url: gyg, sponsored: Boolean(cfg.gyg.trim()) },
     ...suggestedActivities.slice(0, 1).map((activity) => ({
       platform: "Viator",
       label: activity,
       url: withParam(`https://www.viator.com/search/${enc(activity)}`, "pid", cfg.viator),
+      sponsored: Boolean(cfg.viator.trim()),
     })),
   ]
 

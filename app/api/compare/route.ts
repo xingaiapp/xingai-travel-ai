@@ -26,7 +26,7 @@ const tripSchema = z.object({
 
 export async function POST(request: NextRequest) {
   const apiKey = process.env.OPENAI_API_KEY?.trim()
-  if (!apiKey) return NextResponse.json(normalizeCompareResult(mockCompareResult))
+  if (!apiKey) return NextResponse.json({ ...normalizeCompareResult(mockCompareResult), demo: true })
 
   const limited = checkDailyLimit(getClientIp(request))
   if (limited) return NextResponse.json(limited, { status: 429 })
@@ -63,9 +63,8 @@ export async function POST(request: NextRequest) {
   } catch {
     try {
       return NextResponse.json(await callOpenAI())
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : "OpenAI request failed"
-      return NextResponse.json({ error: msg, code: "OPENAI_ERROR" }, { status: 502 })
+    } catch {
+      return NextResponse.json({ error: "Decision unavailable", code: "OPENAI_ERROR" }, { status: 502 })
     }
   }
 }

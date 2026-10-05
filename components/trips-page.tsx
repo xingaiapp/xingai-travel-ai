@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import { useMemo, useSyncExternalStore } from "react"
 import { ArrowRight, BriefcaseBusiness, Compass, HardDrive, Sparkles, Trash2 } from "lucide-react"
 import { useLocale } from "@/components/locale-provider"
-import { mockPlanResult } from "@/lib/mock-data"
 import {
   clearHistory,
   parseHistory,
@@ -33,7 +32,7 @@ export function TripsPage() {
   const dateFmt = useMemo(() => new Intl.DateTimeFormat(locale, { month: "short", day: "numeric", year: "numeric" }), [locale])
 
   function reopen(entry: TripHistoryEntry) {
-    restoreDecision(entry, mockPlanResult)
+    restoreDecision(entry)
     router.push("/result")
   }
 

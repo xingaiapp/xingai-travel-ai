@@ -72,6 +72,8 @@ export interface CompareResult {
   // Stamped client-side when the result arrives, so the UI can tell which mode / language produced it.
   mode?: "compare" | "inspire"
   generatedLocale?: TripContext["locale"]
+  /** Sample payload returned when the decision service has no API key. Not a decision for this trip. */
+  demo?: boolean
 }
 
 export interface ItineraryDay {
@@ -103,4 +105,6 @@ export interface PlanResult {
   warnings?: TripWarning[]
   /** Normalized by /api/plan (lib/budget.ts); absent on older plans and shared links. */
   budgetEstimate?: BudgetEstimate
+  /** Sample itinerary returned when the decision service has no API key. */
+  demo?: boolean
 }

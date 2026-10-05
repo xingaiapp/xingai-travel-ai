@@ -89,7 +89,7 @@ export function winnerOf(compare: CompareResult) {
  * Make a decision the one /result shows: write the three session keys. A missing plan
  * (user left before it arrived) is requested again; /result polls PLAN_STORAGE.
  */
-export function restoreDecision(entry: { id?: string; trip: TripContext; compare: CompareResult; plan?: PlanResult }, fallbackPlan: PlanResult) {
+export function restoreDecision(entry: { id?: string; trip: TripContext; compare: CompareResult; plan?: PlanResult }) {
   sessionStorage.setItem(TRIP_STORAGE, JSON.stringify(entry.trip))
   sessionStorage.setItem(COMPARE_STORAGE, JSON.stringify(entry.compare))
   if (entry.plan) {
@@ -103,7 +103,7 @@ export function restoreDecision(entry: { id?: string; trip: TripContext; compare
       sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(plan))
       if (entry.id) attachPlan(entry.id, plan)
     })
-    .catch(() => sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(fallbackPlan)))
+    .catch(() => sessionStorage.removeItem(PLAN_STORAGE))
 }
 
 export function findDecision(id: string) {

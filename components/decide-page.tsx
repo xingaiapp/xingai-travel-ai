@@ -11,7 +11,7 @@ import { StylePaceSelector } from "@/components/style-pace-selector"
 import { TripForm } from "@/components/trip-form"
 import { TripSnapshot } from "@/components/trip-snapshot"
 import { useLocale } from "@/components/locale-provider"
-import { defaultFutureDates, defaultTrip, isPastDate, mockCompareResult, mockPlanResult } from "@/lib/mock-data"
+import { defaultFutureDates, defaultTrip, isPastDate } from "@/lib/mock-data"
 import type { CompareResult, InspireContext, TripContext } from "@/lib/types"
 import {
   addDecision,
@@ -30,6 +30,23 @@ import { cn, HELP_ANCHOR, OPEN_HELP_EVENT } from "@/lib/utils"
 import { useEffect, useState, useRef } from "react"
 
 const COMPARE_UPDATED_EVENT = "xingai-travel-compare-updated"
+
+class DecisionRequestError extends Error {
+  code: string
+  constructor(code: string) {
+    super("Decision request failed")
+    this.code = code
+  }
+}
+
+async function decisionError(res: Response): Promise<DecisionRequestError> {
+  try {
+    const body = (await res.json()) as { code?: string }
+    return new DecisionRequestError(body.code ?? "")
+  } catch {
+    return new DecisionRequestError("")
+  }
+}
 
 const defaultInspire: InspireContext = {
   vibe: "explore",
@@ -181,7 +198,7 @@ export function DecidePage() {
           signal: controller.signal,
         })
         window.clearTimeout(timeout)
-        if (!res.ok) throw new Error("Inspire failed")
+        if (!res.ok) throw await decisionError(res)
         data = (await res.json()) as CompareResult
       } else {
         // Normal compare path
@@ -193,7 +210,7 @@ export function DecidePage() {
           signal: controller.signal,
         })
         window.clearTimeout(timeout)
-        if (!res.ok) throw new Error("Compare failed")
+        if (!res.ok) throw await decisionError(res)
         data = (await res.json()) as CompareResult
       }
 
@@ -210,29 +227,26 @@ export function DecidePage() {
       window.dispatchEvent(new Event(COMPARE_UPDATED_EVENT))
 
       const winner = winnerOf(data)
-      // Only live results go into Trips history; the preview fallback below is never saved.
-      const historyId = winner ? addDecision({ mode: runMode, trip: planCtx, compare: data }) : undefined
+      // A demo sample is labeled and is not this traveler's decision, so it stays out of Trips.
+      const historyId = data.demo || !winner ? undefined : addDecision({ mode: runMode, trip: planCtx, compare: data })
       setResults((prev) => ({ ...prev, [runMode]: { data, trip: planCtx, historyId } }))
-      if (winner && historyId) {
+      setErrors((prev) => ({ ...prev, [runMode]: "" }))
+      if (winner) {
         fetchPlan(`${winner.name}, ${winner.country}`, planCtx)
           .then((plan) => {
-            attachPlan(historyId, plan)
+            if (historyId) attachPlan(historyId, plan)
             // Don't clobber the session if the user has since opened the other mode's result.
             if (sessionModeRef.current === runMode) sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(plan))
           })
           .catch(() => {
-            if (sessionModeRef.current === runMode) sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(mockPlanResult))
+            if (sessionModeRef.current === runMode) sessionStorage.removeItem(PLAN_STORAGE)
           })
       }
     } catch (e) {
       if (e instanceof DOMException && e.name === "AbortError" && controllerRef.current !== controller) return
-      const fallback: CompareResult = { ...mockCompareResult, mode: runMode, generatedLocale: "en" }
-      sessionStorage.setItem(COMPARE_STORAGE, JSON.stringify(fallback))
-      sessionStorage.setItem(PLAN_STORAGE, JSON.stringify(mockPlanResult))
-      sessionModeRef.current = runMode
-      window.dispatchEvent(new Event(COMPARE_UPDATED_EVENT))
-      setResults((prev) => ({ ...prev, [runMode]: { data: fallback, trip: defaultTrip } }))
-      setErrors((prev) => ({ ...prev, [runMode]: messages.result.previewFallback }))
+      const code = e instanceof DecisionRequestError ? e.code : ""
+      const message = code === "RATE_LIMIT" ? messages.result.rateLimited : messages.result.decisionFailed
+      setErrors((prev) => ({ ...prev, [runMode]: message }))
     } finally {
       if (controllerRef.current === controller) setLoadingMode(null)
     }
@@ -242,7 +256,7 @@ export function DecidePage() {
     if (!current) return
     if (sessionModeRef.current !== mode) {
       const saved = current.historyId ? findDecision(current.historyId) : undefined
-      restoreDecision(saved ?? { trip: current.trip, compare: current.data, plan: current.historyId ? undefined : mockPlanResult }, mockPlanResult)
+      restoreDecision(saved ?? { trip: current.trip, compare: current.data })
       sessionModeRef.current = mode
       window.dispatchEvent(new Event(COMPARE_UPDATED_EVENT))
     }
@@ -358,10 +372,24 @@ export function DecidePage() {
           </div>
         </div>
 
-        {error ? (
+        {current?.data.demo ? (
           <p className="mt-4 rounded-md border border-amber-300 bg-amber-100 px-4 py-3 text-sm font-semibold text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
-            {error}
+            {messages.result.demoBanner}
           </p>
+        ) : null}
+
+        {error ? (
+          <div className="mt-4 rounded-md border border-amber-300 bg-amber-100 px-4 py-3 text-sm font-semibold text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
+            <p>{error}</p>
+            <button
+              type="button"
+              onClick={() => runCompare()}
+              disabled={loading}
+              className="mt-3 inline-flex h-11 items-center rounded-md bg-amber-800 px-4 text-sm font-extrabold text-amber-50 disabled:opacity-70 dark:bg-amber-200 dark:text-amber-950"
+            >
+              {messages.result.tryAgain}
+            </button>
+          </div>
         ) : null}
 
         {langMismatch ? (
