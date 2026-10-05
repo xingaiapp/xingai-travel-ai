@@ -1,4 +1,5 @@
 import { cities } from "@/lib/cities"
+import { compares, guides } from "@/lib/content"
 import { publishedEpisodes, seasons } from "@/lib/stories"
 
 function storiesSection() {
@@ -24,6 +25,20 @@ ${lines.join("\n")}
 `
 }
 
+function contentGraphSection() {
+  const compareLines = compares.map((item) => `- /compare/${item.slug} — ${item.title.en}`)
+  const guideLines = guides.map((item) => `- /guides/${item.slug} — ${item.title.en}`)
+  return `
+SEO / AEO / GEO content graph (ADR 0009). Decision Engine stays at /decide; content pages answer first, then CTA to /decide. No fake numeric scores on content pages.
+- /how-it-works — methodology: constraints → compare → winner → trade-offs → evidence → book
+- /faq — visible FAQ aligned with product principles
+- /compare — index
+${compareLines.join("\n")}
+- /guides — index
+${guideLines.join("\n")}
+`
+}
+
 export function GET() {
   return new Response(
     `# XingAI Travel AI
@@ -37,13 +52,15 @@ Core flow:
 - Produce a book-first checklist and practical itinerary.
 
 Primary pages:
-- /decide
-- /result
+- /decide (conversion — Travel Decision System)
 - /privacy
 - /terms
 - /disclaimer
 - /affiliate-disclosure
-${storiesSection()}${citiesSection()}
+${contentGraphSection()}${storiesSection()}${citiesSection()}
+Not indexed:
+- /result and /trips depend on this browser's session or local history. They are noindex and omitted from the sitemap.
+
 Product principle:
 - Decision quality comes first.
 - Affiliate links may appear after the recommendation and should not influence destination ranking, winner selection, confidence, or trade-off explanations.

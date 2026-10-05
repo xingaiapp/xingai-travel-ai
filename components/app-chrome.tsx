@@ -283,6 +283,13 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
               ))}
             </nav>
           </div>
+          <div className="mx-auto mt-3 flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/60 pt-3">
+            <span className="font-semibold text-foreground">{messages.content.discover}</span>
+            <Link href="/how-it-works" className="hover:text-primary">{messages.content.howItWorksNav}</Link>
+            <Link href="/faq" className="hover:text-primary">{messages.content.faqNav}</Link>
+            <Link href="/compare" className="hover:text-primary">{messages.content.compareNav}</Link>
+            <Link href="/guides" className="hover:text-primary">{messages.content.guidesNav}</Link>
+          </div>
           {/* XingAI family links: plain anchors so crawlers follow them. */}
           <div className="mx-auto mt-3 flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/60 pt-3">
             <span>

@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next"
 import { cities } from "@/lib/cities"
+import { compares, guides } from "@/lib/content"
 import { publishedEpisodes, seasons } from "@/lib/stories"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://travel.xingai.app"
   // /result is excluded: it's dynamic sessionStorage content, not crawlable
-  const pages = ["decide", "privacy", "terms", "disclaimer", "affiliate-disclosure"]
-  // Draft stories are never listed; a season appears once it has a published episode.
+  const pages = ["decide", "how-it-works", "faq", "privacy", "terms", "disclaimer", "affiliate-disclosure"]
   const stories = seasons.flatMap((season) => {
     const episodes = publishedEpisodes(season)
     if (episodes.length === 0) return []
@@ -26,15 +26,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }))
+  const comparePages = [
+    { url: `${base}/compare`, changeFrequency: "weekly" as const, priority: 0.85 },
+    ...compares.map((item) => ({
+      url: `${base}/compare/${item.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    })),
+  ]
+  const guidePages = [
+    { url: `${base}/guides`, changeFrequency: "weekly" as const, priority: 0.85 },
+    ...guides.map((item) => ({
+      url: `${base}/guides/${item.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    })),
+  ]
   return [
     ...cityPages,
+    ...comparePages,
+    ...guidePages,
     ...storiesIndex,
     ...stories,
     ...pages.map((page) => ({
       url: `${base}/${page}`,
-      lastModified: new Date(),
       changeFrequency: "weekly" as const,
-      priority: page === "decide" ? 1 : 0.5,
+      priority: page === "decide" ? 1 : page === "how-it-works" || page === "faq" ? 0.9 : 0.5,
     })),
   ]
 }

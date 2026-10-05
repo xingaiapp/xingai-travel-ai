@@ -320,6 +320,34 @@ export interface Messages {
     fromResultCta: string
     fromStory: string
   }
+  content: {
+    howEyebrow: string
+    faqEyebrow: string
+    compareEyebrow: string
+    guidesEyebrow: string
+    compareIndexTitle: string
+    guidesIndexTitle: string
+    bestFor: string
+    factors: string
+    verdict: string
+    tradeoffs: string
+    related: string
+    candidates: string
+    faqHeading: string
+    ctaTitle: string
+    ctaBody: string
+    ctaButton: string
+    fitStrong: string
+    fitGood: string
+    fitMixed: string
+    fitWeaker: string
+    fitNote: string
+    howItWorksNav: string
+    faqNav: string
+    compareNav: string
+    guidesNav: string
+    discover: string
+  }
   travelers: {
     solo: string
     couple: string

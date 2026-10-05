@@ -4,6 +4,7 @@ import { LegalPage } from "@/components/legal-page"
 export const metadata: Metadata = {
   title: "Terms of Use",
   description: "Terms of use for XingAI Travel AI as a travel decision-support tool.",
+  alternates: { canonical: "/terms" },
 }
 
 export default function Page() {

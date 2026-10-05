@@ -4,6 +4,7 @@ import { LegalPage } from "@/components/legal-page"
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Privacy principles for XingAI Travel AI, including trip context collection and user control.",
+  alternates: { canonical: "/privacy" },
 }
 
 export default function Page() {

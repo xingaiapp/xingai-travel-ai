@@ -53,16 +53,6 @@ export const metadata: Metadata = {
     apple: "/assets/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
-  alternates: {
-    canonical: "/decide",
-    languages: {
-      en: "/decide",
-      "zh-CN": "/decide",
-      ko: "/decide",
-      es: "/decide",
-      "x-default": "/decide",
-    },
-  },
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://travel.xingai.app"),
 }
 
