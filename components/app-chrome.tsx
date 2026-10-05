@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
@@ -285,6 +286,29 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
 
         {children}
         <footer className="border-t border-border bg-background/70 px-4 py-5 pb-24 text-xs text-muted-foreground lg:px-8 lg:pb-5">
+          <div className="mx-auto mb-5 max-w-6xl overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+            <Link
+              href="/decide"
+              className="group relative block aspect-[2.35/1] max-h-44 w-full sm:max-h-52 lg:max-h-56"
+            >
+              <Image
+                src="/assets/footer-traveler-hong-kong.webp"
+                alt={messages.chrome.footerTravelerAlt}
+                fill
+                quality={88}
+                sizes="(min-width: 1024px) 72rem, 100vw"
+                className="object-cover object-[72%_48%] motion-safe:transition-transform motion-safe:duration-500 group-hover:scale-[1.02]"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,color-mix(in_oklch,var(--background)_88%,transparent)_0%,color-mix(in_oklch,var(--background)_25%,transparent)_42%,transparent_72%)]"
+              />
+              <span className="absolute bottom-3 left-4 right-4 max-w-xs text-sm font-bold leading-snug text-foreground sm:bottom-4 sm:left-5 sm:text-base">
+                {messages.chrome.footerTravelerCaption}
+                <ArrowRight className="ml-1.5 inline h-4 w-4 text-primary motion-safe:transition group-hover:translate-x-0.5" aria-hidden />
+              </span>
+            </Link>
+          </div>
           <div className="mx-auto flex max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="font-semibold">© 2026 XingAI Travel · Make a better travel decision</p>
             <nav className="flex flex-wrap gap-x-4 gap-y-2" aria-label="Footer legal">

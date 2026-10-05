@@ -340,12 +340,33 @@
   }
 }
 
+.home-hero-full {
+  aspect-ratio: 16 / 9;
+  min-height: min(72vh, 28rem);
+  max-height: min(82vh, 44rem);
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .home-hero-full {
+    min-height: min(68vh, 32rem);
+    max-height: min(78vh, 48rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-hero-full {
+    min-height: 36rem;
+    max-height: min(80vh, 52rem);
+  }
+}
+
 @keyframes home-ken-burns {
   from {
     transform: scale(1);
   }
   to {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
 }
 

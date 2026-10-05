@@ -28,6 +28,8 @@ export const es: Messages = {
     continueLastTripBody: "Reabre tu mejor plan o compara de nuevo.",
     help: "Ayuda y preguntas frecuentes",
     helpHowItWorks: "Cómo funciona XingAI Travel",
+    footerTravelerAlt: "Viajera en un mirador de Hong Kong mirando el horizonte",
+    footerTravelerCaption: "Tu próximo viaje empieza con una decisión",
   },
   home: {
     eyebrow: "Sistema de decisión de viaje",

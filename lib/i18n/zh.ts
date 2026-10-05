@@ -28,6 +28,8 @@ export const zh: Messages = {
     continueLastTripBody: "继续查看最适合的方案，或重新比较。",
     help: "帮助与常见问题",
     helpHowItWorks: "XingAI Travel 怎么用",
+    footerTravelerAlt: "旅行者坐在香港高处眺望城市天际线",
+    footerTravelerCaption: "下一次旅行，从做一个决定开始",
   },
   home: {
     eyebrow: "旅行决策系统",

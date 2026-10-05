@@ -28,6 +28,8 @@ export interface Messages {
     continueLastTripBody: string
     help: string
     helpHowItWorks: string
+    footerTravelerAlt: string
+    footerTravelerCaption: string
   }
   home: {
     eyebrow: string

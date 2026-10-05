@@ -28,6 +28,8 @@ export const ko: Messages = {
     continueLastTripBody: "가장 맞는 계획을 다시 열거나 다시 비교하세요.",
     help: "도움말 및 FAQ",
     helpHowItWorks: "XingAI Travel 사용 방법",
+    footerTravelerAlt: "홍콩 전망대에 앉아 스카이라인을 바라보는 여행자",
+    footerTravelerCaption: "다음 여행은 결정에서 시작합니다",
   },
   home: {
     eyebrow: "Travel Decision System",

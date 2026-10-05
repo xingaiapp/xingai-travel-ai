@@ -40,10 +40,15 @@ import { pickLocalized } from "@/lib/content/types"
 import { cn } from "@/lib/utils"
 
 const heroSlides = [
-  { src: "/assets/home-hero-hong-kong.webp", alt: homeCopy.heroAlt },
-  { src: "/assets/home-hero-tokyo.webp", alt: homeCopy.heroTokyoAlt },
-  { src: "/assets/home-hero-seoul.webp", alt: homeCopy.heroSeoulAlt },
-  { src: "/assets/home-hero-los-cabos.webp", alt: homeCopy.heroLosCabosAlt },
+  {
+    src: "/assets/home-hero-hong-kong.webp",
+    alt: homeCopy.heroAlt,
+    /** Keep the seated traveler + harbour in frame when the hero crops to 16:9 */
+    objectPosition: "72% 52%",
+  },
+  { src: "/assets/home-hero-tokyo.webp", alt: homeCopy.heroTokyoAlt, objectPosition: "50% 50%" },
+  { src: "/assets/home-hero-seoul.webp", alt: homeCopy.heroSeoulAlt, objectPosition: "50% 50%" },
+  { src: "/assets/home-hero-los-cabos.webp", alt: homeCopy.heroLosCabosAlt, objectPosition: "45% 50%" },
 ] as const
 
 const HERO_INTERVAL_MS = 7000
@@ -250,17 +255,19 @@ function HeroCarousel({ labelFor }: { labelFor: (alt: (typeof heroSlides)[number
             alt={active ? labelFor(slide.alt) : ""}
             fill
             priority={slideIndex === 0}
+            quality={90}
             sizes="100vw"
             aria-hidden={!active}
+            style={{ objectPosition: slide.objectPosition }}
             className={cn(
-              "object-cover object-[70%_center] motion-safe:transition-opacity motion-safe:duration-700",
+              "object-cover motion-safe:transition-opacity motion-safe:duration-700",
               active ? "opacity-100 home-hero-ken" : "opacity-0"
             )}
           />
         )
       })}
       <div
-        className="absolute bottom-4 right-4 z-10 flex gap-1"
+        className="absolute bottom-3 right-3 z-10 flex gap-0.5 sm:bottom-5 sm:right-5"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
@@ -279,8 +286,8 @@ function HeroCarousel({ labelFor }: { labelFor: (alt: (typeof heroSlides)[number
             >
               <span
                 className={cn(
-                  "block h-2.5 w-2.5 rounded-full border border-foreground/30 motion-safe:transition-transform",
-                  active ? "scale-110 bg-primary" : "bg-background/80"
+                  "block h-2.5 w-2.5 rounded-full border border-white/50 shadow-sm motion-safe:transition-transform",
+                  active ? "scale-110 bg-primary" : "bg-white/75"
                 )}
               />
             </button>
@@ -302,23 +309,23 @@ export function HomeLanding() {
   ] as const
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 pb-8 sm:px-6 sm:pb-12">
-      <section className="relative -mx-4 overflow-hidden sm:-mx-6 lg:min-h-[26rem]">
+    <main className="w-full pb-8 sm:pb-12">
+      <section className="home-hero-full relative w-full overflow-hidden">
         <HeroCarousel labelFor={t} />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--background)_35%,transparent)_0%,transparent_60%)] lg:bg-[linear-gradient(90deg,color-mix(in_oklch,var(--background)_45%,transparent)_0%,transparent_55%)]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--background)_55%,transparent)_0%,color-mix(in_oklch,var(--background)_18%,transparent)_42%,color-mix(in_oklch,var(--background)_72%,transparent)_100%)] sm:bg-[linear-gradient(105deg,color-mix(in_oklch,var(--background)_78%,transparent)_0%,color-mix(in_oklch,var(--background)_42%,transparent)_38%,transparent_68%)]"
         />
-        <div className="relative px-4 pb-32 pt-8 sm:px-6 lg:flex lg:min-h-[26rem] lg:max-w-2xl lg:flex-col lg:justify-center lg:px-6 lg:pb-12 lg:pt-12">
+        <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-4 pb-14 pt-10 sm:justify-center sm:px-6 sm:pb-16 sm:pt-14 lg:px-8">
           <div className="max-w-xl">
-            <p className="home-reveal home-reveal-delay-1 mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-foreground/80 [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)]">
+            <p className="home-reveal home-reveal-delay-1 mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)]">
               <Compass className="h-3.5 w-3.5 text-primary" aria-hidden />
               XingAI Travel
             </p>
-            <h1 className="home-reveal hero-display-title text-[1.85rem] font-semibold leading-[1.15] tracking-tight text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_75%,transparent)] sm:text-5xl">
+            <h1 className="home-reveal hero-display-title text-[1.85rem] font-semibold leading-[1.15] tracking-tight text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)] sm:text-5xl">
               {t(homeCopy.headline)}
             </h1>
-            <p className="home-reveal home-reveal-delay-1 mt-4 max-w-xl text-base leading-relaxed text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)] sm:text-lg">
+            <p className="home-reveal home-reveal-delay-1 mt-4 max-w-xl text-base leading-relaxed text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_75%,transparent)] sm:text-lg">
               {t(homeCopy.support)}
             </p>
             <div className="home-reveal home-reveal-delay-2 mt-6 flex flex-col gap-3 sm:flex-row">
@@ -333,35 +340,37 @@ export function HomeLanding() {
               <Link
                 href="/guides"
                 onClick={() => track("home_secondary", { target: "/guides" })}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-foreground/25 bg-card px-6 text-center text-sm font-bold text-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--foreground)_8%,transparent)] motion-safe:transition hover:border-primary/50"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-foreground/20 bg-card/90 px-6 text-center text-sm font-bold text-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--foreground)_8%,transparent)] backdrop-blur-sm motion-safe:transition hover:border-primary/50"
               >
                 <Map className="h-4 w-4 text-primary" aria-hidden />
                 {t(homeCopy.secondaryCta)}
               </Link>
             </div>
-            <ul className="home-reveal home-reveal-delay-3 mt-5 flex flex-wrap gap-2">
-              {heroChips.map((chip) => {
-                const Icon = chip.icon
-                return (
-                  <li
-                    key={chip.label.en}
-                    className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-foreground/15 bg-card/85 px-3 py-1.5 text-xs font-semibold text-foreground shadow-sm backdrop-blur-sm"
-                  >
-                    <Icon className="h-3.5 w-3.5 text-primary" aria-hidden />
-                    {t(chip.label)}
-                  </li>
-                )
-              })}
-            </ul>
-            <p className="home-reveal home-reveal-delay-3 mt-4 max-w-xl text-sm leading-relaxed text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)]">
-              {t(homeCopy.control)}
-            </p>
-            <div className="mt-6 max-w-xl lg:max-w-none">
-              <DecisionDemo t={t} />
-            </div>
           </div>
         </div>
       </section>
+
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+        <section className="mt-8 sm:mt-10" aria-label={t(homeCopy.demoLabel)}>
+          <ul className="flex flex-wrap gap-2">
+            {heroChips.map((chip) => {
+              const Icon = chip.icon
+              return (
+                <li
+                  key={chip.label.en}
+                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-foreground"
+                >
+                  <Icon className="h-3.5 w-3.5 text-primary" aria-hidden />
+                  {t(chip.label)}
+                </li>
+              )
+            })}
+          </ul>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">{t(homeCopy.control)}</p>
+          <div className="mt-5 max-w-3xl">
+            <DecisionDemo t={t} />
+          </div>
+        </section>
 
       <section className="mt-10 border-t border-border pt-8" aria-labelledby="home-features">
         <h2 id="home-features" className="sr-only">
@@ -426,6 +435,7 @@ export function HomeLanding() {
                         src={place.image}
                         alt=""
                         fill
+                        quality={88}
                         sizes="(min-width: 1024px) 25vw, 100vw"
                         className="object-cover motion-safe:transition-transform motion-safe:duration-500 group-hover:scale-[1.04]"
                       />
@@ -453,6 +463,7 @@ export function HomeLanding() {
                   src="/assets/home-hero-harbour-v2.webp"
                   alt={t(homeCopy.heroHarbourAlt)}
                   fill
+                  quality={88}
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover object-center"
                 />
@@ -640,6 +651,7 @@ export function HomeLanding() {
                 src="/assets/home-hero-hong-kong.webp"
                 alt={t(homeCopy.whyPhotoAlt)}
                 fill
+                quality={88}
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover object-[70%_center]"
               />
@@ -699,6 +711,7 @@ export function HomeLanding() {
           </Link>
         </ScrollIn>
       </section>
+      </div>
     </main>
   )
 }

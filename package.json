@@ -7,11 +7,13 @@
   },
   "scripts": {
     "dev": "next dev --port 3000",
-    "build": "npm run check:cities && next build",
-    "vercel-build": "npm run check:cities && next build",
+    "build": "npm run check:cities && npm run check:assets && next build",
+    "vercel-build": "npm run check:cities && npm run check:assets && next build",
     "start": "next start --port 3000",
     "lint": "npx eslint .",
     "check:cities": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning scripts/check-cities.mjs",
+    "check:assets": "node scripts/process-site-images.mjs --check",
+    "assets:hires": "node scripts/process-site-images.mjs --force",
     "stories:photos": "node scripts/process-story-photos.mjs"
   },
   "dependencies": {
