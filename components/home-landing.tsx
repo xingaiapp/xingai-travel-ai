@@ -86,6 +86,146 @@ function ScrollIn({ children, className, delayMs = 0 }: { children: ReactNode; c
   )
 }
 
+function DecisionDemo({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) => string }) {
+  const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const steps = [
+    { title: homeCopy.demoTell, hint: homeCopy.demoTellHint, icon: MessageSquareText },
+    { title: homeCopy.demoCompare, hint: homeCopy.demoCompareHint, icon: Scale },
+    { title: homeCopy.demoWinner, hint: homeCopy.demoWinnerHint, icon: CheckCircle2 },
+  ] as const
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || paused) return
+    const id = window.setInterval(() => {
+      setActive((current) => (current + 1) % steps.length)
+    }, 1600)
+    return () => window.clearInterval(id)
+  }, [paused, steps.length])
+
+  return (
+    <div
+      className="home-reveal home-reveal-delay-4 rounded-2xl border border-border/80 bg-card/90 p-4 shadow-sm backdrop-blur-sm sm:p-5"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">{t(homeCopy.demoLabel)}</p>
+      <ol className="relative mt-4 grid gap-3 sm:grid-cols-3">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute left-[12%] right-[12%] top-5 hidden h-px bg-border sm:block"
+        />
+        {steps.map((step, index) => {
+          const Icon = step.icon
+          const lit = active === index
+          return (
+            <li
+              key={step.title.en}
+              className={cn(
+                "relative rounded-xl border px-3 py-3 motion-safe:transition",
+                lit
+                  ? "border-primary/45 bg-[color-mix(in_oklch,var(--primary)_10%,var(--card))] shadow-sm"
+                  : "border-border/70 bg-background/70 opacity-70"
+              )}
+            >
+              <span
+                className={cn(
+                  "relative z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border text-sm font-bold",
+                  lit
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card text-muted-foreground"
+                )}
+              >
+                <Icon className="h-4 w-4" aria-hidden />
+              </span>
+              <p className="mt-2 text-sm font-semibold text-foreground">{t(step.title)}</p>
+              <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{t(step.hint)}</p>
+            </li>
+          )
+        })}
+      </ol>
+    </div>
+  )
+}
+
+function HowStepsPlay({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) => string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [playing, setPlaying] = useState(false)
+  const [litCount, setLitCount] = useState(0)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setPlaying(true)
+      setLitCount(howSteps.length)
+      return
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setPlaying(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.35 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!playing) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    setLitCount(0)
+    const timers = howSteps.map((_, index) =>
+      window.setTimeout(() => setLitCount(index + 1), 280 + index * 420)
+    )
+    return () => timers.forEach((id) => window.clearTimeout(id))
+  }, [playing])
+
+  return (
+    <div ref={ref} className={cn("home-how", playing && "is-playing")}>
+      <ol className="relative mt-8 grid gap-4 lg:grid-cols-3 lg:gap-5">
+        <span
+          className="home-how-line pointer-events-none absolute left-[16%] right-[16%] top-9 hidden h-0.5 bg-primary/50 lg:block"
+          aria-hidden
+        />
+        {howSteps.map((step, index) => {
+          const Icon = howIcons[index] ?? CheckCircle2
+          const lit = index < litCount
+          return (
+            <li
+              key={step.title.en}
+              className={cn(
+                "home-how-step relative rounded-2xl border border-border/80 bg-[color-mix(in_oklch,var(--primary)_5%,var(--card))] p-5",
+                lit && "is-lit"
+              )}
+            >
+              <span
+                className={cn(
+                  "relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-full text-primary-foreground shadow-[0_6px_16px_color-mix(in_oklch,var(--primary)_25%,transparent)] motion-safe:transition",
+                  lit ? "bg-primary scale-105" : "bg-primary/55"
+                )}
+              >
+                <Icon className="h-5 w-5" aria-hidden />
+                <span className="sr-only">{index + 1}</span>
+              </span>
+              <p className="mt-3 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-1 text-lg font-semibold">{t(step.title)}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(step.body)}</p>
+            </li>
+          )
+        })}
+      </ol>
+    </div>
+  )
+}
+
 function HeroCarousel({ labelFor }: { labelFor: (alt: (typeof heroSlides)[number]["alt"]) => string }) {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -185,7 +325,7 @@ export function HomeLanding() {
               <Link
                 href="/decide"
                 onClick={() => track("home_hero_decide", { target: "/decide" })}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-center text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)] motion-safe:transition hover:brightness-105"
+                className="home-cta-pulse inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-center text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)] motion-safe:transition hover:brightness-105"
               >
                 {t(homeCopy.primaryCta)}
                 <ArrowRight className="home-cta-arrow h-4 w-4" aria-hidden />
@@ -213,9 +353,12 @@ export function HomeLanding() {
                 )
               })}
             </ul>
-            <p className="home-reveal home-reveal-delay-4 mt-4 max-w-xl text-sm leading-relaxed text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)]">
+            <p className="home-reveal home-reveal-delay-3 mt-4 max-w-xl text-sm leading-relaxed text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)]">
               {t(homeCopy.control)}
             </p>
+            <div className="mt-6 max-w-xl lg:max-w-none">
+              <DecisionDemo t={t} />
+            </div>
           </div>
         </div>
       </section>
@@ -435,31 +578,7 @@ export function HomeLanding() {
         <ScrollIn>
           <div className="rounded-2xl border border-border bg-card px-5 py-8 sm:px-8 sm:py-10">
             <h2 className="hero-display-title max-w-xl text-2xl font-semibold tracking-tight sm:text-4xl">{t(homeCopy.howTitle)}</h2>
-            <ol className="relative mt-8 grid gap-4 lg:grid-cols-3 lg:gap-5">
-              <span
-                className="pointer-events-none absolute left-[16%] right-[16%] top-9 hidden h-px bg-border lg:block"
-                aria-hidden
-              />
-              {howSteps.map((step, index) => {
-                const Icon = howIcons[index] ?? CheckCircle2
-                return (
-                  <li
-                    key={step.title.en}
-                    className="relative rounded-2xl border border-border/80 bg-[color-mix(in_oklch,var(--primary)_5%,var(--card))] p-5 motion-safe:transition hover:border-primary/40"
-                  >
-                    <span className="relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_6px_16px_color-mix(in_oklch,var(--primary)_25%,transparent)]">
-                      <Icon className="h-5 w-5" aria-hidden />
-                      <span className="sr-only">{index + 1}</span>
-                    </span>
-                    <p className="mt-3 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
-                      {String(index + 1).padStart(2, "0")}
-                    </p>
-                    <h3 className="mt-1 text-lg font-semibold">{t(step.title)}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(step.body)}</p>
-                  </li>
-                )
-              })}
-            </ol>
+            <HowStepsPlay t={t} />
             <div className="mt-8 flex flex-col items-stretch gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-muted-foreground sm:max-w-md">{t(homeCopy.control)}</p>
               <Link

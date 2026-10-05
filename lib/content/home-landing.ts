@@ -64,6 +64,13 @@ export const homeCopy = {
   heroChipCompare: t("Compare first", "先比较", "먼저 비교", "Compara primero"),
   heroChipTradeoffs: t("Clear trade-offs", "清晰取舍", "명확한 트레이드오프", "Trade-offs claros"),
   heroChipYouDecide: t("You decide", "你来定", "당신이 결정", "Tú decides"),
+  demoLabel: t("How a decision looks", "一次决定长这样", "결정은 이렇게 보입니다", "Así se ve una decisión"),
+  demoTell: t("Tell us", "告诉我们", "말하기", "Cuéntanos"),
+  demoTellHint: t("Dates, budget, style", "日期、预算、风格", "날짜·예산·스타일", "Fechas, presupuesto, estilo"),
+  demoCompare: t("Compare", "比较", "비교", "Comparar"),
+  demoCompareHint: t("Trade-offs, not a wall of options", "看取舍，不是选项墙", "옵션 벽이 아니라 트레이드오프", "Trade-offs, no un muro de opciones"),
+  demoWinner: t("Winner", "首选", "추천", "Ganador"),
+  demoWinnerHint: t("One fit — you still decide", "一个更合适的——最终你定", "맞는 하나 — 결정은 당신", "Una opción — tú decides"),
   introTitle: t(
     "Travel planning is full of choices. We help you make them.",
     "旅行计划里全是选择。我们帮你做这些选择。",
