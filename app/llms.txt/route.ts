@@ -43,7 +43,7 @@ export function GET() {
   return new Response(
     `# XingAI Travel AI
 
-XingAI Travel AI is an AI travel decision tool for people who have not decided where to go yet.
+XingAI Travel AI helps you make a better travel decision. Other travel sites help you search. This one helps you compare options and trade-offs. You stay in control. It does not book the trip for you.
 
 Core flow:
 - Capture real trip constraints: dates, origin, budget, travelers, pace, and preferences.
@@ -52,7 +52,8 @@ Core flow:
 - Produce a book-first checklist and practical itinerary.
 
 Primary pages:
-- /decide (conversion — Travel Decision System)
+- / (explains the product; primary action is Make My Travel Decision)
+- /decide (the Travel Decision form)
 - /privacy
 - /terms
 - /disclaimer

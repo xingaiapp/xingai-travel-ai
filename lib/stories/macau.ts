@@ -47,8 +47,8 @@ const ep01: StoryEpisode = {
   cover: shot(
     "01",
     "londoner-big-ben",
-    1320,
-    1760,
+    1600,
+    2133,
     tx(
       "The Big Ben replica outside The Londoner Macao on Cotai",
       "澳门路氹伦敦人酒店外的大本钟与街景",
@@ -67,8 +67,8 @@ const ep01: StoryEpisode = {
     poster: shot(
       "01",
       "londoner-big-ben",
-      1320,
-      1760,
+      1600,
+      2133,
       tx(
         "The Big Ben replica outside The Londoner Macao on Cotai",
         "澳门路氹伦敦人酒店外的大本钟与街景",
@@ -102,8 +102,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "londoner-big-ben",
-        1320,
-        1760,
+        1600,
+        2133,
         tx(
           "The Big Ben replica outside The Londoner Macao on Cotai",
           "澳门路氹伦敦人酒店外的大本钟与街景",
@@ -133,8 +133,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "venetian-armillary",
-        1320,
-        1760,
+        1600,
+        2133,
         tx(
           "The golden armillary sphere in The Venetian Macao lobby",
           "威尼斯人酒店大堂中央的金色浑天仪",
@@ -164,8 +164,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "venetian-dome",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Painted dome ceiling with gold detail inside The Venetian Macao",
           "威尼斯人室内穹顶上的彩色壁画与金色装饰",
@@ -195,8 +195,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "parisian-lobby",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "French-style lobby under a glass dome at The Parisian Macao",
           "巴黎人酒店玻璃穹顶下的法式大堂",
@@ -226,8 +226,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "londoner-clock",
-        1320,
-        1760,
+        1600,
+        2133,
         tx(
           "The Big Ben replica at The Londoner Macao",
           "澳门伦敦人酒店外的大本钟复刻建筑",
@@ -257,8 +257,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "city-of-dreams-kiss",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Kiss sculpture of two facing faces outside City of Dreams Macau",
           "新濠天地门口两张相对人脸组成的亲吻雕塑",
@@ -288,8 +288,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "wynn-gold-facade",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Golden facade of Wynn Macau seen from the roadside",
           "路边看到的澳门永利金色酒店外观",
@@ -319,8 +319,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "casino-slots",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Bright slot-machine screens on a Macau casino floor",
           "澳门赌场内色彩明亮的老虎机屏幕",
@@ -350,8 +350,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "cotai-waterfront",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Outdoor water feature and hotel buildings along Cotai",
           "路氹酒店区户外水景、绿化与相邻酒店建筑",
@@ -381,8 +381,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "venetian-dome-close",
-        1320,
-        1760,
+        1600,
+        2133,
         tx(
           "Golden armillary under the ornate Venetian Macao lobby dome",
           "威尼斯人酒店大堂华丽穹顶下的金色浑天仪",
@@ -476,8 +476,8 @@ const ep02: StoryEpisode = {
   cover: shot(
     "02",
     "portuguese-paving-lanterns",
-    1320,
-    2337,
+    1600,
+    2133,
     tx(
       "Portuguese wave-pattern paving and lanterns in a Macau old-town alley",
       "铺着黑白海浪纹葡式碎石路、挂着彩色灯笼的澳门小巷",
@@ -496,8 +496,8 @@ const ep02: StoryEpisode = {
     poster: shot(
       "02",
       "portuguese-paving-lanterns",
-      1320,
-      2337,
+      1600,
+      2133,
       tx(
         "Portuguese wave-pattern paving and lanterns in a Macau old-town alley",
         "铺着黑白海浪纹葡式碎石路、挂着彩色灯笼的澳门小巷",
@@ -531,8 +531,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "ruins-of-st-pauls",
-        1440,
-        2560,
+        1600,
+        2133,
         tx(
           "The Ruins of St. Paul’s facade with people in the square below",
           "人群前方的大三巴牌坊",
@@ -562,8 +562,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "snack-street-crowd",
-        1440,
-        2560,
+        1600,
+        2133,
         tx(
           "Crowded snack street below the Ruins of St. Paul’s",
           "大三巴牌坊下拥挤的小吃街",
@@ -593,8 +593,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "portuguese-paving-lanterns",
-        1320,
-        2337,
+        1600,
+        2133,
         tx(
           "Portuguese wave-pattern paving and lanterns in a Macau old-town alley",
           "铺着黑白海浪纹葡式碎石路、挂着彩色灯笼的澳门小巷",
@@ -624,8 +624,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "quiet-old-town",
-        1440,
-        2560,
+        1600,
+        2133,
         tx(
           "A quiet Macau old-town street with few visitors",
           "游客稀少的澳门老城街道",
@@ -656,8 +656,8 @@ const ep02: StoryEpisode = {
         shot(
           "02",
           "hk-macau-bus-ticket",
-          1440,
-          2560,
+          1600,
+          2133,
           tx(
             "Hong Kong–Macau Express bus ticket and route card in hand",
             "手里拿着港澳一号巴士车票和路线指引",
@@ -668,8 +668,8 @@ const ep02: StoryEpisode = {
         shot(
           "02",
           "hzmb-from-bus",
-          1440,
-          2560,
+          1600,
+          2133,
           tx(
             "Hong Kong–Zhuhai–Macao Bridge and sea from the bus window",
             "从巴士车窗望见港珠澳大桥与海面",
@@ -784,8 +784,8 @@ export const macau: StorySeason = {
   cover: shot(
     "01",
     "londoner-big-ben",
-    1320,
-    1760,
+    1600,
+    2133,
     tx(
       "The Big Ben replica outside The Londoner Macao on Cotai",
       "澳门路氹伦敦人酒店外的大本钟与街景",

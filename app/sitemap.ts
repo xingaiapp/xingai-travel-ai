@@ -43,6 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ]
   return [
+    { url: base, changeFrequency: "weekly" as const, priority: 1 },
     ...cityPages,
     ...comparePages,
     ...guidePages,
@@ -51,7 +52,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...pages.map((page) => ({
       url: `${base}/${page}`,
       changeFrequency: "weekly" as const,
-      priority: page === "decide" ? 1 : page === "how-it-works" || page === "faq" ? 0.9 : 0.5,
+      priority: page === "decide" ? 0.9 : page === "how-it-works" || page === "faq" ? 0.8 : 0.5,
     })),
   ]
 }

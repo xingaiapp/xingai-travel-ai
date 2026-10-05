@@ -3,11 +3,13 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
+  ArrowRight,
   BookOpen,
   BriefcaseBusiness,
   ChevronDown,
   CircleHelp,
   Compass,
+  House,
   Menu,
   PanelLeftClose,
   PanelLeftOpen,
@@ -26,12 +28,13 @@ import { cn, getCityImage, HELP_ANCHOR, openHelp } from "@/lib/utils"
 
 type NavItem = {
   href: string
-  key: "decide" | "stories" | "trips"
+  key: "home" | "decide" | "stories" | "trips"
   icon: typeof Compass
   soon?: boolean
 }
 
 const navItems: readonly NavItem[] = [
+  { href: "/", key: "home", icon: House },
   { href: "/decide", key: "decide", icon: Compass },
   { href: "/stories", key: "stories", icon: BookOpen, soon: visibleSeasons().length === 0 },
   // Saved / Profile stay out of the nav until they exist — no dead entries.
@@ -46,6 +49,7 @@ const legalLinks = [
 ] as const
 
 function mobileHeaderTitle(pathname: string, messages: Messages) {
+  if (pathname === "/") return messages.chrome.home
   if (pathname === "/result") {
     return messages.result.breadcrumb.split("›").pop()?.trim() ?? messages.chrome.decide
   }
@@ -58,10 +62,11 @@ function mobileHeaderTitle(pathname: string, messages: Messages) {
 }
 
 function isDecideRoute(pathname: string) {
-  return pathname === "/decide" || pathname === "/" || pathname === "/result"
+  return pathname === "/decide" || pathname === "/result"
 }
 
 function isActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/"
   if (href === "/decide") return isDecideRoute(pathname)
   return pathname === href || pathname.startsWith(`${href}/`)
 }
@@ -142,7 +147,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
 
         <div className={cn("flex min-h-0 flex-1 flex-col overflow-y-auto", !desktopNavOpen && "w-full items-center")}>
         <Link
-          href="/decide"
+          href="/"
           aria-label={messages.chrome.brand}
           className={cn("flex min-w-0 items-center gap-3", !desktopNavOpen && "justify-center")}
         >
@@ -256,7 +261,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           <div className="min-w-0 flex-1 text-center text-sm font-bold lg:hidden">
             <span className="text-primary">Travel</span> · {mobileHeaderTitle(pathname, messages)}
           </div>
-          <Link href="/decide" className="hidden min-w-0 items-center lg:flex">
+          <Link href="/" className="hidden min-w-0 items-center lg:flex">
             <span className="truncate text-base font-bold leading-none">
               XingAI <span className="text-primary">Travel AI</span>
             </span>
@@ -266,6 +271,13 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             <ThemeToggle className="h-10 w-10" />
           </div>
           <div className="hidden items-center gap-2 lg:flex">
+            <Link
+              href="/decide"
+              className="inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-bold text-primary-foreground shadow-[0_6px_16px_color-mix(in_oklch,var(--primary)_28%,transparent)]"
+            >
+              {messages.chrome.decideCta}
+              <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+            </Link>
             <LocaleSwitcher />
             <ThemeToggle />
           </div>
@@ -335,7 +347,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           <button className="absolute inset-0 bg-black/40" aria-label="Close menu" type="button" onClick={() => setOpen(false)} />
           <aside className="absolute left-0 top-0 flex h-full w-[min(21rem,88vw)] flex-col border-r border-border bg-card shadow-2xl">
             <div className="flex items-center justify-between border-b border-border px-4 py-4 pt-[max(1rem,env(safe-area-inset-top))]">
-              <Link href="/decide" onClick={() => setOpen(false)} className="flex min-w-0 items-center gap-3">
+              <Link href="/" onClick={() => setOpen(false)} className="flex min-w-0 items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
                   <Plane className="h-5 w-5" aria-hidden />
                 </span>

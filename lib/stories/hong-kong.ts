@@ -48,8 +48,8 @@ const ep01: StoryEpisode = {
   cover: shot(
     "01",
     "harbour-promenade-skyline",
-    720,
-    1280,
+    1600,
+    2133,
     tx(
       "Waterfront promenade facing the Victoria Harbour skyline",
       "海滨栈道，对岸是维港的天际线",
@@ -68,8 +68,8 @@ const ep01: StoryEpisode = {
     poster: shot(
       "01",
       "harbour-promenade-skyline",
-      720,
-      1280,
+      1600,
+      2133,
       tx(
         "Waterfront promenade facing the Victoria Harbour skyline",
         "海滨栈道，对岸是维港的天际线",
@@ -103,8 +103,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "harbour-promenade-skyline",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Waterfront promenade facing the Victoria Harbour skyline",
           "海滨栈道，对岸是维港的天际线",
@@ -134,8 +134,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "boardwalk-to-harbour",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Wooden boardwalk extending toward Victoria Harbour",
           "木栈道向海里延伸，视野正对维港",
@@ -165,8 +165,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "red-sail-junk",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Red-sail junk crossing Victoria Harbour with towers behind",
           "红帆船经过维港，背后是高楼群",
@@ -196,8 +196,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "cargo-ship-skyline",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Cargo ship on Victoria Harbour under a wide skyline",
           "货船驶过，海天之间全是城市的轮廓",
@@ -227,8 +227,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "harbour-night-neon",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Victoria Harbour at night as neon lights come on",
           "夜晚的维港，霓虹灯次第亮起",
@@ -258,8 +258,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "victoria-sign-night",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "VICTORIA HARBOUR sign glowing at night on the waterfront",
           "VICTORIA HARBOUR 灯牌夜景",
@@ -289,8 +289,8 @@ const ep01: StoryEpisode = {
       photo: shot(
         "01",
         "harbour-night-reflection",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Victoria Harbour night lights reflected on the water",
           "维港夜景，灯火倒映在水里",
@@ -393,8 +393,8 @@ const ep02: StoryEpisode = {
   cover: shot(
     "02",
     "roast-meat-rice-eggs",
-    880,
-    1173,
+    1600,
+    2133,
     tx(
       "Char siu and roast-duck rice with soft-yolk eggs",
       "叉烧烧鸭饭配流心蛋",
@@ -413,8 +413,8 @@ const ep02: StoryEpisode = {
     poster: shot(
       "02",
       "roast-meat-rice-eggs",
-      880,
-      1173,
+      1600,
+      2133,
       tx(
         "Char siu and roast-duck rice with soft-yolk eggs",
         "叉烧烧鸭饭配流心蛋",
@@ -448,8 +448,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "bridge-pillar-mural",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Painted bridge pillars along a single-lane road under an overpass",
           "桥底单车道，彩绘柱子很有意思",
@@ -479,8 +479,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "mural-detail",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Close-up of painted mural detail on a bridge pillar",
           "涂鸦柱子近看，细节拉满",
@@ -510,8 +510,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "roast-platter",
-        880,
-        1173,
+        1600,
+        2133,
         tx(
           "Mixed roast platter with char siu and roast duck",
           "烧味拼盘，叉烧烧鸭双拼",
@@ -541,8 +541,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "roast-meat-rice-eggs",
-        880,
-        1173,
+        1600,
+        2133,
         tx(
           "Char siu and roast-duck rice with soft-yolk eggs",
           "叉烧烧鸭饭配流心蛋",
@@ -572,8 +572,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "steamed-fish",
-        880,
-        1173,
+        1600,
+        2133,
         tx(
           "Steamed fish with black-bean sauce and spring onion",
           "清蒸鱼，豉汁葱丝",
@@ -603,8 +603,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "harbour-night-family",
-        720,
-        1280,
+        1600,
+        2133,
         tx(
           "Family walking the waterfront at night with harbour lights across the water",
           "夜晚的维港，灯火倒映在水里",
@@ -634,8 +634,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "note-to-grandmother",
-        880,
-        1173,
+        1600,
+        2133,
         tx(
           "Handwritten note reading To Grandmother with a drawn heart",
           "孩子写给祖母的字",
@@ -665,8 +665,8 @@ const ep02: StoryEpisode = {
       photo: shot(
         "02",
         "harbour-day-close",
-        880,
-        1173,
+        1600,
+        2133,
         tx(
           "Victoria Harbour by day with sea meeting sky",
           "白天再看维港，海天一色",
@@ -770,8 +770,8 @@ export const hongKong: StorySeason = {
   cover: shot(
     "01",
     "red-sail-junk",
-    720,
-    1280,
+    1600,
+    2133,
     tx(
       "Red-sail junk crossing Victoria Harbour with towers behind",
       "红帆船经过维港，背后是高楼群",

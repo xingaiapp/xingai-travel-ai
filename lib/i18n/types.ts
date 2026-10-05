@@ -5,6 +5,8 @@ export interface Messages {
     brand: string
     brandShort: string
     decide: string
+    home: string
+    decideCta: string
     stories: string
     trips: string
     saved: string
