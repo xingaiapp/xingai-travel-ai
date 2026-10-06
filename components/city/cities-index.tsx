@@ -44,17 +44,30 @@ export function CitiesIndexView({
     queueMicrotask(() => {
       setRegion(parseRegion(params.get("region")))
       setIntent(parseIntent(params.get("intent")))
+      const q = params.get("q")?.trim().slice(0, 120) ?? ""
+      if (q) setQuery(q)
     })
   }, [])
+
+  function writeUrl(nextRegion: RegionFilter, nextIntent: IntentFilter, nextQuery: string) {
+    const params = new URLSearchParams()
+    if (nextRegion !== "all") params.set("region", nextRegion)
+    if (nextIntent !== "all") params.set("intent", nextIntent)
+    const q = nextQuery.trim().slice(0, 120)
+    if (q) params.set("q", q)
+    const qs = params.toString()
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+  }
 
   function pushFilters(nextRegion: RegionFilter, nextIntent: IntentFilter) {
     setRegion(nextRegion)
     setIntent(nextIntent)
-    const params = new URLSearchParams()
-    if (nextRegion !== "all") params.set("region", nextRegion)
-    if (nextIntent !== "all") params.set("intent", nextIntent)
-    const qs = params.toString()
-    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+    writeUrl(nextRegion, nextIntent, query)
+  }
+
+  function onSearchChange(value: string) {
+    setQuery(value)
+    writeUrl(region, intent, value)
   }
 
   const liveCount = catalog.filter((item) => item.status === "live").length
@@ -118,7 +131,7 @@ export function CitiesIndexView({
             <input
               type="search"
               value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => onSearchChange(event.target.value)}
               placeholder={m.searchPlaceholder}
               autoComplete="off"
               className="h-12 w-full rounded-xl border border-border bg-card pl-10 pr-11 text-sm font-medium text-foreground shadow-sm outline-none ring-primary/30 placeholder:text-muted-foreground focus:border-primary focus:ring-2"
@@ -126,7 +139,7 @@ export function CitiesIndexView({
             {query ? (
               <button
                 type="button"
-                onClick={() => setQuery("")}
+                onClick={() => onSearchChange("")}
                 className="absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
                 aria-label={m.searchClear}
               >
@@ -206,7 +219,9 @@ export function CitiesIndexView({
                 type="button"
                 onClick={() => {
                   setQuery("")
-                  pushFilters("all", "all")
+                  setRegion("all")
+                  setIntent("all")
+                  writeUrl("all", "all", "")
                 }}
                 className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-5 text-sm font-bold text-primary hover:border-primary"
               >

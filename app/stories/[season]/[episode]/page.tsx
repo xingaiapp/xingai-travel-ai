@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { EpisodeView } from "@/components/story-view"
 import { pageMeta } from "@/lib/seo-meta"
+import { storyArticleJsonLdHtml } from "@/lib/seo-json-ld"
 import { getEpisode, getSeason, isVisible, visibleEpisodes, visibleSeasons } from "@/lib/stories"
 
 type Props = { params: Promise<{ season: string; episode: string }> }
@@ -45,5 +46,23 @@ export default async function EpisodePage({ params }: Props) {
   const found = await load(params)
   if (!found) notFound()
   const { season, episode } = found
-  return <EpisodeView season={season} episode={episode} linkable={visibleEpisodes(season).map((item) => item.slug)} />
+  const imagePath = episode.cover.src ? `${episode.cover.src}-1600.webp` : undefined
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: storyArticleJsonLdHtml({
+            seasonSlug: season.slug,
+            episodeSlug: episode.slug,
+            title: episode.title.en,
+            description: episode.dek.en,
+            publishedAt: episode.publishedAt,
+            imagePath,
+          }),
+        }}
+      />
+      <EpisodeView season={season} episode={episode} linkable={visibleEpisodes(season).map((item) => item.slug)} />
+    </>
+  )
 }

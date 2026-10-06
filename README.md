@@ -44,6 +44,7 @@ Do not thrash title / brand strings for ~30 days unless a factual error. Brand n
 | **Traffic recovery (2026-10-06)** | Custom 404 → Decide / Cities / Home. FAQ internal links show human labels (not raw paths). Decide chrome CTA on `/decide` scrolls to `#trip-form`. Stories index states publisher-only (no UGC) + Decide CTA. [ADR 0016](./docs/adr/0016-traffic-404-faq-stories.md). |
 | **Story interest gauge (2026-10-06)** | Stories index / season / episode offer a mailto interest CTA (“we don’t publish reader stories yet”) + `story_submit_interest` track. No coming soon, no photo upload. Privacy covers voluntary emails. [ADR 0017](./docs/adr/0017-story-interest-mailto.md). |
 | **Affiliate funnel prep (2026-10-06)** | Privacy names partner cookies after Book-first click-out. `booking_cta_view` fires when Book-first is visible (pairs with `affiliate_click`). Application blurbs: [docs/affiliate-application-blurb.md](./docs/affiliate-application-blurb.md). Disclosure still auto-switches when any `NEXT_PUBLIC_*` partner id is set. [ADR 0018](./docs/adr/0018-booking-cta-view-privacy.md). |
+| **JSON-LD scope + funnel (2026-10-06)** | Sitewide schema keeps Org/WebSite/WebApp only. FAQPage on `/faq` (+ home FAQ). HowTo on `/how-it-works`. Story episodes emit Article + Person (Xing). `decide_start` / `recommendation_view` tracked. `/city?q=` syncs search. 404 title set. [ADR 0019](./docs/adr/0019-jsonld-funnel-city-q.md). |
 | **Compare honesty (2026-10-06)** | Related links use city/compare titles (not raw paths); FAQ path linkify; Match Score is the single headline fit number; walkability nudge + flight tie-break; baseline security headers; drop stale “Top 10” copy. [ADR 0013](./docs/adr/0013-compare-honesty-match-headers.md). |
 | **Decide trust (2026-10-06)** | Empty Decide defaults (no SFO / wishes / avoid prefill); region examples stay placeholders. Avoid is hard in compare prompt + normalize (short trips demote ~9h+ flights). Remote city OG uses first-party PNG; home hero drops `unoptimized` (keep first-slide `priority`) — [ADR 0012](./docs/adr/0012-decide-trust-avoid-hard.md) · [tech blog](./docs/tech-blog/2026-10-06-next-image-hero-unoptimized-vs-priority.md). |
 | **Your travel map (2026-10-06)** | Per-browser **Want to go / Been** on live city guides (`localStorage` `xingai-travel-city-map`). Progress strip on `/`, `/city`, and `/decide` (decide only when marked). Not a global Top 100, and **not Your Trips** — Trips only lists finished Decide results (`xingai-travel-trip-history`). [ADR 0010](./docs/adr/0010-city-map-soft-fill-decide.md) · [ADR 0007](./docs/adr/0007-local-trip-history.md). |
@@ -236,7 +237,7 @@ Triggered automatically after compare on the client. Counts against its own per-
 
 ### `POST /api/track`
 
-**Body:** affiliate `{ platform, type: "flight"|"hotel"|"activity", destination }`, booking view `{ type: "booking_cta_view", destination }`, story `{ type: "story_from_result"|"story_to_decide"|"story_submit_interest", season }`, or city `{ type: "city_from_result"|"city_route_select"|"city_to_decide", city, route? }`.
+**Body:** affiliate `{ platform, type: "flight"|"hotel"|"activity", destination }`, booking view `{ type: "booking_cta_view", destination }`, decide funnel `{ type: "decide_start"|"recommendation_view", mode? }`, story `{ type: "story_from_result"|"story_to_decide"|"story_submit_interest", season }`, or city `{ type: "city_from_result"|"city_route_select"|"city_to_decide", city, route? }`.
 
 ### Funnel metrics
 
@@ -326,7 +327,7 @@ cd docs/ux-v1 && python3 -m http.server 8767
 ## SEO & AEO
 
 - Metadata + Open Graph in `app/layout.tsx`
-- JSON-LD graph: Organization, WebSite, WebApplication, FAQPage, HowTo (`lib/seo-json-ld.ts`)
+- JSON-LD: sitewide Organization / WebSite / WebApplication; FAQPage on `/faq` (+ home FAQ); HowTo on `/how-it-works`; Article + Person on story episodes (`lib/seo-json-ld.ts`)
 - `/robots.txt`, `/sitemap.xml` (static routes only)
 - `/llms.txt` — plain-text product summary for AI crawlers
 - **IndexNow (Bing):** public key at `/{key}.txt` (same shared XingAI key as xingai.app / invest). After deploy, run `python3 scripts/submit-indexnow.py` to notify engines from the live sitemap. Key is public by protocol; crawl outcomes are not guaranteed.

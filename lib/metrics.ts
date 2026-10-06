@@ -14,6 +14,8 @@ export type TravelEvent =
   | "plan_fail"
   | "affiliate_click"
   | "booking_cta_view"
+  | "decide_start"
+  | "recommendation_view"
   | "story_from_result"
   | "story_to_decide"
   | "story_submit_interest"

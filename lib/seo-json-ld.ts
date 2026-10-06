@@ -1,30 +1,35 @@
+import { faqItems, howItWorksSteps, howItWorksTitle } from "@/lib/content/how-faq"
+
+const site = "https://travel.xingai.app"
+
+/** Sitewide graph only — Organization / WebSite / WebApplication. FAQPage and HowTo belong on pages that show them. */
 export const seoJsonLdGraph = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://travel.xingai.app/#organization",
+      "@id": `${site}/#organization`,
       name: "XingAI",
       url: "https://xingai.app",
     },
     {
       "@type": "WebSite",
-      "@id": "https://travel.xingai.app/#website",
+      "@id": `${site}/#website`,
       name: "XingAI Travel",
-      url: "https://travel.xingai.app",
-      publisher: { "@id": "https://travel.xingai.app/#organization" },
+      url: site,
+      publisher: { "@id": `${site}/#organization` },
       inLanguage: ["en", "zh-CN", "ko", "es"],
       potentialAction: {
         "@type": "Action",
         name: "Make a travel decision",
-        target: "https://travel.xingai.app/decide",
+        target: `${site}/decide`,
       },
     },
     {
       "@type": "WebApplication",
-      "@id": "https://travel.xingai.app/#app",
+      "@id": `${site}/#app`,
       name: "XingAI Travel",
-      url: "https://travel.xingai.app/",
+      url: `${site}/`,
       applicationCategory: "TravelApplication",
       operatingSystem: "Web",
       description:
@@ -41,78 +46,10 @@ export const seoJsonLdGraph = {
       ],
       inLanguage: ["en", "zh-CN", "ko", "es"],
     },
-    {
-      "@type": "FAQPage",
-      "@id": "https://travel.xingai.app/#faq",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "What is XingAI Travel?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "XingAI Travel is an AI travel decision system that compares destinations based on dates, budget, flights, weather, walkability, travel pace, and personal preferences. It recommends one best-fit destination and two alternatives with clear trade-offs instead of a long search list.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "How is XingAI Travel different from booking sites?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Booking sites help you buy travel inventory. XingAI Travel helps you decide where to go first by comparing destinations against your constraints. Affiliate or partner search links may appear after the decision.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Do affiliate links affect recommendations?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "No. Destination winners, rankings, confidence, and trade-off explanations are based on trip fit. Affiliate links may appear after the decision.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Should I verify the plan before booking?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Yes. Always verify live prices, entry rules, safety conditions, cancellation policies, and availability before booking.",
-          },
-        },
-      ],
-    },
-    {
-      "@type": "HowTo",
-      "@id": "https://travel.xingai.app/#howto",
-      name: "How to choose a trip with XingAI Travel",
-      step: [
-        {
-          "@type": "HowToStep",
-          position: 1,
-          name: "Enter trip context",
-          text: "Add dates, origin, budget, travelers, style, pace, and notes on /decide.",
-          url: "https://travel.xingai.app/decide",
-        },
-        {
-          "@type": "HowToStep",
-          position: 2,
-          name: "Compare destinations",
-          text: "Review the winner, alternatives, confidence, and trade-offs on the decision result.",
-          url: "https://travel.xingai.app/decide",
-        },
-        {
-          "@type": "HowToStep",
-          position: 3,
-          name: "Book the key pieces first",
-          text: "Open partner search links for flights, stays, and activities after checking live availability.",
-          url: "https://travel.xingai.app/decide",
-        },
-      ],
-    },
   ],
 } as const
 
 export const seoJsonLdHtml = JSON.stringify(seoJsonLdGraph).replace(/</g, "\\u003c")
-
-const site = "https://travel.xingai.app"
 
 /** Page-level JSON-LD for /decide — SSR with the decision tool route. */
 export const decideJsonLd = {
@@ -147,3 +84,79 @@ export const decideJsonLd = {
 } as const
 
 export const decideJsonLdHtml = JSON.stringify(decideJsonLd).replace(/</g, "\\u003c")
+
+/** FAQPage for /faq — matches visible FAQ copy (English for schema). */
+export function faqPageJsonLdHtml(): string {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${site}/faq#faq`,
+    url: `${site}/faq`,
+    isPartOf: { "@id": `${site}/#website` },
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q.en,
+      acceptedAnswer: { "@type": "Answer", text: item.a.en },
+    })),
+  }
+  return JSON.stringify(data).replace(/</g, "\\u003c")
+}
+
+/** HowTo for /how-it-works — matches visible steps. */
+export function howToJsonLdHtml(): string {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": `${site}/how-it-works#howto`,
+    name: howItWorksTitle.en,
+    url: `${site}/how-it-works`,
+    isPartOf: { "@id": `${site}/#website` },
+    step: howItWorksSteps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.title.en,
+      text: step.body.en,
+      url: `${site}/decide`,
+    })),
+  }
+  return JSON.stringify(data).replace(/</g, "\\u003c")
+}
+
+export type StoryArticleInput = {
+  seasonSlug: string
+  episodeSlug: string
+  title: string
+  description: string
+  publishedAt?: string
+  imagePath?: string
+}
+
+/** Article + Person author for Travel Stories episodes. */
+export function storyArticleJsonLdHtml(input: StoryArticleInput): string {
+  const url = `${site}/stories/${input.seasonSlug}/${input.episodeSlug}`
+  const image = input.imagePath
+    ? input.imagePath.startsWith("http")
+      ? input.imagePath
+      : `${site}${input.imagePath.startsWith("/") ? "" : "/"}${input.imagePath}`
+    : undefined
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: input.title,
+    description: input.description,
+    url,
+    datePublished: input.publishedAt,
+    inLanguage: "en",
+    isPartOf: { "@id": `${site}/#website` },
+    author: {
+      "@type": "Person",
+      "@id": `${site}/#author-xing`,
+      name: "Xing",
+      url: "https://xingai.app",
+    },
+    publisher: { "@id": `${site}/#organization` },
+    ...(image ? { image: [image] } : {}),
+  }
+  return JSON.stringify(data).replace(/</g, "\\u003c")
+}

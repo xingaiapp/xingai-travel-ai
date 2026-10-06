@@ -15,6 +15,12 @@ const bookingViewSchema = z.object({
   destination: z.string().max(100),
 })
 
+/** Decide funnel: compare started, recommendation shown. */
+const decideFunnelSchema = z.object({
+  type: z.enum(["decide_start", "recommendation_view"]),
+  mode: z.enum(["compare", "inspire"]).optional(),
+})
+
 // Story funnel: result → story, story → /decide, interest in reader stories (mailto). See ADR 0006 / 0017.
 const storySchema = z.object({
   type:   z.enum(["story_from_result", "story_to_decide", "story_submit_interest"]),
@@ -46,6 +52,12 @@ export async function POST(request: NextRequest) {
   const view = bookingViewSchema.safeParse(json)
   if (view.success) {
     after(() => recordEvent("booking_cta_view", { destination: view.data.destination }))
+    return NextResponse.json({ ok: true })
+  }
+
+  const funnel = decideFunnelSchema.safeParse(json)
+  if (funnel.success) {
+    after(() => recordEvent(funnel.data.type, { mode: funnel.data.mode }))
     return NextResponse.json({ ok: true })
   }
 

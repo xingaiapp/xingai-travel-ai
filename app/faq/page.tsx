@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { FaqView } from "@/components/content-pages"
 import { pageMeta } from "@/lib/seo-meta"
+import { faqPageJsonLdHtml } from "@/lib/seo-json-ld"
 
 export const metadata: Metadata = pageMeta({
   path: "/faq",
@@ -10,5 +11,10 @@ export const metadata: Metadata = pageMeta({
 })
 
 export default function Page() {
-  return <FaqView />
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqPageJsonLdHtml() }} />
+      <FaqView />
+    </>
+  )
 }

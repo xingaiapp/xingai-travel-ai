@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { HowItWorksView } from "@/components/content-pages"
 import { pageMeta } from "@/lib/seo-meta"
+import { howToJsonLdHtml } from "@/lib/seo-json-ld"
 
 export const metadata: Metadata = pageMeta({
   path: "/how-it-works",
@@ -10,5 +11,10 @@ export const metadata: Metadata = pageMeta({
 })
 
 export default function Page() {
-  return <HowItWorksView />
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: howToJsonLdHtml() }} />
+      <HowItWorksView />
+    </>
+  )
 }

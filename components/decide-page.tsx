@@ -213,6 +213,13 @@ export function DecidePage() {
     }
 
     try {
+      fetch("/api/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "decide_start", mode: runMode }),
+        keepalive: true,
+      }).catch(() => {})
+
       const timeout = window.setTimeout(() => controller.abort(), 30000)
 
       let data: CompareResult
@@ -266,6 +273,12 @@ export function DecidePage() {
       setResults((prev) => ({ ...prev, [runMode]: { data, trip: planCtx, historyId } }))
       setErrors((prev) => ({ ...prev, [runMode]: "" }))
       setErrorCodes((prev) => ({ ...prev, [runMode]: "" }))
+      fetch("/api/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "recommendation_view", mode: runMode }),
+        keepalive: true,
+      }).catch(() => {})
       if (winner) {
         fetchPlan(`${winner.name}, ${winner.country}`, planCtx)
           .then((plan) => {
