@@ -15,6 +15,7 @@ export type TravelEvent =
   | "affiliate_click"
   | "story_from_result"
   | "story_to_decide"
+  | "story_submit_interest"
   | "city_from_result"
   | "city_route_select"
   | "city_to_decide"

@@ -9,9 +9,9 @@ const affiliateSchema = z.object({
   destination: z.string().max(100),
 })
 
-// Story funnel: result → story, and story → /decide. See ADR 0006.
+// Story funnel: result → story, story → /decide, interest in reader stories (mailto). See ADR 0006 / 0017.
 const storySchema = z.object({
-  type:   z.enum(["story_from_result", "story_to_decide"]),
+  type:   z.enum(["story_from_result", "story_to_decide", "story_submit_interest"]),
   season: z.string().max(60),
 })
 

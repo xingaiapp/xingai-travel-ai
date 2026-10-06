@@ -65,11 +65,23 @@ export function storiesForDestinations(names: string[]) {
   })
 }
 
-export function trackStoryClick(type: "story_from_result" | "story_to_decide", season: string) {
+export function trackStoryClick(
+  type: "story_from_result" | "story_to_decide" | "story_submit_interest",
+  season: string
+) {
   fetch("/api/track", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ type, season }),
     keepalive: true,
   }).catch(() => {})
+}
+
+/** Interest gauge only — not a publish pipeline. No photo upload. */
+export function storyInterestMailto(placeHint?: string) {
+  const subject = "Travel story interest — XingAI Travel"
+  const body = placeHint
+    ? `Where I went: ${placeHint}\n\nOne sentence about the trip:\n`
+    : "Where I went:\n\nOne sentence about the trip:\n"
+  return `mailto:contact@xingai.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }

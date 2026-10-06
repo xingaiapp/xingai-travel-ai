@@ -4,7 +4,7 @@ import Link from "next/link"
 import { ArrowLeft, ArrowRight, Camera, Gem, Map as MapIcon, RotateCcw, ThumbsDown, Lightbulb } from "lucide-react"
 import { useLocale } from "@/components/locale-provider"
 import { citiesForDestinations, fill } from "@/lib/cities"
-import { decideHref, episodeLabel, pickText, trackStoryClick } from "@/lib/stories"
+import { decideHref, episodeLabel, pickText, storyInterestMailto, trackStoryClick } from "@/lib/stories"
 import type { StoryBlock, StoryEpisode, StoryPhoto, StorySeason, TakeKind } from "@/lib/stories/types"
 import { cn } from "@/lib/utils"
 
@@ -149,6 +149,41 @@ function Block({ block }: Readonly<{ block: StoryBlock }>) {
   }
 }
 
+function StoryInterestCta({ seasonSlug, placeHint }: Readonly<{ seasonSlug: string; placeHint?: string }>) {
+  const { ui } = useStoryText()
+  return (
+    <section className="mt-10 rounded-2xl border border-border bg-muted/40 p-5 sm:p-6">
+      <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
+        {ui("Reader stories", "读者故事", "독자 이야기", "Historias de lectores")}
+      </p>
+      <h2 className="mt-2 text-lg font-extrabold tracking-tight sm:text-xl">
+        {ui(
+          "Have a trip worth telling?",
+          "有一段值得讲的旅行？",
+          "들려줄 만한 여행이 있나요?",
+          "¿Tienes un viaje que valga la pena contar?",
+        )}
+      </h2>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+        {ui(
+          "We don't publish reader stories yet. If you'd like to share yours, tell us where you went — we're gauging interest before building this. No photo upload.",
+          "我们目前还不发布读者故事。如果你愿意分享，告诉我们你去了哪里——我们先看看有多少人感兴趣，再决定要不要做。请勿上传照片。",
+          "아직 독자 이야기를 발행하지 않습니다. 공유하고 싶다면 어디를 갔는지 알려 주세요 — 만들기 전에 관심을 먼저 봅니다. 사진 업로드는 받지 않습니다.",
+          "Aún no publicamos historias de lectores. Si quieres compartir la tuya, dinos a dónde fuiste — medimos interés antes de construir esto. Sin subir fotos.",
+        )}
+      </p>
+      <a
+        href={storyInterestMailto(placeHint)}
+        onClick={() => trackStoryClick("story_submit_interest", seasonSlug)}
+        className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-card px-5 text-sm font-bold text-primary hover:border-primary/50"
+      >
+        {ui("Tell us about your trip", "告诉我们你的旅行", "여행 이야기 보내기", "Cuéntanos tu viaje")}
+        <ArrowRight className="h-4 w-4" aria-hidden />
+      </a>
+    </section>
+  )
+}
+
 function DecideCta({ season }: Readonly<{ season: StorySeason }>) {
   const { t, ui } = useStoryText()
   const place = t(season.place)
@@ -290,6 +325,7 @@ export function SeasonView({ season, linkable }: Readonly<{ season: StorySeason;
         </section>
         <CityGuideCta season={season} />
         <DecideCta season={season} />
+        <StoryInterestCta seasonSlug={season.slug} placeHint={t(season.place)} />
       </div>
     </main>
   )
@@ -387,6 +423,7 @@ export function EpisodeView({
           ) : null}
 
           <DecideCta season={season} />
+          <StoryInterestCta seasonSlug={season.slug} placeHint={t(season.place)} />
 
           <section className="mt-12">
             <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
@@ -465,6 +502,7 @@ export function StoriesIndexView({ seasons }: Readonly<{ seasons: { season: Stor
             <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </div>
+        <StoryInterestCta seasonSlug="index" />
       </div>
     </main>
   )

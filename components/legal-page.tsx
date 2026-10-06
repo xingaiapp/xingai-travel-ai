@@ -48,6 +48,10 @@ const copy: Record<LegalPageKind, LegalCopy> = {
         "Optional share URLs encode a compressed comparison and plan in the query string so another person can open the result without a database. Trip origin, dates, budget, and notes are not encoded in that link. Anyone with the link can see the shared decision content.",
       ],
       [
+        "Emails you send us",
+        "If you email contact@xingai.app about story interest or other questions, we use that message to reply and to gauge whether reader-submitted stories are worth building. We do not publish your email or trip details without your consent. Please do not attach photos (they may include location metadata we are not set up to handle).",
+      ],
+      [
         "What we do not do",
         "We do not sell personal trip context. Affiliate or partner links never change destination rankings, confidence, or trade-off text.",
       ],

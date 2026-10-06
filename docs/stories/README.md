@@ -31,4 +31,4 @@ Stories live in `lib/stories/<season>.ts`, render at `/stories/<season>/<episode
 
 ## Measuring
 
-`/api/track` logs `[story-click]` with `story_from_result` (result page → story) and `story_to_decide` (story CTA → `/decide`). Review after two published episodes before investing in more seasons, short video, or reader contributions.
+`/api/track` logs `[story-click]` with `story_from_result` (result page → story), `story_to_decide` (story CTA → `/decide`), and `story_submit_interest` (mailto interest in reader stories — not a publish pipeline). Review after two published episodes before investing in more seasons, short video, or reader contributions ([ADR 0017](../adr/0017-story-interest-mailto.md)).

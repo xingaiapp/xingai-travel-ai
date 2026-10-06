@@ -42,6 +42,7 @@ Do not thrash title / brand strings for ~30 days unless a factual error. Brand n
 | **Score parity + OG (2026-10-06)** | Comparison table Match Scores include walkability and follow ranked column order; empty-origin uses field alert + focus (no Try again); Avoid demotion localized; remote-city OG uses high-res 2400×1260 JPG from HK hero. [ADR 0014](./docs/adr/0014-score-parity-og-hires.md). |
 | **Constraint conflict + privacy (2026-10-06)** | When Avoid demotes every candidate, results show a conflict banner and a soft “closest among conflicts” label (not a clean Best match). Low-confidence Match Scores may sit below 52 so peers still separate. Privacy names OpenAI, IP/Redis limits, Analytics, local map/Trips, and `/s` encoding; legal 中文/한국어 blurbs are page-specific. Decide nights + Avoid/notes placeholders are localized. [ADR 0015](./docs/adr/0015-constraint-conflict-privacy-i18n.md). |
 | **Traffic recovery (2026-10-06)** | Custom 404 → Decide / Cities / Home. FAQ internal links show human labels (not raw paths). Decide chrome CTA on `/decide` scrolls to `#trip-form`. Stories index states publisher-only (no UGC) + Decide CTA. [ADR 0016](./docs/adr/0016-traffic-404-faq-stories.md). |
+| **Story interest gauge (2026-10-06)** | Stories index / season / episode offer a mailto interest CTA (“we don’t publish reader stories yet”) + `story_submit_interest` track. No coming soon, no photo upload. Privacy covers voluntary emails. [ADR 0017](./docs/adr/0017-story-interest-mailto.md). |
 | **Compare honesty (2026-10-06)** | Related links use city/compare titles (not raw paths); FAQ path linkify; Match Score is the single headline fit number; walkability nudge + flight tie-break; baseline security headers; drop stale “Top 10” copy. [ADR 0013](./docs/adr/0013-compare-honesty-match-headers.md). |
 | **Decide trust (2026-10-06)** | Empty Decide defaults (no SFO / wishes / avoid prefill); region examples stay placeholders. Avoid is hard in compare prompt + normalize (short trips demote ~9h+ flights). Remote city OG uses first-party PNG; home hero drops `unoptimized` (keep first-slide `priority`) — [ADR 0012](./docs/adr/0012-decide-trust-avoid-hard.md) · [tech blog](./docs/tech-blog/2026-10-06-next-image-hero-unoptimized-vs-priority.md). |
 | **Your travel map (2026-10-06)** | Per-browser **Want to go / Been** on live city guides (`localStorage` `xingai-travel-city-map`). Progress strip on `/`, `/city`, and `/decide` (decide only when marked). Not a global Top 100, and **not Your Trips** — Trips only lists finished Decide results (`xingai-travel-trip-history`). [ADR 0010](./docs/adr/0010-city-map-soft-fill-decide.md) · [ADR 0007](./docs/adr/0007-local-trip-history.md). |
@@ -234,7 +235,7 @@ Triggered automatically after compare on the client. Counts against its own per-
 
 ### `POST /api/track`
 
-**Body:** affiliate `{ platform, type: "flight"|"hotel"|"activity", destination }`, story `{ type: "story_from_result"|"story_to_decide", season }`, or city `{ type: "city_from_result"|"city_route_select", city, route? }`.
+**Body:** affiliate `{ platform, type: "flight"|"hotel"|"activity", destination }`, story `{ type: "story_from_result"|"story_to_decide"|"story_submit_interest", season }`, or city `{ type: "city_from_result"|"city_route_select"|"city_to_decide", city, route? }`.
 
 ### Funnel metrics
 
