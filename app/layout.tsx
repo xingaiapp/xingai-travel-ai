@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next"
 import { Fraunces, Inter } from "next/font/google"
+import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 import { AppChrome } from "@/components/app-chrome"
 import { LocaleProvider } from "@/components/locale-provider"
 import { SeoJsonLd } from "@/components/seo-json-ld"
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider, themeBootScript } from "@/components/theme-provider"
 import "./globals.css"
 
 const inter = Inter({
@@ -62,13 +63,19 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   viewportFit: "cover",
-  themeColor: "#2563eb",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#2563eb" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`light ${inter.variable} ${fraunces.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`dark ${inter.variable} ${fraunces.variable}`}>
       <body className="font-sans antialiased">
+        <Script id="theme-boot" strategy="beforeInteractive">
+          {themeBootScript}
+        </Script>
         <SeoJsonLd />
         <ThemeProvider>
           <LocaleProvider>

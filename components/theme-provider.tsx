@@ -6,6 +6,7 @@ type Theme = "light" | "dark" | "system"
 type ResolvedTheme = "light" | "dark"
 
 const STORAGE_KEY = "theme"
+const DEFAULT_THEME: Theme = "dark"
 
 type ThemeContextValue = {
   theme: Theme
@@ -26,8 +27,10 @@ function readStoredTheme(): Theme {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored === "light" || stored === "dark" || stored === "system") return stored
-  } catch { /* ignore */ }
-  return "light"
+  } catch {
+    /* ignore */
+  }
+  return DEFAULT_THEME
 }
 
 function getSystemDark(): boolean {
@@ -38,7 +41,10 @@ function computeResolved(theme: Theme, systemDark: boolean): ResolvedTheme {
   return theme === "system" ? (systemDark ? "dark" : "light") : theme
 }
 
-interface ThemeState { theme: Theme; systemDark: boolean }
+interface ThemeState {
+  theme: Theme
+  systemDark: boolean
+}
 type ThemeAction =
   | { type: "INIT"; theme: Theme; systemDark: boolean }
   | { type: "SET"; theme: Theme }
@@ -46,30 +52,38 @@ type ThemeAction =
 
 function themeReducer(state: ThemeState, action: ThemeAction): ThemeState {
   switch (action.type) {
-    case "INIT": return { theme: action.theme, systemDark: action.systemDark }
-    case "SET":  return { ...state, theme: action.theme }
-    case "SYSTEM_CHANGE": return { ...state, systemDark: action.dark }
-    default: return state
+    case "INIT":
+      return { theme: action.theme, systemDark: action.systemDark }
+    case "SET":
+      return { ...state, theme: action.theme }
+    case "SYSTEM_CHANGE":
+      return { ...state, systemDark: action.dark }
+    default:
+      return state
   }
 }
 
-export function ThemeProvider({ children }: Readonly<{ children: React.ReactNode }>) {
-  const [state, dispatch] = useReducer(themeReducer, { theme: "light", systemDark: false })
+/** Inline before paint — keeps first HTML aligned with stored/default theme. */
+export const themeBootScript = `(function(){try{var t=localStorage.getItem(${JSON.stringify(STORAGE_KEY)});var dark;if(t==="light")dark=false;else if(t==="dark"||!t)dark=true;else dark=window.matchMedia("(prefers-color-scheme: dark)").matches;var r=document.documentElement;r.classList.remove("light","dark");r.classList.add(dark?"dark":"light");r.style.colorScheme=dark?"dark":"light";}catch(e){}})();`
 
-  // Single init effect — one dispatch, no cascading setState
+export function ThemeProvider({ children }: Readonly<{ children: React.ReactNode }>) {
+  const [state, dispatch] = useReducer(themeReducer, { theme: DEFAULT_THEME, systemDark: true })
+
   useEffect(() => {
     dispatch({ type: "INIT", theme: readStoredTheme(), systemDark: getSystemDark() })
   }, [])
 
   const resolvedTheme = computeResolved(state.theme, state.systemDark)
 
-  // Apply to DOM + persist on every change
   useEffect(() => {
     applyTheme(resolvedTheme)
-    try { localStorage.setItem(STORAGE_KEY, state.theme) } catch { /* ignore */ }
+    try {
+      localStorage.setItem(STORAGE_KEY, state.theme)
+    } catch {
+      /* ignore */
+    }
   }, [state.theme, resolvedTheme])
 
-  // Track system preference (only active when theme === "system")
   useEffect(() => {
     if (state.theme !== "system") return
     const media = window.matchMedia("(prefers-color-scheme: dark)")
