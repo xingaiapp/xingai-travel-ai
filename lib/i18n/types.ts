@@ -365,6 +365,16 @@ export interface Messages {
     intentBeach: string
     intentFood: string
     intentCulture: string
+    mapGroupLabel: string
+    mapWant: string
+    mapBeen: string
+    lifeMapEyebrow: string
+    lifeMapTitle: string
+    lifeMapLead: string
+    lifeMapProgress: string
+    lifeMapEmpty: string
+    lifeMapBrowseCta: string
+    lifeMapLocalOnly: string
   }
   content: {
     howEyebrow: string

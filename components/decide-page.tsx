@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ArrowRight, ChevronDown, MapPinned, Route, ShieldCheck, Sparkles } from "lucide-react"
+import { TravelMapProgress } from "@/components/city/travel-map-progress"
 import { DestinationCompare } from "@/components/destination-compare"
 import { InspireForm } from "@/components/inspire-form"
 import { LanguageMismatch } from "@/components/language-mismatch"
@@ -280,6 +281,8 @@ export function DecidePage() {
 
       <div className="decision-grid-bg px-4 pt-6 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-6xl">
+        <TravelMapProgress variant="decide" className="mb-4" />
+
         {/* Mode toggle */}
         <div className="mb-4 flex items-center gap-2 rounded-full border border-border bg-card p-1">
           <button

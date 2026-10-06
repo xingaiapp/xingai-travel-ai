@@ -5,6 +5,7 @@ import { ArrowRight, Compass, Info } from "lucide-react"
 import { useMemo, useRef, useState } from "react"
 import { useLocale } from "@/components/locale-provider"
 import { AdjustPanel } from "@/components/city/adjust-panel"
+import { CityMapToggles } from "@/components/city/city-map-toggles"
 import { CityPhoto } from "@/components/city/city-photo"
 import { PlaceCard } from "@/components/city/place-card"
 import { RouteCard } from "@/components/city/route-card"
@@ -93,6 +94,7 @@ export function CityPage({ city }: Readonly<{ city: City }>) {
             </p>
           </div>
           <div className="flex flex-col gap-2 sm:items-stretch">
+            <CityMapToggles slug={city.slug} className="sm:justify-end" />
             <a
               href="#routes"
               className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-sm hover:bg-primary/90"

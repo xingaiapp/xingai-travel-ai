@@ -5,6 +5,8 @@ import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ArrowRight, Search, X } from "lucide-react"
 import { useMemo, useState } from "react"
+import { CityMapToggles } from "@/components/city/city-map-toggles"
+import { TravelMapProgress } from "@/components/city/travel-map-progress"
 import { DecideCta } from "@/components/content-shell"
 import { useLocale } from "@/components/locale-provider"
 import {
@@ -104,6 +106,8 @@ export function CitiesIndexView() {
             {fill(m.indexCount, { live: liveCount, soon: soonCount, total: catalog.length })}
           </p>
         </header>
+
+        <TravelMapProgress variant="index" className="mb-6" />
 
         <div className="mb-6 flex flex-col gap-3">
           <label className="relative block max-w-xl">
@@ -251,12 +255,14 @@ export function CitiesIndexView() {
               return (
                 <li key={item.slug}>
                   {live ? (
-                    <Link
-                      href={`/city/${item.slug}`}
-                      className="card-hover card-hover-media group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
-                    >
-                      {body}
-                    </Link>
+                    <article className="card-hover card-hover-media group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+                      <Link href={`/city/${item.slug}`} className="flex min-h-0 flex-1 flex-col">
+                        {body}
+                      </Link>
+                      <div className="border-t border-border px-4 py-3">
+                        <CityMapToggles slug={item.slug} size="sm" />
+                      </div>
+                    </article>
                   ) : (
                     <article
                       className="flex h-full flex-col overflow-hidden rounded-2xl border border-dashed border-border bg-card/80"

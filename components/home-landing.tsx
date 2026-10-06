@@ -23,6 +23,7 @@ import {
   XCircle,
 } from "lucide-react"
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from "react"
+import { TravelMapProgress } from "@/components/city/travel-map-progress"
 import { useLocale } from "@/components/locale-provider"
 import {
   decideSteps,
@@ -461,6 +462,12 @@ export function HomeLanding() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="mt-14 border-t border-border pt-10" aria-label="travel-map-home">
+        <ScrollIn>
+          <TravelMapProgress variant="home" />
+        </ScrollIn>
       </section>
 
       <section className="mt-14 border-t border-border pt-10" aria-labelledby="home-editor-picks">

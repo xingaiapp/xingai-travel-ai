@@ -31,6 +31,7 @@ The sidebar “Continue your last trip” card and locale switcher had the same 
 | `xingai-travel-locale` | `localStorage` | `en` \| `zh` \| `ko` \| `es` |
 | `theme` | `localStorage` | `light` \| `dark` \| `system` |
 | `xingai-travel-trip-history` | `localStorage` | Recent decisions for `/trips` (max 12) — see [ADR 0007](./0007-local-trip-history.md) |
+| `xingai-travel-city-map` | `localStorage` | Want / Been marks for live city guides (this browser only; not a ranking) |
 
 ### Hydration-safe pattern
 
