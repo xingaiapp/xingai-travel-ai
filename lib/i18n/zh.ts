@@ -388,6 +388,8 @@ export const zh: Messages = {
     searchClear: "清除搜索",
     searchEmpty: "没有符合搜索或筛选的城市。",
     searchReset: "显示全部城市",
+    searchEmptyDecide: "用 Decide 比较 {q}",
+    searchEmptyDecideHint: "还没有这座城的指南 — Decide 仍可把它和备选比较。",
     filterLabel: "按地区筛选",
     filterAsia: "亚洲",
     filterEurope: "欧洲",

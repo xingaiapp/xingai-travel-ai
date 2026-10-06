@@ -189,16 +189,30 @@ export function CitiesIndexView({
         {filtered.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border bg-card/70 px-5 py-10 text-center">
             <p className="text-base font-semibold text-foreground">{m.searchEmpty}</p>
-            <button
-              type="button"
-              onClick={() => {
-                setQuery("")
-                pushFilters("all", "all")
-              }}
-              className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full border border-border px-5 text-sm font-bold text-primary hover:border-primary"
-            >
-              {m.searchReset}
-            </button>
+            {query.trim() ? (
+              <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">{m.searchEmptyDecideHint}</p>
+            ) : null}
+            <div className="mt-4 flex flex-col items-center justify-center gap-2 sm:flex-row">
+              {query.trim() ? (
+                <Link
+                  href={`/decide?places=${encodeURIComponent(query.trim().slice(0, 120))}#trip-form`}
+                  className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full bg-primary px-5 text-sm font-bold text-primary-foreground shadow-sm hover:bg-primary/90"
+                >
+                  {fill(m.searchEmptyDecide, { q: query.trim().slice(0, 40) })}
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </Link>
+              ) : null}
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("")
+                  pushFilters("all", "all")
+                }}
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-5 text-sm font-bold text-primary hover:border-primary"
+              >
+                {m.searchReset}
+              </button>
+            </div>
           </div>
         ) : (
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

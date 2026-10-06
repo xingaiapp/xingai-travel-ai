@@ -389,6 +389,8 @@ export const ko: Messages = {
     searchClear: "검색 지우기",
     searchEmpty: "검색·필터에 맞는 도시가 없습니다.",
     searchReset: "모든 도시 보기",
+    searchEmptyDecide: "Decide로 {q} 비교하기",
+    searchEmptyDecideHint: "가이드는 아직 없습니다 — Decide로 대안과 비교할 수 있습니다.",
     filterLabel: "지역별 필터",
     filterAsia: "아시아",
     filterEurope: "유럽",

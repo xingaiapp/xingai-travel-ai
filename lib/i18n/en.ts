@@ -389,6 +389,8 @@ export const en: Messages = {
     searchClear: "Clear search",
     searchEmpty: "No cities match that search or filter.",
     searchReset: "Show all cities",
+    searchEmptyDecide: "Decide with {q}",
+    searchEmptyDecideHint: "No guide yet — Decide can still compare it against alternatives.",
     filterLabel: "Filter by region",
     filterAsia: "Asia",
     filterEurope: "Europe",

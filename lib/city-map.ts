@@ -1,7 +1,10 @@
 /**
  * Per-browser “want to go / been” marks for live city guides.
  * Device-local only — same pattern as trip history (ADR 0007). Not a global ranking.
+ * Decide may soft-fill empty placesInMind / avoid from these marks — never re-ranks results client-side.
  */
+
+import type { TripContext } from "@/lib/types"
 
 export const CITY_MAP_STORAGE = "xingai-travel-city-map"
 export const CITY_MAP_UPDATED_EVENT = "xingai-travel-city-map-updated"
@@ -121,5 +124,44 @@ export function cityMapProgress(state: CityMapState, liveSlugs: readonly string[
     beenLive,
     wantLive,
     markedLive: beenLive + wantLive,
+  }
+}
+
+const PLACES_MAX = 240
+const AVOID_MAX = 200
+
+/**
+ * Soft-fill empty Decide fields from the browser city map.
+ * Want → placesInMind (boost). Been → avoid (demote). Never overwrites user or URL text.
+ */
+export function applyCityMapPrefill(
+  trip: TripContext,
+  state: CityMapState,
+  nameForSlug: (slug: string) => string | undefined
+): TripContext {
+  const wantNames = state.want.map(nameForSlug).filter((name): name is string => Boolean(name?.trim()))
+  const beenNames = state.been.map(nameForSlug).filter((name): name is string => Boolean(name?.trim()))
+  if (!wantNames.length && !beenNames.length) return trip
+
+  let placesInMind = trip.placesInMind?.trim() ?? ""
+  let avoid = trip.avoid?.trim() ?? ""
+
+  if (!placesInMind && wantNames.length) {
+    placesInMind = wantNames.join(", ").slice(0, PLACES_MAX)
+  }
+
+  if (beenNames.length) {
+    const tag = `Already visited: ${beenNames.join(", ")}`
+    const lower = avoid.toLowerCase()
+    const alreadyNoted = beenNames.some((name) => lower.includes(name.toLowerCase()))
+    if (!alreadyNoted) {
+      avoid = (avoid ? `${avoid}; ${tag}` : tag).slice(0, AVOID_MAX)
+    }
+  }
+
+  return {
+    ...trip,
+    ...(placesInMind ? { placesInMind } : {}),
+    ...(avoid ? { avoid } : {}),
   }
 }

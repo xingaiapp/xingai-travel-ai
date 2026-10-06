@@ -12,6 +12,8 @@ import { StylePaceSelector } from "@/components/style-pace-selector"
 import { TripForm } from "@/components/trip-form"
 import { TripSnapshot } from "@/components/trip-snapshot"
 import { useLocale } from "@/components/locale-provider"
+import { getCity } from "@/lib/cities"
+import { applyCityMapPrefill, parseCityMap, readCityMapRaw } from "@/lib/city-map"
 import { defaultFutureDates, defaultTrip, isPastDate } from "@/lib/mock-data"
 import type { CompareResult, InspireContext, TripContext } from "@/lib/types"
 import {
@@ -79,7 +81,7 @@ const REGIONS: TripContext["region"][] = [
   "anywhere", "europe", "asia", "north_america", "latin_america", "middle_east", "africa", "oceania",
 ]
 
-// Travel Stories link here with ?places=Hong%20Kong&region=asia so the reader starts from their own constraints.
+// Travel Stories / city search link here with ?places=…&region=… so the reader starts from their own constraints.
 function withLinkPrefill(trip: TripContext): TripContext {
   const params = new URLSearchParams(window.location.search)
   const places = params.get("places")?.trim().slice(0, 120)
@@ -90,6 +92,11 @@ function withLinkPrefill(trip: TripContext): TripContext {
     ...(places ? { placesInMind: places } : {}),
     ...(region && REGIONS.includes(region) ? { region } : {}),
   }
+}
+
+/** Want → empty placesInMind; Been → avoid. URL / session text wins. */
+function withCityMapPrefill(trip: TripContext): TripContext {
+  return applyCityMapPrefill(trip, parseCityMap(readCityMapRaw()), (slug) => getCity(slug)?.name.en)
 }
 
 export function DecidePage() {
@@ -135,7 +142,7 @@ export function DecidePage() {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       if (prefs?.vibe && prefs.flightRange && prefs.priority) setInspire((prev) => ({ ...prev, ...prefs }))
     } catch { /* keep default */ }
-    setTrip(withLinkPrefill(stored))
+    setTrip(withCityMapPrefill(withLinkPrefill(stored)))
     setTripReady(true)
   }, [])
 

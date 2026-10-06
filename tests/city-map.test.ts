@@ -1,5 +1,16 @@
 import { describe, expect, it } from "vitest"
-import { applyCityMark, cityMapProgress, markOf, parseCityMap } from "@/lib/city-map"
+import { applyCityMapPrefill, applyCityMark, cityMapProgress, markOf, parseCityMap } from "@/lib/city-map"
+import type { TripContext } from "@/lib/types"
+
+const baseTrip = {
+  dates: { from: "2026-11-01", to: "2026-11-05", nights: 4 },
+  origin: "SFO",
+  region: "anywhere",
+  budget: { amount: 2000, currency: "USD" },
+  travelers: { count: 2, type: "couple" },
+  style: ["city"],
+  pace: "balanced",
+} satisfies TripContext
 
 describe("parseCityMap", () => {
   it("returns empty lists for null / invalid JSON", () => {
@@ -42,5 +53,30 @@ describe("cityMapProgress", () => {
       wantLive: 1,
       markedLive: 2,
     })
+  })
+})
+
+describe("applyCityMapPrefill", () => {
+  const names = (slug: string) =>
+    ({ tokyo: "Tokyo", "hong-kong": "Hong Kong", seoul: "Seoul" })[slug]
+
+  it("fills empty placesInMind from want and avoid from been", () => {
+    const next = applyCityMapPrefill(
+      baseTrip,
+      { want: ["tokyo", "seoul"], been: ["hong-kong"] },
+      names
+    )
+    expect(next.placesInMind).toBe("Tokyo, Seoul")
+    expect(next.avoid).toBe("Already visited: Hong Kong")
+  })
+
+  it("does not overwrite existing placesInMind or duplicate avoid tags", () => {
+    const next = applyCityMapPrefill(
+      { ...baseTrip, placesInMind: "Paris", avoid: "Already visited: Hong Kong" },
+      { want: ["tokyo"], been: ["hong-kong"] },
+      names
+    )
+    expect(next.placesInMind).toBe("Paris")
+    expect(next.avoid).toBe("Already visited: Hong Kong")
   })
 })

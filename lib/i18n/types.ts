@@ -353,6 +353,8 @@ export interface Messages {
     searchClear: string
     searchEmpty: string
     searchReset: string
+    searchEmptyDecide: string
+    searchEmptyDecideHint: string
     filterLabel: string
     filterAsia: string
     filterEurope: string
