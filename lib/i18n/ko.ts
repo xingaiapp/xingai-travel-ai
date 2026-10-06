@@ -434,6 +434,7 @@ export const ko: Messages = {
     compareIndexTitle: "목적지 비교",
     guidesIndexTitle: "여행 결정 가이드",
     bestFor: "잘 맞는 경우",
+    pickWhen: "언제 어디를 고를지",
     factors: "차이 (정성, 엔진 점수 아님)",
     verdict: "XingAI 결론",
     tradeoffs: "Trade-offs",

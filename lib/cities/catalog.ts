@@ -194,6 +194,21 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
     intents: ["culture", "food"],
     image: "https://images.unsplash.com/photo-1586016413664-864c0dd76f53?auto=format&fit=crop&w=1600&q=80",
   },
+  {
+    slug: "new-orleans",
+    name: t("New Orleans", "新奥尔良", "뉴올리언스", "Nueva Orleans"),
+    localName: "New Orleans",
+    country: t("United States", "美国", "미국", "Estados Unidos"),
+    blurb: t(
+      "French Quarter streets, Creole food, and river-city jazz energy.",
+      "法式区街巷、克里奥尔美食，以及江城爵士的能量。",
+      "프렌치 쿼터 골목, 크리올 음식, 강변 도시의 재즈 에너지.",
+      "Calles del French Quarter, comida criolla y energía de jazz ribereña.",
+    ),
+    region: "americas",
+    intents: ["food", "culture", "first-city"],
+    image: "/assets/destination-new-orleans-card.webp",
+  },
 ]
 
 export type CityCatalogItem = CityCatalogPlan & {

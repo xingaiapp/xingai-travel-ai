@@ -15,6 +15,7 @@ import { useLocale } from "@/components/locale-provider"
 import { getCity } from "@/lib/cities"
 import { applyCityMapPrefill, parseCityMap, readCityMapRaw } from "@/lib/city-map"
 import { defaultFutureDates, defaultTrip, isPastDate } from "@/lib/mock-data"
+import { decideCompareFormIssue } from "@/lib/decide-validate"
 import type { CompareResult, InspireContext, TripContext } from "@/lib/types"
 import {
   addDecision,
@@ -194,18 +195,23 @@ export function DecidePage() {
     setFieldNotice("")
 
     if (!isInspire) {
-      if (!trip.origin.trim()) {
+      const issue = decideCompareFormIssue({
+        origin: trip.origin,
+        from: trip.dates.from,
+        to: trip.dates.to,
+      })
+      if (issue === "origin") {
         setLoadingMode(null)
         setFieldNotice(messages.form.originRequired)
         focusTripOrigin()
         return
       }
-      if (!trip.dates.from || !trip.dates.to || isPastDate(trip.dates.from) || isPastDate(trip.dates.to)) {
+      if (issue === "dates_past") {
         setLoadingMode(null)
         setFieldNotice(messages.form.datesPastError)
         return
       }
-      if (new Date(trip.dates.to).getTime() < new Date(trip.dates.from).getTime()) {
+      if (issue === "dates_order") {
         setLoadingMode(null)
         setFieldNotice(messages.form.datesOrderError)
         return

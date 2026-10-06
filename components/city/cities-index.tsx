@@ -10,7 +10,7 @@ import { TravelMapProgress } from "@/components/city/travel-map-progress"
 import { DecideCta } from "@/components/content-shell"
 import { useLocale } from "@/components/locale-provider"
 import { listCityCatalog } from "@/lib/cities/catalog"
-import { parseIntent, parseRegion, type IntentFilter, type RegionFilter } from "@/lib/cities/filters"
+import { parseIntent, parseRegion, buildCityDirectorySearch, type IntentFilter, type RegionFilter } from "@/lib/cities/filters"
 import { cityText, fill } from "@/lib/cities"
 import { cn } from "@/lib/utils"
 
@@ -50,12 +50,7 @@ export function CitiesIndexView({
   }, [])
 
   function writeUrl(nextRegion: RegionFilter, nextIntent: IntentFilter, nextQuery: string) {
-    const params = new URLSearchParams()
-    if (nextRegion !== "all") params.set("region", nextRegion)
-    if (nextIntent !== "all") params.set("intent", nextIntent)
-    const q = nextQuery.trim().slice(0, 120)
-    if (q) params.set("q", q)
-    const qs = params.toString()
+    const qs = buildCityDirectorySearch(nextRegion, nextIntent, nextQuery)
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
   }
 

@@ -398,6 +398,7 @@ export interface Messages {
     compareIndexTitle: string
     guidesIndexTitle: string
     bestFor: string
+    pickWhen: string
     factors: string
     verdict: string
     tradeoffs: string

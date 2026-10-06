@@ -15,3 +15,17 @@ export function parseIntent(raw: string | null | undefined): IntentFilter {
   if (raw && INTENTS.includes(raw as CityCatalogIntent)) return raw as CityCatalogIntent
   return "all"
 }
+
+/** Sync /city filters into a query string (`region`, `intent`, `q`). */
+export function buildCityDirectorySearch(
+  region: RegionFilter,
+  intent: IntentFilter,
+  query: string,
+): string {
+  const params = new URLSearchParams()
+  if (region !== "all") params.set("region", region)
+  if (intent !== "all") params.set("intent", intent)
+  const q = query.trim().slice(0, 120)
+  if (q) params.set("q", q)
+  return params.toString()
+}

@@ -434,6 +434,7 @@ export const es: Messages = {
     compareIndexTitle: "Comparaciones de destinos",
     guidesIndexTitle: "Guías de decisión de viaje",
     bestFor: "Mejor para",
+    pickWhen: "Cuándo elegir cada una",
     factors: "Cómo difieren (cualitativo)",
     verdict: "Veredicto XingAI",
     tradeoffs: "Trade-offs",

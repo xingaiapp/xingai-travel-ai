@@ -433,6 +433,7 @@ export const zh: Messages = {
     compareIndexTitle: "目的地对比",
     guidesIndexTitle: "旅行决策指南",
     bestFor: "更适合",
+    pickWhen: "何时选哪一座",
     factors: "差异（定性，非引擎分数）",
     verdict: "XingAI 结论",
     tradeoffs: "取舍",

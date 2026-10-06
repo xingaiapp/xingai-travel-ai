@@ -13,6 +13,7 @@ import { hongKong } from "../lib/cities/hong-kong.ts"
 import { lisbon } from "../lib/cities/lisbon.ts"
 import { losCabos } from "../lib/cities/los-cabos.ts"
 import { macau } from "../lib/cities/macau.ts"
+import { newOrleans } from "../lib/cities/new-orleans.ts"
 import { seoul } from "../lib/cities/seoul.ts"
 import { shanghai } from "../lib/cities/shanghai.ts"
 import { singapore } from "../lib/cities/singapore.ts"
@@ -33,6 +34,7 @@ const cities = [
   lisbon,
   barcelona,
   xian,
+  newOrleans,
 ]
 const errors = cities.flatMap((city) => [
   ...validateCity(city),

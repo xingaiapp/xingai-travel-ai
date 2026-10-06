@@ -42,6 +42,7 @@ const srcs = [
   "/assets/destination-taipei-card.webp",
   "/assets/destination-shanghai-card.webp",
   "/assets/destination-lisbon-card.webp",
+  "/assets/destination-new-orleans-card.webp",
   "/assets/hero-travel-decision.webp",
   "/stories/hong-kong/01/harbour-promenade-skyline",
   "/stories/hong-kong/01/red-sail-junk",

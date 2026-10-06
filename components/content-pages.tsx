@@ -148,6 +148,28 @@ export function CompareDetailView({ slug }: Readonly<{ slug: string }>) {
       </div>
 
       <section className="mt-8">
+        <h2 className="text-base font-extrabold">{messages.content.pickWhen}</h2>
+        <div className="mt-3 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-md border border-border bg-card/70 p-4">
+            <p className="text-sm font-extrabold text-primary">{pickLocalized(page.aName, locale)}</p>
+            <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-muted-foreground">
+              {page.pickWhenA.map((line) => (
+                <li key={pickLocalized(line, locale)}>• {pickLocalized(line, locale)}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-md border border-border bg-card/70 p-4">
+            <p className="text-sm font-extrabold text-primary">{pickLocalized(page.bName, locale)}</p>
+            <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-muted-foreground">
+              {page.pickWhenB.map((line) => (
+                <li key={pickLocalized(line, locale)}>• {pickLocalized(line, locale)}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-8">
         <h2 className="text-base font-extrabold">{messages.content.factors}</h2>
         <p className="mt-1 text-xs text-muted-foreground">{messages.content.fitNote}</p>
         <div className="mt-3 overflow-x-auto rounded-md border border-border">

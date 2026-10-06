@@ -22,6 +22,9 @@ export interface ComparePage {
   bName: Localized
   aBestFor: Localized[]
   bBestFor: Localized[]
+  /** Concrete “pick this city when…” cues — more decision-shaped than Best for. */
+  pickWhenA: Localized[]
+  pickWhenB: Localized[]
   factors: CompareFactor[]
   verdict: Localized
   tradeoffs: Localized

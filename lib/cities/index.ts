@@ -4,6 +4,7 @@ import { hongKong } from "./hong-kong.ts"
 import { lisbon } from "./lisbon.ts"
 import { losCabos } from "./los-cabos.ts"
 import { macau } from "./macau.ts"
+import { newOrleans } from "./new-orleans.ts"
 import { seoul } from "./seoul.ts"
 import { shanghai } from "./shanghai.ts"
 import { singapore } from "./singapore.ts"
@@ -25,6 +26,7 @@ export const cities: City[] = [
   lisbon,
   barcelona,
   xian,
+  newOrleans,
 ]
 
 export function getCity(slug: string): City | undefined {
@@ -69,6 +71,7 @@ export function cityDecideHref(city: City) {
     lisbon: "europe",
     barcelona: "europe",
     xian: "asia",
+    "new-orleans": "north_america",
   }
   const params = new URLSearchParams({ places: city.name.en })
   const region = regionBySlug[city.slug]

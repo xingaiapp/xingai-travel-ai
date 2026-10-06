@@ -28,6 +28,14 @@ export const compares: ComparePage[] = [
       L("Nightlife and youth culture", "夜生活与年轻文化", "나이트라이프·젊은 문화", "Vida nocturna y cultura joven"),
       L("Shorter long-haul budgets", "长途预算更紧时", "장거리 예산이 빠듯할 때", "Presupuestos largos más ajustados"),
     ],
+    pickWhenA: [
+      L("You want maximum neighborhood + food variety and denser transit on foot.", "你想要最大街区与美食多样性，以及更密的步行+公交。", "동네·음식 다양성과 도보+교통 밀도를 최대로 원할 때.", "Quieres máxima variedad de barrios y comida, y tránsito denso a pie."),
+      L("Japan is the priority destination, not just “Asia somewhere.”", "日本本身是优先目的地，不只是「亚洲随便哪」。", "일본 자체가 우선 목적지일 때 — ‘아시아 어딘가’가 아니라.", "Japón es el destino prioritario, no solo “Asia en algún sitio”."),
+    ],
+    pickWhenB: [
+      L("The same budget needs more stretch for food, nights out, and hotels.", "同一预算要在餐饮、夜生活和酒店上更有弹性。", "같은 예산으로 식비·밤문화·숙소를 더 늘리고 싶을 때.", "El mismo presupuesto necesita más margen en comida, noches y hoteles."),
+      L("Nightlife energy and a younger street vibe matter more than prestige dining.", "更看重夜生活与年轻街头气质，而不是精致餐饮。", "파인 다이닝보다 나이트·젊은 거리 기운이 더 중요할 때.", "La vida nocturna y el vibe joven importan más que la alta cocina."),
+    ],
     factors: [
       factor("Food", "美食", "음식", "Comida", "strong", "good"),
       factor("Walkability", "步行友好", "도보", "Caminabilidad", "strong", "good"),
@@ -87,6 +95,14 @@ export const compares: ComparePage[] = [
     bBestFor: [
       L("Warmer short breaks", "偏暖的短途", "따뜻한 단기 여행", "Escapadas más cálidas"),
       L("Gentler budgets", "预算更轻松", "더 여유로운 예산", "Presupuestos más suaves"),
+    ],
+    pickWhenA: [
+      L("You want big-city intensity and the widest food map in one trip.", "你想要大都市强度，以及一次行程里最广的美食地图。", "한 번에 대도시 강도와 가장 넓은 음식 지도를 원할 때.", "Quieres intensidad de gran ciudad y el mapa gastronómico más amplio."),
+      L("Cooler weather is fine if the city payoff is higher.", "若城市回报更高，凉一点的天气也能接受。", "도시 보상이 크다면 더 선선한 날씨도 괜찮을 때.", "El clima más fresco vale si la ciudad compensa."),
+    ],
+    pickWhenB: [
+      L("Warm evenings and a softer hotel/food bill matter more than scale.", "更看重暖夜与更柔的住宿/餐饮账单，而不是体量。", "규모보다 따뜻한 저녁·더 부드러운 숙식비가 중요할 때.", "Noches cálidas y una cuenta más suave importan más que la escala."),
+      L("You want a shorter Asia hop from some regional hubs.", "你想从部分区域枢纽走更短的亚洲跳。", "일부 지역 허브에서 더 짧은 아시아 이동을 원할 때.", "Quieres un salto asiático más corto desde algunos hubs."),
     ],
     factors: [
       factor("Food", "美食", "음식", "Comida", "strong", "strong"),
@@ -148,6 +164,14 @@ export const compares: ComparePage[] = [
       L("Longer neighborhood deep-dives", "更长的街区深潜", "긴 동네 탐험", "Inmersión larga en barrios"),
       L("Broader food map", "更广的美食地图", "더 넓은 음식 지도", "Mapa gastronómico más amplio"),
     ],
+    pickWhenA: [
+      L("You only have a compact window and want harbor + street drama fast.", "你只有紧凑窗口，想快速拿到港口与街道的戏剧感。", "짧은 일정에 항구·거리 드라마를 빨리 느끼고 싶을 때.", "Tienes una ventana compacta y quieres drama puerto-calle ya."),
+      L("You want to pair the trip with published XingAI Travel Stories for Hong Kong.", "你想把行程和已发布的香港 Stories 对照着看。", "게시된 홍콩 Stories와 나란히 보고 싶을 때.", "Quieres emparejar el viaje con las Stories publicadas de Hong Kong."),
+    ],
+    pickWhenB: [
+      L("You have more days and want neighborhood variety beyond one transit hub.", "你有更多天，想要不止一个交通枢纽周边的街区多样性。", "날이 더 있어 교통 허브 하나 이상의 동네 다양성을 원할 때.", "Tienes más días y quieres variedad de barrios más allá de un hub."),
+      L("A broader Japan food and culture marathon is the point of the trip.", "这次旅行的重点是更广的日本美食与文化马拉松。", "여행의 목적이 더 넓은 일본 미식·문화 마라톤일 때.", "El punto es un maratón más amplio de comida y cultura japonesa."),
+    ],
     factors: [
       factor("Food", "美食", "음식", "Comida", "strong", "strong"),
       factor("Walkability", "步行友好", "도보", "Caminabilidad", "good", "strong"),
@@ -207,6 +231,14 @@ export const compares: ComparePage[] = [
     bBestFor: [
       L("Easy first-timer logistics", "新手行程更好办", "초보 물류가 쉬움", "Logística fácil para debutantes"),
       L("Greener, calmer pacing", "更绿、更从容", "더 푸르고 차분한 속도", "Ritmo más verde y calmado"),
+    ],
+    pickWhenA: [
+      L("You want denser Cantonese / street-food intensity and skyline-harbor walks.", "你想要更密的粤菜/街头美食强度，以及天际线—港口散步。", "더  dens한 광동·길거리 음식과 스카이라인·항구 산책을 원할 때.", "Quieres más densidad cantonesa/street food y paseos skyline-puerto."),
+      L("A little grit and humidity are fine if the energy is higher.", "若能量更高，挤一点、湿一点也能接受。", "기운이 세면 붐빔·습도도 감수할 때.", "Un poco de grit y humedad vale si la energía es mayor."),
+    ],
+    pickWhenB: [
+      L("First-timer logistics and greener, calmer pacing matter most.", "新手行程与更绿、更从容的节奏最重要。", "초보 물류와 더 초록·차분한 속도가 최우선일 때.", "La logística fácil y un ritmo más verde/calmado pesan más."),
+      L("You prefer polished planning over raw night-market chaos every evening.", "你更想精致好规划，而不是每晚生猛夜市。", "매일 거친 야시장보다 다듬어진 계획을 선호할 때.", "Prefieres plan pulido a caos de mercado nocturno cada noche."),
     ],
     factors: [
       factor("Food", "美食", "음식", "Comida", "strong", "strong"),
@@ -268,6 +300,14 @@ export const compares: ComparePage[] = [
       L("Beach + city in one trip", "海滨 + 城市一次搞定", "해변+도시 한 번에", "Playa + ciudad en un viaje"),
       L("Architecture bucket list", "建筑打卡清单", "건축 버킷리스트", "Lista de arquitectura"),
     ],
+    pickWhenA: [
+      L("You want a compact hill-city trip you can “cover” in 3–4 days.", "你想要紧凑山城，3–4 天就能大致盖住。", "3–4일에 대략 커버 가능한 콤팩트 언덕 도시를 원할 때.", "Quieres una ciudad en colina compacta que se cubra en 3–4 días."),
+      L("Softer crowds outside peak matter more than a beach day.", "淡季外人少比海滩日更重要。", "해변 하루보다 비성수기 한산함이 더 중요할 때.", "Menos muchedumbre fuera de pico importa más que un día de playa."),
+    ],
+    pickWhenB: [
+      L("Beach + Gaudí-scale icons are non-negotiable on this trip.", "这次旅行海滨与高迪级地标不可少。", "이번 여행에 해변·가우디급 아이콘이 필수일 때.", "Playa e iconos a escala Gaudí son innegociables."),
+      L("You can add days or accept peak crowds around the big sights.", "你能加天数，或接受大体量景点周边的旺季人流。", "날을 더하거나 대형 명소 성수기 혼잡을 감수할 수 있을 때.", "Puedes sumar días o aceptar muchedumbres en los grandes iconos."),
+    ],
     factors: [
       factor("Walkability", "步行友好", "도보", "Caminabilidad", "strong", "good"),
       factor("Beach access", "近海", "해변 접근", "Acceso a playa", "weaker", "strong"),
@@ -308,6 +348,67 @@ export const compares: ComparePage[] = [
       },
     ],
   },
+
+  {
+    slug: "new-orleans-vs-los-cabos",
+    title: L("New Orleans vs Los Cabos: culture city or Baja coast?", "新奥尔良 vs 洛斯卡沃斯：文化城还是下加州海岸？", "뉴올리언스 vs 로스카보스: 문화 도시 vs 바하 해안?", "Nueva Orleans vs Los Cabos: ¿ciudad cultural o costa Baja?"),
+    oneLiner: L(
+      "New Orleans wins for food, music, and walkable historic streets; Los Cabos wins for beach rest, marina energy, and warm-water coast days.",
+      "新奥尔良胜在美食、音乐与可步行的历史街区；洛斯卡沃斯胜在海滩休息、码头活力与暖水海岸日。",
+      "뉴올리언스는 음식·음악·걷기 좋은 역사 거리에서, 로스카보스는 해변 휴식·마리나·따뜻한 해안에서 앞섭니다.",
+      "Nueva Orleans gana en comida, música y calles históricas caminables; Los Cabos en playa, marina y días de costa cálida."
+    ),
+    aName: L("New Orleans", "新奥尔良", "뉴올리언스", "Nueva Orleans"),
+    bName: L("Los Cabos", "洛斯卡沃스", "로스카보스", "Los Cabos"),
+    aBestFor: [
+      L("Food + music city breaks", "美食 + 音乐城市短途", "음식+음악 시티브레이크", "Escapadas de comida y música"),
+      L("Historic street walking", "历史街区步行", "역사 거리 걷기", "Caminar calles históricas"),
+    ],
+    bBestFor: [
+      L("Beach and resort pacing", "海滩与度假节奏", "해변·리조트 속도", "Ritmo playa y resort"),
+      L("Warm-water coast days", "暖水海岸日", "따뜻한 바다 날", "Días de costa de agua cálida"),
+    ],
+    pickWhenA: [
+      L("You want Creole / Cajun food and evening music more than a swim-every-day trip.", "你更想克里奥尔/卡津美食与夜晚音乐，而不是天天游泳。", "매일 수영보다 크리올·케준 음식과 저녁 음악이 중요할 때.", "Quieres comida criolla/cajún y música nocturna más que nadar cada día."),
+      L("Heat + walking historic cores is acceptable; beach is optional.", "能接受湿热与历史核心步行；海滩可选。", "습열·역사 중심 걷기를 감수하고 해변은 선택일 때.", "Aceptas calor y caminar el casco; la playa es opcional."),
+    ],
+    pickWhenB: [
+      L("Rest, swim, and Corridor / Arch coast days are the point of the trip.", "休息、游泳与走廊/石拱海岸日才是旅行重点。", "휴식·수영·코리도르/아치 해안이 여행의 목적일 때.", "El punto es descanso, nadar y días de costa Corredor/Arco."),
+      L("You prefer resort logistics over dense downtown evenings.", "你更喜欢度假区行程，而不是密集的市中心夜晚。", "밀집한 도심 밤보다 리조트 물류를 선호할 때.", "Prefieres logística de resort a noches densas de centro."),
+    ],
+    factors: [
+      factor("Food", "美食", "음식", "Comida", "strong", "good"),
+      factor("Beach / water", "海滩 / 海水", "해변·바다", "Playa / agua", "weaker", "strong"),
+      factor("Walkability", "步行友好", "도보", "Caminabilidad", "strong", "mixed"),
+      factor("Nightlife / music", "夜生活 / 音乐", "나이트·음악", "Noche / música", "strong", "good"),
+      factor("Rest pacing", "休息节奏", "휴식 속도", "Ritmo de descanso", "mixed", "strong"),
+    ],
+    verdict: L(
+      "Pick New Orleans for culture-and-food intensity; pick Los Cabos when warm-water rest is non-negotiable.",
+      "要文化与美食强度选新奥尔良；暖水休息不可少选洛斯卡沃斯。",
+      "문화·음식 강도면 뉴올리언스, 따뜻한 바다 휴식이 필수면 로스카보스.",
+      "Elige Nueva Orleans por intensidad cultural y gastronómica; Los Cabos si el descanso en agua cálida es innegociable."
+    ),
+    tradeoffs: L(
+      "New Orleans summers are humid and walking days need shade breaks; some evenings run late and loud. Los Cabos often needs taxis between Cabo San Lucas, the Corridor, and San José — a “one walk covers it” map is rarer.",
+      "新奥尔良夏日湿热，步行日需要遮阴休息；有些夜晚又晚又吵。洛斯卡沃斯常要在圣卢卡斯、走廊与圣何塞之间打车——很少有「一趟走完」的地图。",
+      "뉴올리언스 여름은 습하고 걷기 날엔 그늘 휴식이 필요합니다. 어떤 저녁은 늦고 시끄럽습니다. 로스카보스는 카보산루카스·코리도르·산호세 사이 택시가 잦아 ‘한 번에 걷기’ 지도가 드뭅니다.",
+      "Los veranos de Nueva Orleans son húmedos y piden pausas a la sombra; algunas noches son largas y ruidosas. Los Cabos suele pedir taxis entre Cabo, el Corredor y San José."
+    ),
+    faq: [
+      {
+        q: L("Better for a first US trip from abroad?", "从国外第一次去美国更适合哪个？", "해외에서 첫 미국 여행에는 어디?", "¿Mejor para un primer viaje a EE.UU. desde fuera?"),
+        a: L(
+          "Neither is a generic “first USA” pick — both are regional. New Orleans suits food-and-culture city travelers; Los Cabos suits beach-rest travelers who accept transfers. Put your origin flight and Avoid into /decide.",
+          "两者都不是通用的「第一次美国」——都偏区域。新奥尔良适合美食文化城市客；洛斯卡沃斯适合能接受换乘的海滩休息客。把出发航班和 Avoid 放进 /decide。",
+          "둘 다 범용 ‘첫 미국’은 아닙니다. 뉴올리언스는 음식·문화 도시형, 로스카보스는 환승을 감수하는 해변 휴식형. 출발 항공과 Avoid를 /decide에 넣으세요.",
+          "Ninguna es el “primer EE.UU.” genérico. Nueva Orleans encaja con ciudad comida-cultura; Los Cabos con playa y traslados. Mete vuelo y Avoid en /decide."
+        ),
+      },
+    ],
+    relatedCitySlugs: ["new-orleans", "los-cabos"],
+  },
+
 ]
 
 export function getCompare(slug: string) {
