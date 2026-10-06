@@ -326,20 +326,22 @@ export function EpisodeView({
             <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">{t(episode.dek)}</p>
           </header>
         </div>
-        <figure className="page-hero-full mt-6 w-full overflow-hidden bg-black">
-          {episode.heroVideo ? (
+        {episode.heroVideo ? (
+          <figure className="mx-auto mt-6 w-full max-w-3xl px-4 sm:px-6 lg:px-10">
             <video
               controls
               playsInline
               preload="metadata"
               poster={episode.heroVideo.poster.src ? `${episode.heroVideo.poster.src}-1600.webp` : undefined}
-              width={episode.heroVideo.poster.width}
-              height={episode.heroVideo.poster.height}
-              className="h-full w-full object-cover"
+              width={720}
+              height={1280}
+              className="mx-auto block h-auto max-h-[min(78svh,42rem)] w-full max-w-[22.5rem] rounded-xl bg-black object-contain"
             >
               <source src={episode.heroVideo.src} type="video/mp4" />
             </video>
-          ) : (
+          </figure>
+        ) : (
+          <figure className="page-hero-full mt-6 w-full overflow-hidden bg-muted">
             <StoryImage
               photo={episode.cover}
               priority
@@ -347,8 +349,8 @@ export function EpisodeView({
               className="h-full max-h-none w-full rounded-none object-cover"
               sizes="100vw"
             />
-          )}
-        </figure>
+          </figure>
+        )}
         {(episode.heroVideo?.poster.caption ?? episode.cover.caption) ? (
           <p className="mx-auto mt-3 max-w-3xl px-4 text-center text-sm leading-relaxed text-muted-foreground sm:px-6 lg:px-10">
             {t(episode.heroVideo?.poster.caption ?? episode.cover.caption!)}
