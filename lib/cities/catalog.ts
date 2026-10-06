@@ -1,5 +1,6 @@
 import type { CityText } from "./types"
 import { cities, getCity } from "./index.ts"
+import { resolveCityImageSrc } from "./share-image.ts"
 
 /**
  * Planned city-guide directory (ADR 0008).
@@ -214,7 +215,7 @@ export function listCityCatalog(): CityCatalogItem[] {
       country: live.country,
       places: live.places.length,
       routes: live.routes.length,
-      image: /\.(webp|jpe?g|png)$/i.test(live.hero.src) ? live.hero.src : `${live.hero.src}-1600.webp`,
+      image: resolveCityImageSrc(live.hero.src),
     }
   })
 }

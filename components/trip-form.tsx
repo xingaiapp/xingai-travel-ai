@@ -59,13 +59,8 @@ export function TripForm({ value, onChange }: TripFormProps) {
   }
 
   function changeRegion(region: TripRegion) {
-    const current = (value.placesInMind ?? "").trim()
-    const examples = Object.values(messages.form.regionExamples)
-    const shouldRefreshExample = current.length === 0 || examples.includes(current)
-    patch({
-      region,
-      placesInMind: shouldRefreshExample ? messages.form.regionExamples[regionLabelKey(region)] : value.placesInMind,
-    })
+    // Region examples stay in the placeholder only — never overwrite the field as a fake answer.
+    patch({ region })
   }
 
   return (

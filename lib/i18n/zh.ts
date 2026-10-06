@@ -100,6 +100,7 @@ export const zh: Messages = {
     avoid: "想避免",
     datesPastError: "请选择今天或之后的出行日期。",
     datesOrderError: "结束日期不能早于开始日期。",
+    originRequired: "比较前请先填写出发地。",
   },
   snapshot: {
     title: "旅行摘要",

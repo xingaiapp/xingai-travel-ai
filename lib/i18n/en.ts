@@ -100,6 +100,7 @@ export const en: Messages = {
     avoid: "Avoid",
     datesPastError: "Pick travel dates that start today or later.",
     datesOrderError: "End date must be on or after the start date.",
+    originRequired: "Add where you’re flying from before comparing.",
   },
   snapshot: {
     title: "Trip Snapshot",

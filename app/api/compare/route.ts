@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid trip context", code: "BAD_REQUEST" }, { status: 400 })
   }
 
+  const trip = parsed.data as TripContext
   const ip = getClientIp(request)
   const limited = await checkDailyLimit(ip)
   if (limited) {
@@ -42,7 +43,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(limited, { status: 429 })
   }
 
-  const prompt = buildComparePrompt(parsed.data as TripContext)
+  const prompt = buildComparePrompt(trip)
   const model = process.env.OPENAI_TRAVEL_MODEL?.trim() || "gpt-4o-mini"
   const openai = new OpenAI({ apiKey })
 
@@ -69,7 +70,7 @@ export async function POST(request: NextRequest) {
     const choice = completion.choices[0]
     const raw = choice?.message?.content ?? ""
     try {
-      return normalizeCompareResult(JSON.parse(raw) as CompareResult)
+      return normalizeCompareResult(JSON.parse(raw) as CompareResult, trip)
     } catch (err) {
       logDecisionModelFailure("compare", err, {
         finish_reason: choice?.finish_reason,

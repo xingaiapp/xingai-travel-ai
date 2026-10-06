@@ -23,16 +23,17 @@ export function isPastDate(value: string, today = new Date()): boolean {
   return day.getTime() < start.getTime()
 }
 
+/** Empty traveler fields — placeholders only in the form. Do not pre-fill wishes/avoid/origin. */
 export const defaultTrip: TripContext = {
   dates: defaultFutureDates(4),
-  origin: "San Francisco (SFO)",
+  origin: "",
   region: "anywhere",
   budget: { amount: 2000, currency: "USD" },
   travelers: { count: 2, type: "couple" },
-  notes: "Warm weather, walkable cities, great food, minimal driving.",
+  notes: "",
   style: ["city"],
   pace: "balanced",
-  avoid: "Long flights, extreme heat",
+  avoid: "",
   locale: "en",
 }
 

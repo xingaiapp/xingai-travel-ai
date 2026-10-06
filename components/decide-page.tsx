@@ -178,6 +178,11 @@ export function DecidePage() {
     setErrors((prev) => ({ ...prev, [runMode]: "" }))
 
     if (!isInspire) {
+      if (!trip.origin.trim()) {
+        setLoadingMode(null)
+        setErrors((prev) => ({ ...prev, [runMode]: messages.form.originRequired }))
+        return
+      }
       if (!trip.dates.from || !trip.dates.to || isPastDate(trip.dates.from) || isPastDate(trip.dates.to)) {
         setLoadingMode(null)
         setErrors((prev) => ({ ...prev, [runMode]: messages.form.datesPastError }))

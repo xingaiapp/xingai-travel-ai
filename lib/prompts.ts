@@ -35,6 +35,12 @@ Trip context:
 - Notes: ${ctx.notes || "none"}
 - Avoid: ${ctx.avoid || "none"}
 
+HARD CONSTRAINTS (must obey — soft preferences never override these):
+- Treat Avoid as hard constraints. Do not place a destination in the top 3 if it clearly violates Avoid.
+- If Avoid mentions long flights (or similar) and the trip is 5 nights or fewer, do not recommend destinations whose scores.flightTime is about 9 hours or longer from the given origin.
+- If Avoid mentions long flights on a longer trip, keep flight times under ~12 hours unless no realistic alternative exists — and say so in tradeoffs.
+- Prefer a slightly weaker soft fit that respects Avoid over a high-scoring destination that breaks Avoid.
+
 Return this exact JSON structure:
 {
   "winner": "destination name",
@@ -61,10 +67,11 @@ Return this exact JSON structure:
 Be honest about trade-offs. Do not recommend a destination that does not fit the budget.
 - Do not claim a destination "fits the budget" or rate its budget fit; describe relative cost instead (e.g. "cheaper than Porto", "hotels spike in December"). A line-by-line cost estimate is produced later.
 - scores.weather must name the likely weather for THESE travel dates in that city (not blank, not "N/A", not a copy-paste of another city).
-- scores.flightTime must differ when hubs or stops differ (include hours + stops from the given origin).
+- scores.flightTime must differ when hubs or stops differ (include hours + stops from the given origin). Prefer realistic nonstop when it exists; do not invent a connection.
+- Never assume the traveler's citizenship or visa status (no "U.S. citizens do not need a visa" unless the trip context states nationality).
 - scores.walkability must not be identical across all three unless truly the same — prefer Excellent / Good / Moderate with a short reason only if needed.
 - whyNotOthers must name each runner-up with a different concrete reason (cost, weather, flight friction, or fit) — never three identical lines.
-If places already in mind are provided, compare those first unless they clearly violate the trip constraints.
+If places already in mind are provided, compare those first unless they clearly violate the trip constraints or Avoid.
 If no places are provided, use the destination range as the search boundary.
 `.trim()
 }

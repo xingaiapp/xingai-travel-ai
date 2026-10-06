@@ -253,8 +253,7 @@ function HeroCarousel({
                   fill
                   priority={slideIndex === 0}
                   quality={95}
-                  unoptimized
-                  sizes="100vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 100vw, 1280px"
                   aria-hidden={!active}
                   style={
                     {

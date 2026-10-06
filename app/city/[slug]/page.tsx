@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { CityPage } from "@/components/city/city-page"
 import { cities, getCity } from "@/lib/cities"
+import { cityOgImage } from "@/lib/cities/share-image"
 import { pageMeta } from "@/lib/seo-meta"
 
 type Props = { params: Promise<{ slug: string }> }
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!city) return {}
   const title = `First time in ${city.name.en}?`
   const description = `${city.places.length} sourced places and ${city.routes.length} first-visit day routes for ${city.name.en} — with why, who it suits, and trade-offs.`
-  const image = /\.(webp|jpe?g|png)$/i.test(city.hero.src) ? city.hero.src : `${city.hero.src}-1600.webp`
+  const image = cityOgImage(city.hero.src)
   return pageMeta({
     path: `/city/${city.slug}`,
     title,

@@ -100,6 +100,7 @@ export const ko: Messages = {
     avoid: "피하고 싶은 것",
     datesPastError: "오늘 이후의 여행 날짜를 선택하세요.",
     datesOrderError: "종료일은 시작일 이후여야 합니다.",
+    originRequired: "비교하기 전에 출발지를 입력하세요.",
   },
   snapshot: {
     title: "여행 요약",
