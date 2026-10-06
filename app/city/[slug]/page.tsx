@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { CityPage } from "@/components/city/city-page"
 import { cities, getCity } from "@/lib/cities"
+import { pageMeta } from "@/lib/seo-meta"
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -14,15 +15,15 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const city = getCity((await params).slug)
   if (!city) return {}
-  const title = `First time in ${city.name.en}? Places and 3 ways to spend the day`
-  const description = `${city.places.length} places worth knowing and ${city.routes.length} reference routes for a first visit to ${city.name.en}, each with why, who it suits and trade-offs. Every fact is sourced.`
+  const title = `First time in ${city.name.en}?`
+  const description = `${city.places.length} sourced places and ${city.routes.length} first-visit day routes for ${city.name.en} — with why, who it suits, and trade-offs.`
   const image = /\.(webp|jpe?g|png)$/i.test(city.hero.src) ? city.hero.src : `${city.hero.src}-1600.webp`
-  return {
+  return pageMeta({
+    path: `/city/${city.slug}`,
     title,
     description,
-    alternates: { canonical: `/city/${city.slug}` },
-    openGraph: { title, description, type: "website", images: [image] },
-  }
+    images: [{ url: image, alt: `${city.name.en} city guide` }],
+  })
 }
 
 export default async function CityRoute({ params }: Props) {

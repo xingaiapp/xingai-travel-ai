@@ -68,7 +68,9 @@ export function CityPage({ city }: Readonly<{ city: City }>) {
         <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">{m.eyebrow}</p>
         <h1 className="mt-2 font-display text-4xl font-bold tracking-tight sm:text-5xl">
           {name}
-          {locale !== "zh" && <span className="ml-3 text-2xl font-normal text-muted-foreground sm:text-3xl">{city.localName}</span>}
+          {locale !== "zh" && city.localName && city.localName !== name ? (
+            <span className="ml-3 text-2xl font-normal text-muted-foreground sm:text-3xl">{city.localName}</span>
+          ) : null}
         </h1>
       </header>
 

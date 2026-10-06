@@ -1,11 +1,13 @@
 import type { Metadata } from "next"
 import { LegalPage } from "@/components/legal-page"
+import { pageMeta } from "@/lib/seo-meta"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/disclaimer",
   title: "Travel Disclaimer",
-  description: "Travel disclaimer for prices, entry rules, AI limitations, and safety verification.",
-  alternates: { canonical: "/disclaimer" },
-}
+  description:
+    "XingAI Travel provides suggestions and estimates, not professional advice. Verify prices, rules, and safety before you book.",
+})
 
 export default function Page() {
   return <LegalPage kind="disclaimer" />

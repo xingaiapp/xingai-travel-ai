@@ -37,6 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "XingAI Travel — Make a better travel decision",
     description: "Compare options and trade-offs so you can decide. Other travel sites help you search. You stay in control.",
+    url: "/",
     images: [{ url: "/assets/home-hero-hong-kong.webp", alt: "Traveler overlooking Victoria Harbour at sunset" }],
     type: "website",
   },

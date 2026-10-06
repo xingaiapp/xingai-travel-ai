@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { GuideDetailView } from "@/components/content-pages"
 import { getGuide, guides } from "@/lib/content"
+import { pageMeta } from "@/lib/seo-meta"
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -13,11 +14,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const page = getGuide(slug)
   if (!page) return { title: "Guide" }
-  return {
+  return pageMeta({
+    path: `/guides/${slug}`,
     title: page.title.en,
     description: page.oneLiner.en,
-    alternates: { canonical: `/guides/${slug}` },
-  }
+  })
 }
 
 export default async function Page({ params }: Props) {

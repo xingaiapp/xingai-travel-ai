@@ -55,6 +55,7 @@ Core flow:
 Primary pages:
 - / (product home; primary action is Make My Travel Decision)
 - /decide (the Travel Decision form; self-canonical)
+- /city (city-guide directory; search + region + trip-style filters)
 - /privacy
 - /terms
 - /disclaimer

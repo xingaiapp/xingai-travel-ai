@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { SeasonView } from "@/components/story-view"
+import { pageMeta } from "@/lib/seo-meta"
 import { getSeason, publishedEpisodes, visibleEpisodes, visibleSeasons } from "@/lib/stories"
 
 type Props = { params: Promise<{ season: string }> }
@@ -15,13 +16,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const season = getSeason((await params).season)
   if (!season) return {}
   const title = `${season.title.en} — ${season.subtitle.en}`
+  const description =
+    season.intro.en.length > 160 ? `${season.intro.en.slice(0, 157).trimEnd()}…` : season.intro.en
   const image = season.cover.src ? `${season.cover.src}-1600.webp` : undefined
   return {
-    title,
-    description: season.intro.en,
-    alternates: { canonical: `/stories/${season.slug}` },
+    ...pageMeta({
+      path: `/stories/${season.slug}`,
+      title,
+      description,
+      images: image ? [{ url: image, alt: season.title.en }] : undefined,
+    }),
     robots: publishedEpisodes(season).length > 0 ? undefined : { index: false, follow: false },
-    openGraph: { title, description: season.intro.en, type: "website", images: image ? [image] : undefined },
   }
 }
 

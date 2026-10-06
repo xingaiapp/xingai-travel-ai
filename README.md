@@ -40,6 +40,7 @@ Do not thrash title / brand strings for ~30 days unless a factual error. Brand n
 | **Decide / City / Stories heroes (2026-10-05)** | Product **photo** heroes are **full-bleed** edge-to-edge (`page-hero-full`): `/decide`, `/city/*`, Stories season + episode stills. Episode **hero videos** stay phone-width (`max-w-[22.5rem]`, `object-contain`) — 720×1280 clips must not stretch full-bleed or they look soft. Body copy stays constrained below. HK city hero uses `/assets/home-hero-hong-kong.webp` (2560×1440). |
 | **City guides batch (2026-10-06)** | Live on `/city`: Top 10 + **Xi'an** (Shaanxi 陕西 — not Shanxi 山西). Each guide 15–25 places + 3 routes (ADR 0008). `/city`: **search** + region chips + **trip-style intents** (First city / Beach & rest / Food-first / Culture & history) via `?intent=` / `?region=`. Home **Editor picks / Worth seeing once** + “Browse by trip style”. |
 | **Your travel map (2026-10-06)** | Per-browser **Want to go / Been** on live city guides (`localStorage` `xingai-travel-city-map`). Progress strip on `/`, `/city`, and `/decide` (decide only when marked). Not a global Top 100 or Desire Score — device-local memory only; does **not** change Decide ranking. |
+| **SEO/AEO pass (2026-10-06)** | `/city` no longer CSR-bailouts (`useSearchParams` removed — filters from server `searchParams`). Shared `pageMeta()` sets self-canonical + matching `og:url` / Twitter on all sitemap routes. City titles shortened; H1 drops duplicate Latin `localName`. |
 | **Stories media (2026-10-05)** | All **31** published episode stills (HK×2 + Macau×2) export at **1600×2133** (`-800`/`-1600` WebP). Story UI prefers the 1600w asset on larger screens. Hero videos (HK/Macau EP01–02, 720×1280) render in a narrow portrait frame — not wide `page-hero-full`. |
 | **Decision honesty (2026-10-05)** | A missing `OPENAI_API_KEY` returns a labeled demo and does not save it as a trip. A failed compare or plan shows a retry and does not substitute the Lisbon sample. API errors stay generic; server logs OpenAI status / type / `finish_reason` only. Daily demo quota counts **successful** decisions only; rate-limit UI hides Try again. Partner search links stay up. Revenue stays **NOT AVAILABLE** until a `NEXT_PUBLIC_*` partner id is set; the booking note says XingAI is not earning a commission. |
 | **App shell** | Next.js 16 App Router, React 19, Tailwind 4. Desktop: top nav (Home / Decide / Stories + red **New** / Your Trips) + CTA — **no sidebar**. Mobile: drawer (no Legal/Help blocks) + bottom tabs. |
@@ -59,18 +60,18 @@ Do not thrash title / brand strings for ~30 days unless a factual error. Brand n
 
 ### Indexability notes (2026-10-05)
 
-Technical crawl of all **28** sitemap URLs (HTTP GET, not Search Console):
+Technical crawl of sitemap URLs (HTTP GET, not Search Console) — re-checked **2026-10-06**:
 
-- Every URL returned **200**
-- No `noindex` in page robots meta (default index)
-- Each page has **1** H1 in the HTML response
-- Self-canonical present on content routes; `/` canonical is `https://travel.xingai.app`
-- `robots.txt` allows `/` and points at `sitemap.xml`
-- `/result` and `/trips` stay out of the sitemap by design
+- Sitemap lists **39** public URLs; every URL returned **200**
+- No `noindex` on sitemap routes (`/result` and `/trips` stay `noindex`, out of sitemap)
+- Each indexable page has **1** H1 in the first HTML (including `/city` after SSR fix)
+- Self-canonical + matching `og:url` / Twitter on content routes via `lib/seo-meta.ts`
+- Sitewide JSON-LD in first HTML; city pages add `TouristDestination`; `/` and `/decide` add page JSON-LD
+- `robots.txt` allows `/` and points at `sitemap.xml`; `/llms.txt` lists primary + content-graph routes
+- Bot parity sample (Googlebot / GPTBot / PerplexityBot) same title + H1 on `/`
+- `/legal/{privacy,terms,disclaimer}` → 307 to local legal pages
 
-This does **not** prove Google has indexed the site. Confirm with Search Console URL Inspection / Coverage. Public `site:travel.xingai.app` alone is not an indexation verdict.
-
-Honest content expansion: deepen published city guides + compares/guides/stories. Prefer Hong Kong–quality pages over empty sitemap stubs. Next city candidates after this batch: Macau, Singapore — then Los Cabos with a beach-day template.
+This does **not** prove Google has indexed the site. Confirm with Search Console URL Inspection / Coverage.
 
 ---
 

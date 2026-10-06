@@ -1,23 +1,19 @@
 import type { Metadata } from "next"
-import { Suspense } from "react"
-import { CitiesIndexView } from "@/components/city/cities-index"
+import { CitiesIndexView, parseIntent, parseRegion } from "@/components/city/cities-index"
+import { pageMeta } from "@/lib/seo-meta"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/city",
   title: "City guides",
   description:
-    "Browse XingAI Travel city guides — Hong Kong, Tokyo, Seoul, Taipei, Macau, Singapore, Los Cabos, Shanghai, Lisbon, Barcelona, Xi'an, and more. Each live guide lists sourced places and three day routes.",
-  alternates: { canonical: "/city" },
-  openGraph: {
-    title: "City guides · XingAI Travel",
-    description:
-      "Search and filter first-visit city guides with sourced places and three reference day routes.",
-  },
+    "First-visit city guides with sourced places and three day routes — Hong Kong, Tokyo, Seoul, Taipei, Macau, Singapore, Los Cabos, Shanghai, Lisbon, Barcelona, and Xi'an.",
+})
+
+type Props = {
+  searchParams: Promise<{ region?: string; intent?: string }>
 }
 
-export default function CityIndexPage() {
-  return (
-    <Suspense fallback={<main className="flex-1 px-4 pb-28 pt-6 sm:px-6 lg:px-10" />}>
-      <CitiesIndexView />
-    </Suspense>
-  )
+export default async function CityIndexPage({ searchParams }: Props) {
+  const sp = await searchParams
+  return <CitiesIndexView region={parseRegion(sp.region)} intent={parseIntent(sp.intent)} />
 }

@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { ArrowRight, Search, X } from "lucide-react"
 import { useMemo, useState } from "react"
 import { CityMapToggles } from "@/components/city/city-map-toggles"
@@ -17,8 +17,8 @@ import {
 import { cityText, fill } from "@/lib/cities"
 import { cn } from "@/lib/utils"
 
-type RegionFilter = "all" | CityCatalogRegion
-type IntentFilter = "all" | CityCatalogIntent
+export type RegionFilter = "all" | CityCatalogRegion
+export type IntentFilter = "all" | CityCatalogIntent
 
 const REGIONS: CityCatalogRegion[] = ["asia", "europe", "americas"]
 const INTENTS: CityCatalogIntent[] = ["first-city", "beach", "food", "culture"]
@@ -27,28 +27,31 @@ function normalize(value: string) {
   return value.normalize("NFKC").toLowerCase().trim()
 }
 
-function parseRegion(raw: string | null): RegionFilter {
+export function parseRegion(raw: string | null | undefined): RegionFilter {
   if (raw && REGIONS.includes(raw as CityCatalogRegion)) return raw as CityCatalogRegion
   return "all"
 }
 
-function parseIntent(raw: string | null): IntentFilter {
+export function parseIntent(raw: string | null | undefined): IntentFilter {
   if (raw && INTENTS.includes(raw as CityCatalogIntent)) return raw as CityCatalogIntent
   return "all"
 }
 
-/** Full city-guide directory: live guides + Coming soon for the roadmap (and more later). */
-export function CitiesIndexView() {
+/**
+ * Full city-guide directory. Filters come from the server `searchParams` so the
+ * first HTML includes H1 + city cards (no useSearchParams CSR bailout).
+ */
+export function CitiesIndexView({
+  region,
+  intent,
+}: Readonly<{ region: RegionFilter; intent: IntentFilter }>) {
   const { locale, messages } = useLocale()
   const m = messages.city
   const catalog = listCityCatalog()
   const router = useRouter()
   const pathname = usePathname()
-  const searchParams = useSearchParams()
 
   const [query, setQuery] = useState("")
-  const region = parseRegion(searchParams.get("region"))
-  const intent = parseIntent(searchParams.get("intent"))
 
   function pushFilters(nextRegion: RegionFilter, nextIntent: IntentFilter) {
     const params = new URLSearchParams()
@@ -229,7 +232,7 @@ export function CitiesIndexView() {
                   <div className="flex flex-1 flex-col gap-2 p-4">
                     <h2 className="text-lg font-extrabold tracking-tight">
                       {name}
-                      {locale !== "zh" && item.localName ? (
+                      {locale !== "zh" && item.localName && item.localName !== name ? (
                         <span className="ml-2 text-sm font-normal text-muted-foreground">{item.localName}</span>
                       ) : null}
                     </h2>

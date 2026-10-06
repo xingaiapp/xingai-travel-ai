@@ -1,11 +1,12 @@
 import type { Metadata } from "next"
 import { LegalPage } from "@/components/legal-page"
+import { pageMeta } from "@/lib/seo-meta"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/terms",
   title: "Terms of Use",
-  description: "Terms of use for XingAI Travel as a travel decision-support tool.",
-  alternates: { canonical: "/terms" },
-}
+  description: "Terms of use for XingAI Travel — suggestions only; you stay responsible for booking and travel decisions.",
+})
 
 export default function Page() {
   return <LegalPage kind="terms" />
