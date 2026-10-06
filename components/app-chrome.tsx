@@ -21,6 +21,11 @@ import { LocaleSwitcher } from "@/components/locale-switcher"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { useLocale } from "@/components/locale-provider"
 import type { Messages } from "@/lib/i18n/types"
+import {
+  asPublicLocale,
+  localizedPublicHref,
+  stripLocalePrefix,
+} from "@/lib/public-locale"
 import { visibleSeasons } from "@/lib/stories"
 import { COMPARE_STORAGE } from "@/lib/trip-history"
 import { cn, getCityImage } from "@/lib/utils"
@@ -136,14 +141,16 @@ function loadLastDecision(): LastDecision | null {
 
 export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname()
-  const { messages } = useLocale()
+  const { locale, messages } = useLocale()
+  const barePath = stripLocalePrefix(pathname).path
+  const hrefFor = (path: string) => localizedPublicHref(asPublicLocale(locale), path)
   const [open, setOpen] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
   const [soon, setSoon] = useState("")
   const [lastDecision, setLastDecision] = useState<LastDecision | null>(null)
   const moreMenuId = useId()
   const moreRef = useRef<HTMLDivElement>(null)
-  const moreActive = isMoreRoute(pathname)
+  const moreActive = isMoreRoute(barePath)
 
   useEffect(() => {
     function syncLastDecision() {
@@ -200,7 +207,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             <Menu className="h-5 w-5" aria-hidden />
           </button>
           <Link
-            href="/"
+            href={hrefFor("/")}
             className="flex min-w-0 flex-1 items-center justify-center gap-2 lg:hidden"
             aria-label={messages.chrome.brand}
           >
@@ -214,10 +221,10 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             />
             <span className="min-w-0 truncate text-sm font-bold">
               <span className="text-primary">Travel</span>
-              <span className="text-muted-foreground"> · {mobileHeaderTitle(pathname, messages)}</span>
+              <span className="text-muted-foreground"> · {mobileHeaderTitle(barePath, messages)}</span>
             </span>
           </Link>
-          <Link href="/" className="hidden min-w-0 shrink-0 items-center gap-2.5 lg:flex" aria-label={messages.chrome.brand}>
+          <Link href={hrefFor("/")} className="hidden min-w-0 shrink-0 items-center gap-2.5 lg:flex" aria-label={messages.chrome.brand}>
             <Image
               src="/assets/logo-mark.svg"
               alt=""
@@ -232,7 +239,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           </Link>
           <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex" aria-label="Primary">
             {navItems.map((item) => {
-              const active = isActive(pathname, item.href)
+              const active = isActive(barePath, item.href)
               const label = messages.chrome[item.key]
               if (item.soon) {
                 return (
@@ -249,7 +256,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
               return (
                 <Link
                   key={item.key}
-                  href={item.href}
+                  href={hrefFor(item.href)}
                   className={cn(
                     "inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold transition",
                     active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -285,11 +292,11 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                   className="absolute left-1/2 top-[calc(100%+0.35rem)] z-50 w-48 -translate-x-1/2 rounded-xl border border-border bg-card p-1.5 shadow-lg"
                 >
                   {moreLinks.map((item) => {
-                    const active = isActive(pathname, item.href)
+                    const active = isActive(barePath, item.href)
                     return (
                       <Link
                         key={item.href}
-                        href={item.href}
+                        href={hrefFor(item.href)}
                         role="menuitem"
                         onClick={() => setMoreOpen(false)}
                         className={cn(
@@ -311,7 +318,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           </div>
           <div className="hidden shrink-0 items-center gap-2 lg:flex">
             <Link
-              href={isDecideRoute(pathname) ? "/decide#trip-form" : "/decide"}
+              href={isDecideRoute(barePath) ? `${hrefFor("/decide")}#trip-form` : hrefFor("/decide")}
               className="inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-bold text-primary-foreground shadow-[0_6px_16px_color-mix(in_oklch,var(--primary)_28%,transparent)]"
             >
               {messages.chrome.decideCta}
@@ -328,7 +335,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
         <footer className="border-t border-border bg-background/70 px-4 py-5 pb-24 text-xs text-muted-foreground lg:px-8 lg:pb-5">
           <div className="card-hover card-hover-media mx-auto mb-5 max-w-6xl overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
             <Link
-              href="/decide"
+              href={hrefFor("/decide")}
               className="group relative block aspect-[16/9] max-h-72 w-full sm:max-h-80 lg:max-h-96"
             >
               <Image
@@ -353,7 +360,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             <p className="font-semibold">{messages.chrome.footerCopyright}</p>
             <nav className="flex flex-wrap gap-x-4 gap-y-2" aria-label="Footer legal">
               {legalLinks.map((item) => (
-                <Link key={item.href} href={item.href} className="font-semibold transition hover:text-primary">
+                <Link key={item.href} href={hrefFor(item.href)} className="font-semibold transition hover:text-primary">
                   {messages.chrome[item.key]}
                 </Link>
               ))}
@@ -361,11 +368,11 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           </div>
           <div className="mx-auto mt-3 flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/60 pt-3">
             <span className="font-semibold text-foreground">{messages.content.discover}</span>
-            <Link href="/how-it-works" className="hover:text-primary">{messages.content.howItWorksNav}</Link>
-            <Link href="/faq" className="hover:text-primary">{messages.content.faqNav}</Link>
-            <Link href="/city" className="hover:text-primary">{messages.content.citiesNav}</Link>
-            <Link href="/compare" className="hover:text-primary">{messages.content.compareNav}</Link>
-            <Link href="/guides" className="hover:text-primary">{messages.content.guidesNav}</Link>
+            <Link href={hrefFor("/how-it-works")} className="hover:text-primary">{messages.content.howItWorksNav}</Link>
+            <Link href={hrefFor("/faq")} className="hover:text-primary">{messages.content.faqNav}</Link>
+            <Link href={hrefFor("/city")} className="hover:text-primary">{messages.content.citiesNav}</Link>
+            <Link href={hrefFor("/compare")} className="hover:text-primary">{messages.content.compareNav}</Link>
+            <Link href={hrefFor("/guides")} className="hover:text-primary">{messages.content.guidesNav}</Link>
           </div>
           {/* XingAI family links: plain anchors so crawlers follow them (project-init footer). */}
           <nav
@@ -394,7 +401,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
         <div className="mx-auto flex max-w-md items-stretch justify-between px-2 py-1.5">
           {navItems.map((item) => {
             const Icon = item.icon
-            const active = isActive(pathname, item.href)
+            const active = isActive(barePath, item.href)
             const label = messages.chrome[item.key]
             if (item.soon) {
               return (
@@ -405,7 +412,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
               )
             }
             return (
-              <Link key={item.key} href={item.href} className={cn("relative flex flex-1 flex-col items-center gap-1 rounded-md px-1 py-1.5", active ? "text-primary" : "text-muted-foreground")}>
+              <Link key={item.key} href={hrefFor(item.href)} className={cn("relative flex flex-1 flex-col items-center gap-1 rounded-md px-1 py-1.5", active ? "text-primary" : "text-muted-foreground")}>
                 <span className="relative">
                   <Icon className="h-5 w-5" aria-hidden />
                   {item.isNew ? (
@@ -427,7 +434,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           <aside className="absolute left-0 top-0 flex h-full w-[min(21rem,88vw)] flex-col border-r border-border bg-card shadow-2xl">
             <div className="flex items-center justify-between border-b border-border px-4 py-4 pt-[max(1rem,env(safe-area-inset-top))]">
               <Link
-                href="/"
+                href={hrefFor("/")}
                 onClick={() => setOpen(false)}
                 className="flex min-w-0 items-center gap-3"
                 aria-label={messages.chrome.brand}
@@ -454,7 +461,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                 <nav className="grid gap-1" aria-label="Mobile primary">
                   {navItems.map((item) => {
                     const Icon = item.icon
-                    const active = isActive(pathname, item.href)
+                    const active = isActive(barePath, item.href)
                     const label = messages.chrome[item.key]
 
                     if (item.soon) {
@@ -480,7 +487,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                     return (
                       <Link
                         key={item.href}
-                        href={item.href}
+                        href={hrefFor(item.href)}
                         onClick={() => setOpen(false)}
                         className={cn(
                           "flex items-center gap-3 rounded-md px-3 py-3 text-left transition",
@@ -504,11 +511,11 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                   <nav className="mt-2 grid gap-1" aria-label={messages.chrome.moreNav}>
                     {moreLinks.map((item) => {
                       const Icon = item.icon
-                      const active = isActive(pathname, item.href)
+                      const active = isActive(barePath, item.href)
                       return (
                         <Link
                           key={item.href}
-                          href={item.href}
+                          href={hrefFor(item.href)}
                           onClick={() => setOpen(false)}
                           className={cn(
                             "flex min-h-11 items-center gap-3 rounded-md px-3 py-2.5 text-left transition",

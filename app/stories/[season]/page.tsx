@@ -21,12 +21,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     season.intro.en.length > 160 ? `${season.intro.en.slice(0, 157).trimEnd()}…` : season.intro.en
   const image = season.cover.src ? toShareJpeg(season.cover.src) : undefined
   return {
-    ...pageMeta({
+    ...(await pageMeta({
       path: `/stories/${season.slug}`,
       title,
       description,
       images: image ? [{ url: image, alt: season.title.en }] : undefined,
-    }),
+    })),
     robots: publishedEpisodes(season).length > 0 ? undefined : { index: false, follow: false },
   }
 }

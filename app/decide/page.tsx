@@ -7,12 +7,14 @@ const title = "Decide your trip · XingAI Travel"
 const description =
   "Describe your real constraints, compare destinations with honest trade-offs, then open partner search links to book the key pieces."
 
-export const metadata: Metadata = pageMeta({
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMeta({
   path: "/decide",
   title,
   description,
   absoluteTitle: true,
 })
+}
 
 export default function Page() {
   return (

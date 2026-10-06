@@ -31,14 +31,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = episode.title.en
   const image = episode.cover.src ? toShareJpeg(episode.cover.src) : undefined
   return {
-    ...pageMeta({
+    ...(await pageMeta({
       path: `/stories/${season.slug}/${episode.slug}`,
       title,
       description: episode.dek.en,
       type: "article",
       publishedTime: episode.publishedAt,
       images: image ? [{ url: image, alt: episode.title.en }] : undefined,
-    }),
+    })),
     robots: episode.status === "published" ? undefined : { index: false, follow: false },
   }
 }

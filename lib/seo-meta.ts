@@ -1,13 +1,21 @@
 import type { Metadata } from "next"
 import { DEFAULT_OG_JPG } from "@/lib/cities/share-image"
+import {
+  alternatesFor,
+  openGraphLocale,
+  type PublicLocale,
+} from "@/lib/public-locale"
+import { requestLocale } from "@/lib/request-locale"
 
 const DEFAULT_IMAGE = {
   url: DEFAULT_OG_JPG,
   alt: "Traveler overlooking Victoria Harbour at sunset",
 } as const
 
+const SITE = process.env.NEXT_PUBLIC_APP_URL ?? "https://travel.xingai.app"
+
 type PageMetaInput = {
-  /** Path without origin, e.g. `/city` or `/city/tokyo`. */
+  /** Bare path without locale prefix, e.g. `/city` or `/city/tokyo`. */
   path: string
   title: string
   description: string
@@ -16,10 +24,12 @@ type PageMetaInput = {
   images?: { url: string; alt?: string }[]
   type?: "website" | "article"
   publishedTime?: string
+  /** Override request locale (tests / rare callers). */
+  locale?: PublicLocale
 }
 
-/** Shared Metadata for indexable pages: self-canonical + matching OG/Twitter. */
-export function pageMeta({
+/** Shared Metadata for indexable pages: locale-aware canonical + hreflang + OG/Twitter. */
+export async function pageMeta({
   path,
   title,
   description,
@@ -27,8 +37,11 @@ export function pageMeta({
   images = [DEFAULT_IMAGE],
   type = "website",
   publishedTime,
-}: PageMetaInput): Metadata {
-  const url = path.startsWith("/") ? path : `/${path}`
+  locale: localeOverride,
+}: PageMetaInput): Promise<Metadata> {
+  const locale = localeOverride ?? (await requestLocale())
+  const bare = path.startsWith("/") ? path : `/${path}`
+  const alt = alternatesFor(SITE, bare, locale)
   const ogImages = images.map((image) =>
     image.alt ? { url: image.url, alt: image.alt } : { url: image.url }
   )
@@ -37,11 +50,12 @@ export function pageMeta({
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,
-    alternates: { canonical: url },
+    alternates: alt,
     openGraph: {
       title,
       description,
-      url,
+      url: alt.canonical,
+      locale: openGraphLocale(locale),
       type,
       images: ogImages,
       ...(publishedTime ? { publishedTime } : {}),

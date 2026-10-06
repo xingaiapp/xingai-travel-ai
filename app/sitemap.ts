@@ -1,61 +1,81 @@
 import type { MetadataRoute } from "next"
 import { cities } from "@/lib/cities"
 import { compares, guides } from "@/lib/content"
+import {
+  hreflangPaths,
+  localizedPublicHref,
+  PUBLIC_LOCALES,
+} from "@/lib/public-locale"
 import { publishedEpisodes, seasons } from "@/lib/stories"
 
+const SITE = "https://travel.xingai.app"
+
+function localizedEntries(
+  path: string,
+  priority: number,
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"],
+  lastModified?: Date
+): MetadataRoute.Sitemap {
+  const languages: Record<string, string> = {}
+  for (const [code, href] of Object.entries(hreflangPaths(path))) {
+    languages[code] = `${SITE}${href}`
+  }
+  return PUBLIC_LOCALES.map((locale) => ({
+    url: `${SITE}${localizedPublicHref(locale, path)}`,
+    lastModified,
+    changeFrequency,
+    priority,
+    alternates: { languages },
+  }))
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://travel.xingai.app"
-  // /result is excluded: it's dynamic sessionStorage content, not crawlable
-  const pages = ["decide", "how-it-works", "faq", "privacy", "terms", "disclaimer", "affiliate-disclosure"]
-  const stories = seasons.flatMap((season) => {
-    const episodes = publishedEpisodes(season)
-    if (episodes.length === 0) return []
-    return [
-      { url: `${base}/stories/${season.slug}`, changeFrequency: "weekly" as const, priority: 0.8 },
-      ...episodes.map((episode) => ({
-        url: `${base}/stories/${season.slug}/${episode.slug}`,
-        lastModified: episode.publishedAt ? new Date(episode.publishedAt) : undefined,
-        changeFrequency: "monthly" as const,
-        priority: 0.7,
-      })),
-    ]
-  })
-  const storiesIndex = stories.length > 0 ? [{ url: `${base}/stories`, changeFrequency: "weekly" as const, priority: 0.7 }] : []
-  const cityPages = [
-    { url: `${base}/city`, changeFrequency: "weekly" as const, priority: 0.85 },
-    ...cities.map((city) => ({
-      url: `${base}/city/${city.slug}`,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    })),
+  // /result and /trips are excluded: session/local state, not crawlable
+  const staticPages = [
+    { path: "/", priority: 1, changeFrequency: "weekly" as const },
+    { path: "/decide", priority: 0.9, changeFrequency: "weekly" as const },
+    { path: "/how-it-works", priority: 0.8, changeFrequency: "weekly" as const },
+    { path: "/faq", priority: 0.8, changeFrequency: "weekly" as const },
+    { path: "/privacy", priority: 0.5, changeFrequency: "weekly" as const },
+    { path: "/terms", priority: 0.5, changeFrequency: "weekly" as const },
+    { path: "/disclaimer", priority: 0.5, changeFrequency: "weekly" as const },
+    { path: "/affiliate-disclosure", priority: 0.5, changeFrequency: "weekly" as const },
+    { path: "/city", priority: 0.85, changeFrequency: "weekly" as const },
+    { path: "/compare", priority: 0.85, changeFrequency: "weekly" as const },
+    { path: "/guides", priority: 0.85, changeFrequency: "weekly" as const },
   ]
-  const comparePages = [
-    { url: `${base}/compare`, changeFrequency: "weekly" as const, priority: 0.85 },
-    ...compares.map((item) => ({
-      url: `${base}/compare/${item.slug}`,
-      changeFrequency: "monthly" as const,
-      priority: 0.85,
-    })),
-  ]
-  const guidePages = [
-    { url: `${base}/guides`, changeFrequency: "weekly" as const, priority: 0.85 },
-    ...guides.map((item) => ({
-      url: `${base}/guides/${item.slug}`,
-      changeFrequency: "monthly" as const,
-      priority: 0.85,
-    })),
-  ]
-  return [
-    { url: base, changeFrequency: "weekly" as const, priority: 1 },
-    ...cityPages,
-    ...comparePages,
-    ...guidePages,
-    ...storiesIndex,
-    ...stories,
-    ...pages.map((page) => ({
-      url: `${base}/${page}`,
-      changeFrequency: "weekly" as const,
-      priority: page === "decide" ? 0.9 : page === "how-it-works" || page === "faq" ? 0.8 : 0.5,
-    })),
-  ]
+
+  const entries: MetadataRoute.Sitemap = staticPages.flatMap((page) =>
+    localizedEntries(page.path, page.priority, page.changeFrequency)
+  )
+
+  for (const city of cities) {
+    entries.push(...localizedEntries(`/city/${city.slug}`, 0.8, "monthly"))
+  }
+  for (const item of compares) {
+    entries.push(...localizedEntries(`/compare/${item.slug}`, 0.85, "monthly"))
+  }
+  for (const item of guides) {
+    entries.push(...localizedEntries(`/guides/${item.slug}`, 0.85, "monthly"))
+  }
+
+  const storySeasons = seasons.filter((season) => publishedEpisodes(season).length > 0)
+  if (storySeasons.length > 0) {
+    entries.push(...localizedEntries("/stories", 0.7, "weekly"))
+    for (const season of storySeasons) {
+      entries.push(...localizedEntries(`/stories/${season.slug}`, 0.8, "weekly"))
+      for (const episode of publishedEpisodes(season)) {
+        entries.push(
+          ...localizedEntries(
+            `/stories/${season.slug}/${episode.slug}`,
+            0.7,
+            "monthly",
+            episode.publishedAt ? new Date(episode.publishedAt) : undefined
+          )
+        )
+      }
+    }
+  }
+
+  return entries
 }

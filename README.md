@@ -11,10 +11,11 @@ XingAI Travel is a **travel decision system**, not an OTA or price-comparison wa
 | URL | Role | Canonical |
 |-----|------|-----------|
 | `/` | Product home — explain the decision system | self (`/`) |
-| `/decide` | Decision tool — capture constraints and compare | self (`/decide`) |
-| `/result`, `/trips` | Session / this-browser state | `noindex`, not in sitemap |
+| `/zh`, `/ko`, `/es` (+ same paths) | Locale prefixes for indexable pages | self on that locale URL; `hreflang` across en/zh/ko/es |
+| `/decide` | Decision tool — capture constraints and compare | self (`/decide` or `/zh/decide` …) |
+| `/result`, `/trips` | Session / this-browser state | `noindex`, not in sitemap, no locale prefix |
 
-`/` does **not** redirect to `/decide`. Both return HTTP 200 with their own metadata.
+English stays unprefixed. Middleware rewrites `/zh|ko|es/…` onto the bare route. `/` does **not** redirect to `/decide`.
 
 ### Title freeze (2026-10-05)
 
@@ -32,7 +33,8 @@ Do not thrash title / brand strings for ~30 days unless a factual error. Brand n
 |------|--------|
 | **SEO signals (2026-10-05)** | Brand/title/OG/schema/`llms.txt` aligned to **XingAI Travel**. Chrome, footer, legal, and i18n no longer say “Travel AI” / “Explore Better”. Sitewide JSON-LD ships in the **first HTML** (not `afterInteractive`). `/decide` adds its own WebPage + WebApplication JSON-LD and self-canonical OG `url`. `/faq` and `/how-it-works` expose a visible AEO direct-answer block. Footer + drawer ship crawlable XingAI family anchors; `/legal/{privacy,terms,disclaimer}` redirect to local pages (project-init). Technical crawl of sitemap URLs: see [Indexability notes](#indexability-notes-2026-10-05). Google Search Console coverage still needs human confirmation (`site:` ≠ index). |
 | **Decision result (2026-10-02)** | Result shows **XingAI Match Score** (0–100 from overall stars + confidence), factor bars for overall/walkability, ranked alternatives with **Why not {city}?**. Hero is result-oriented: “Stop searching. Start deciding.” + proof line (en / zh / ko / es). **Evidence panel** labels weather / flight / walkability / plan budget / match as estimate·derived·plan (no fake source URLs). Hero “How to use” starts **collapsed** on all breakpoints. |
-| **SEO/AEO/GEO content graph (ADR 0009)** | Live intent pages: `/how-it-works`, `/faq`, `/compare` (+ 5 A-vs-B pages), `/guides` (+ 5 intent pages). `/decide` stays the conversion step. Fit labels stay qualitative. `hreflang` no longer points 中文 / 한국어 / Español at the English `/decide` URL. |
+| **SEO/AEO/GEO content graph (ADR 0009)** | Live intent pages: `/how-it-works`, `/faq`, `/compare` (+ 5 A-vs-B pages), `/guides` (+ 5 intent pages). `/decide` stays the conversion step. Fit labels stay qualitative. |
+| **Locale URL paths (2026-10-06)** | Public indexable routes ship as `/`, `/zh/…`, `/ko/…`, `/es/…`. Middleware rewrite + `x-xingai-locale`. Language switcher updates the path. `pageMeta` / sitemap emit self-canonical + `hreflang` (en, zh-CN, ko, es, x-default). Session routes (`/result`, `/trips`, `/s`) stay unprefixed. |
 | **Home (2026-10-05)** | `/` keeps the **4-slide hero carousel** (HK / Tokyo / Seoul / Cabo, 2560×1440) with a **centered segment bar under the hero** (not over the photo). Mobile: width-based **4:5** photo + copy below; per-slide mobile focal points; carousel **4.5s** opacity crossfade only — **no Ken Burns zoom**. After **Popular destinations**, **Editor picks / Worth seeing once** (Xi'an · HK · Los Cabos · Lisbon — editorial, not a ranking) → then **Search vs Decide**. **Start with Hong Kong** is title → wide photo → one primary CTA + text links. Primary Decide CTAs on **hero**, **How it works**, and **page-end**. Footer traveler banner + XingAI family links. |
 | **Chrome More menu (2026-10-05)** | Desktop top nav: text-only Home / Decide / Stories / Trips + **More ▾** (Cities · Compare · Guides). Mobile drawer + bottom tabs keep icons. Footer Discover links stay for crawl. |
 | **Brand mark (2026-10-05)** | Chrome uses `/assets/logo-mark.svg` — flat indigo tile + route + pin (no gradient shadow / paper plane). Also wired in desktop header, mobile title bar, drawer. `logo-full.svg` for light OG/marketing only. |

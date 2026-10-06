@@ -7,12 +7,14 @@ const title = "XingAI Travel — Make a better travel decision"
 const description =
   "Compare trip options and trade-offs so you can decide. Other sites help you search. You stay in control. Suggestions only — verify before you book."
 
-export const metadata: Metadata = pageMeta({
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMeta({
   path: "/",
   title,
   description,
   absoluteTitle: true,
 })
+}
 
 export default function Page() {
   return (

@@ -6,6 +6,8 @@ import { AppChrome } from "@/components/app-chrome"
 import { LocaleProvider } from "@/components/locale-provider"
 import { SeoJsonLd } from "@/components/seo-json-ld"
 import { ThemeProvider, themeBootScript } from "@/components/theme-provider"
+import { htmlLang } from "@/lib/public-locale"
+import { requestLocale } from "@/lib/request-locale"
 import "./globals.css"
 
 const inter = Inter({
@@ -70,16 +72,17 @@ export const viewport: Viewport = {
   ],
 }
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const locale = await requestLocale()
   return (
-    <html lang="en" suppressHydrationWarning className={`dark ${inter.variable} ${fraunces.variable}`}>
+    <html lang={htmlLang(locale)} suppressHydrationWarning className={`dark ${inter.variable} ${fraunces.variable}`}>
       <body className="font-sans antialiased">
         <Script id="theme-boot" strategy="beforeInteractive">
           {themeBootScript}
         </Script>
         <SeoJsonLd />
         <ThemeProvider>
-          <LocaleProvider>
+          <LocaleProvider initialLocale={locale}>
             <AppChrome>{children}</AppChrome>
           </LocaleProvider>
         </ThemeProvider>
