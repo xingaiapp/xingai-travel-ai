@@ -432,15 +432,6 @@
   }
 }
 
-@keyframes home-ken-burns {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.03);
-  }
-}
-
 @keyframes home-cta-pulse {
   0% {
     box-shadow: 0 8px 20px color-mix(in oklch, var(--primary) 28%, transparent);
@@ -515,12 +506,6 @@
 
   .home-feature-icon:hover {
     animation: home-icon-pop 0.45s ease;
-  }
-
-  @media (min-width: 640px) {
-    .home-hero-ken {
-      animation: home-ken-burns 7s ease-out both;
-    }
   }
 
   .home-scroll-in {

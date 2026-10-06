@@ -1,23 +1,19 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">XingAI Travel mark</title>
-  <desc id="desc">A blue rounded square with a white route, compass point, and paper plane for travel decisions.</desc>
-  <defs>
-    <linearGradient id="travelBlue" x1="96" y1="64" x2="416" y2="448" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#38BDF8"/>
-      <stop offset="0.48" stop-color="#2563EB"/>
-      <stop offset="1" stop-color="#1D4ED8"/>
-    </linearGradient>
-    <filter id="softShadow" x="34" y="34" width="444" height="444" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#2563EB" flood-opacity="0.26"/>
-    </filter>
-  </defs>
-  <g filter="url(#softShadow)">
-    <rect x="72" y="72" width="368" height="368" rx="96" fill="url(#travelBlue)"/>
-  </g>
-  <path d="M158 333C194 287 230 266 266 270C300 274 326 296 354 268C372 250 382 219 394 176" stroke="white" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"/>
-  <circle cx="157" cy="333" r="22" fill="white"/>
-  <circle cx="394" cy="176" r="22" fill="white"/>
-  <path d="M166 169L369 143C384 141 392 160 380 169L303 226C298 230 296 237 298 243L326 344C330 359 310 368 301 355L243 274C239 268 231 266 225 269L134 308C120 314 107 297 118 286L202 207C207 202 207 194 202 189L166 169Z" fill="white"/>
-  <path d="M220 207L369 143L248 250L301 355L243 274L220 207Z" fill="#BFDBFE"/>
-  <path d="M220 207L248 250L134 308L220 207Z" fill="#DBEAFE"/>
+  <desc id="desc">A flat indigo tile with a simple route and destination pin — travel decisions, not booking.</desc>
+  <!-- Solid brand tile; no shadow, no paper-plane clutter. Reads at 28px. -->
+  <rect x="48" y="48" width="416" height="416" rx="112" fill="#3B5BDB"/>
+  <!-- Route -->
+  <path
+    d="M148 340C188 286 230 262 274 268C318 274 348 308 380 250"
+    stroke="#FFFFFF"
+    stroke-width="36"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <!-- Origin -->
+  <circle cx="148" cy="340" r="28" fill="#FFFFFF"/>
+  <!-- Destination pin -->
+  <circle cx="380" cy="196" r="40" fill="#FFFFFF"/>
+  <circle cx="380" cy="196" r="16" fill="#3B5BDB"/>
 </svg>

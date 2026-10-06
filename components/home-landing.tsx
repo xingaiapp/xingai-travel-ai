@@ -260,8 +260,9 @@ function HeroCarousel({
                       "--hero-position-mobile": slide.mobileObjectPosition,
                     } as CSSProperties
                   }
-                  className={cn("home-hero-slide-img object-cover", active && "home-hero-ken")}
+                  className="home-hero-slide-img object-cover"
                 />
+
               </div>
             )
           })}

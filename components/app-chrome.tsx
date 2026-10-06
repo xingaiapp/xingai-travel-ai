@@ -9,7 +9,6 @@ import {
   BriefcaseBusiness,
   ChevronDown,
   Compass,
-  Ellipsis,
   FileText,
   House,
   MapPinned,
@@ -231,7 +230,6 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           </Link>
           <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex" aria-label="Primary">
             {navItems.map((item) => {
-              const Icon = item.icon
               const active = isActive(pathname, item.href)
               const label = messages.chrome[item.key]
               if (item.soon) {
@@ -240,9 +238,8 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                     key={item.key}
                     type="button"
                     onClick={() => showSoon(label)}
-                    className="inline-flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                    className="inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-foreground"
                   >
-                    <Icon className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
                     {label}
                   </button>
                 )
@@ -252,11 +249,10 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                   key={item.key}
                   href={item.href}
                   className={cn(
-                    "inline-flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-semibold transition",
+                    "inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold transition",
                     active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                 >
-                  <Icon className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
                   {label}
                   {item.isNew ? <NewBadge label={messages.chrome.newBadge} /> : null}
                 </Link>
@@ -270,13 +266,12 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                 aria-controls={moreMenuId}
                 onClick={() => setMoreOpen((value) => !value)}
                 className={cn(
-                  "inline-flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-semibold transition",
+                  "inline-flex h-10 items-center gap-1 rounded-md px-3 text-sm font-semibold transition",
                   moreActive || moreOpen
                     ? "bg-primary/10 text-primary"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
               >
-                <Ellipsis className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
                 {messages.chrome.moreNav}
                 <ChevronDown className={cn("h-3.5 w-3.5 transition", moreOpen && "rotate-180")} aria-hidden />
               </button>
@@ -285,10 +280,9 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                   id={moreMenuId}
                   role="menu"
                   aria-label={messages.chrome.moreNav}
-                  className="absolute left-1/2 top-[calc(100%+0.35rem)] z-50 w-52 -translate-x-1/2 rounded-xl border border-border bg-card p-1.5 shadow-lg"
+                  className="absolute left-1/2 top-[calc(100%+0.35rem)] z-50 w-48 -translate-x-1/2 rounded-xl border border-border bg-card p-1.5 shadow-lg"
                 >
                   {moreLinks.map((item) => {
-                    const Icon = item.icon
                     const active = isActive(pathname, item.href)
                     return (
                       <Link
@@ -297,11 +291,10 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                         role="menuitem"
                         onClick={() => setMoreOpen(false)}
                         className={cn(
-                          "flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-sm font-semibold transition",
+                          "flex min-h-11 items-center rounded-lg px-3 text-sm font-semibold transition",
                           active ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
                         )}
                       >
-                        <Icon className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
                         {messages.content[item.labelKey]}
                       </Link>
                     )

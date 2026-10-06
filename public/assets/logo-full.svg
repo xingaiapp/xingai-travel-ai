@@ -1,20 +1,17 @@
 <svg width="960" height="320" viewBox="0 0 960 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">XingAI Travel</title>
-  <desc id="desc">XingAI Travel logo with travel decision mark and wordmark.</desc>
-  <defs>
-    <linearGradient id="travelBlue" x1="40" y1="40" x2="280" y2="280" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#38BDF8"/>
-      <stop offset="0.5" stop-color="#2563EB"/>
-      <stop offset="1" stop-color="#1D4ED8"/>
-    </linearGradient>
-  </defs>
-  <rect x="40" y="40" width="240" height="240" rx="64" fill="url(#travelBlue)"/>
-  <path d="M96 212C119 182 143 169 168 172C190 175 207 189 225 171C237 159 244 139 252 111" stroke="white" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"/>
-  <circle cx="96" cy="212" r="14" fill="white"/>
-  <circle cx="252" cy="111" r="14" fill="white"/>
-  <path d="M101 106L233 89C243 88 248 100 240 106L190 143C187 146 185 150 187 154L205 220C207 230 194 236 188 227L150 175C148 171 143 170 139 172L80 197C71 201 63 190 70 183L125 132C128 129 128 124 125 121L101 106Z" fill="white"/>
-  <path d="M136 131L233 89L154 159L188 227L150 175L136 131Z" fill="#BFDBFE"/>
-  <path d="M136 131L154 159L80 197L136 131Z" fill="#DBEAFE"/>
-  <text x="328" y="145" fill="#0F172A" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="70" font-weight="800" letter-spacing="-1">XingAI</text>
-  <text x="330" y="219" fill="#2563EB" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="52" font-weight="800" letter-spacing="-0.5">Travel</text>
+  <desc id="desc">XingAI Travel logo — flat route mark plus wordmark (light backgrounds).</desc>
+  <rect x="40" y="40" width="240" height="240" rx="64" fill="#3B5BDB"/>
+  <path
+    d="M98 208C121 177 145 163 171 166C196 169 214 189 232 155"
+    stroke="#FFFFFF"
+    stroke-width="22"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="98" cy="208" r="16" fill="#FFFFFF"/>
+  <circle cx="232" cy="124" r="24" fill="#FFFFFF"/>
+  <circle cx="232" cy="124" r="10" fill="#3B5BDB"/>
+  <text x="328" y="145" fill="#0F172A" font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="70" font-weight="800" letter-spacing="-1">XingAI</text>
+  <text x="330" y="219" fill="#3B5BDB" font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="52" font-weight="800" letter-spacing="-0.5">Travel</text>
 </svg>
