@@ -31,7 +31,7 @@ The sidebar “Continue your last trip” card and locale switcher had the same 
 | `xingai-travel-locale` | `localStorage` | `en` \| `zh` \| `ko` \| `es` |
 | `theme` | `localStorage` | `light` \| `dark` \| `system` |
 | `xingai-travel-trip-history` | `localStorage` | Recent decisions for `/trips` (max 12) — see [ADR 0007](./0007-local-trip-history.md) |
-| `xingai-travel-city-map` | `localStorage` | Want / Been marks for live city guides (this browser only; not a ranking) |
+| `xingai-travel-city-map` | `localStorage` | Want / Been marks for live city guides (this browser only; not a ranking) — soft-fill rules in [ADR 0010](./0010-city-map-soft-fill-decide.md) |
 
 ### Hydration-safe pattern
 
@@ -90,4 +90,5 @@ const [trip] = useState(() =>
 
 - `components/decide-page.tsx`, `components/result-page.tsx`, `components/app-chrome.tsx`
 - `components/locale-provider.tsx`, `components/theme-provider.tsx`
-- [ADR 0001](./0001-compare-first-product-scope.md)
+- `lib/city-map.ts` — city map Want/Been ([ADR 0010](./0010-city-map-soft-fill-decide.md))
+- [ADR 0001](./0001-compare-first-product-scope.md) · [ADR 0007](./0007-local-trip-history.md) · [ADR 0010](./0010-city-map-soft-fill-decide.md)

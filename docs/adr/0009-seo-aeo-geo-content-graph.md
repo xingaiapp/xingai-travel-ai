@@ -32,4 +32,4 @@ We already have Stories, `llms.txt`, layout FAQ/HowTo JSON-LD, and `/city/[slug]
 
 ## Related
 
-- [ADR 0001](./0001-compare-first-product-scope.md) · [ADR 0006](./0006-stories-after-decision.md) · [ADR 0008](./0008-city-layer-after-decision.md)
+- [ADR 0001](./0001-compare-first-product-scope.md) · [ADR 0006](./0006-stories-after-decision.md) · [ADR 0008](./0008-city-layer-after-decision.md) · [ADR 0011](./0011-first-html-seo-honesty.md) (first-HTML / `pageMeta` honesty)

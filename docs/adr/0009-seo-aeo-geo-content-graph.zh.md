@@ -27,4 +27,4 @@
 
 ## 相关
 
-- [ADR 0001](./0001-compare-first-product-scope.zh.md) · [ADR 0006](./0006-stories-after-decision.zh.md) · [ADR 0008](./0008-city-layer-after-decision.zh.md)
+- [ADR 0001](./0001-compare-first-product-scope.zh.md) · [ADR 0006](./0006-stories-after-decision.zh.md) · [ADR 0008](./0008-city-layer-after-decision.zh.md) · [ADR 0011](./0011-first-html-seo-honesty.zh.md)（首屏 HTML / `pageMeta` 诚实性）

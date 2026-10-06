@@ -13,6 +13,8 @@ Bilingual index. Format: [BILINGUAL-ADR.md](./BILINGUAL-ADR.md)
 | 0007 | [Local trip history for Trips](./0007-local-trip-history.md) | [Trips 使用本地行程历史](./0007-local-trip-history.zh.md) | Accepted | 2026-09-27 |
 | 0008 | [City layer after the destination decision](./0008-city-layer-after-decision.md) | [目的地决策之后的城市层](./0008-city-layer-after-decision.zh.md) | Accepted | 2026-09-30 |
 | 0009 | [SEO / AEO / GEO content graph](./0009-seo-aeo-geo-content-graph.md) | [SEO / AEO / GEO 内容图](./0009-seo-aeo-geo-content-graph.zh.md) | Accepted | 2026-10-02 |
+| 0010 | [City map Want/Been soft-fills Decide](./0010-city-map-soft-fill-decide.md) | [城市地图 Want/Been 软填 Decide](./0010-city-map-soft-fill-decide.zh.md) | Accepted | 2026-10-06 |
+| 0011 | [First-HTML SEO honesty](./0011-first-html-seo-honesty.md) | [首屏 HTML SEO 诚实性](./0011-first-html-seo-honesty.zh.md) | Accepted | 2026-10-06 |
 
 ## Related
 

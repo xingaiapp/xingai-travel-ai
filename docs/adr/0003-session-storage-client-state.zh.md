@@ -31,7 +31,7 @@ Next.js App Router 会 **服务端渲染** 客户端组件。若在首次客户�
 | `xingai-travel-locale` | `localStorage` | `en` \| `zh` \| `ko` \| `es` |
 | `theme` | `localStorage` | `light` \| `dark` \| `system` |
 | `xingai-travel-trip-history` | `localStorage` | `/trips` 的最近决策（最多 12 条），见 [ADR 0007](./0007-local-trip-history.zh.md) |
-| `xingai-travel-city-map` | `localStorage` | 已上线城市指南的「想去 / 去过」标记（仅本浏览器；不是排名） |
+| `xingai-travel-city-map` | `localStorage` | 已上线城市指南的「想去 / 去过」标记（仅本浏览器；不是排名）— 软填规则见 [ADR 0010](./0010-city-map-soft-fill-decide.zh.md) |
 
 ###  hydration 安全写法
 
@@ -90,4 +90,5 @@ const [trip] = useState(() =>
 
 - `components/decide-page.tsx`、`components/result-page.tsx`、`components/app-chrome.tsx`
 - `components/locale-provider.tsx`、`components/theme-provider.tsx`
-- [ADR 0001](./0001-compare-first-product-scope.zh.md)
+- `lib/city-map.ts` — 城市地图 Want/Been（[ADR 0010](./0010-city-map-soft-fill-decide.zh.md)）
+- [ADR 0001](./0001-compare-first-product-scope.zh.md) · [ADR 0007](./0007-local-trip-history.zh.md) · [ADR 0010](./0010-city-map-soft-fill-decide.zh.md)
