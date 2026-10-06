@@ -21,6 +21,7 @@ Bilingual index. Format: [BILINGUAL-ADR.md](./BILINGUAL-ADR.md)
 | 0015 | [Constraint conflict + privacy + Decide i18n](./0015-constraint-conflict-privacy-i18n.md) | [条件冲突 + 隐私披露 + Decide 漏翻](./0015-constraint-conflict-privacy-i18n.zh.md) | Accepted | 2026-10-06 |
 | 0016 | [Traffic 404 + FAQ labels + Stories honesty](./0016-traffic-404-faq-stories.md) | [流量 404 + FAQ 文案 + Stories 诚实](./0016-traffic-404-faq-stories.zh.md) | Accepted | 2026-10-06 |
 | 0017 | [Story interest mailto (no coming soon)](./0017-story-interest-mailto.md) | [故事兴趣 mailto（不写即将推出）](./0017-story-interest-mailto.zh.md) | Accepted | 2026-10-06 |
+| 0018 | [Booking CTA view + partner-cookie privacy](./0018-booking-cta-view-privacy.md) | [预订曝光埋点 + 伙伴 Cookie 隐私](./0018-booking-cta-view-privacy.zh.md) | Accepted | 2026-10-06 |
 
 ## Related
 

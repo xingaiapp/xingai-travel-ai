@@ -9,6 +9,12 @@ const affiliateSchema = z.object({
   destination: z.string().max(100),
 })
 
+/** Book-first block became visible — pairs with affiliate_click for view→click. */
+const bookingViewSchema = z.object({
+  type:        z.literal("booking_cta_view"),
+  destination: z.string().max(100),
+})
+
 // Story funnel: result → story, story → /decide, interest in reader stories (mailto). See ADR 0006 / 0017.
 const storySchema = z.object({
   type:   z.enum(["story_from_result", "story_to_decide", "story_submit_interest"]),
@@ -34,6 +40,12 @@ export async function POST(request: NextRequest) {
   const city = citySchema.safeParse(json)
   if (city.success) {
     after(() => recordEvent(city.data.type, { city: city.data.city, route: city.data.route }))
+    return NextResponse.json({ ok: true })
+  }
+
+  const view = bookingViewSchema.safeParse(json)
+  if (view.success) {
+    after(() => recordEvent("booking_cta_view", { destination: view.data.destination }))
     return NextResponse.json({ ok: true })
   }
 

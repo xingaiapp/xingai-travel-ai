@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { BedDouble, CalendarCheck, ExternalLink, MapPin, Plane } from "lucide-react"
 import { useLocale } from "@/components/locale-provider"
 import { affiliateIdsConfigured, buildAffiliateLinks, extractOriginCode, guessIata, usableDates } from "@/lib/affiliate"
@@ -49,6 +49,15 @@ function trackClick(platform: string, type: string, destination: string) {
   }).catch(() => {})
 }
 
+function trackBookingCtaView(destination: string) {
+  fetch("/api/track", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ type: "booking_cta_view", destination }),
+    keepalive: true,
+  }).catch(() => {})
+}
+
 interface BookFirstProps {
   plan: PlanResult
   /** Null on shared links: no origin or dates, so flights are skipped. */
@@ -58,6 +67,8 @@ interface BookFirstProps {
 export function BookFirst({ plan, trip }: BookFirstProps) {
   const { messages, locale } = useLocale()
   const winner = plan.destination
+  const viewLogged = useRef(false)
+  const rootRef = useRef<HTMLDivElement>(null)
 
   const affiliateLinks = useMemo(() => {
     const originCode = trip ? extractOriginCode(trip.origin) : ""
@@ -82,8 +93,33 @@ export function BookFirst({ plan, trip }: BookFirstProps) {
     return { ok: true, text: messages.result.prefilledWith.replace("{summary}", `${range} · ${people}`) }
   }, [trip, messages, locale])
 
+  useEffect(() => {
+    const el = rootRef.current
+    if (!el || viewLogged.current) return
+    const send = () => {
+      if (viewLogged.current) return
+      viewLogged.current = true
+      trackBookingCtaView(winner)
+    }
+    if (typeof IntersectionObserver === "undefined") {
+      send()
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          send()
+          io.disconnect()
+        }
+      },
+      { threshold: 0.25 }
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [winner])
+
   return (
-    <div className="space-y-4">
+    <div ref={rootRef} className="space-y-4">
       {prefill ? (
         <p
           className={
