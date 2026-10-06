@@ -348,6 +348,24 @@ export interface Messages {
     indexCount: string
     indexSoonHint: string
     indexMoreNote: string
+    searchLabel: string
+    searchPlaceholder: string
+    searchClear: string
+    searchEmpty: string
+    searchReset: string
+    filterLabel: string
+    filterAll: string
+    filterAsia: string
+    filterEurope: string
+    filterAmericas: string
+    filterShowing: string
+    filterShowingAll: string
+    intentLabel: string
+    intentAll: string
+    intentFirstCity: string
+    intentBeach: string
+    intentFood: string
+    intentCulture: string
   }
   content: {
     howEyebrow: string

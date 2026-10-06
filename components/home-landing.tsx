@@ -26,6 +26,7 @@ import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, 
 import { useLocale } from "@/components/locale-provider"
 import {
   decideSteps,
+  editorPicks,
   homeCopy,
   homeFaq,
   homeFeatures,
@@ -459,6 +460,72 @@ export function HomeLanding() {
               </ScrollIn>
             </li>
           ))}
+        </ul>
+      </section>
+
+      <section className="mt-14 border-t border-border pt-10" aria-labelledby="home-editor-picks">
+        <ScrollIn>
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">{t(homeCopy.picksEyebrow)}</p>
+          <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <h2 id="home-editor-picks" className="hero-display-title text-2xl font-semibold tracking-tight sm:text-3xl">
+              {t(homeCopy.picksTitle)}
+            </h2>
+            <div className="flex flex-col gap-2 sm:items-end">
+              <Link
+                href="/city"
+                onClick={() => track("home_destination", { id: "editor-picks-all", target: "/city" })}
+                className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary"
+              >
+                {t(homeCopy.picksAllCta)}
+                <ChevronRight className="h-4 w-4" aria-hidden />
+              </Link>
+              <Link
+                href="/city?intent=culture"
+                onClick={() => track("home_destination", { id: "editor-picks-style", target: "/city?intent=culture" })}
+                className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-muted-foreground hover:text-primary"
+              >
+                {t(homeCopy.picksByStyleCta)}
+                <ChevronRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
+          </div>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">{t(homeCopy.picksNote)}</p>
+        </ScrollIn>
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+          {editorPicks.map((pick, index) => {
+            const remote = pick.image.startsWith("http")
+            return (
+              <li key={pick.id}>
+                <ScrollIn delayMs={index * 50}>
+                  <Link
+                    href={pick.href}
+                    onClick={() => track("home_destination", { id: pick.id, target: pick.href })}
+                    className="card-hover card-hover-media group grid overflow-hidden rounded-2xl border border-border bg-card sm:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
+                  >
+                    <div className="relative aspect-[16/10] sm:aspect-auto sm:min-h-[11rem]">
+                      <Image
+                        src={pick.image}
+                        alt=""
+                        fill
+                        quality={90}
+                        unoptimized={remote}
+                        sizes="(min-width: 640px) 40vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-col justify-center gap-2 px-4 py-4 sm:px-5">
+                      <h3 className="text-lg font-semibold tracking-tight">{t(pick.label)}</h3>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{t(pick.detail)}</p>
+                      <span className="mt-1 inline-flex min-h-11 items-center gap-1 text-sm font-bold text-primary">
+                        {t(homeCopy.picksOpenCta).replace("{city}", t(pick.label))}
+                        <ArrowRight className="h-4 w-4 motion-safe:transition group-hover:translate-x-0.5" aria-hidden />
+                      </span>
+                    </div>
+                  </Link>
+                </ScrollIn>
+              </li>
+            )
+          })}
         </ul>
       </section>
 

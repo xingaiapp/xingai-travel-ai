@@ -134,13 +134,24 @@ export const homeCopy = {
   featuresLabel: t("What you can do here", "在这里能做什么", "여기서 할 수 있는 일", "Qué puedes hacer aquí"),
   placesTitle: t("Popular destinations", "热门目的地", "인기 여행지", "Destinos populares"),
   placesNote: t(
-    "All ten Top destinations now have live city guides — Hong Kong through Barcelona. Open Cities for the full list.",
-    "十大热门目的地城市指南已全部上线——从香港到巴塞罗那。完整列表在 Cities。",
-    "상위 열 개 도시 가이드가 모두 열려 있습니다 — 홍콩부터 바르셀로나까지. 전체 목록은 Cities에서.",
-    "Las diez ciudades Top ya tienen guía en vivo — de Hong Kong a Barcelona. La lista completa está en Cities."
+    "Live city guides now include Xi'an (Shaanxi) plus the Top 10 — open Cities to search the full list.",
+    "城市指南已含西安（陕西）与 Top 10——完整列表在 Cities 可搜索。",
+    "시안(산시·陝西)과 Top 10 가이드가 열려 있습니다. 전체 목록은 Cities에서 검색하세요.",
+    "Las guías ya incluyen Xi'an (Shaanxi) y el Top 10 — busca la lista completa en Cities."
   ),
   placesAllCta: t("All city guides", "全部城市指南", "모든 도시 가이드", "Todas las guías de ciudad"),
   soon: t("Coming soon", "即将推出", "곧 제공", "Próximamente"),
+  picksEyebrow: t("Editor picks", "编辑精选", "에디터 픽", "Selección editorial"),
+  picksTitle: t("Worth seeing once", "一生值得去一次", "한 번은 가볼 만한 곳", "Vale la pena verlos una vez"),
+  picksNote: t(
+    "A short editorial list from our live city guides — not a ranking, not sponsored. Open a guide, then run Decide with your dates.",
+    "从已上线城市指南里挑出的短名单——不是算法榜，也不是广告。先打开指南，再用你的日期跑 Decide。",
+    "공개된 도시 가이드에서 고른 짧은 편집 목록입니다. 순위도, 광고도 아닙니다. 가이드를 연 뒤 날짜로 Decide를 돌리세요.",
+    "Lista corta editorial de nuestras guías publicadas: no es un ranking ni va patrocinada. Abre la guía y luego Decide con tus fechas."
+  ),
+  picksAllCta: t("Browse all cities", "浏览全部城市", "모든 도시 보기", "Ver todas las ciudades"),
+  picksOpenCta: t("Open {city} guide", "打开{city}指南", "{city} 가이드 열기", "Abrir guía de {city}"),
+  picksByStyleCta: t("Browse by trip style", "按旅行方式逛", "여행 스타일로 보기", "Explorar por estilo de viaje"),
   hkTitle: t("Start with Hong Kong", "先从香港看起", "홍콩부터 보기", "Empieza por Hong Kong"),
   hkBody: t(
     "Hong Kong is the first city with a written guide: neighborhoods, places, and reference routes. It does not book a hotel for you.",
@@ -363,6 +374,58 @@ export const hongKongEntries: HomeLink[] = [
   { id: "hk-vs-tokyo", href: "/compare/hong-kong-vs-tokyo", label: t("Hong Kong vs Tokyo", "香港对比东京", "홍콩 대 도쿄", "Hong Kong frente a Tokio") },
   { id: "hk-vs-sg", href: "/compare/hong-kong-vs-singapore", label: t("Hong Kong vs Singapore", "香港对比新加坡", "홍콩 대 싱가포르", "Hong Kong frente a Singapur") },
   { id: "hk-stories", href: "/stories/hong-kong", label: t("Hong Kong stories", "香港故事", "홍콩 이야기", "Historias de Hong Kong") },
+]
+
+/** Editorial “worth seeing once” — human picks from live guides, not a scored ranking. */
+export const editorPicks: (HomeLink & { detail: L; image: string })[] = [
+  {
+    id: "pick-xian",
+    href: "/city/xian",
+    image: "https://images.unsplash.com/photo-1586016413664-864c0dd76f53?auto=format&fit=crop&w=1600&q=80",
+    label: t("Xi'an", "西安", "시안", "Xi'an"),
+    detail: t(
+      "Terracotta Army and a walled city — history you feel once, then decide the rest.",
+      "兵马俑与城墙——那种一生一次的历史感，其余再用 Decide 收束。",
+      "병마용과 성벽 — 한 번 느껴볼 역사감. 나머지는 Decide로.",
+      "El Ejército de Terracota y la muralla: historia que se siente una vez; el resto, Decide."
+    ),
+  },
+  {
+    id: "pick-hong-kong",
+    href: "/city/hong-kong",
+    image: "/assets/dest-hong-kong-v2.webp",
+    label: t("Hong Kong", "香港", "홍콩", "Hong Kong"),
+    detail: t(
+      "Harbour, hills, and street food in one dense day — our first written city spine.",
+      "港口、山城与街头吃食挤在一天——我们写下的第一条城市主线。",
+      "항구, 언덕, 길거리 음식이 하루 안에 — 우리가 처음 쓴 도시 축.",
+      "Puerto, colinas y comida callejera en un día denso: nuestra primera columna urbana."
+    ),
+  },
+  {
+    id: "pick-los-cabos",
+    href: "/city/los-cabos",
+    image: "/assets/dest-los-cabos-v2.webp",
+    label: t("Los Cabos", "洛斯卡沃斯", "로스카보스", "Los Cabos"),
+    detail: t(
+      "Land's End and El Arco where desert meets two seas — a coast day, not a checklist.",
+      "陆地尽头与石拱，沙漠撞上两片海——是海岸日，不是打卡清单。",
+      "사막이 두 바다를 만나는 랜즈 엔드·엘 아르코 — 체크리스트가 아닌 해안 하루.",
+      "Fin de la Tierra y El Arco, desierto entre dos mares: un día de costa, no una lista."
+    ),
+  },
+  {
+    id: "pick-lisbon",
+    href: "/city/lisbon",
+    image: "/assets/destination-lisbon-card.webp",
+    label: t("Lisbon", "里斯本", "리스본", "Lisboa"),
+    detail: t(
+      "Hills, trams, and Atlantic light — a first Europe city that still feels human-scale.",
+      "山城、电车与大西洋的光——第一座仍像人尺度的欧洲城。",
+      "언덕, 트램, 대서양 빛 — 사람 스케일이 남는 첫 유럽 도시.",
+      "Colinas, tranvías y luz atlántica: una primera ciudad europea a escala humana."
+    ),
+  },
 ]
 
 export const homeFaq: { q: L; a: L }[] = [

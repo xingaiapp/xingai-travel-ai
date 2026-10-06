@@ -9,12 +9,19 @@ import { cities, getCity } from "./index.ts"
 
 const t = (en: string, zh: string, ko: string, es: string): CityText => ({ en, zh, ko, es })
 
+export type CityCatalogRegion = "asia" | "europe" | "americas"
+
+/** Editorial trip-style tags for /city filters — not rankings. */
+export type CityCatalogIntent = "first-city" | "beach" | "food" | "culture"
+
 export type CityCatalogPlan = {
   slug: string
   name: CityText
   localName: string
   country: CityText
   blurb: CityText
+  region: CityCatalogRegion
+  intents: readonly CityCatalogIntent[]
   /** Card image under public/ (or story -1600). */
   image: string
 }
@@ -32,6 +39,8 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
       "항구와 길거리 음식, 그리고 첫날 코스 세 가지.",
       "Orillas del puerto, comida callejera y tres rutas de primer día.",
     ),
+    region: "asia",
+    intents: ["first-city", "food", "culture"],
     image: "/assets/dest-hong-kong-v2.webp",
   },
   {
@@ -45,6 +54,8 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
       "사찰, 교차로, 동네 음식이 한 도시에 모여 있습니다.",
       "Templos, cruces y comida de barrio en una ciudad densa.",
     ),
+    region: "asia",
+    intents: ["first-city", "food", "culture"],
     image: "/assets/dest-tokyo-v2.webp",
   },
   {
@@ -58,6 +69,8 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
       "궁궐, 시장, 한강 너머 언덕 전망.",
       "Palacios, mercados y vistas desde las colinas sobre el Han.",
     ),
+    region: "asia",
+    intents: ["first-city", "food", "culture"],
     image: "/assets/dest-seoul-v2.webp",
   },
   {
@@ -71,6 +84,8 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
       "야시장, 사원, 분지 위 스카이라인.",
       "Mercados nocturnos, templos y un skyline sobre la cuenca.",
     ),
+    region: "asia",
+    intents: ["food", "culture"],
     image: "/assets/destination-taipei-card.webp",
   },
   {
@@ -84,6 +99,8 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
       "옛 거리와 광장, 홍콩 옆의 항구 도시.",
       "Calles antiguas, plazas y una ciudad puerto junto a Hong Kong.",
     ),
+    region: "asia",
+    intents: ["food", "culture"],
     image: "/stories/macau/01/londoner-big-ben-1600.webp",
   },
   {
@@ -97,6 +114,8 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
       "가든시티, 푸드코트, 계획하기 쉬운 첫날.",
       "Ciudad jardín, food courts y un primer día fácil de planear.",
     ),
+    region: "asia",
+    intents: ["first-city", "food"],
     image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1600&q=85&auto=format&fit=crop",
   },
   {
@@ -110,6 +129,8 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
       "두 도시 사이 해변, 휴식, 바하 해안.",
       "Playas, descanso y la costa de Baja entre dos pueblos.",
     ),
+    region: "americas",
+    intents: ["beach"],
     image: "/assets/dest-los-cabos-v2.webp",
   },
   {
@@ -123,6 +144,8 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
       "번드 전망, 골목, 밤의 강변 도시.",
       "El Bund, callejones y una ciudad fluvial de noche.",
     ),
+    region: "asia",
+    intents: ["first-city", "culture"],
     image: "/assets/destination-shanghai-card.webp",
   },
   {
@@ -131,11 +154,13 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
     localName: "Lisboa",
     country: t("Portugal", "葡萄牙", "포르투갈", "Portugal"),
     blurb: t(
-      "Hills, trams, and Atlantic light — Europe city guide next.",
-      "山城、有轨电车与大西洋的光——欧洲城市指南下一批。",
-      "언덕, 트램, 대서양 빛 — 유럽 도시 가이드 다음.",
-      "Colinas, tranvías y luz atlántica — guía europea después.",
+      "Hills, trams, and Atlantic light on a first Europe city day.",
+      "山城、有轨电车与大西洋的光——欧洲城市第一天。",
+      "언덕, 트램, 대서양 빛 — 유럽 도시 첫날.",
+      "Colinas, tranvías y luz atlántica en un primer día europeo.",
     ),
+    region: "europe",
+    intents: ["first-city", "culture"],
     image: "/assets/destination-lisbon-card.webp",
   },
   {
@@ -149,7 +174,24 @@ export const cityCatalogPlan: readonly CityCatalogPlan[] = [
       "해변, 고딕 골목, 음식 시장.",
       "Playa, callejones góticos y mercados de comida.",
     ),
+    region: "europe",
+    intents: ["first-city", "beach", "culture", "food"],
     image: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=1600&q=85&auto=format&fit=crop",
+  },
+  {
+    slug: "xian",
+    name: t("Xi'an", "西安", "시안", "Xi'an"),
+    localName: "西安",
+    country: t("China", "中国", "중국", "China"),
+    blurb: t(
+      "City walls, Tang pagodas, and the Terracotta Army in Shaanxi — not Shanxi.",
+      "城墙、唐塔与兵马俑——在陕西，不是山西。",
+      "성벽, 당탑, 병마용 — 산시(陝西)이며 산시(山西)가 아닙니다.",
+      "Muralla, pagodas Tang y el Ejército de Terracota en Shaanxi — no Shanxi.",
+    ),
+    region: "asia",
+    intents: ["culture", "food"],
+    image: "https://images.unsplash.com/photo-1586016413664-864c0dd76f53?auto=format&fit=crop&w=1600&q=80",
   },
 ]
 

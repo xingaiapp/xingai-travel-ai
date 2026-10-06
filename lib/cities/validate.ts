@@ -19,6 +19,8 @@ const BOUNDS: Record<string, { lat: [number, number]; lng: [number, number] }> =
   shanghai: { lat: [31.14, 31.35], lng: [121.35, 121.6] },
   lisbon: { lat: [38.69, 38.8], lng: [-9.25, -9.08] },
   barcelona: { lat: [41.35, 41.45], lng: [2.1, 2.25] },
+  /** Includes Lintong (Terracotta Army / Huaqing) east of the Ming city wall. */
+  xian: { lat: [34.15, 34.45], lng: [108.75, 109.32] },
 }
 
 export function validateCity(city: City): string[] {

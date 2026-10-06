@@ -9,6 +9,7 @@ import { shanghai } from "./shanghai.ts"
 import { singapore } from "./singapore.ts"
 import { taipei } from "./taipei.ts"
 import { tokyo } from "./tokyo.ts"
+import { xian } from "./xian.ts"
 import type { City, CityText, Place } from "./types"
 
 /** City registry (ADR 0008). Adding a city = adding its data file here. */
@@ -23,6 +24,7 @@ export const cities: City[] = [
   shanghai,
   lisbon,
   barcelona,
+  xian,
 ]
 
 export function getCity(slug: string): City | undefined {
@@ -66,6 +68,7 @@ export function cityDecideHref(city: City) {
     shanghai: "asia",
     lisbon: "europe",
     barcelona: "europe",
+    xian: "asia",
   }
   const params = new URLSearchParams({ places: city.name.en })
   const region = regionBySlug[city.slug]

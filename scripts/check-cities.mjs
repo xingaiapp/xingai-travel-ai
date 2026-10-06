@@ -18,6 +18,7 @@ import { shanghai } from "../lib/cities/shanghai.ts"
 import { singapore } from "../lib/cities/singapore.ts"
 import { taipei } from "../lib/cities/taipei.ts"
 import { tokyo } from "../lib/cities/tokyo.ts"
+import { xian } from "../lib/cities/xian.ts"
 import { cityPhotoPaths, validateCity } from "../lib/cities/validate.ts"
 
 const cities = [
@@ -31,6 +32,7 @@ const cities = [
   shanghai,
   lisbon,
   barcelona,
+  xian,
 ]
 const errors = cities.flatMap((city) => [
   ...validateCity(city),
