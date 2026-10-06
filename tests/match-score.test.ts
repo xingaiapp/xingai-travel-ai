@@ -18,6 +18,10 @@ describe("computeMatchScore", () => {
     expect(computeMatchScore(4, "medium")).toBeGreaterThan(computeMatchScore(4, "low"))
   })
 
+  it("nudges score with labeled walkability so equal star/confidence can differ", () => {
+    expect(computeMatchScore(4, "medium", "Excellent")).toBeGreaterThan(computeMatchScore(4, "medium", "Moderate"))
+  })
+
   it("treats a non-numeric overall as 3 stars", () => {
     expect(computeMatchScore(Number.NaN, "medium")).toBe(computeMatchScore(3, "medium"))
   })
@@ -54,11 +58,35 @@ describe("overallTenths", () => {
 })
 
 describe("rankedAlternatives", () => {
-  const dest = (name: string, overall: number, confidence: Destination["confidence"], isWinner = false) =>
-    ({ name, country: "", isWinner, confidence, whyWins: [], tradeoffs: [], scores: { overall, weather: "", flightTime: "", walkability: "" } }) as Destination
+  const dest = (
+    name: string,
+    overall: number,
+    confidence: Destination["confidence"],
+    isWinner = false,
+    flightTime = "",
+    walkability = ""
+  ) =>
+    ({
+      name,
+      country: "",
+      isWinner,
+      confidence,
+      whyWins: [],
+      tradeoffs: [],
+      scores: { overall, weather: "", flightTime, walkability },
+    }) as Destination
 
   it("drops the winner and sorts the rest by score", () => {
     const out = rankedAlternatives([dest("A", 5, "high", true), dest("B", 3, "low"), dest("C", 4, "high")])
     expect(out.map((x) => x.item.name)).toEqual(["C", "B"])
+  })
+
+  it("breaks equal scores with shorter flight first", () => {
+    const out = rankedAlternatives([
+      dest("A", 5, "high", true),
+      dest("Lisbon", 4, "medium", false, "~12h (1 stop)"),
+      dest("Mexico City", 4, "medium", false, "~5h nonstop"),
+    ])
+    expect(out.map((x) => x.item.name)).toEqual(["Mexico City", "Lisbon"])
   })
 })

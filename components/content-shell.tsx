@@ -83,12 +83,27 @@ export function FaqBlock({ items }: Readonly<{ items: { q: string; a: string }[]
         {items.map((item) => (
           <div key={item.q} className="card-hover rounded-md border border-border bg-card p-4">
             <dt className="text-sm font-extrabold">{item.q}</dt>
-            <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.a}</dd>
+            <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{linkifyInternalPaths(item.a)}</dd>
           </div>
         ))}
       </dl>
     </section>
   )
+}
+
+/** Turn bare `/decide`, `/stories/…` paths in FAQ prose into real links. */
+function linkifyInternalPaths(text: string) {
+  const parts = text.split(/(\/(?:decide|faq|how-it-works|stories|city|compare|guides)(?:\/[a-z0-9-]+)*)/g)
+  return parts.map((part, index) => {
+    if (part.startsWith("/") && part.length > 1) {
+      return (
+        <Link key={`${part}-${index}`} href={part} className="font-semibold text-primary hover:underline">
+          {part}
+        </Link>
+      )
+    }
+    return <span key={`t-${index}`}>{part}</span>
+  })
 }
 
 export function ContentShell({ children }: Readonly<{ children: React.ReactNode }>) {

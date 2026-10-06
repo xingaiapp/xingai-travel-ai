@@ -16,6 +16,7 @@ Bilingual index. Format: [BILINGUAL-ADR.md](./BILINGUAL-ADR.md)
 | 0010 | [City map Want/Been soft-fills Decide](./0010-city-map-soft-fill-decide.md) | [城市地图 Want/Been 软填 Decide](./0010-city-map-soft-fill-decide.zh.md) | Accepted | 2026-10-06 |
 | 0011 | [First-HTML SEO honesty](./0011-first-html-seo-honesty.md) | [首屏 HTML SEO 诚实性](./0011-first-html-seo-honesty.zh.md) | Accepted | 2026-10-06 |
 | 0012 | [Decide trust: empty defaults + Avoid hard](./0012-decide-trust-avoid-hard.md) | [Decide 可信度：空默认 + Avoid 硬约束](./0012-decide-trust-avoid-hard.zh.md) | Accepted | 2026-10-06 |
+| 0013 | [Compare honesty + match score + security headers](./0013-compare-honesty-match-headers.md) | [Compare 诚实文案 + 匹配分 + 安全头](./0013-compare-honesty-match-headers.zh.md) | Accepted | 2026-10-06 |
 
 ## Related
 

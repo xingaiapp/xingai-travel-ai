@@ -41,7 +41,7 @@ export function DecisionEvidence({
 }>) {
   const { messages } = useLocale()
   const r = messages.result
-  const score = computeMatchScore(winner.scores.overall, winner.confidence)
+  const score = computeMatchScore(winner.scores.overall, winner.confidence, winner.scores.walkability)
 
   const rows: EvidenceRow[] = [
     {

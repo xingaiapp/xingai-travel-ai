@@ -134,10 +134,10 @@ export const homeCopy = {
   featuresLabel: t("What you can do here", "在这里能做什么", "여기서 할 수 있는 일", "Qué puedes hacer aquí"),
   placesTitle: t("Popular destinations", "热门目的地", "인기 여행지", "Destinos populares"),
   placesNote: t(
-    "Live city guides now include Xi'an (Shaanxi) plus the Top 10 — open Cities to search the full list.",
-    "城市指南已含西安（陕西）与 Top 10——完整列表在 Cities 可搜索。",
-    "시안(산시·陝西)과 Top 10 가이드가 열려 있습니다. 전체 목록은 Cities에서 검색하세요.",
-    "Las guías ya incluyen Xi'an (Shaanxi) y el Top 10 — busca la lista completa en Cities."
+    "Live city guides now include Xi'an (Shaanxi) and the full live directory — open Cities to search the list.",
+    "城市指南已含西安（陕西）与全部已上线城市——完整列表在 Cities 可搜索。",
+    "시안(산시·陝西)과 공개된 도시 가이드 전체가 열려 있습니다. 목록은 Cities에서 검색하세요.",
+    "Las guías ya incluyen Xi'an (Shaanxi) y el directorio publicado — busca la lista completa en Cities."
   ),
   placesAllCta: t("All city guides", "全部城市指南", "모든 도시 가이드", "Todas las guías de ciudad"),
   soon: t("Coming soon", "即将推出", "곧 제공", "Próximamente"),

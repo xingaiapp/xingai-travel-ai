@@ -135,7 +135,7 @@ export const compares: ComparePage[] = [
       factor("Walkability", "步行友好", "도보", "Caminabilidad", "good", "strong"),
       factor("Skyline / harbor", "天际线 / 港口", "스카이라인·항구", "Skyline / puerto", "strong", "good"),
       factor("Scale", "体量", "규모", "Escala", "good", "strong"),
-      factor("First-hand stories on XingAI", "站内亲历故事", "XingAI 현장 스토리", "Historias de primera mano", "strong", "weaker"),
+      factor("First-timer clarity", "初次到访者清晰度", "첫 방문 명확도", "Claridad para debutantes", "strong", "weaker"),
     ],
     verdict: L(
       "Choose Hong Kong for a compact, dramatic city-and-harbor trip (and our published Stories); choose Tokyo when you want more days of neighborhood variety.",

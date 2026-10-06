@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { ContentHero, ContentShell, DecideCta, DirectAnswer, FaqBlock, FitPill } from "@/components/content-shell"
 import { useLocale } from "@/components/locale-provider"
+import { getCity } from "@/lib/cities"
 import {
   compares,
   faqDirectAnswer,
@@ -195,11 +196,15 @@ export function CompareDetailView({ slug }: Readonly<{ slug: string }>) {
       {(page.relatedCitySlugs?.length || 0) > 0 ? (
         <p className="mt-6 text-sm">
           <span className="font-semibold">{messages.content.related}: </span>
-          {page.relatedCitySlugs!.map((slug) => (
-            <Link key={slug} href={`/city/${slug}`} className="mr-3 font-semibold text-primary hover:underline">
-              /city/{slug}
-            </Link>
-          ))}
+          {page.relatedCitySlugs!.map((slug) => {
+            const city = getCity(slug)
+            const label = city ? pickLocalized(city.name, locale) : slug
+            return (
+              <Link key={slug} href={`/city/${slug}`} className="mr-3 font-semibold text-primary hover:underline">
+                {label}
+              </Link>
+            )
+          })}
         </p>
       ) : null}
 
@@ -273,11 +278,19 @@ export function GuideDetailView({ slug }: Readonly<{ slug: string }>) {
       {(page.relatedCompareSlugs?.length || 0) > 0 ? (
         <p className="mt-6 text-sm">
           <span className="font-semibold">{messages.content.related}: </span>
-          {page.relatedCompareSlugs!.map((slug) => (
-            <Link key={slug} href={`/compare/${slug}`} className="mr-3 font-semibold text-primary hover:underline">
-              {slug}
-            </Link>
-          ))}
+          {page.relatedCompareSlugs!.map((compareSlug) => {
+            const related = getCompare(compareSlug)
+            const label = related ? pickLocalized(related.title, locale) : compareSlug
+            return (
+              <Link
+                key={compareSlug}
+                href={`/compare/${compareSlug}`}
+                className="mr-3 font-semibold text-primary hover:underline"
+              >
+                {label}
+              </Link>
+            )
+          })}
         </p>
       ) : null}
       <DecideCta />

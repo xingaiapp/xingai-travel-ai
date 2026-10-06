@@ -3,13 +3,11 @@
 import Image from "next/image"
 import { CheckCircle2, Star } from "lucide-react"
 import { useState } from "react"
-import { ConfidencePill } from "@/components/confidence-pill"
 import { useLocale } from "@/components/locale-provider"
 import { localizeRating } from "@/lib/i18n"
 import {
   computeMatchScore,
   matchScoreLabelBand,
-  overallTenths,
   rankedAlternatives,
   walkabilityTenths,
 } from "@/lib/match-score"
@@ -56,7 +54,7 @@ function DestinationCompareInner({
 
   const focusedImage = getCityImage(focused.name)
   const isWinnerFocused = focused.isWinner
-  const winnerScore = computeMatchScore(winner.scores.overall, winner.confidence)
+  const winnerScore = computeMatchScore(winner.scores.overall, winner.confidence, winner.scores.walkability)
   const scoreBand = matchScoreLabelBand(winnerScore)
   const scoreBandLabel =
     scoreBand === "excellent"
@@ -124,7 +122,6 @@ function DestinationCompareInner({
             <h3 className="text-2xl font-extrabold tracking-tight">
               {messages.result.bestFit}: <span className="text-primary">{winner.name}, {winner.country}</span>
             </h3>
-            <ConfidencePill value={winner.confidence} />
           </div>
 
           <div className="mb-4 grid gap-3 rounded-md border border-primary/25 bg-primary/5 p-3 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-5 sm:p-4">
@@ -139,7 +136,6 @@ function DestinationCompareInner({
               <p className="mt-0.5 text-xs font-bold text-primary">{scoreBandLabel}</p>
             </div>
             <div className="grid gap-2.5">
-              <FactorBar label={messages.result.factorOverall} value={overallTenths(winner.scores.overall)} />
               {walkTenths != null ? (
                 <FactorBar
                   label={messages.result.factorWalkability}
@@ -181,6 +177,7 @@ function DestinationCompareInner({
                         #{index + 2} {item.name}
                         <span className="ml-1 font-semibold text-muted-foreground">— {score}/100</span>
                       </p>
+                      <p className="text-xs text-muted-foreground">{item.scores.flightTime}</p>
                     </div>
                     <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-amber-700 dark:text-amber-400">
                       {messages.result.whyNotCity.replace("{city}", item.name)}
