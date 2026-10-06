@@ -4,13 +4,13 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { ArrowRight, Search, X } from "lucide-react"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { CityMapToggles } from "@/components/city/city-map-toggles"
 import { TravelMapProgress } from "@/components/city/travel-map-progress"
 import { DecideCta } from "@/components/content-shell"
 import { useLocale } from "@/components/locale-provider"
 import { listCityCatalog } from "@/lib/cities/catalog"
-import type { IntentFilter, RegionFilter } from "@/lib/cities/filters"
+import { parseIntent, parseRegion, type IntentFilter, type RegionFilter } from "@/lib/cities/filters"
 import { cityText, fill } from "@/lib/cities"
 import { cn } from "@/lib/utils"
 
@@ -21,13 +21,13 @@ function normalize(value: string) {
 }
 
 /**
- * Full city-guide directory. Filters come from the server `searchParams` so the
- * first HTML includes H1 + city cards (no useSearchParams CSR bailout).
+ * Full city-guide directory. SSR always paints the full catalog (crawlers + CDN).
+ * Region/intent filters sync from the URL after mount — never useSearchParams (CSR bailout).
  */
 export function CitiesIndexView({
-  region,
-  intent,
-}: Readonly<{ region: RegionFilter; intent: IntentFilter }>) {
+  region: initialRegion = "all",
+  intent: initialIntent = "all",
+}: Readonly<{ region?: RegionFilter; intent?: IntentFilter }>) {
   const { locale, messages } = useLocale()
   const m = messages.city
   const catalog = listCityCatalog()
@@ -35,8 +35,18 @@ export function CitiesIndexView({
   const pathname = usePathname()
 
   const [query, setQuery] = useState("")
+  const [region, setRegion] = useState<RegionFilter>(initialRegion)
+  const [intent, setIntent] = useState<IntentFilter>(initialIntent)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    setRegion(parseRegion(params.get("region")))
+    setIntent(parseIntent(params.get("intent")))
+  }, [])
 
   function pushFilters(nextRegion: RegionFilter, nextIntent: IntentFilter) {
+    setRegion(nextRegion)
+    setIntent(nextIntent)
     const params = new URLSearchParams()
     if (nextRegion !== "all") params.set("region", nextRegion)
     if (nextIntent !== "all") params.set("intent", nextIntent)
