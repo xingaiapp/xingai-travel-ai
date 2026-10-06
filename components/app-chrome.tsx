@@ -14,7 +14,6 @@ import {
   House,
   MapPinned,
   Menu,
-  Plane,
   Scale,
   X,
 } from "lucide-react"
@@ -199,10 +198,33 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           >
             <Menu className="h-5 w-5" aria-hidden />
           </button>
-          <div className="min-w-0 flex-1 text-center text-sm font-bold lg:hidden">
-            <span className="text-primary">Travel</span> · {mobileHeaderTitle(pathname, messages)}
-          </div>
-          <Link href="/" className="hidden min-w-0 shrink-0 items-center lg:flex">
+          <Link
+            href="/"
+            className="flex min-w-0 flex-1 items-center justify-center gap-2 lg:hidden"
+            aria-label={messages.chrome.brand}
+          >
+            <Image
+              src="/assets/logo-mark.svg"
+              alt=""
+              width={28}
+              height={28}
+              className="h-7 w-7 shrink-0"
+              priority
+            />
+            <span className="min-w-0 truncate text-sm font-bold">
+              <span className="text-primary">Travel</span>
+              <span className="text-muted-foreground"> · {mobileHeaderTitle(pathname, messages)}</span>
+            </span>
+          </Link>
+          <Link href="/" className="hidden min-w-0 shrink-0 items-center gap-2.5 lg:flex" aria-label={messages.chrome.brand}>
+            <Image
+              src="/assets/logo-mark.svg"
+              alt=""
+              width={32}
+              height={32}
+              className="h-8 w-8 shrink-0"
+              priority
+            />
             <span className="truncate text-base font-bold leading-none">
               XingAI <span className="text-primary">Travel</span>
             </span>
@@ -409,10 +431,19 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           <button className="absolute inset-0 bg-black/40" aria-label="Close menu" type="button" onClick={() => setOpen(false)} />
           <aside className="absolute left-0 top-0 flex h-full w-[min(21rem,88vw)] flex-col border-r border-border bg-card shadow-2xl">
             <div className="flex items-center justify-between border-b border-border px-4 py-4 pt-[max(1rem,env(safe-area-inset-top))]">
-              <Link href="/" onClick={() => setOpen(false)} className="flex min-w-0 items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
-                  <Plane className="h-5 w-5" aria-hidden />
-                </span>
+              <Link
+                href="/"
+                onClick={() => setOpen(false)}
+                className="flex min-w-0 items-center gap-3"
+                aria-label={messages.chrome.brand}
+              >
+                <Image
+                  src="/assets/logo-mark.svg"
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 shrink-0"
+                />
                 <span className="min-w-0 leading-tight">
                   <span className="block truncate text-sm font-extrabold">XingAI</span>
                   <span className="block truncate text-xs font-bold text-primary">Travel</span>
