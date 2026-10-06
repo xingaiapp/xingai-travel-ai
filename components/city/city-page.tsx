@@ -1,6 +1,7 @@
 "use client"
 
-import { Compass, Info } from "lucide-react"
+import Link from "next/link"
+import { ArrowRight, Compass, Info } from "lucide-react"
 import { useMemo, useRef, useState } from "react"
 import { useLocale } from "@/components/locale-provider"
 import { AdjustPanel } from "@/components/city/adjust-panel"
@@ -11,7 +12,7 @@ import { RouteExplanation } from "@/components/city/route-explanation"
 import { RouteTimeline } from "@/components/city/route-timeline"
 import { TravelMap } from "@/components/city/travel-map"
 import { UncertaintyNotes } from "@/components/uncertainty-notes"
-import { cityText, fill, trackCityEvent } from "@/lib/cities"
+import { cityDecideHref, cityText, fill, trackCityEvent } from "@/lib/cities"
 import { adjustRoute, type AdjustToggle } from "@/lib/cities/adjust"
 import type { City, PlaceCategory } from "@/lib/cities/types"
 import { cn } from "@/lib/utils"
@@ -61,24 +62,26 @@ export function CityPage({ city }: Readonly<{ city: City }>) {
   }
 
   return (
-    <main className="flex-1 px-4 pb-28 pt-6 sm:px-6 lg:px-10 lg:pb-12">
-      <div className="mx-auto max-w-5xl">
-        <header>
-          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">{m.eyebrow}</p>
-          <h1 className="mt-2 font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            {name}
-            {locale !== "zh" && <span className="ml-3 text-2xl font-normal text-muted-foreground sm:text-3xl">{city.localName}</span>}
-          </h1>
-        </header>
+    <main className="flex-1 pb-28 lg:pb-12">
+      <header className="mx-auto max-w-5xl px-4 pt-6 sm:px-6 lg:px-10">
+        <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">{m.eyebrow}</p>
+        <h1 className="mt-2 font-display text-4xl font-bold tracking-tight sm:text-5xl">
+          {name}
+          {locale !== "zh" && <span className="ml-3 text-2xl font-normal text-muted-foreground sm:text-3xl">{city.localName}</span>}
+        </h1>
+      </header>
 
-        <CityPhoto
-          photo={city.hero}
-          priority
-          className="mt-5 aspect-[16/10] w-full rounded-md sm:aspect-[21/9]"
-          sizes="(min-width: 1024px) 64rem, 100vw"
-        />
+      {/* Full-bleed hero — same edge-to-edge stage as Home / Decide */}
+      <CityPhoto
+        photo={city.hero}
+        priority
+        hires
+        className="page-hero-full mt-5 w-full rounded-none [&_img]:object-[72%_48%]"
+        sizes="100vw"
+      />
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-start" aria-labelledby="first-time-heading">
+      <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-6 lg:px-10">
+        <section className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-start" aria-labelledby="first-time-heading">
           <div>
             <h2 id="first-time-heading" className="text-xl font-extrabold">
               {fill(m.firstTimeTitle, { city: name })}
@@ -89,13 +92,23 @@ export function CityPage({ city }: Readonly<{ city: City }>) {
               {m.notCovered}
             </p>
           </div>
-          <a
-            href="#routes"
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-sm hover:bg-primary/90"
-          >
-            <Compass className="h-4 w-4" aria-hidden />
-            {fill(m.routesTitle, { city: name })}
-          </a>
+          <div className="flex flex-col gap-2 sm:items-stretch">
+            <a
+              href="#routes"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-sm hover:bg-primary/90"
+            >
+              <Compass className="h-4 w-4" aria-hidden />
+              {fill(m.routesTitle, { city: name })}
+            </a>
+            <Link
+              href={cityDecideHref(city)}
+              onClick={() => trackCityEvent("city_to_decide", city.slug)}
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-md border border-border bg-card px-4 py-2.5 text-sm font-bold text-foreground transition hover:border-primary/50"
+            >
+              {fill(m.decideCta, { city: name })}
+              <ArrowRight className="h-4 w-4 text-primary" aria-hidden />
+            </Link>
+          </div>
         </section>
 
         <section className="mt-10" aria-labelledby="places-heading">
@@ -180,6 +193,24 @@ export function CityPage({ city }: Readonly<{ city: City }>) {
             </div>
           </div>
         )}
+
+        <section className="card-hover mt-12 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6" aria-labelledby="city-decide-heading">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">{m.decideEyebrow}</p>
+          <h2 id="city-decide-heading" className="mt-2 hero-display-title text-2xl font-semibold tracking-tight sm:text-3xl">
+            {fill(m.decideTitle, { city: name })}
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+            {fill(m.decideBody, { city: name })}
+          </p>
+          <Link
+            href={cityDecideHref(city)}
+            onClick={() => trackCityEvent("city_to_decide", city.slug)}
+            className="mt-5 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)]"
+          >
+            {fill(m.decideCta, { city: name })}
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+        </section>
 
         <div className="mt-8">
           <UncertaintyNotes

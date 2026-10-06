@@ -96,6 +96,7 @@ function DestinationCompareInner({
             src={focusedImage}
             alt={`${focused.name} travel photo`}
             fill
+            quality={90}
             className="object-cover object-center transition-opacity duration-300"
             sizes="(max-width: 768px) 100vw, 18rem"
             unoptimized={focusedImage.startsWith("https://images.unsplash.com")}
@@ -174,7 +175,7 @@ function DestinationCompareInner({
               <h4 className="text-sm font-extrabold">{messages.result.alternativesTitle}</h4>
               <ul className="mt-2 space-y-3">
                 {alternatives.map(({ item, score }, index) => (
-                  <li key={item.name} className="rounded-md border border-border/80 bg-muted/20 px-3 py-2.5">
+                  <li key={item.name} className="card-hover rounded-md border border-border/80 bg-muted/20 px-3 py-2.5">
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                       <p className="text-sm font-extrabold text-foreground">
                         #{index + 2} {item.name}

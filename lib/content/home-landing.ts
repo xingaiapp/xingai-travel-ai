@@ -134,11 +134,12 @@ export const homeCopy = {
   featuresLabel: t("What you can do here", "在这里能做什么", "여기서 할 수 있는 일", "Qué puedes hacer aquí"),
   placesTitle: t("Popular destinations", "热门目的地", "인기 여행지", "Destinos populares"),
   placesNote: t(
-    "Hong Kong is the city guide that is open. Tokyo, Seoul, and Los Cabos are not city guides yet.",
-    "香港城市指南已经打开。东京、首尔和洛斯卡沃斯还没有城市指南。",
-    "홍콩 도시 가이드는 열려 있습니다. 도쿄, 서울, 로스카보스는 아직 도시 가이드가 없습니다.",
-    "La guía de Hong Kong está abierta. Tokio, Seúl y Los Cabos aún no tienen guía de ciudad."
+    "Hong Kong, Tokyo, Seoul, Taipei, and Los Cabos have live city guides. See all ten on the Cities page — more coming.",
+    "香港、东京、首尔、台北、洛斯卡沃斯已有城市指南。十座城市总目录在 Cities 页，还会继续加。",
+    "홍콩·도쿄·서울·타이베이·로스카보스 가이드가 열려 있습니다. 열 개 도시 목록은 Cities 페이지에서 — 계속 늘어납니다.",
+    "Hong Kong, Tokio, Seúl, Taipéi y Los Cabos ya tienen guía. Las diez ciudades están en Cities — y habrá más."
   ),
+  placesAllCta: t("All city guides", "全部城市指南", "모든 도시 가이드", "Todas las guías de ciudad"),
   soon: t("Coming soon", "即将推出", "곧 제공", "Próximamente"),
   hkTitle: t("Start with Hong Kong", "先从香港看起", "홍콩부터 보기", "Empieza por Hong Kong"),
   hkBody: t(
@@ -328,25 +329,29 @@ export const homePlaces: (HomeLink & { detail: L; image?: string; soon?: boolean
   },
   {
     id: "tokyo",
-    href: "/compare/tokyo-vs-seoul",
+    href: "/city/tokyo",
     image: "/assets/dest-tokyo-v2.webp",
-    soon: true,
     label: t("Tokyo", "东京", "도쿄", "Tokio"),
     detail: t("Modern city, rich tradition", "现代城市，传统也在", "현대 도시, 깊은 전통", "Ciudad moderna, tradición rica"),
   },
   {
     id: "seoul",
-    href: "/compare/tokyo-vs-seoul",
+    href: "/city/seoul",
     image: "/assets/dest-seoul-v2.webp",
-    soon: true,
     label: t("Seoul", "首尔", "서울", "Seúl"),
     detail: t("Food, neighborhoods, and shopping", "美食、街区和购物", "음식, 동네, 쇼핑", "Comida, barrios y compras"),
   },
   {
+    id: "taipei",
+    href: "/city/taipei",
+    image: "/assets/destination-taipei-card.webp",
+    label: t("Taipei", "台北", "타이베이", "Taipei"),
+    detail: t("Night markets, temples, and hills", "夜市、庙宇与山城", "야시장, 사원, 언덕", "Mercados nocturnos, templos y colinas"),
+  },
+  {
     id: "los-cabos",
-    href: "/decide",
+    href: "/city/los-cabos",
     image: "/assets/dest-los-cabos-v2.webp",
-    soon: true,
     label: t("Los Cabos", "洛斯卡沃斯", "로스카보스", "Los Cabos"),
     detail: t("Beaches, rest, and the coast", "海滩、休息和海岸", "해변, 휴식, 해안", "Playas, descanso y costa"),
   },

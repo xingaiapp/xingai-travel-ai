@@ -370,6 +370,19 @@ export const ko: Messages = {
     fromResultBody: "알아 두면 좋은 곳과 첫날을 보내는 3가지 방법, 모두 출처 포함. 위 결과에는 영향을 주지 않았습니다.",
     fromResultCta: "{city} 가이드 열기",
     fromStory: "{city}, 처음이세요? 알아 두면 좋은 곳과 3가지 방법",
+    decideEyebrow: "당신의 여행, 이 가이드가 아닌",
+    decideTitle: "{city}, 이번 여행에 맞을까요?",
+    decideBody:
+      "이 페이지는 장소와 하루 코스만 보여 줍니다. {city}이(가) 맞는지 — 다른 선택과 비교해 — 판단하려면 출발지, 날짜, 예산, 중요한 것을 알려 주세요.",
+    decideCta: "내 {city} 결정 만들기",
+    indexTitle: "도시 가이드",
+    indexLead:
+      "출처가 있는 장소와 하루 코스 3개로 된 첫 방문 가이드. 아래 공개 도시를 열고, Coming soon은 홍콩과 같은 기준으로 작성 중이라는 뜻입니다.",
+    indexMeta: "장소 {n}곳 · 코스 {r}개",
+    indexOpen: "{city} 열기",
+    indexCount: "공개 {live} · 준비 중 {soon} · 목록 {total}",
+    indexSoonHint: "가이드 작성 중 — 홍콩과 같은 품질",
+    indexMoreNote: "목록은 출시할수록 늘어납니다. 마카오·싱가포르 다음: 아시아 확장, 그다음 유럽 비치·도시 템플릿.",
   },
   content: {
     howEyebrow: "방법론",
@@ -397,6 +410,7 @@ export const ko: Messages = {
     faqNav: "FAQ",
     compareNav: "비교",
     guidesNav: "가이드",
+    citiesNav: "도시",
     discover: "탐색",
   },
   travelers: {

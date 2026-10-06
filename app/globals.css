@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.985 0.018 245);
+  --background: oklch(1 0 0);
   --foreground: oklch(0.22 0.035 255);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.22 0.035 255);
@@ -12,16 +12,16 @@
   --popover-foreground: oklch(0.22 0.035 255);
   --primary: oklch(0.55 0.22 260);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.95 0.035 250);
+  --secondary: oklch(0.97 0.01 250);
   --secondary-foreground: oklch(0.3 0.08 255);
-  --muted: oklch(0.96 0.016 250);
+  --muted: oklch(0.97 0.006 250);
   --muted-foreground: oklch(0.5 0.04 255);
-  --accent: oklch(0.93 0.045 245);
+  --accent: oklch(0.96 0.012 245);
   --accent-foreground: oklch(0.32 0.1 255);
   --destructive: oklch(0.58 0.22 28);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.88 0.035 250);
-  --input: oklch(0.91 0.025 250);
+  --border: oklch(0.9 0.012 250);
+  --input: oklch(0.94 0.008 250);
   --ring: oklch(0.55 0.22 260);
   --success: oklch(0.62 0.16 150);
   --warning: oklch(0.75 0.16 80);
@@ -91,6 +91,8 @@
   }
   body {
     @apply min-h-[100dvh] bg-background text-foreground;
+  }
+  .dark body {
     background:
       radial-gradient(circle at 28% -10%, color-mix(in oklch, var(--primary) 18%, transparent), transparent 34rem),
       linear-gradient(180deg, var(--background), color-mix(in oklch, var(--secondary) 55%, var(--background)));
@@ -100,6 +102,32 @@
 .glass-panel {
   background: color-mix(in oklch, var(--card) 86%, transparent);
   box-shadow: 0 18px 54px color-mix(in oklch, var(--primary) 10%, transparent);
+}
+
+/* Shared card hover — lift + shadow + border (pointer devices only) */
+.card-hover {
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease;
+}
+
+.card-hover-media img {
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 14px 32px color-mix(in oklch, var(--foreground) 9%, transparent),
+      0 2px 8px color-mix(in oklch, var(--primary) 8%, transparent);
+    border-color: color-mix(in oklch, var(--primary) 42%, var(--border));
+  }
+
+  .card-hover-media:hover img {
+    transform: scale(1.04);
+  }
 }
 
 .decision-grid-bg {
@@ -342,6 +370,29 @@
 
 .home-hero-full {
   width: 100%;
+}
+
+/* Shared full-bleed hero stage for city / decide / other product pages */
+.page-hero-full {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: min(52svh, 22rem);
+  max-height: min(72svh, 36rem);
+}
+
+@media (min-width: 640px) {
+  .page-hero-full {
+    aspect-ratio: 21 / 9;
+    min-height: min(42vh, 20rem);
+    max-height: min(56vh, 32rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-hero-full {
+    min-height: 22rem;
+    max-height: min(60vh, 36rem);
+  }
 }
 
 /* Mobile: height follows viewport width (auto-resize), not a fixed svh box. */

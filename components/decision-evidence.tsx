@@ -115,7 +115,7 @@ export function DecisionEvidence({
         {rows.map((row) => (
           <li
             key={row.id}
-            className="grid gap-1 rounded-md border border-border/80 bg-muted/20 px-3 py-2.5 sm:grid-cols-[7.5rem_1fr_auto] sm:items-start sm:gap-3"
+            className="card-hover grid gap-1 rounded-md border border-border/80 bg-muted/20 px-3 py-2.5 sm:grid-cols-[7.5rem_1fr_auto] sm:items-start sm:gap-3"
           >
             <span className="text-xs font-extrabold uppercase tracking-wide text-foreground">{row.label}</span>
             <span className="flex items-start gap-2 text-sm text-muted-foreground">

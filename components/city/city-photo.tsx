@@ -14,7 +14,16 @@ export function CityPhoto({
   sizes,
   priority = false,
   showCredit = true,
-}: Readonly<{ photo: CityPhotoData; className?: string; sizes?: string; priority?: boolean; showCredit?: boolean }>) {
+  /** Prefer always-on 1600w for city heroes / route cards (sharper on retina). */
+  hires = true,
+}: Readonly<{
+  photo: CityPhotoData
+  className?: string
+  sizes?: string
+  priority?: boolean
+  showCredit?: boolean
+  hires?: boolean
+}>) {
   const { locale, messages } = useLocale()
   return (
     <figure className={cn("relative overflow-hidden bg-muted", className)}>
@@ -22,6 +31,7 @@ export function CityPhoto({
         photo={{ ...photo, shot: "" }}
         sizes={sizes}
         priority={priority}
+        hires={hires}
         className="h-full max-h-none w-full rounded-none object-cover"
       />
       {showCredit && (

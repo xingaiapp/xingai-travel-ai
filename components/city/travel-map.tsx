@@ -113,7 +113,7 @@ export function TravelMap({
   const activeIndex = layout.stops.findIndex(({ place }) => place.id === activeStop)
 
   return (
-    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5" aria-labelledby="map-heading">
+    <section className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5" aria-labelledby="map-heading">
       <div className="mb-3 flex items-center gap-2">
         <MapIcon className="h-5 w-5 text-primary" aria-hidden />
         <h3 id="map-heading" className="text-base font-extrabold">

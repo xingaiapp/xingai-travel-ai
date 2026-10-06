@@ -13,7 +13,7 @@ export function RouteExplanation({ route }: Readonly<{ route: TravelRoute }>) {
 
   return (
     <div className="grid gap-4">
-      <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5" aria-labelledby="why-heading">
+      <section className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5" aria-labelledby="why-heading">
         <div className="mb-3 flex items-center gap-2">
           <CheckCircle2 className="h-5 w-5 text-primary" aria-hidden />
           <h3 id="why-heading" className="text-base font-extrabold">

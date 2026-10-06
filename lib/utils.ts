@@ -6,7 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 function unsplash(id: string): string {
-  return `https://images.unsplash.com/${id}?w=640&q=75`
+  // Match local card/story delivery: ~1600w, high encode quality (not the old 640@q75 soft fallback).
+  return `https://images.unsplash.com/${id}?w=1600&q=85&auto=format&fit=crop`
 }
 
 /**
@@ -40,18 +41,18 @@ export const CITY_IMAGES: Record<string, string> = {
   伊斯坦布尔: unsplash("photo-1524231757912-21f4fe3a7200"),
 
   // Asia
-  "hong kong": "/stories/hong-kong/01/red-sail-junk-800.webp",
-  hongkong: "/stories/hong-kong/01/red-sail-junk-800.webp",
-  香港: "/stories/hong-kong/01/red-sail-junk-800.webp",
-  홍콩: "/stories/hong-kong/01/red-sail-junk-800.webp",
-  "victoria harbour": "/stories/hong-kong/01/harbour-promenade-skyline-800.webp",
-  维港: "/stories/hong-kong/01/harbour-promenade-skyline-800.webp",
-  macau: "/stories/macau/01/londoner-big-ben-800.webp",
-  macao: "/stories/macau/01/londoner-big-ben-800.webp",
-  澳门: "/stories/macau/01/londoner-big-ben-800.webp",
-  마카오: "/stories/macau/01/londoner-big-ben-800.webp",
-  cotai: "/stories/macau/01/londoner-big-ben-800.webp",
-  路氹: "/stories/macau/01/londoner-big-ben-800.webp",
+  "hong kong": "/stories/hong-kong/01/red-sail-junk-1600.webp",
+  hongkong: "/stories/hong-kong/01/red-sail-junk-1600.webp",
+  香港: "/stories/hong-kong/01/red-sail-junk-1600.webp",
+  홍콩: "/stories/hong-kong/01/red-sail-junk-1600.webp",
+  "victoria harbour": "/stories/hong-kong/01/harbour-promenade-skyline-1600.webp",
+  维港: "/stories/hong-kong/01/harbour-promenade-skyline-1600.webp",
+  macau: "/stories/macau/01/londoner-big-ben-1600.webp",
+  macao: "/stories/macau/01/londoner-big-ben-1600.webp",
+  澳门: "/stories/macau/01/londoner-big-ben-1600.webp",
+  마카오: "/stories/macau/01/londoner-big-ben-1600.webp",
+  cotai: "/stories/macau/01/londoner-big-ben-1600.webp",
+  路氹: "/stories/macau/01/londoner-big-ben-1600.webp",
   tokyo: unsplash("photo-1540959733332-eab4deabeeaf"),
   东京: unsplash("photo-1540959733332-eab4deabeeaf"),
   東京: unsplash("photo-1540959733332-eab4deabeeaf"),

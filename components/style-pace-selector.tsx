@@ -33,7 +33,7 @@ export function StylePaceSelector({ value, onChange }: StylePaceSelectorProps) {
   }
 
   return (
-    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
+    <section className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
       <div className="mb-4 flex items-center gap-2">
         <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-primary">
           <SlidersHorizontal className="h-4 w-4" aria-hidden />

@@ -24,7 +24,7 @@ function BookCard({ platform, label, url, note, badge, sponsored, icon, onClick 
       target="_blank"
       rel={sponsored ? "noopener noreferrer sponsored nofollow" : "noopener noreferrer nofollow"}
       onClick={onClick}
-      className="flex items-center gap-3 rounded-md border border-border bg-background p-3 transition hover:border-primary/40 hover:bg-primary/5 group"
+      className="card-hover group flex items-center gap-3 rounded-md border border-border bg-background p-3"
     >
       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
         {icon}

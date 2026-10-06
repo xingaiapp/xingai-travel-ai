@@ -17,6 +17,7 @@ export type TravelEvent =
   | "story_to_decide"
   | "city_from_result"
   | "city_route_select"
+  | "city_to_decide"
 
 type Dims = Record<string, string | undefined>
 

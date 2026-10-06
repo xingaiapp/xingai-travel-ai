@@ -72,7 +72,7 @@ function pageReducer(state: PageState, action: PageAction): PageState {
 
 function PlanSkeleton() {
   return (
-    <div className="space-y-3 rounded-md border border-border bg-card p-4 sm:p-5">
+    <div className="card-hover space-y-3 rounded-md border border-border bg-card p-4 sm:p-5">
       {[1, 2, 3].map((i) => (
         <div key={i} className="h-14 animate-pulse rounded-md bg-muted" />
       ))}
@@ -136,7 +136,7 @@ export function ResultPage() {
       <main className="decision-grid-bg flex-1 px-4 pb-28 pt-6 sm:px-6 lg:px-10 lg:pb-12">
         <div className="mx-auto max-w-6xl">
           {ready ? (
-            <div className="rounded-md border border-border bg-card p-5">
+            <div className="card-hover rounded-md border border-border bg-card p-5">
               <p className="text-sm font-semibold text-foreground">{messages.result.noDecision}</p>
               <Link
                 href="/decide"
@@ -214,7 +214,7 @@ export function ResultPage() {
             {planReady && plan ? (
               <>
                 {plan.budgetEstimate ? <BudgetBreakdown estimate={plan.budgetEstimate} trip={trip} /> : null}
-                <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
+                <section className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
                   <h2 className="mb-4 text-base font-extrabold">{messages.result.bookFirst}</h2>
                   <BookFirst plan={plan} trip={trip} />
                 </section>

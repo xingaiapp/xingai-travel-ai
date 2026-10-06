@@ -1030,7 +1030,22 @@ export const hongKong: City = {
     "홍콩 도심은 빅토리아 하버를 사이에 두고 마주 보는 두 해안에 있습니다. 남쪽이 홍콩섬, 북쪽이 구룡입니다. 첫날은 양쪽에서 어디를 볼지 정하고 항구를 한 번 건너는 것이 핵심입니다.",
     "El centro de Hong Kong ocupa dos orillas frente a frente en el puerto Victoria: la isla de Hong Kong al sur y Kowloon al norte. Un buen primer día se reduce a elegir qué ver en cada lado y cruzar el puerto una vez."
   ),
-  hero: photos.promenade,
+  // 2560×1440 site hero — sharper than story -1600 stills for the city page band.
+  hero: {
+    src: "/assets/home-hero-hong-kong.webp",
+    width: 2560,
+    height: 1440,
+    alt: t(
+      "A traveler looks across Victoria Harbour and the Hong Kong skyline at sunset",
+      "一位旅行者望向黄昏中的维多利亚港和香港天际线",
+      "여행자가 해 질 녘 빅토리아 하버와 홍콩 스카이라인을 바라본다",
+      "Una viajera mira Victoria Harbour y el horizonte de Hong Kong al atardecer"
+    ),
+    credit: {
+      label: t("XingAI Travel", "XingAI Travel", "XingAI Travel", "XingAI Travel"),
+      href: "/",
+    },
+  },
   map: {
     // Rough outline of Victoria Harbour between Kennedy Town and Quarry Bay. Schematic only.
     water: [

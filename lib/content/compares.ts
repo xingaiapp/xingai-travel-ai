@@ -58,7 +58,7 @@ export const compares: ComparePage[] = [
         ),
       },
     ],
-    relatedCitySlugs: [],
+    relatedCitySlugs: ["tokyo", "seoul"],
   },
   {
     slug: "tokyo-vs-taipei",
@@ -109,6 +109,7 @@ export const compares: ComparePage[] = [
         ),
       },
     ],
+    relatedCitySlugs: ["tokyo", "taipei"],
   },
   {
     slug: "hong-kong-vs-tokyo",
@@ -159,7 +160,7 @@ export const compares: ComparePage[] = [
         ),
       },
     ],
-    relatedCitySlugs: ["hong-kong"],
+    relatedCitySlugs: ["hong-kong", "tokyo"],
   },
   {
     slug: "hong-kong-vs-singapore",

@@ -370,6 +370,19 @@ export const en: Messages = {
     fromResultBody: "Places worth knowing and 3 ways to spend a first day, with sources. It did not affect your result above.",
     fromResultCta: "Open the {city} guide",
     fromStory: "First time in {city}? Places and 3 ways to spend the day",
+    decideEyebrow: "Your trip, not this guide",
+    decideTitle: "Is {city} right for your trip?",
+    decideBody:
+      "This page shows places and day routes. To decide whether {city} fits you — against alternatives — add your origin, dates, budget, and what matters.",
+    decideCta: "Build my {city} decision",
+    indexTitle: "City guides",
+    indexLead:
+      "First-visit guides with sourced places and 3 day routes. Open a live city below — Coming soon means we are still writing it to the same standard.",
+    indexMeta: "{n} places · {r} routes",
+    indexOpen: "Open {city}",
+    indexCount: "{live} live · {soon} coming soon · {total} on the map",
+    indexSoonHint: "Guide in progress — same quality bar as Hong Kong",
+    indexMoreNote: "This list grows as we publish. Next up after Macau and Singapore: more Asia, then Europe beach and city templates.",
   },
   content: {
     howEyebrow: "Methodology",
@@ -397,6 +410,7 @@ export const en: Messages = {
     faqNav: "FAQ",
     compareNav: "Compare",
     guidesNav: "Guides",
+    citiesNav: "Cities",
     discover: "Discover",
   },
   travelers: {

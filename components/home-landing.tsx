@@ -77,91 +77,6 @@ function ScrollIn({ children, className, delayMs = 0 }: { children: ReactNode; c
   )
 }
 
-function DecisionDemo({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) => string }) {
-  const [active, setActive] = useState(0)
-  const [paused, setPaused] = useState(false)
-  const holdTimer = useRef<number | null>(null)
-  const steps = [
-    { title: homeCopy.demoTell, hint: homeCopy.demoTellHint, icon: MessageSquareText },
-    { title: homeCopy.demoCompare, hint: homeCopy.demoCompareHint, icon: Scale },
-    { title: homeCopy.demoWinner, hint: homeCopy.demoWinnerHint, icon: CheckCircle2 },
-  ] as const
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || paused) return
-    const id = window.setInterval(() => {
-      setActive((current) => (current + 1) % steps.length)
-    }, 1600)
-    return () => window.clearInterval(id)
-  }, [paused, steps.length])
-
-  useEffect(() => {
-    return () => {
-      if (holdTimer.current !== null) window.clearTimeout(holdTimer.current)
-    }
-  }, [])
-
-  function selectStep(index: number) {
-    setActive(index)
-    setPaused(true)
-    if (holdTimer.current !== null) window.clearTimeout(holdTimer.current)
-    // Resume auto-play after a short hold (mobile has no hover pause).
-    holdTimer.current = window.setTimeout(() => setPaused(false), 3200)
-  }
-
-  return (
-    <div
-      className="home-reveal home-reveal-delay-4 rounded-2xl border border-border/80 bg-card/90 p-4 shadow-sm backdrop-blur-sm sm:p-5"
-      onMouseEnter={() => {
-        if (holdTimer.current !== null) window.clearTimeout(holdTimer.current)
-        setPaused(true)
-      }}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">{t(homeCopy.demoLabel)}</p>
-      <ol className="relative mt-4 grid gap-3 sm:grid-cols-3" role="tablist" aria-label={t(homeCopy.demoLabel)}>
-        <span
-          aria-hidden
-          className="pointer-events-none absolute left-[12%] right-[12%] top-5 hidden h-px bg-border sm:block"
-        />
-        {steps.map((step, index) => {
-          const Icon = step.icon
-          const lit = active === index
-          return (
-            <li key={step.title.en} className="relative">
-              <button
-                type="button"
-                role="tab"
-                aria-selected={lit}
-                onClick={() => selectStep(index)}
-                className={cn(
-                  "w-full rounded-xl border px-3 py-3 text-left motion-safe:transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                  lit
-                    ? "border-primary/45 bg-[color-mix(in_oklch,var(--primary)_10%,var(--card))] shadow-sm"
-                    : "border-border/70 bg-background/70 opacity-70 hover:opacity-100 hover:border-border"
-                )}
-              >
-                <span
-                  className={cn(
-                    "relative z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border text-sm font-bold",
-                    lit
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-border bg-card text-muted-foreground"
-                  )}
-                >
-                  <Icon className="h-4 w-4" aria-hidden />
-                </span>
-                <p className="mt-2 text-sm font-semibold text-foreground">{t(step.title)}</p>
-                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{t(step.hint)}</p>
-              </button>
-            </li>
-          )
-        })}
-      </ol>
-    </div>
-  )
-}
-
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)"
 
 function subscribeReducedMotion(onChange: () => void) {
@@ -174,14 +89,16 @@ function HowStepsPlay({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) =
   const ref = useRef<HTMLDivElement>(null)
   const [playing, setPlaying] = useState(false)
   const [litCount, setLitCount] = useState(0)
+  const [active, setActive] = useState<number | null>(null)
+  const [manual, setManual] = useState(false)
   // Reduced motion shows every step lit at once; false on the server so hydration matches.
   const reduced = useSyncExternalStore(subscribeReducedMotion, () => window.matchMedia(REDUCED_MOTION).matches, () => false)
-  const isPlaying = playing || reduced
-  const shownCount = reduced ? howSteps.length : litCount
+  const isPlaying = playing || reduced || manual
+  const shownCount = reduced || manual ? howSteps.length : litCount
 
   useEffect(() => {
     const el = ref.current
-    if (!el || reduced) return
+    if (!el || reduced || manual) return
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -193,15 +110,22 @@ function HowStepsPlay({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) =
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [reduced])
+  }, [reduced, manual])
 
   useEffect(() => {
-    if (!playing || reduced) return
+    if (!playing || reduced || manual) return
     const timers = howSteps.map((_, index) =>
       window.setTimeout(() => setLitCount(index + 1), 280 + index * 420)
     )
     return () => timers.forEach((id) => window.clearTimeout(id))
-  }, [playing, reduced])
+  }, [playing, reduced, manual])
+
+  function selectStep(index: number) {
+    setManual(true)
+    setActive(index)
+    setLitCount(howSteps.length)
+    setPlaying(true)
+  }
 
   return (
     <div ref={ref} className={cn("home-how", isPlaying && "is-playing")}>
@@ -213,28 +137,34 @@ function HowStepsPlay({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) =
         {howSteps.map((step, index) => {
           const Icon = howIcons[index] ?? CheckCircle2
           const lit = index < shownCount
+          const focused = active === index
           return (
-            <li
-              key={step.title.en}
-              className={cn(
-                "home-how-step relative rounded-2xl border border-border/80 bg-[color-mix(in_oklch,var(--primary)_5%,var(--card))] p-5",
-                lit && "is-lit"
-              )}
-            >
-              <span
+            <li key={step.title.en} className="relative">
+              <button
+                type="button"
+                onClick={() => selectStep(index)}
+                aria-pressed={focused}
                 className={cn(
-                  "relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-full text-primary-foreground shadow-[0_6px_16px_color-mix(in_oklch,var(--primary)_25%,transparent)] motion-safe:transition",
-                  lit ? "bg-primary scale-105" : "bg-primary/55"
+                  "card-hover home-how-step w-full rounded-2xl border border-border/80 bg-[color-mix(in_oklch,var(--primary)_5%,var(--card))] p-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  lit && "is-lit",
+                  focused && "border-primary/50 shadow-[0_10px_28px_color-mix(in_oklch,var(--primary)_14%,transparent)]"
                 )}
               >
-                <Icon className="h-5 w-5" aria-hidden />
-                <span className="sr-only">{index + 1}</span>
-              </span>
-              <p className="mt-3 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3 className="mt-1 text-lg font-semibold">{t(step.title)}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(step.body)}</p>
+                <span
+                  className={cn(
+                    "relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-full text-primary-foreground shadow-[0_6px_16px_color-mix(in_oklch,var(--primary)_25%,transparent)] motion-safe:transition",
+                    lit || focused ? "bg-primary scale-105" : "bg-primary/55"
+                  )}
+                >
+                  <Icon className="h-5 w-5" aria-hidden />
+                  <span className="sr-only">{index + 1}</span>
+                </span>
+                <p className="mt-3 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3 className="mt-1 text-lg font-semibold">{t(step.title)}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(step.body)}</p>
+              </button>
             </li>
           )
         })}
@@ -446,7 +376,7 @@ export function HomeLanding() {
       <HeroCarousel labelFor={t} />
 
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-        <section className="mt-8 sm:mt-10" aria-label={t(homeCopy.demoLabel)}>
+        <section className="mt-8 sm:mt-10" aria-label={t(homeCopy.control)}>
           <ul className="flex flex-wrap gap-2">
             {heroChips.map((chip) => {
               const Icon = chip.icon
@@ -462,10 +392,128 @@ export function HomeLanding() {
             })}
           </ul>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">{t(homeCopy.control)}</p>
-          <div className="mt-5 max-w-3xl">
-            <DecisionDemo t={t} />
-          </div>
         </section>
+
+      <section className="mt-12 border-t border-border pt-8" aria-labelledby="home-places">
+        <ScrollIn>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <h2 id="home-places" className="hero-display-title text-2xl font-semibold tracking-tight sm:text-3xl">
+              {t(homeCopy.placesTitle)}
+            </h2>
+            <Link
+              href="/city"
+              onClick={() => track("home_destination", { id: "all-cities", target: "/city" })}
+              className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary"
+            >
+              {t(homeCopy.placesAllCta)}
+              <ChevronRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </div>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">{t(homeCopy.placesNote)}</p>
+        </ScrollIn>
+        <ul className="mt-5 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {homePlaces.map((place, index) => (
+            <li key={place.id} className="flex h-full min-h-0">
+              <ScrollIn delayMs={index * 50} className="flex h-full w-full min-h-0 flex-col">
+                {place.soon || !place.image ? (
+                  <article className="card-hover flex h-full flex-col overflow-hidden rounded-2xl border border-dashed border-border bg-card">
+                    {place.image ? (
+                      <div className="relative aspect-[16/10] shrink-0">
+                        <Image src={place.image} alt="" fill quality={90} sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" />
+                      </div>
+                    ) : null}
+                    <div className="flex min-h-[7.5rem] flex-1 flex-col px-4 py-3">
+                      <h3 className="text-lg font-semibold">{t(place.label)}</h3>
+                      <p className="mt-0.5 line-clamp-2 min-h-[2.5rem] text-sm text-muted-foreground">{t(place.detail)}</p>
+                      <p className="mt-auto pt-2 text-sm font-semibold text-muted-foreground">{t(homeCopy.soon)}</p>
+                    </div>
+                  </article>
+                ) : (
+                  <Link
+                    href={place.href}
+                    onClick={() => track("home_destination", { id: place.id, target: place.href })}
+                    className="card-hover card-hover-media group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card"
+                  >
+                    <div className="relative aspect-[16/10] shrink-0 overflow-hidden">
+                      <Image
+                        src={place.image}
+                        alt=""
+                        fill
+                        quality={90}
+                        sizes="(min-width: 1024px) 25vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex min-h-[7.5rem] flex-1 items-end gap-3 px-4 py-3">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-lg font-semibold">{t(place.label)}</h3>
+                        <p className="mt-0.5 line-clamp-2 min-h-[2.5rem] text-sm text-muted-foreground">{t(place.detail)}</p>
+                      </div>
+                      <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center self-center rounded-full border border-border text-primary motion-safe:transition group-hover:border-primary group-hover:bg-primary/5">
+                        <ChevronRight className="h-4 w-4" aria-hidden />
+                      </span>
+                    </div>
+                  </Link>
+                )}
+              </ScrollIn>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Positioning right after destinations — answer “why not just search?” before How */}
+      <section className="mt-14 border-t border-border pt-10" aria-labelledby="home-search-vs-decide">
+        <ScrollIn>
+          <h2 id="home-search-vs-decide" className="max-w-3xl hero-display-title text-2xl font-semibold tracking-tight sm:text-4xl">
+            <span className="block text-foreground">{t(homeCopy.whyHeadlineLead)}</span>
+            <span className="mt-1 block text-primary">{t(homeCopy.whyHeadlineAccent)}</span>
+          </h2>
+        </ScrollIn>
+        <div className="relative mt-8 grid gap-4 md:grid-cols-2 md:gap-6">
+          <ScrollIn>
+            <article className="card-hover h-full rounded-2xl border border-border/80 bg-muted/30 px-5 py-6 sm:px-6">
+              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                <Search className="h-3.5 w-3.5" aria-hidden />
+                {t(homeCopy.searchLabel)}
+              </p>
+              <ol className="mt-5 space-y-4">
+                {searchSteps.map((step, index) => (
+                  <li key={step.en} className="flex items-start gap-3 text-muted-foreground">
+                    <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border text-[0.7rem] font-semibold">
+                      {index + 1}
+                    </span>
+                    <span className="text-base leading-snug">{t(step)}</span>
+                  </li>
+                ))}
+              </ol>
+            </article>
+          </ScrollIn>
+          <ScrollIn delayMs={80}>
+            <article className="card-hover h-full rounded-2xl border border-primary/35 bg-[color-mix(in_oklch,var(--primary)_8%,var(--card))] px-5 py-6 shadow-[0_12px_32px_color-mix(in_oklch,var(--primary)_12%,transparent)] sm:px-6">
+              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">
+                <Compass className="h-3.5 w-3.5" aria-hidden />
+                {t(homeCopy.decideLabel)}
+              </p>
+              <ol className="mt-5 space-y-4">
+                {decideSteps.map((step, index) => (
+                  <li key={step.en} className="flex items-start gap-3 text-foreground">
+                    <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[0.7rem] font-bold text-primary-foreground">
+                      {index + 1}
+                    </span>
+                    <span className="text-base font-semibold leading-snug">{t(step)}</span>
+                  </li>
+                ))}
+              </ol>
+            </article>
+          </ScrollIn>
+          <span
+            className="pointer-events-none absolute left-1/2 top-1/2 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-primary shadow-sm md:flex"
+            aria-hidden
+          >
+            <ArrowRight className="home-cta-arrow h-4 w-4" />
+          </span>
+        </div>
+      </section>
 
       <section className="mt-10 border-t border-border pt-8" aria-labelledby="home-features">
         <h2 id="home-features" className="sr-only">
@@ -493,78 +541,22 @@ export function HomeLanding() {
         </ul>
       </section>
 
-      <section className="mt-12 border-t border-border pt-8" aria-labelledby="home-places">
+      <section className="mt-10 border-t border-border pt-8" aria-labelledby="home-hk-start">
         <ScrollIn>
-          <h2 id="home-places" className="hero-display-title text-2xl font-semibold tracking-tight sm:text-3xl">
-            {t(homeCopy.placesTitle)}
-          </h2>
-          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">{t(homeCopy.placesNote)}</p>
-        </ScrollIn>
-        <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {homePlaces.map((place, index) => (
-            <li key={place.id}>
-              <ScrollIn delayMs={index * 50}>
-                {place.soon || !place.image ? (
-                  <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-dashed border-border bg-card motion-safe:transition hover:border-primary/40">
-                    {place.image ? (
-                      <div className="relative aspect-[16/10]">
-                        <Image src={place.image} alt="" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" />
-                      </div>
-                    ) : null}
-                    <div className="flex flex-1 flex-col justify-between px-4 py-3">
-                      <div>
-                        <h3 className="text-lg font-semibold">{t(place.label)}</h3>
-                        <p className="text-sm text-muted-foreground">{t(place.detail)}</p>
-                      </div>
-                      <p className="mt-2 text-sm font-semibold text-muted-foreground">{t(homeCopy.soon)}</p>
-                    </div>
-                  </article>
-                ) : (
-                  <Link
-                    href={place.href}
-                    onClick={() => track("home_destination", { id: place.id, target: place.href })}
-                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card motion-safe:transition hover:border-primary/50 hover:shadow-md"
-                  >
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <Image
-                        src={place.image}
-                        alt=""
-                        fill
-                        quality={88}
-                        sizes="(min-width: 1024px) 25vw, 100vw"
-                        className="object-cover motion-safe:transition-transform motion-safe:duration-500 group-hover:scale-[1.04]"
-                      />
-                    </div>
-                    <div className="flex items-center gap-3 px-4 py-3">
-                      <div className="min-w-0 flex-1">
-                        <h3 className="text-lg font-semibold">{t(place.label)}</h3>
-                        <p className="text-sm text-muted-foreground">{t(place.detail)}</p>
-                      </div>
-                      <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-primary motion-safe:transition group-hover:border-primary group-hover:bg-primary/5">
-                        <ChevronRight className="h-4 w-4" aria-hidden />
-                      </span>
-                    </div>
-                  </Link>
-                )}
-              </ScrollIn>
-            </li>
-          ))}
-        </ul>
-        <ScrollIn className="mt-8">
-          <div className="overflow-hidden rounded-2xl border border-border bg-card">
+          <div className="card-hover card-hover-media overflow-hidden rounded-2xl border border-border bg-card">
             <div className="grid lg:grid-cols-2">
               <div className="relative min-h-52 sm:min-h-60 lg:min-h-[18rem]">
                 <Image
                   src="/assets/home-hero-harbour-v2.webp"
                   alt={t(homeCopy.heroHarbourAlt)}
                   fill
-                  quality={88}
+                  quality={90}
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover object-center"
                 />
               </div>
               <div className="px-5 py-6 sm:px-6">
-                <h3 className="flex items-center gap-2 text-xl font-semibold">
+                <h3 id="home-hk-start" className="flex items-center gap-2 text-xl font-semibold">
                   <MapPin className="h-5 w-5 text-primary" aria-hidden />
                   {t(homeCopy.hkTitle)}
                 </h3>
@@ -604,7 +596,7 @@ export function HomeLanding() {
                   return (
                     <li
                       key={question.en}
-                      className="flex min-h-12 items-center gap-3 rounded-xl border border-border/80 bg-card/90 px-4 py-3 text-sm font-semibold text-foreground shadow-sm"
+                      className="card-hover flex min-h-12 items-center gap-3 rounded-xl border border-border/80 bg-card/90 px-4 py-3 text-sm font-semibold text-foreground shadow-sm"
                     >
                       <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                         <Icon className="h-3.5 w-3.5" aria-hidden />
@@ -617,59 +609,6 @@ export function HomeLanding() {
             </div>
           </div>
         </ScrollIn>
-      </section>
-
-      <section className="mt-14 border-t border-border pt-10">
-        <ScrollIn>
-          <h2 className="max-w-3xl hero-display-title text-2xl font-semibold tracking-tight sm:text-4xl">
-            <span className="block text-foreground">{t(homeCopy.whyHeadlineLead)}</span>
-            <span className="mt-1 block text-primary">{t(homeCopy.whyHeadlineAccent)}</span>
-          </h2>
-        </ScrollIn>
-        <div className="relative mt-8 grid gap-4 md:grid-cols-2 md:gap-6">
-          <ScrollIn>
-            <article className="h-full rounded-2xl border border-border/80 bg-muted/30 px-5 py-6 sm:px-6">
-              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                <Search className="h-3.5 w-3.5" aria-hidden />
-                {t(homeCopy.searchLabel)}
-              </p>
-              <ol className="mt-5 space-y-4">
-                {searchSteps.map((step, index) => (
-                  <li key={step.en} className="flex items-start gap-3 text-muted-foreground">
-                    <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border text-[0.7rem] font-semibold">
-                      {index + 1}
-                    </span>
-                    <span className="text-base leading-snug">{t(step)}</span>
-                  </li>
-                ))}
-              </ol>
-            </article>
-          </ScrollIn>
-          <ScrollIn delayMs={80}>
-            <article className="h-full rounded-2xl border border-primary/35 bg-[color-mix(in_oklch,var(--primary)_8%,var(--card))] px-5 py-6 shadow-[0_12px_32px_color-mix(in_oklch,var(--primary)_12%,transparent)] sm:px-6">
-              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">
-                <Compass className="h-3.5 w-3.5" aria-hidden />
-                {t(homeCopy.decideLabel)}
-              </p>
-              <ol className="mt-5 space-y-4">
-                {decideSteps.map((step, index) => (
-                  <li key={step.en} className="flex items-start gap-3 text-foreground">
-                    <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[0.7rem] font-bold text-primary-foreground">
-                      {index + 1}
-                    </span>
-                    <span className="text-base font-semibold leading-snug">{t(step)}</span>
-                  </li>
-                ))}
-              </ol>
-            </article>
-          </ScrollIn>
-          <span
-            className="pointer-events-none absolute left-1/2 top-1/2 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-primary shadow-sm md:flex"
-            aria-hidden
-          >
-            <ArrowRight className="home-cta-arrow h-4 w-4" />
-          </span>
-        </div>
       </section>
 
       <section className="mt-14 border-t border-border pt-10">
@@ -716,7 +655,7 @@ export function HomeLanding() {
                   <Link
                     href={item.href}
                     onClick={() => track("home_question", { id: item.id, target: item.href })}
-                    className="flex h-full min-h-24 gap-3 rounded-2xl border border-border bg-card px-4 py-4 text-sm font-semibold leading-snug text-foreground motion-safe:transition hover:border-primary hover:shadow-sm"
+                    className="card-hover flex h-full min-h-24 gap-3 rounded-2xl border border-border bg-card px-4 py-4 text-sm font-semibold leading-snug text-foreground"
                   >
                     <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                       <Icon className="h-4 w-4" aria-hidden />
@@ -738,19 +677,18 @@ export function HomeLanding() {
                 src="/assets/home-hero-hong-kong.webp"
                 alt={t(homeCopy.whyPhotoAlt)}
                 fill
-                quality={88}
+                quality={90}
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover object-[70%_center]"
               />
             </div>
             <div className="bg-[oklch(0.94_0.03_230)] px-6 py-8 dark:bg-[oklch(0.24_0.04_245)] sm:px-8 sm:py-10">
-              <p id="home-why" className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
+              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
                 <ShieldCheck className="h-3.5 w-3.5 text-primary" aria-hidden />
                 {t(homeCopy.whyEyebrow)}
               </p>
-              <h2 className="mt-3 hero-display-title text-2xl font-semibold tracking-tight sm:text-3xl">
-                <span className="block text-foreground">{t(homeCopy.whyHeadlineLead)}</span>
-                <span className="mt-1 block text-primary">{t(homeCopy.whyHeadlineAccent)}</span>
+              <h2 id="home-why" className="mt-3 hero-display-title text-2xl font-semibold tracking-tight sm:text-3xl">
+                {t(homeCopy.whyTitle)}
               </h2>
               <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">{t(homeCopy.whyBody)}</p>
             </div>
@@ -763,7 +701,7 @@ export function HomeLanding() {
           <h2 className="hero-display-title text-2xl font-semibold tracking-tight sm:text-3xl">{t(homeCopy.faqTitle)}</h2>
           <div className="mt-4 grid gap-3">
             {homeFaq.map((item) => (
-              <details key={item.q.en} className="group rounded-2xl border border-border bg-card px-4 py-3 open:border-primary/40">
+              <details key={item.q.en} className="card-hover group rounded-2xl border border-border bg-card px-4 py-3 open:border-primary/40">
                 <summary className="flex cursor-pointer list-none items-center gap-3 text-base font-semibold [&::-webkit-details-marker]:hidden">
                   <HelpCircle className="h-4 w-4 shrink-0 text-primary" aria-hidden />
                   <span className="flex-1">{t(item.q)}</span>

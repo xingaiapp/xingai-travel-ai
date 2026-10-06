@@ -12,7 +12,7 @@ export function PlaceCard({ place, clusterName }: Readonly<{ place: Place; clust
   const m = messages.city
 
   return (
-    <article className="flex h-full flex-col rounded-md border border-border bg-card p-4 shadow-sm">
+    <article className="card-hover flex h-full flex-col rounded-md border border-border bg-card p-4 shadow-sm">
       <h3 className="font-bold leading-snug">
         {cityText(place.name, locale)}
         {locale !== "zh" && <span className="ml-1.5 text-sm font-normal text-muted-foreground">{place.localName}</span>}
@@ -30,13 +30,13 @@ export function PlaceCard({ place, clusterName }: Readonly<{ place: Place; clust
         {m.setting[place.setting]} · {m.bestTime[place.bestTime]} ·{" "}
         {fill(m.visitRange, { min: place.visitMinutes.min, max: place.visitMinutes.max })}
       </p>
-      <div className="mt-auto flex flex-wrap items-start justify-between gap-2 border-t border-border pt-2">
+      <div className="mt-auto flex flex-wrap items-start justify-between gap-2 border-t border-border pt-2.5">
         <EvidenceBadge sources={place.sources} />
         <a
           href={mapsUrl(place)}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-9 shrink-0 items-center gap-1 rounded-md border border-border px-2.5 text-xs font-semibold text-primary hover:border-primary/60"
+          className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-md border border-primary/30 bg-primary/5 px-2.5 text-xs font-bold text-primary transition hover:border-primary/55 hover:bg-primary/10"
         >
           {m.openInMaps}
           <ExternalLink className="h-3 w-3" aria-hidden />

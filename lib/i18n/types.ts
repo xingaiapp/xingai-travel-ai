@@ -336,6 +336,17 @@ export interface Messages {
     fromResultBody: string
     fromResultCta: string
     fromStory: string
+    decideEyebrow: string
+    decideTitle: string
+    decideBody: string
+    decideCta: string
+    indexTitle: string
+    indexLead: string
+    indexMeta: string
+    indexOpen: string
+    indexCount: string
+    indexSoonHint: string
+    indexMoreNote: string
   }
   content: {
     howEyebrow: string
@@ -363,6 +374,7 @@ export interface Messages {
     faqNav: string
     compareNav: string
     guidesNav: string
+    citiesNav: string
     discover: string
   }
   travelers: {

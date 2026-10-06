@@ -9,9 +9,13 @@
 
 import { existsSync } from "node:fs"
 import { hongKong } from "../lib/cities/hong-kong.ts"
+import { losCabos } from "../lib/cities/los-cabos.ts"
+import { seoul } from "../lib/cities/seoul.ts"
+import { taipei } from "../lib/cities/taipei.ts"
+import { tokyo } from "../lib/cities/tokyo.ts"
 import { cityPhotoPaths, validateCity } from "../lib/cities/validate.ts"
 
-const cities = [hongKong]
+const cities = [hongKong, tokyo, seoul, taipei, losCabos]
 const errors = cities.flatMap((city) => [
   ...validateCity(city),
   ...cityPhotoPaths(city)

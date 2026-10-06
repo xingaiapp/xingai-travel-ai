@@ -32,15 +32,16 @@ export function RouteCard({
       onClick={onSelect}
       aria-pressed={selected}
       className={cn(
-        "group flex h-full flex-col overflow-hidden rounded-md border bg-card text-left shadow-sm transition",
-        selected ? "border-primary ring-2 ring-primary" : "border-border hover:border-primary/60"
+        "card-hover card-hover-media group flex h-full flex-col overflow-hidden rounded-md border bg-card text-left shadow-sm",
+        selected ? "border-primary ring-2 ring-primary" : "border-border"
       )}
     >
       {route.photo && (
         <CityPhoto
           photo={route.photo}
+          hires
           className="aspect-[16/10] w-full"
-          sizes="(min-width: 1024px) 20rem, (min-width: 640px) 45vw, 100vw"
+          sizes="(min-width: 1024px) 28rem, 100vw"
           showCredit={false}
         />
       )}

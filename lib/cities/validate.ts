@@ -10,6 +10,10 @@ const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/
 /** Rough bounds per city, to catch swapped or mistyped coordinates. */
 const BOUNDS: Record<string, { lat: [number, number]; lng: [number, number] }> = {
   "hong-kong": { lat: [22.15, 22.57], lng: [113.82, 114.45] },
+  tokyo: { lat: [35.6, 35.8], lng: [139.6, 139.9] },
+  seoul: { lat: [37.42, 37.72], lng: [126.75, 127.2] },
+  taipei: { lat: [24.95, 25.2], lng: [121.45, 121.65] },
+  "los-cabos": { lat: [22.85, 23.1], lng: [-110.0, -109.65] },
 }
 
 export function validateCity(city: City): string[] {
@@ -194,5 +198,8 @@ function insidePolygon([x, y]: [number, number], polygon: [number, number][]): b
 /** Every photo path a city uses, for the build script to check on disk. */
 export function cityPhotoPaths(city: City): string[] {
   const photos = [city.hero, ...city.routes.flatMap((route) => (route.photo ? [route.photo] : []))]
-  return photos.flatMap((photo) => [`${photo.src}-800.webp`, `${photo.src}-1600.webp`])
+  return photos.flatMap((photo) => {
+    if (/\.(webp|jpe?g|png)$/i.test(photo.src)) return [photo.src]
+    return [`${photo.src}-800.webp`, `${photo.src}-1600.webp`]
+  })
 }

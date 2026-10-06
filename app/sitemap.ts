@@ -21,11 +21,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ]
   })
   const storiesIndex = stories.length > 0 ? [{ url: `${base}/stories`, changeFrequency: "weekly" as const, priority: 0.7 }] : []
-  const cityPages = cities.map((city) => ({
-    url: `${base}/city/${city.slug}`,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }))
+  const cityPages = [
+    { url: `${base}/city`, changeFrequency: "weekly" as const, priority: 0.85 },
+    ...cities.map((city) => ({
+      url: `${base}/city/${city.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
+  ]
   const comparePages = [
     { url: `${base}/compare`, changeFrequency: "weekly" as const, priority: 0.85 },
     ...compares.map((item) => ({

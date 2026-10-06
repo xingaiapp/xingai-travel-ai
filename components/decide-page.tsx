@@ -364,7 +364,7 @@ export function DecidePage() {
             <TripSnapshot trip={trip} />
             {!inspireMode && <StylePaceSelector value={trip} onChange={setTrip} />}
             {inspireMode && (
-              <div className="rounded-md border border-border bg-card p-4 text-sm text-muted-foreground sm:p-5">
+              <div className="card-hover rounded-md border border-border bg-card p-4 text-sm text-muted-foreground sm:p-5">
                 <p className="mb-1 font-bold text-foreground">{messages.inspire.budgetNote}</p>
                 <p className="text-xs leading-relaxed">{messages.inspire.budgetDateNote}</p>
                 <button
@@ -503,7 +503,7 @@ function HeroIntro() {
           </div>
 
           <div id={HELP_ANCHOR} className="hidden scroll-mt-24 items-center lg:flex">
-            <div className="w-full rounded-2xl border border-border/80 bg-card/90 p-4 shadow-sm backdrop-blur-sm sm:p-5">
+            <div className="card-hover w-full rounded-2xl border border-border/80 bg-card/90 p-4 shadow-sm backdrop-blur-sm sm:p-5">
               <button
                 type="button"
                 onClick={() => setHelpOpen((open) => !open)}
@@ -525,7 +525,7 @@ function HeroIntro() {
 
               <div id="how-to-use-content" className={cn("mt-4 space-y-3", helpOpen ? "block" : "hidden")}>
                 {helpSteps.map(([title, body], index) => (
-                  <div key={title} className="grid grid-cols-[2rem_1fr] gap-3 rounded-xl border border-border/80 bg-background/80 p-3">
+                  <div key={title} className="card-hover grid grid-cols-[2rem_1fr] gap-3 rounded-xl border border-border/80 bg-background/80 p-3">
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
                       {index + 1}
                     </span>
@@ -537,7 +537,7 @@ function HeroIntro() {
                 ))}
               </div>
 
-              <div className={cn("mt-4 rounded-xl border border-border/80 bg-background/80 p-3", helpOpen ? "block" : "hidden")}>
+              <div className={cn("card-hover mt-4 rounded-xl border border-border/80 bg-background/80 p-3", helpOpen ? "block" : "hidden")}>
                 <p className="flex items-center gap-2 text-xs font-semibold text-foreground">
                   <Route className="h-4 w-4 shrink-0 text-primary" aria-hidden />
                   {messages.home.helper}
@@ -569,7 +569,7 @@ function HeroIntro() {
           </button>
           <div id="how-to-use-content-mobile" className={cn("mt-4 space-y-3", helpOpen ? "block" : "hidden")}>
             {helpSteps.map(([title, body], index) => (
-              <div key={title} className="grid grid-cols-[2rem_1fr] gap-3 rounded-xl border border-border/80 bg-background/80 p-3">
+              <div key={title} className="card-hover grid grid-cols-[2rem_1fr] gap-3 rounded-xl border border-border/80 bg-background/80 p-3">
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
                   {index + 1}
                 </span>
@@ -593,7 +593,7 @@ function HeroIntro() {
 
 function CompareSkeleton() {
   return (
-    <section className="rounded-md border border-border bg-card p-5 shadow-sm">
+    <section className="card-hover rounded-md border border-border bg-card p-5 shadow-sm">
       <div className="mb-4 h-5 w-36 animate-pulse rounded bg-muted" />
       <div className="grid gap-5 lg:grid-cols-[18rem_1fr]">
         <div className="h-48 animate-pulse rounded-md bg-muted" />

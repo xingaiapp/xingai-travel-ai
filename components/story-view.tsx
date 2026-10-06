@@ -27,9 +27,11 @@ function useStoryText() {
 export function StoryImage({
   photo,
   className,
-  sizes = "(min-width: 640px) 28rem, 88vw",
+  sizes: _sizes,
   priority = false,
-}: Readonly<{ photo: StoryPhoto; className?: string; sizes?: string; priority?: boolean }>) {
+  /** Kept for call-site compat; delivery always uses the 1600w (or direct) master. */
+  hires: _hires = true,
+}: Readonly<{ photo: StoryPhoto; className?: string; sizes?: string; priority?: boolean; hires?: boolean }>) {
   const { t } = useStoryText()
   if (!photo.src) {
     return (
@@ -46,13 +48,14 @@ export function StoryImage({
       </div>
     )
   }
+  // Direct asset URL (e.g. /assets/home-hero-hong-kong.webp) vs story base path (-1600).
+  // Always serve the high-res master — never the -800 variant in UI.
+  const isDirectFile = /\.(webp|jpe?g|png)$/i.test(photo.src)
+  const src = isDirectFile ? photo.src : `${photo.src}-1600.webp`
   return (
-    // Prefer the 1600w file on larger screens; 800w stays for narrow phones.
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`${photo.src}-1600.webp`}
-      srcSet={`${photo.src}-800.webp 800w, ${photo.src}-1600.webp 1600w`}
-      sizes={sizes}
+      src={src}
       width={photo.width}
       height={photo.height}
       alt={t(photo.alt)}
@@ -115,7 +118,7 @@ function Block({ block }: Readonly<{ block: StoryBlock }>) {
             const meta = takeMeta[item.kind]
             const Icon = meta.icon
             return (
-              <div key={index} className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+              <div key={index} className="card-hover rounded-2xl border border-border bg-card p-4 shadow-sm">
                 <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-primary">
                   <Icon className="h-4 w-4" aria-hidden />
                   {ui(meta.en, meta.zh, meta.ko, meta.es)}
@@ -128,7 +131,7 @@ function Block({ block }: Readonly<{ block: StoryBlock }>) {
       )
     case "verdict":
       return (
-        <aside className="my-10 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6" aria-labelledby="story-verdict-title">
+        <aside className="card-hover my-10 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6" aria-labelledby="story-verdict-title">
           <h2 id="story-verdict-title" className="hero-display-title text-2xl font-semibold">
             {ui("My take", "我的判断", "내 판단", "Mi opinión")}
           </h2>
@@ -150,7 +153,7 @@ function DecideCta({ season }: Readonly<{ season: StorySeason }>) {
   const { t, ui } = useStoryText()
   const place = t(season.place)
   return (
-    <section className="mt-12 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
+    <section className="card-hover mt-12 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
       <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
         {ui("Your trip, not mine", "你的旅行，不是我的", "당신의 여행, 내 것이 아닌", "Tu viaje, no el mío")}
       </p>
@@ -214,9 +217,8 @@ function EpisodeList({ season, episodes, currentSlug }: Readonly<{ season: Story
           </>
         )
         const className = cn(
-          "flex items-start gap-3 rounded-2xl border border-border bg-card p-4 transition",
-          current && "border-primary/50 bg-primary/5 shadow-sm",
-          linked && !current && "hover:border-primary/40"
+          "card-hover flex items-start gap-3 rounded-2xl border border-border bg-card p-4",
+          current && "border-primary/50 bg-primary/5 shadow-sm"
         )
         return (
           <li key={episode.slug}>
@@ -245,7 +247,7 @@ function CityGuideCta({ season }: Readonly<{ season: StorySeason }>) {
   return (
     <Link
       href={`/city/${city.slug}`}
-      className="mt-6 flex min-h-12 items-center gap-3 rounded-2xl border border-border bg-card p-4 text-sm font-bold shadow-sm transition hover:border-primary/40"
+      className="card-hover mt-6 flex min-h-12 items-center gap-3 rounded-2xl border border-border bg-card p-4 text-sm font-bold shadow-sm"
     >
       <MapIcon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
       <span>{fill(messages.city.fromStory, { city: t(city.name) })}</span>
@@ -257,8 +259,8 @@ function CityGuideCta({ season }: Readonly<{ season: StorySeason }>) {
 export function SeasonView({ season, linkable }: Readonly<{ season: StorySeason; linkable: string[] }>) {
   const { t, ui } = useStoryText()
   return (
-    <main className="flex-1 px-4 pb-28 pt-6 sm:px-6 lg:px-10 lg:pb-12">
-      <div className="mx-auto max-w-3xl">
+    <main className="flex-1 pb-28 lg:pb-12">
+      <div className="mx-auto max-w-3xl px-4 pt-6 sm:px-6 lg:px-10">
         <header>
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
             {ui("Travel Stories · Season 1", "旅行故事 · 第一季", "여행 이야기 · 시즌 1", "Historias de viaje · Temporada 1")}
@@ -268,10 +270,18 @@ export function SeasonView({ season, linkable }: Readonly<{ season: StorySeason;
           </h1>
           <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">{t(season.subtitle)}</p>
         </header>
-        <div className="mt-8 flex justify-center">
-          <StoryImage photo={season.cover} priority />
-        </div>
-        <p className="mt-6 text-base leading-relaxed text-foreground/90 sm:text-lg">{t(season.intro)}</p>
+      </div>
+      <div className="page-hero-full mt-6 w-full overflow-hidden bg-muted">
+        <StoryImage
+          photo={season.cover}
+          priority
+          hires
+          className="h-full max-h-none w-full rounded-none object-cover"
+          sizes="100vw"
+        />
+      </div>
+      <div className="mx-auto max-w-3xl px-4 pt-6 sm:px-6 lg:px-10">
+        <p className="text-base leading-relaxed text-foreground/90 sm:text-lg">{t(season.intro)}</p>
         <section className="mt-10">
           <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
             {ui("Episodes", "分集", "에피소드", "Episodios")}
@@ -296,25 +306,27 @@ export function EpisodeView({
   const prev = season.episodes.slice(0, index).reverse().find((item) => linkable.includes(item.slug))
 
   return (
-    <main className="flex-1 px-4 pb-28 pt-6 sm:px-6 lg:px-10 lg:pb-12">
-      <article className="mx-auto max-w-3xl">
-        <Link
-          href={`/stories/${season.slug}`}
-          className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-primary"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden />
-          {t(season.title)}
-        </Link>
-        <header className="mt-4">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
-            {episodeLabel(episode)} · {t(season.title)}
-          </p>
-          <h1 className="hero-display-title mt-3 text-[1.85rem] font-semibold leading-[1.15] tracking-tight sm:text-5xl">
-            {t(episode.title)}
-          </h1>
-          <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">{t(episode.dek)}</p>
-        </header>
-        <figure className="mt-8 flex flex-col items-center">
+    <main className="flex-1 pb-28 lg:pb-12">
+      <article>
+        <div className="mx-auto max-w-3xl px-4 pt-6 sm:px-6 lg:px-10">
+          <Link
+            href={`/stories/${season.slug}`}
+            className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-primary"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden />
+            {t(season.title)}
+          </Link>
+          <header className="mt-4">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
+              {episodeLabel(episode)} · {t(season.title)}
+            </p>
+            <h1 className="hero-display-title mt-3 text-[1.85rem] font-semibold leading-[1.15] tracking-tight sm:text-5xl">
+              {t(episode.title)}
+            </h1>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">{t(episode.dek)}</p>
+          </header>
+        </div>
+        <figure className="page-hero-full mt-6 w-full overflow-hidden bg-black">
           {episode.heroVideo ? (
             <video
               controls
@@ -323,58 +335,64 @@ export function EpisodeView({
               poster={episode.heroVideo.poster.src ? `${episode.heroVideo.poster.src}-1600.webp` : undefined}
               width={episode.heroVideo.poster.width}
               height={episode.heroVideo.poster.height}
-              className="mx-auto h-auto max-h-[min(75vh,36rem)] w-auto max-w-full rounded-2xl bg-black"
+              className="h-full w-full object-cover"
             >
               <source src={episode.heroVideo.src} type="video/mp4" />
             </video>
           ) : (
-            <StoryImage photo={episode.cover} priority />
+            <StoryImage
+              photo={episode.cover}
+              priority
+              hires
+              className="h-full max-h-none w-full rounded-none object-cover"
+              sizes="100vw"
+            />
           )}
-          {(episode.heroVideo?.poster.caption ?? episode.cover.caption) ? (
-            <figcaption className="mt-3 max-w-[28rem] text-center text-sm leading-relaxed text-muted-foreground">
-              {t(episode.heroVideo?.poster.caption ?? episode.cover.caption!)}
-            </figcaption>
-          ) : null}
         </figure>
+        {(episode.heroVideo?.poster.caption ?? episode.cover.caption) ? (
+          <p className="mx-auto mt-3 max-w-3xl px-4 text-center text-sm leading-relaxed text-muted-foreground sm:px-6 lg:px-10">
+            {t(episode.heroVideo?.poster.caption ?? episode.cover.caption!)}
+          </p>
+        ) : null}
 
-        <div className="mt-4">
+        <div className="mx-auto mt-4 max-w-3xl px-4 sm:px-6 lg:px-10">
           {episode.blocks.map((block, blockIndex) => (
             <Block key={blockIndex} block={block} />
           ))}
-        </div>
 
-        {next ? (
-          <Link
-            href={`/stories/${season.slug}/${next.slug}`}
-            className="mt-12 flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm transition hover:border-primary/40"
-          >
-            <span>
-              <span className="block text-xs font-bold uppercase tracking-[0.14em] text-primary">
-                {ui("Next", "下一集", "다음", "Siguiente")} · {episodeLabel(next)}
+          {next ? (
+            <Link
+              href={`/stories/${season.slug}/${next.slug}`}
+              className="card-hover mt-12 flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm"
+            >
+              <span>
+                <span className="block text-xs font-bold uppercase tracking-[0.14em] text-primary">
+                  {ui("Next", "下一集", "다음", "Siguiente")} · {episodeLabel(next)}
+                </span>
+                <span className="mt-1 block hero-display-title text-xl font-semibold">{t(next.title)}</span>
               </span>
-              <span className="mt-1 block hero-display-title text-xl font-semibold">{t(next.title)}</span>
-            </span>
-            <ArrowRight className="h-5 w-5 shrink-0 text-primary" aria-hidden />
-          </Link>
-        ) : null}
-        {prev && !next ? (
-          <Link
-            href={`/stories/${season.slug}/${prev.slug}`}
-            className="mt-12 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-primary"
-          >
-            <ArrowLeft className="h-4 w-4" aria-hidden />
-            {episodeLabel(prev)} · {t(prev.title)}
-          </Link>
-        ) : null}
+              <ArrowRight className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+            </Link>
+          ) : null}
+          {prev && !next ? (
+            <Link
+              href={`/stories/${season.slug}/${prev.slug}`}
+              className="mt-12 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-primary"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden />
+              {episodeLabel(prev)} · {t(prev.title)}
+            </Link>
+          ) : null}
 
-        <DecideCta season={season} />
+          <DecideCta season={season} />
 
-        <section className="mt-12">
-          <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
-            {ui("All episodes", "全部分集", "전체 에피소드", "Todos los episodios")}
-          </h2>
-          <EpisodeList season={season} episodes={linkable} currentSlug={episode.slug} />
-        </section>
+          <section className="mt-12">
+            <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
+              {ui("All episodes", "全部分集", "전체 에피소드", "Todos los episodios")}
+            </h2>
+            <EpisodeList season={season} episodes={linkable} currentSlug={episode.slug} />
+          </section>
+        </div>
       </article>
     </main>
   )
@@ -404,7 +422,7 @@ export function StoriesIndexView({ seasons }: Readonly<{ seasons: { season: Stor
             <Link
               key={season.slug}
               href={`/stories/${season.slug}`}
-              className="block overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition hover:border-primary/40"
+              className="card-hover card-hover-media block overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
             >
               <StoryImage photo={season.cover} className="max-h-64 w-full rounded-none object-cover" sizes="(min-width: 768px) 40rem, 100vw" />
               <div className="p-5">

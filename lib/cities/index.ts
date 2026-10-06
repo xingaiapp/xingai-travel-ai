@@ -1,9 +1,13 @@
 import type { Locale, Messages } from "@/lib/i18n/types"
 import { hongKong } from "./hong-kong.ts"
+import { losCabos } from "./los-cabos.ts"
+import { seoul } from "./seoul.ts"
+import { taipei } from "./taipei.ts"
+import { tokyo } from "./tokyo.ts"
 import type { City, CityText, Place } from "./types"
 
 /** City registry (ADR 0008). Adding a city = adding its data file here. */
-export const cities: City[] = [hongKong]
+export const cities: City[] = [hongKong, tokyo, seoul, taipei, losCabos]
 
 export function getCity(slug: string): City | undefined {
   return cities.find((city) => city.slug === slug)
@@ -33,8 +37,27 @@ export function mapsUrl(place: Place): string {
   return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
 }
 
+/** Prefill Decide with this city — same pattern as Stories (`?places=&region=`). */
+export function cityDecideHref(city: City) {
+  const regionBySlug: Record<string, string> = {
+    "hong-kong": "asia",
+    tokyo: "asia",
+    seoul: "asia",
+    taipei: "asia",
+    "los-cabos": "latin_america",
+  }
+  const params = new URLSearchParams({ places: city.name.en })
+  const region = regionBySlug[city.slug]
+  if (region) params.set("region", region)
+  return `/decide?${params.toString()}#trip-form`
+}
+
 /** Fire-and-forget funnel event (ADR 0008 §7). Logged only; never affects any decision. */
-export function trackCityEvent(type: "city_from_result" | "city_route_select", city: string, route?: string) {
+export function trackCityEvent(
+  type: "city_from_result" | "city_route_select" | "city_to_decide",
+  city: string,
+  route?: string,
+) {
   fetch("/api/track", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

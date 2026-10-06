@@ -55,7 +55,7 @@ export function SharedTripView({ trip }: { trip: SharedTrip | null }) {
           {plan?.warnings?.length ? <TripWarnings warnings={plan.warnings} destination={plan.destination} /> : null}
           {plan ? (
             <>
-              <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
+              <section className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
                 <h2 className="mb-4 text-base font-extrabold">{r.bookFirst}</h2>
                 <BookFirst plan={plan} trip={null} />
               </section>

@@ -16,7 +16,7 @@ export function CityGuideLink({ destinations }: Readonly<{ destinations: string[
   if (matches.length === 0) return null
 
   return (
-    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
+    <section className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
       {matches.map((city) => {
         const name = cityText(city.name, locale)
         return (

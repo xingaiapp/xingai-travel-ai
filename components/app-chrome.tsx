@@ -71,7 +71,7 @@ function mobileHeaderTitle(pathname: string, messages: Messages) {
   if (legal) return messages.chrome[legal.key]
   if (pathname.startsWith("/stories")) return messages.chrome.stories
   if (pathname.startsWith("/trips")) return messages.chrome.trips
-  if (pathname.startsWith("/city/")) return messages.city.eyebrow
+  if (pathname === "/city" || pathname.startsWith("/city/")) return messages.city.eyebrow
   return messages.chrome.decide
 }
 
@@ -210,16 +210,16 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
       <div className="flex min-w-0 flex-1 flex-col">
         {children}
         <footer className="border-t border-border bg-background/70 px-4 py-5 pb-24 text-xs text-muted-foreground lg:px-8 lg:pb-5">
-          <div className="mx-auto mb-5 max-w-6xl overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          <div className="card-hover card-hover-media mx-auto mb-5 max-w-6xl overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
             <Link
               href="/decide"
-              className="group relative block aspect-[2.35/1] max-h-44 w-full sm:max-h-52 lg:max-h-56"
+              className="group relative block aspect-[16/9] max-h-72 w-full sm:max-h-80 lg:max-h-96"
             >
               <Image
                 src="/assets/footer-traveler-hong-kong.webp"
                 alt={messages.chrome.footerTravelerAlt}
                 fill
-                quality={88}
+                quality={90}
                 sizes="(min-width: 1024px) 72rem, 100vw"
                 className="object-cover object-[72%_48%] motion-safe:transition-transform motion-safe:duration-500 group-hover:scale-[1.02]"
               />
@@ -247,6 +247,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             <span className="font-semibold text-foreground">{messages.content.discover}</span>
             <Link href="/how-it-works" className="hover:text-primary">{messages.content.howItWorksNav}</Link>
             <Link href="/faq" className="hover:text-primary">{messages.content.faqNav}</Link>
+            <Link href="/city" className="hover:text-primary">{messages.content.citiesNav}</Link>
             <Link href="/compare" className="hover:text-primary">{messages.content.compareNav}</Link>
             <Link href="/guides" className="hover:text-primary">{messages.content.guidesNav}</Link>
           </div>
@@ -446,7 +447,7 @@ function SideInsightCard({
       <Link
         href="/result"
         onClick={onNavigate}
-        className="block rounded-md border border-border bg-background p-3 transition hover:border-primary/40 hover:bg-primary/5"
+        className="card-hover block rounded-md border border-border bg-background p-3"
       >
         {content}
       </Link>

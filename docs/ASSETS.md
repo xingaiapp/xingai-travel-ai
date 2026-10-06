@@ -15,8 +15,8 @@ All **wired** images under `public/` must meet minimum width before merge. `npm 
 | Decide hero background | `public/assets/hero-travel-decision.webp` | 2400 |
 | HK harbour promo block | `public/assets/home-hero-harbour-v2.webp` | 1920 (target 2560×1440) |
 | Global footer photo | `public/assets/footer-traveler-hong-kong.webp` | 2400 (target 2560×1440) |
-| Travel stories | `public/stories/**/-800.webp`, `-1600.webp` | 800 / 1600 (see `scripts/process-story-photos.mjs`) |
-| City layer photos | same `-800`/`-1600` convention | 800 / 1600 |
+| Travel stories | `public/stories/**/-800.webp`, `-1600.webp` | 800 / 1600 (see `scripts/process-story-photos.mjs`) — **UI always loads `-1600`** |
+| City layer photos | same `-800`/`-1600` convention | 800 / 1600 — **UI always loads `-1600`** |
 
 Icons (`favicon`, `logo-*.png`) and UX mock assets in `docs/ux-v1/` are excluded.
 

@@ -59,7 +59,7 @@ export function RouteTimeline({
               )}
               <div
                 className={cn(
-                  "rounded-md border p-3 transition",
+                  "card-hover rounded-md border p-3",
                   active ? "border-primary bg-primary/5" : "border-border bg-background"
                 )}
               >

@@ -46,7 +46,7 @@ export function ContentHero({
 /** Visible 40–80 word AEO answer block (same facts as FAQ/schema where possible). */
 export function DirectAnswer({ question, answer }: Readonly<{ question: string; answer: string }>) {
   return (
-    <section className="mb-8 rounded-2xl border border-primary/25 bg-primary/5 p-5" aria-labelledby="direct-answer-q">
+    <section className="card-hover mb-8 rounded-2xl border border-primary/25 bg-primary/5 p-5" aria-labelledby="direct-answer-q">
       <p id="direct-answer-q" className="text-sm font-extrabold text-foreground">
         {question}
       </p>
@@ -58,7 +58,7 @@ export function DirectAnswer({ question, answer }: Readonly<{ question: string; 
 export function DecideCta({ hint }: Readonly<{ hint?: Localized }>) {
   const { messages, locale } = useLocale()
   return (
-    <section className="mt-10 rounded-md border border-primary/30 bg-primary/5 p-5">
+    <section className="card-hover mt-10 rounded-md border border-primary/30 bg-primary/5 p-5">
       <h2 className="text-base font-extrabold">{messages.content.ctaTitle}</h2>
       <p className="mt-2 text-sm text-muted-foreground">
         {hint ? pickLocalized(hint, locale) : messages.content.ctaBody}
@@ -81,7 +81,7 @@ export function FaqBlock({ items }: Readonly<{ items: { q: string; a: string }[]
       <h2 className="text-base font-extrabold">{messages.content.faqHeading}</h2>
       <dl className="mt-4 space-y-4">
         {items.map((item) => (
-          <div key={item.q} className="rounded-md border border-border bg-card p-4">
+          <div key={item.q} className="card-hover rounded-md border border-border bg-card p-4">
             <dt className="text-sm font-extrabold">{item.q}</dt>
             <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.a}</dd>
           </div>

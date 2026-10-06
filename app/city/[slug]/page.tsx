@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!city) return {}
   const title = `First time in ${city.name.en}? Places and 3 ways to spend the day`
   const description = `${city.places.length} places worth knowing and ${city.routes.length} reference routes for a first visit to ${city.name.en}, each with why, who it suits and trade-offs. Every fact is sourced.`
-  const image = `${city.hero.src}-1600.webp`
+  const image = /\.(webp|jpe?g|png)$/i.test(city.hero.src) ? city.hero.src : `${city.hero.src}-1600.webp`
   return {
     title,
     description,

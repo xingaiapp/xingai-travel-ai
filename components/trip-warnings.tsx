@@ -77,7 +77,7 @@ export function TripWarnings({ warnings, destination }: TripWarningsProps) {
   const hasCaution = warnings.some((w) => w.severity === "caution")
 
   return (
-    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
+    <section className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
       <div className="mb-3 flex items-center gap-2">
         {hasWarning
           ? <AlertTriangle className="h-5 w-5 text-red-500" aria-hidden />

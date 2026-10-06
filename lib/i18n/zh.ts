@@ -370,6 +370,18 @@ export const zh: Messages = {
     fromResultBody: "值得知道的地方和第一天的 3 种玩法，全部附来源。它没有影响上面的结果。",
     fromResultCta: "打开{city}指南",
     fromStory: "第一次去{city}？值得知道的地方和 3 种玩法",
+    decideEyebrow: "你的旅行，不是这份指南",
+    decideTitle: "{city}适合你这次的旅行吗？",
+    decideBody:
+      "本页只讲地点和一天路线。要判断{city}是否适合你——并和其他目的地比较——请填出发地、日期、预算和你最在意的事。",
+    decideCta: "生成我的{city}决策",
+    indexTitle: "城市指南",
+    indexLead: "第一次到访的城市指南：附来源的地点 + 3 种一天路线。下面可打开已上线城市；「即将推出」表示还在按香港同标准写。",
+    indexMeta: "{n} 个地点 · {r} 条路线",
+    indexOpen: "打开{city}",
+    indexCount: "已上线 {live} · 即将推出 {soon} · 目录共 {total}",
+    indexSoonHint: "指南撰写中 — 质量对齐香港页",
+    indexMoreNote: "目录会随发布继续加长。澳门、新加坡之后：更多亚洲，再补欧洲海滩与城市模板。",
   },
   content: {
     howEyebrow: "方法论",
@@ -397,6 +409,7 @@ export const zh: Messages = {
     faqNav: "常见问题",
     compareNav: "对比",
     guidesNav: "指南",
+    citiesNav: "城市",
     discover: "发现",
   },
   travelers: {

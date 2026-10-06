@@ -34,7 +34,7 @@ export function RelatedStories({ destinations }: Readonly<{ destinations: string
             key={season.slug}
             href={`/stories/${season.slug}`}
             onClick={() => trackStoryClick("story_from_result", season.slug)}
-            className="flex items-start gap-3 rounded-md border border-border p-3 transition hover:border-primary/40"
+            className="card-hover flex items-start gap-3 rounded-md border border-border p-3"
           >
             <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
             <span>

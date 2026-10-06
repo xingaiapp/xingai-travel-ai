@@ -18,7 +18,7 @@ export function UncertaintyNotes({
 
   return (
     <section
-      className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5"
+      className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5"
       aria-labelledby="uncertainty-heading"
     >
       <div className="mb-3 flex items-center gap-2">

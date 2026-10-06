@@ -56,7 +56,7 @@ export function BudgetBreakdown({ estimate, trip }: Readonly<{ estimate: BudgetE
   const date = new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(estimate.estimatedAt))
 
   return (
-    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
+    <section className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
       <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
         <h2 className="flex items-center gap-2 text-base font-extrabold">
           <Wallet className="h-5 w-5 text-primary" aria-hidden />

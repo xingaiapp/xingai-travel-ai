@@ -23,8 +23,10 @@ Applies to **xingai-travel-ai** (`travel.xingai.app`). Source of truth for width
 
 - **`next.config.mjs` `images.qualities`** must include every `quality={…}` used in code (today: **75, 88, 90, 95**). If you add a new quality, update config in the same change.
 - **Full-bleed heroes (2560 WebP masters)** — Prefer **`unoptimized`** on the home carousel so Vercel does not recompress; or serve at `quality={95}` with widths that do not downscale below the master on desktop.
-- **Cards / footer / inline** — Use `quality={88}` or **90** with `sizes` that match layout (avoid `100vw` on tiny thumbs).
+- **Cards / footer / inline** — Use **`quality={90}`** or **95** with `sizes` that match layout (avoid `100vw` on tiny thumbs). Do not ship new UI at 88 or below.
 - **Never** ship hero `quality={90}` without listing **90** in config (Next 16 silently uses 75).
+- **City / Stories photos** — UI always serves **`-1600.webp`** (or a direct `/assets/*.webp` master). Do not wire `-800` into production UI; keep `-800` only as a processing side output if needed.
+- **Compare / trips city thumbs** (`getCityImage`) — local paths use `-1600`; Unsplash fallbacks use `w=1600&q=85`.
 
 ## Layout vs clarity (especially mobile)
 

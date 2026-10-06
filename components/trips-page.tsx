@@ -91,7 +91,7 @@ export function TripsPage() {
               const { trip } = entry
               const dates = trip.dates.from && trip.dates.to ? `${trip.dates.from} → ${trip.dates.to}` : null
               return (
-                <li key={entry.id} className="overflow-hidden rounded-md border border-border bg-card shadow-sm">
+                <li key={entry.id} className="card-hover overflow-hidden rounded-md border border-border bg-card shadow-sm">
                   <div className="grid sm:grid-cols-[9rem_1fr]">
                     <div
                       className="h-28 bg-muted bg-cover bg-center sm:h-full"

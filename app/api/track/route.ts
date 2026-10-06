@@ -15,9 +15,9 @@ const storySchema = z.object({
   season: z.string().max(60),
 })
 
-// City layer funnel: result → city page, and which reference route people open. See ADR 0008.
+// City layer funnel: result → city, route open, city → /decide. See ADR 0008.
 const citySchema = z.object({
-  type:  z.enum(["city_from_result", "city_route_select"]),
+  type:  z.enum(["city_from_result", "city_route_select", "city_to_decide"]),
   city:  z.string().max(60),
   route: z.string().max(60).optional(),
 })

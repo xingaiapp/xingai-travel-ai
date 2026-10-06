@@ -32,7 +32,7 @@ export function HowItWorksView() {
       />
       <ol className="space-y-4">
         {howItWorksSteps.map((step) => (
-          <li key={pickLocalized(step.title, locale)} className="rounded-md border border-border bg-card p-4">
+          <li key={pickLocalized(step.title, locale)} className="card-hover rounded-md border border-border bg-card p-4">
             <h2 className="text-sm font-extrabold">{pickLocalized(step.title, locale)}</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{pickLocalized(step.body, locale)}</p>
           </li>
@@ -99,7 +99,7 @@ export function CompareIndexView() {
           <li key={item.slug}>
             <Link
               href={`/compare/${item.slug}`}
-              className="block rounded-md border border-border bg-card p-4 transition hover:border-primary/40"
+              className="card-hover block rounded-md border border-border bg-card p-4"
             >
               <p className="text-sm font-extrabold">{pickLocalized(item.title, locale)}</p>
               <p className="mt-1 text-sm text-muted-foreground">{pickLocalized(item.oneLiner, locale)}</p>
@@ -126,7 +126,7 @@ export function CompareDetailView({ slug }: Readonly<{ slug: string }>) {
       />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <div className="rounded-md border border-border bg-card p-4">
+        <div className="card-hover rounded-md border border-border bg-card p-4">
           <h2 className="text-lg font-black text-primary">{pickLocalized(page.aName, locale)}</h2>
           <p className="mt-2 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">{messages.content.bestFor}</p>
           <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
@@ -135,7 +135,7 @@ export function CompareDetailView({ slug }: Readonly<{ slug: string }>) {
             ))}
           </ul>
         </div>
-        <div className="rounded-md border border-border bg-card p-4">
+        <div className="card-hover rounded-md border border-border bg-card p-4">
           <h2 className="text-lg font-black text-primary">{pickLocalized(page.bName, locale)}</h2>
           <p className="mt-2 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">{messages.content.bestFor}</p>
           <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
@@ -175,7 +175,7 @@ export function CompareDetailView({ slug }: Readonly<{ slug: string }>) {
         </div>
       </section>
 
-      <section className="mt-8 rounded-md border border-primary/25 bg-primary/5 p-4">
+      <section className="card-hover mt-8 rounded-md border border-primary/25 bg-primary/5 p-4">
         <h2 className="text-base font-extrabold">{messages.content.verdict}</h2>
         <p className="mt-2 text-sm leading-relaxed">{pickLocalized(page.verdict, locale)}</p>
       </section>
@@ -222,7 +222,7 @@ export function GuidesIndexView() {
           <li key={item.slug}>
             <Link
               href={`/guides/${item.slug}`}
-              className="block rounded-md border border-border bg-card p-4 transition hover:border-primary/40"
+              className="card-hover block rounded-md border border-border bg-card p-4"
             >
               <p className="text-sm font-extrabold">{pickLocalized(item.title, locale)}</p>
               <p className="mt-1 text-sm text-muted-foreground">{pickLocalized(item.oneLiner, locale)}</p>
@@ -258,7 +258,7 @@ export function GuideDetailView({ slug }: Readonly<{ slug: string }>) {
         <h2 className="text-base font-extrabold">{messages.content.candidates}</h2>
         <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
           {page.candidates.map((line) => (
-            <li key={pickLocalized(line, locale)} className="rounded-md border border-border bg-card px-3 py-2">
+            <li key={pickLocalized(line, locale)} className="card-hover rounded-md border border-border bg-card px-3 py-2">
               • {pickLocalized(line, locale)}
             </li>
           ))}

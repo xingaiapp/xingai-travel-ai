@@ -53,7 +53,7 @@ export function AdjustPanel({
   }
 
   return (
-    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5" aria-labelledby="adjust-heading">
+    <section className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5" aria-labelledby="adjust-heading">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="h-5 w-5 text-primary" aria-hidden />

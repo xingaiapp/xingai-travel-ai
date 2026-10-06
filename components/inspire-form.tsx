@@ -88,7 +88,7 @@ export function InspireForm({ value, onChange, tripBudget, tripTravelers }: Insp
   }
 
   return (
-    <section className="rounded-md border border-amber-400/35 bg-amber-50/40 p-4 dark:border-amber-600/35 dark:bg-amber-950/20 sm:p-5">
+    <section className="card-hover rounded-md border border-amber-400/35 bg-amber-50/40 p-4 dark:border-amber-600/35 dark:bg-amber-950/20 sm:p-5">
       <div className="mb-4 flex items-center gap-2">
         <span className="surprise-tab-active flex h-8 w-8 items-center justify-center rounded-md">
           <Sparkles className="h-4 w-4" aria-hidden />

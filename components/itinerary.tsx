@@ -11,7 +11,7 @@ export function Itinerary({ plan }: Readonly<{ plan: PlanResult }>) {
   const [detail, setDetail] = useState(false)
 
   return (
-    <section className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
+    <section className="card-hover rounded-md border border-border bg-card p-4 shadow-sm sm:p-5">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <CalendarDays className="h-5 w-5 text-primary" aria-hidden />
