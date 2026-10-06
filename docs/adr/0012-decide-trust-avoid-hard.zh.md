@@ -21,18 +21,24 @@
 3. **Avoid 在 prompt + normalize 都当硬约束。** `buildComparePrompt` 写明 HARD CONSTRAINTS（≤5 晚且 Avoid 含长途：前三不得出现约 9h+ 航程）。`normalizeCompareResult(result, trip)` 在可解析的飞行小时超限时降权（overall ≤2、confidence low、重选 winner）。
 4. **compare prompt 不做国籍假定**（无默认 “美国公民免签” 类句子）。
 5. **城市 OG 图。** `cityOgImage()` / `resolveCityImageSrc()` — 不对 `http(s)` URL 追加 `-1600.webp`；远程 hero 的 OG/Twitter 用本站 `/assets/hero-travel-decision.png`。
-6. **首页 hero。** 去掉轮播 `unoptimized`，由 Next 出多档尺寸；首图保留 `priority`。
+6. **首页 hero 图片加载**（详见 [tech blog](../tech-blog/2026-10-06-next-image-hero-unoptimized-vs-priority.zh.md)）：
+   - **去掉 `unoptimized`。** 开着时浏览器直接拉 `/assets/home-hero-*.webp` 原图（约 2560px，每张几百 KB）。手机也要下桌面级大图，首屏 LCP 常先空白一阵。
+   - 去掉后走 `/_next/image`，配合 `sizes` 按屏宽出较小文件。
+   - **保留首图 `priority={slideIndex === 0}`。** 只给第一张标 LCP：提前抓取（接近 `fetchPriority=high`）。后面几张仍可懒加载。
+   - 别混为一谈：`priority` 管**何时**抓；`unoptimized` 管**是否**缩放。我们要的是「早点抓优化后的图」，不是「早点抓 2560 原图」。
 
 ## 后果
 
 - 比较前必须填出发地，减少误交示例单。
-- 即使模型无视 prompt，“避开长途”仍会尽量降权（依赖 `scores.flightTime` 解析）。
+- 即使模型无视 prompt，「避开长途」仍会尽量降权（依赖 `scores.flightTime` 解析）。
 - 小时解析是启发式；奇怪文案可能漏降权 — prompt 仍保留规则。
 - 三城页内仍可用 Unsplash hero；分享卡用品牌 PNG，直到有本站实拍。
+- 手机首页 hero 字节更小，同时首图仍优先加载。
 
 ## 相关
 
 - `lib/mock-data.ts`、`components/trip-form.tsx`、`components/decide-page.tsx`
 - `lib/prompts.ts`、`lib/compare-normalize.ts`、`app/api/compare/route.ts`
 - `lib/cities/share-image.ts`、`app/city/[slug]/page.tsx`、`components/home-landing.tsx`
+- Tech blog：[Next.js Image：去掉 unoptimized，保留 priority](../tech-blog/2026-10-06-next-image-hero-unoptimized-vs-priority.zh.md)
 - [ADR 0001](./0001-compare-first-product-scope.zh.md) · [ADR 0010](./0010-city-map-soft-fill-decide.zh.md) · [ADR 0011](./0011-first-html-seo-honesty.zh.md)
