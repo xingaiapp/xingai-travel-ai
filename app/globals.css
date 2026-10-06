@@ -341,11 +341,18 @@
 }
 
 .home-hero-full {
-  /* Mobile: tall portrait stage matching the Hong Kong harbour hero */
-  aspect-ratio: auto;
-  min-height: min(92svh, 44rem);
-  max-height: 96svh;
   width: 100%;
+}
+
+/* Mobile: height follows viewport width (auto-resize), not a fixed svh box. */
+.home-hero-media {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: min(78vw, 32rem);
+}
+
+.home-hero-slide-img {
+  object-position: var(--hero-position-mobile, center);
 }
 
 @media (min-width: 640px) {
@@ -353,6 +360,17 @@
     aspect-ratio: 16 / 9;
     min-height: min(68vh, 32rem);
     max-height: min(78vh, 48rem);
+  }
+
+  .home-hero-media {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+    max-height: none;
+  }
+
+  .home-hero-slide-img {
+    object-position: var(--hero-position-desktop, center);
   }
 }
 
@@ -448,8 +466,10 @@
     animation: home-icon-pop 0.45s ease;
   }
 
-  .home-hero-ken {
-    animation: home-ken-burns 7s ease-out both;
+  @media (min-width: 640px) {
+    .home-hero-ken {
+      animation: home-ken-burns 7s ease-out both;
+    }
   }
 
   .home-scroll-in {

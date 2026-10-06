@@ -9,6 +9,13 @@ const nextConfig = {
   turbopack: {
     root: path.dirname(fileURLToPath(import.meta.url)),
   },
+  // Next 16 only allows listed qualities — hero uses 95; without this it falls back to 75 (soft).
+  images: {
+    qualities: [75, 88, 90, 95],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 2560, 3840],
+    imageSizes: [64, 96, 128, 256, 384],
+    formats: ["image/avif", "image/webp"],
+  },
   // My Hong Kong Season 1 rebuilt 2026-09-28 (Macau-style EP01–EP02). Old long-form slugs redirect.
   async redirects() {
     const season = "/stories/hong-kong"

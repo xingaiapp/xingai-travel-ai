@@ -22,7 +22,7 @@ import {
   Wallet,
   XCircle,
 } from "lucide-react"
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from "react"
 import { useLocale } from "@/components/locale-provider"
 import {
   decideSteps,
@@ -80,6 +80,7 @@ function ScrollIn({ children, className, delayMs = 0 }: { children: ReactNode; c
 function DecisionDemo({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) => string }) {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
+  const holdTimer = useRef<number | null>(null)
   const steps = [
     { title: homeCopy.demoTell, hint: homeCopy.demoTellHint, icon: MessageSquareText },
     { title: homeCopy.demoCompare, hint: homeCopy.demoCompareHint, icon: Scale },
@@ -94,16 +95,31 @@ function DecisionDemo({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) =
     return () => window.clearInterval(id)
   }, [paused, steps.length])
 
+  useEffect(() => {
+    return () => {
+      if (holdTimer.current !== null) window.clearTimeout(holdTimer.current)
+    }
+  }, [])
+
+  function selectStep(index: number) {
+    setActive(index)
+    setPaused(true)
+    if (holdTimer.current !== null) window.clearTimeout(holdTimer.current)
+    // Resume auto-play after a short hold (mobile has no hover pause).
+    holdTimer.current = window.setTimeout(() => setPaused(false), 3200)
+  }
+
   return (
     <div
       className="home-reveal home-reveal-delay-4 rounded-2xl border border-border/80 bg-card/90 p-4 shadow-sm backdrop-blur-sm sm:p-5"
-      onMouseEnter={() => setPaused(true)}
+      onMouseEnter={() => {
+        if (holdTimer.current !== null) window.clearTimeout(holdTimer.current)
+        setPaused(true)
+      }}
       onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
     >
       <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">{t(homeCopy.demoLabel)}</p>
-      <ol className="relative mt-4 grid gap-3 sm:grid-cols-3">
+      <ol className="relative mt-4 grid gap-3 sm:grid-cols-3" role="tablist" aria-label={t(homeCopy.demoLabel)}>
         <span
           aria-hidden
           className="pointer-events-none absolute left-[12%] right-[12%] top-5 hidden h-px bg-border sm:block"
@@ -112,27 +128,32 @@ function DecisionDemo({ t }: { t: (value: Parameters<typeof pickLocalized>[0]) =
           const Icon = step.icon
           const lit = active === index
           return (
-            <li
-              key={step.title.en}
-              className={cn(
-                "relative rounded-xl border px-3 py-3 motion-safe:transition",
-                lit
-                  ? "border-primary/45 bg-[color-mix(in_oklch,var(--primary)_10%,var(--card))] shadow-sm"
-                  : "border-border/70 bg-background/70 opacity-70"
-              )}
-            >
-              <span
+            <li key={step.title.en} className="relative">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={lit}
+                onClick={() => selectStep(index)}
                 className={cn(
-                  "relative z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border text-sm font-bold",
+                  "w-full rounded-xl border px-3 py-3 text-left motion-safe:transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                   lit
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border bg-card text-muted-foreground"
+                    ? "border-primary/45 bg-[color-mix(in_oklch,var(--primary)_10%,var(--card))] shadow-sm"
+                    : "border-border/70 bg-background/70 opacity-70 hover:opacity-100 hover:border-border"
                 )}
               >
-                <Icon className="h-4 w-4" aria-hidden />
-              </span>
-              <p className="mt-2 text-sm font-semibold text-foreground">{t(step.title)}</p>
-              <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{t(step.hint)}</p>
+                <span
+                  className={cn(
+                    "relative z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border text-sm font-bold",
+                    lit
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border bg-card text-muted-foreground"
+                  )}
+                >
+                  <Icon className="h-4 w-4" aria-hidden />
+                </span>
+                <p className="mt-2 text-sm font-semibold text-foreground">{t(step.title)}</p>
+                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{t(step.hint)}</p>
+              </button>
             </li>
           )
         })}
@@ -230,6 +251,7 @@ const heroSlides = [
     place: homeCopy.heroPlace,
     placeDetail: homeCopy.heroPlaceDetail,
     objectPosition: "72% 52%",
+    mobileObjectPosition: "78% 42%",
   },
   {
     src: "/assets/home-hero-tokyo.webp",
@@ -237,6 +259,7 @@ const heroSlides = [
     place: homeCopy.heroPlaceTokyo,
     placeDetail: homeCopy.heroPlaceTokyoDetail,
     objectPosition: "50% 50%",
+    mobileObjectPosition: "50% 38%",
   },
   {
     src: "/assets/home-hero-seoul.webp",
@@ -244,6 +267,7 @@ const heroSlides = [
     place: homeCopy.heroPlaceSeoul,
     placeDetail: homeCopy.heroPlaceSeoulDetail,
     objectPosition: "50% 50%",
+    mobileObjectPosition: "50% 40%",
   },
   {
     src: "/assets/home-hero-los-cabos.webp",
@@ -251,10 +275,11 @@ const heroSlides = [
     place: homeCopy.heroPlaceCabo,
     placeDetail: homeCopy.heroPlaceCaboDetail,
     objectPosition: "45% 50%",
+    mobileObjectPosition: "50% 42%",
   },
 ] as const
 
-const HERO_INTERVAL_MS = 7000
+const HERO_INTERVAL_MS = 4500
 
 function HeroCarousel({
   labelFor,
@@ -278,57 +303,75 @@ function HeroCarousel({
   return (
     <div className="w-full">
       <section className="home-hero-full relative w-full overflow-hidden">
-        {heroSlides.map((slide, slideIndex) => {
-          const active = slideIndex === index
-          return (
-            <Image
-              key={slide.src}
-              src={slide.src}
-              alt={active ? labelFor(slide.alt) : ""}
-              fill
-              priority={slideIndex === 0}
-              quality={90}
-              sizes="100vw"
-              aria-hidden={!active}
-              style={{ objectPosition: slide.objectPosition }}
-              className={cn(
-                "object-cover motion-safe:transition-opacity motion-safe:duration-700",
-                active ? "opacity-100 home-hero-ken" : "opacity-0"
-              )}
-            />
-          )
-        })}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,transparent_38%,color-mix(in_oklch,var(--background)_28%,transparent)_62%,color-mix(in_oklch,var(--background)_78%,transparent)_100%)] sm:bg-[linear-gradient(105deg,color-mix(in_oklch,var(--background)_72%,transparent)_0%,color-mix(in_oklch,var(--background)_36%,transparent)_36%,transparent_68%)]"
-        />
-        <p className="pointer-events-none absolute bottom-4 right-3 z-10 sm:bottom-5 sm:right-5 lg:right-6">
-          <span className="inline-flex max-w-[11rem] items-start gap-1.5 rounded-xl border border-border/70 bg-background/90 px-2.5 py-1.5 text-left text-foreground shadow-sm backdrop-blur-sm sm:max-w-none">
-            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
-            <span>
-              <span className="block text-sm font-bold leading-tight">{labelFor(activeSlide.place)}</span>
-              <span className="block text-xs font-medium leading-tight text-muted-foreground">{labelFor(activeSlide.placeDetail)}</span>
+        <div className="home-hero-media relative w-full">
+          {heroSlides.map((slide, slideIndex) => {
+            const active = slideIndex === index
+            return (
+              <div
+                key={slide.src}
+                className={cn(
+                  "absolute inset-0 motion-safe:transition-opacity motion-safe:duration-700",
+                  active ? "opacity-100" : "opacity-0"
+                )}
+                aria-hidden={!active}
+              >
+                <Image
+                  src={slide.src}
+                  alt={active ? labelFor(slide.alt) : ""}
+                  fill
+                  priority={slideIndex === 0}
+                  quality={95}
+                  unoptimized
+                  sizes="100vw"
+                  aria-hidden={!active}
+                  style={
+                    {
+                      "--hero-position-desktop": slide.objectPosition,
+                      "--hero-position-mobile": slide.mobileObjectPosition,
+                    } as CSSProperties
+                  }
+                  className={cn("home-hero-slide-img object-cover", active && "home-hero-ken")}
+                />
+              </div>
+            )
+          })}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--background)_18%,transparent)_0%,transparent_55%,color-mix(in_oklch,var(--background)_35%,transparent)_100%)] sm:bg-[linear-gradient(105deg,color-mix(in_oklch,var(--background)_72%,transparent)_0%,color-mix(in_oklch,var(--background)_36%,transparent)_36%,transparent_68%)]"
+          />
+          <p className="pointer-events-none absolute right-3 top-3 z-10 sm:bottom-5 sm:right-5 sm:top-auto lg:right-6">
+            <span className="inline-flex max-w-[10.5rem] items-start gap-1.5 rounded-lg border border-border/60 bg-background/80 px-2 py-1 text-left text-foreground shadow-sm backdrop-blur-sm sm:max-w-none sm:rounded-xl sm:px-2.5 sm:py-1.5">
+              <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary sm:h-4 sm:w-4" aria-hidden />
+              <span>
+                <span className="block text-xs font-bold leading-tight sm:text-sm">{labelFor(activeSlide.place)}</span>
+                <span className="block text-[0.7rem] font-medium leading-tight text-muted-foreground sm:text-xs">
+                  {labelFor(activeSlide.placeDetail)}
+                </span>
+              </span>
             </span>
-          </span>
-        </p>
-        <div className="relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-4 pb-6 pt-8 sm:justify-center sm:px-6 sm:pb-10 sm:pt-14 lg:px-8">
-          <div className="max-w-xl rounded-2xl bg-background/55 p-4 shadow-sm backdrop-blur-[2px] sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none">
-            <p className="home-reveal home-reveal-delay-1 mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-foreground sm:mb-3 sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)]">
+          </p>
+        </div>
+        <div className="home-hero-copy relative z-10 mx-auto w-full max-w-6xl border-t border-border/70 bg-background px-4 py-4 sm:absolute sm:inset-0 sm:flex sm:flex-col sm:justify-center sm:border-0 sm:bg-transparent sm:px-6 sm:pb-10 sm:pt-14 lg:px-8">
+          <div className="max-w-xl">
+            <p className="home-reveal home-reveal-delay-1 mb-1.5 inline-flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-muted-foreground sm:mb-3 sm:text-xs sm:text-foreground sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_85%,transparent)]">
               <Compass className="h-3.5 w-3.5 text-primary" aria-hidden />
               XingAI Travel
             </p>
-            <h1 className="home-reveal hero-display-title text-[1.65rem] font-semibold leading-[1.15] tracking-tight sm:text-5xl sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_80%,transparent)]">
+            <h1 className="home-reveal hero-display-title text-[1.55rem] font-semibold leading-[1.12] tracking-tight sm:text-5xl sm:leading-[1.15] sm:[text-shadow:0_1px_3px_color-mix(in_oklch,var(--background)_88%,transparent)]">
               <span className="block text-foreground">{labelFor(homeCopy.headlineLead)}</span>
-              <span className="mt-1 block text-primary">{labelFor(homeCopy.headlineAccent)}</span>
+              <span className="mt-0.5 block text-primary sm:mt-1">{labelFor(homeCopy.headlineAccent)}</span>
             </h1>
-            <p className="home-reveal home-reveal-delay-1 mt-3 hidden max-w-xl text-base leading-relaxed text-foreground sm:mt-4 sm:block sm:text-lg sm:[text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_75%,transparent)]">
+            <p className="home-reveal home-reveal-delay-1 mt-2.5 max-w-xl text-sm leading-snug text-muted-foreground sm:mt-4 sm:hidden">
+              {labelFor(homeCopy.control)}
+            </p>
+            <p className="home-reveal home-reveal-delay-1 mt-4 hidden max-w-xl text-lg leading-relaxed text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_75%,transparent)] sm:block">
               {labelFor(homeCopy.support)}
             </p>
-            <div className="home-reveal home-reveal-delay-2 mt-5 flex flex-col gap-3 sm:mt-6 sm:flex-row">
+            <div className="home-reveal home-reveal-delay-2 mt-4 flex flex-col gap-2.5 sm:mt-6 sm:flex-row sm:gap-3">
               <Link
                 href="/decide"
                 onClick={() => track("home_hero_decide", { target: "/decide" })}
-                className="home-cta-pulse inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-center text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)] motion-safe:transition hover:brightness-105"
+                className="home-cta-pulse inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-center text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)] motion-safe:transition hover:brightness-105 sm:h-12 sm:px-6"
               >
                 {labelFor(homeCopy.primaryCta)}
                 <ArrowRight className="home-cta-arrow h-4 w-4" aria-hidden />
@@ -336,7 +379,7 @@ function HeroCarousel({
               <Link
                 href="/guides"
                 onClick={() => track("home_secondary", { target: "/guides" })}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-foreground/20 bg-card/90 px-6 text-center text-sm font-bold text-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--foreground)_8%,transparent)] backdrop-blur-sm motion-safe:transition hover:border-primary/50"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-foreground/25 bg-background/35 px-5 text-center text-sm font-bold text-foreground backdrop-blur-[1px] motion-safe:transition hover:border-primary/50 sm:h-12 sm:border-foreground/20 sm:bg-card/90 sm:px-6 sm:shadow-[0_8px_20px_color-mix(in_oklch,var(--foreground)_8%,transparent)] sm:backdrop-blur-sm"
               >
                 <Map className="h-4 w-4 text-primary" aria-hidden />
                 {labelFor(homeCopy.secondaryCta)}
