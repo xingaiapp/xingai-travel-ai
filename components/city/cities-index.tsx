@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ArrowRight, Search, X } from "lucide-react"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { DecideCta } from "@/components/content-shell"
 import { useLocale } from "@/components/locale-provider"
 import {
@@ -45,13 +45,8 @@ export function CitiesIndexView() {
   const searchParams = useSearchParams()
 
   const [query, setQuery] = useState("")
-  const [region, setRegion] = useState<RegionFilter>(() => parseRegion(searchParams.get("region")))
-  const [intent, setIntent] = useState<IntentFilter>(() => parseIntent(searchParams.get("intent")))
-
-  useEffect(() => {
-    setRegion(parseRegion(searchParams.get("region")))
-    setIntent(parseIntent(searchParams.get("intent")))
-  }, [searchParams])
+  const region = parseRegion(searchParams.get("region"))
+  const intent = parseIntent(searchParams.get("intent"))
 
   function pushFilters(nextRegion: RegionFilter, nextIntent: IntentFilter) {
     const params = new URLSearchParams()
@@ -144,10 +139,7 @@ export function CitiesIndexView() {
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => {
-                    setRegion(item.id)
-                    pushFilters(item.id, intent)
-                  }}
+                  onClick={() => pushFilters(item.id, intent)}
                   className={cn(
                     "inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-semibold transition",
                     active
@@ -169,10 +161,7 @@ export function CitiesIndexView() {
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => {
-                    setIntent(item.id)
-                    pushFilters(region, item.id)
-                  }}
+                  onClick={() => pushFilters(region, item.id)}
                   className={cn(
                     "inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-semibold transition",
                     active
@@ -201,8 +190,6 @@ export function CitiesIndexView() {
               type="button"
               onClick={() => {
                 setQuery("")
-                setRegion("all")
-                setIntent("all")
                 pushFilters("all", "all")
               }}
               className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full border border-border px-5 text-sm font-bold text-primary hover:border-primary"

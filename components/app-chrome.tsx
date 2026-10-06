@@ -160,9 +160,11 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
     }
   }, [])
 
-  useEffect(() => {
-    setMoreOpen(false)
-  }, [pathname])
+  const [morePath, setMorePath] = useState(pathname)
+  if (pathname !== morePath) {
+    setMorePath(pathname)
+    if (moreOpen) setMoreOpen(false)
+  }
 
   useEffect(() => {
     if (!moreOpen) return
