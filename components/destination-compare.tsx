@@ -64,6 +64,10 @@ function DestinationCompareInner({
         : messages.result.matchFair
   const walkTenths = walkabilityTenths(winner.scores.walkability)
   const alternatives = rankedAlternatives(result.destinations)
+  /** Same score formula + order as the cards (winner first, then ranked alts). */
+  const orderedDestinations = [winner, ...alternatives.map((entry) => entry.item)].filter(
+    (item, index, list) => list.findIndex((d) => destinationKey(d) === destinationKey(item)) === index
+  )
 
   const tableRows: [string, (item: Destination) => string][] = [
     [messages.result.tableOverall, (item) => starRating(item.scores.overall)],
@@ -205,8 +209,9 @@ function DestinationCompareInner({
             <thead className="bg-muted/70 text-xs text-muted-foreground">
               <tr>
                 <th className="p-3 text-left">{messages.result.tableDestination}</th>
-                {result.destinations.map((item) => {
+                {orderedDestinations.map((item) => {
                   const selected = destinationKey(focused) === destinationKey(item)
+                  const score = computeMatchScore(item.scores.overall, item.confidence, item.scores.walkability)
                   return (
                     <th key={item.name} className={cn("p-0 text-center", columnClass(item))}>
                       <button
@@ -220,7 +225,7 @@ function DestinationCompareInner({
                       >
                         <span>{item.name}</span>
                         <span className="text-[0.65rem] font-semibold tabular-nums text-muted-foreground">
-                          {computeMatchScore(item.scores.overall, item.confidence)}/100
+                          {score}/100
                         </span>
                         {item.isWinner ? (
                           <span className={cn("text-[0.65rem] font-semibold uppercase tracking-wide", selected ? "text-primary" : "text-primary/60")}>
@@ -237,7 +242,7 @@ function DestinationCompareInner({
               {tableRows.map(([label, getValue]) => (
                 <tr key={label} className="border-t border-border">
                   <td className="p-3 font-semibold text-muted-foreground">{label}</td>
-                  {result.destinations.map((item) => (
+                  {orderedDestinations.map((item) => (
                     <td key={item.name} className={cn("p-3 text-center font-medium", columnClass(item))}>
                       {getValue(item)}
                     </td>

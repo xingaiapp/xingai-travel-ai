@@ -22,7 +22,7 @@ describe("cityOgImage", () => {
   it("uses first-party PNG for remote heroes", () => {
     expect(
       cityOgImage("https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1600&q=85&auto=format&fit=crop")
-    ).toBe("/assets/hero-travel-decision.png")
+    ).toBe("/assets/og-travel-decision-2400.jpg")
   })
 
   it("keeps local heroes for OG", () => {

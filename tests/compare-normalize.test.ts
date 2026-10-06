@@ -90,12 +90,13 @@ describe("normalizeCompareResult", () => {
           },
         ],
       }),
-      shortTripAvoidLong
+      { ...shortTripAvoidLong, locale: "zh" }
     )
     expect(out.winner).toBe("Mexico City")
     expect(out.destinations.find((d) => d.name === "Lisbon")?.scores.overall).toBeLessThanOrEqual(2)
     expect(out.destinations.find((d) => d.name === "Lisbon")?.confidence).toBe("low")
-    expect(out.whyNotOthers).toMatch(/Demoted for Avoid/)
+    expect(out.whyNotOthers).toMatch(/避开长途/)
+    expect(out.destinations.find((d) => d.name === "Lisbon")?.tradeoffs[0]).toMatch(/违反「避开」/)
   })
 })
 

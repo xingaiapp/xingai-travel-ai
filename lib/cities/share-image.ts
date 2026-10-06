@@ -1,10 +1,11 @@
 /**
  * City hero / card image URL helpers.
  * Story-style local bases get `-1600.webp`; http(s) and already-suffixed files stay intact.
- * OG for remote Unsplash heroes uses a first-party PNG (WeChat + no query-string mangling).
+ * OG for remote Unsplash heroes uses a first-party high-res share card (WeChat + no query mangling).
  */
 
-const FIRST_PARTY_OG = "/assets/hero-travel-decision.png"
+/** 2400×1260 JPEG from site hero — high-res pixels, share-friendly size. */
+const FIRST_PARTY_OG = "/assets/og-travel-decision-2400.jpg"
 
 /** Resolve a display src for directory cards and page heroes. */
 export function resolveCityImageSrc(src: string): string {
@@ -16,7 +17,7 @@ export function resolveCityImageSrc(src: string): string {
 /**
  * Open Graph / Twitter image for a city page.
  * Remote Unsplash (and similar) URLs must not get `-1600.webp` appended — that corrupts
- * query strings (`…fit=crop-1600.webp`). Prefer a first-party PNG for share previews.
+ * query strings (`…fit=crop-1600.webp`). Prefer a first-party high-res JPG for share previews.
  */
 export function cityOgImage(heroSrc: string): string {
   if (/^https?:\/\//i.test(heroSrc)) return FIRST_PARTY_OG

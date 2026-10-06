@@ -20,7 +20,7 @@ Share images for Singapore / Barcelona / Xi'an also mangled Unsplash URLs by app
 2. **Origin required before compare.** Client blocks submit with a clear error; API still rejects empty origin via zod.
 3. **Avoid is hard in prompt + normalize.** `buildComparePrompt` states Avoid as HARD CONSTRAINTS (short trips ≤5 nights: no ~9h+ flights in the top 3 when Avoid mentions long flights). `normalizeCompareResult(result, trip)` demotes matching destinations (cap overall ≤2, confidence low, rewrite winner) when flight hours parse above the cap.
 4. **No citizenship guesses** in the compare prompt (no default “U.S. citizens…” visa lines).
-5. **City OG images.** `cityOgImage()` / `resolveCityImageSrc()` — never append `-1600.webp` to `http(s)` URLs; remote heroes use first-party `/assets/hero-travel-decision.png` for OG/Twitter.
+5. **City OG images.** `cityOgImage()` / `resolveCityImageSrc()` — never append `-1600.webp` to `http(s)` URLs; remote heroes use a first-party high-res share card (see [ADR 0014](./0014-score-parity-og-hires.md) for `/assets/og-travel-decision-2400.jpg`).
 6. **Home hero image delivery** (see also [tech blog](../tech-blog/2026-10-06-next-image-hero-unoptimized-vs-priority.md)):
    - **Remove `unoptimized`** on the homepage carousel `next/image` slides. With `unoptimized`, the browser fetched the raw `/assets/home-hero-*.webp` files (~2560px, hundreds of KB each). Phones paid for desktop-sized originals; LCP often showed a blank band on first paint.
    - After removal, images go through `/_next/image` with `sizes` so smaller widths get smaller files.

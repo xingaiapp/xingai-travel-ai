@@ -20,7 +20,7 @@
 2. **比较前必须填出发地。** 客户端拦截并提示；API 仍用 zod 拒绝空 origin。
 3. **Avoid 在 prompt + normalize 都当硬约束。** `buildComparePrompt` 写明 HARD CONSTRAINTS（≤5 晚且 Avoid 含长途：前三不得出现约 9h+ 航程）。`normalizeCompareResult(result, trip)` 在可解析的飞行小时超限时降权（overall ≤2、confidence low、重选 winner）。
 4. **compare prompt 不做国籍假定**（无默认 “美国公民免签” 类句子）。
-5. **城市 OG 图。** `cityOgImage()` / `resolveCityImageSrc()` — 不对 `http(s)` URL 追加 `-1600.webp`；远程 hero 的 OG/Twitter 用本站 `/assets/hero-travel-decision.png`。
+5. **城市 OG 图。** `cityOgImage()` / `resolveCityImageSrc()` — 不对 `http(s)` URL 追加 `-1600.webp`；远程 hero 用本站高清分享卡（见 [ADR 0014](./0014-score-parity-og-hires.zh.md) 的 `/assets/og-travel-decision-2400.jpg`）。
 6. **首页 hero 图片加载**（详见 [tech blog](../tech-blog/2026-10-06-next-image-hero-unoptimized-vs-priority.zh.md)）：
    - **去掉 `unoptimized`。** 开着时浏览器直接拉 `/assets/home-hero-*.webp` 原图（约 2560px，每张几百 KB）。手机也要下桌面级大图，首屏 LCP 常先空白一阵。
    - 去掉后走 `/_next/image`，配合 `sizes` 按屏宽出较小文件。

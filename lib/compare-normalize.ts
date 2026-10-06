@@ -49,6 +49,44 @@ function rankKey(item: Destination): number {
   return stars + bonus
 }
 
+function avoidLocale(locale?: TripContext["locale"]): NonNullable<TripContext["locale"]> {
+  return locale === "zh" || locale === "ko" || locale === "es" ? locale : "en"
+}
+
+function avoidViolateLine(locale: TripContext["locale"] | undefined, hours: number, nights: number): string {
+  const n = nights || "?"
+  switch (avoidLocale(locale)) {
+    case "zh":
+      return `违反「避开」：航程约 ${hours} 小时（行程 ${n} 晚）`
+    case "ko":
+      return `Avoid 위반: 비행 약 ${hours}시간（일정 ${n}박）`
+    case "es":
+      return `Viola Evitar: vuelo ~${hours}h (viaje ${n} noches)`
+    default:
+      return `Violates Avoid (long flight ~${hours}h; trip ${n} nights)`
+  }
+}
+
+function avoidDemotedNote(locale: TripContext["locale"] | undefined, names: string[]): string {
+  const list = names.join(", ")
+  switch (avoidLocale(locale)) {
+    case "zh":
+      return `因「避开长途」已降权：${list}。`
+    case "ko":
+      return `장거리 회피로 하향: ${list}.`
+    case "es":
+      return `Rebaja por Evitar vuelos largos: ${list}.`
+    default:
+      return `Demoted for Avoid (long flights): ${list}.`
+  }
+}
+
+function isAvoidDemotionLine(line: string): boolean {
+  return /violates avoid|违反「避开」|avoid 위반|viola evitar|demoted for avoid|因「避开长途」|장거리 회피|rebaja por evitar/i.test(
+    line
+  )
+}
+
 function applyAvoidHardConstraints(
   destinations: Destination[],
   trip: TripContext | undefined,
@@ -79,8 +117,8 @@ function applyAvoidHardConstraints(
         confidence: "low",
         scores: { ...dest.scores, overall: Math.min(dest.scores.overall, 2) },
         tradeoffs: [
-          `Violates Avoid (long flight ~${hours}h; trip ${nights || "?"} nights)`,
-          ...dest.tradeoffs.filter((line) => !/violates avoid/i.test(line)),
+          avoidViolateLine(trip.locale, hours, nights),
+          ...dest.tradeoffs.filter((line) => !isAvoidDemotionLine(line)),
         ].slice(0, 5),
         isWinner: false,
       }
@@ -98,7 +136,7 @@ function applyAvoidHardConstraints(
 
   let nextWhy = whyNotOthers
   if (demotedNames.length) {
-    const note = `Demoted for Avoid (long flights): ${demotedNames.join(", ")}.`
+    const note = avoidDemotedNote(trip.locale, demotedNames)
     nextWhy = nextWhy ? `${nextWhy} ${note}` : note
   }
 

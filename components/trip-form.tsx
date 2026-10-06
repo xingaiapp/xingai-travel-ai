@@ -107,10 +107,12 @@ export function TripForm({ value, onChange }: TripFormProps) {
 
         <FieldShell icon={MapPin} label={messages.form.from}>
           <input
+            id="trip-origin"
             className={inputClass}
             value={value.origin}
             onChange={(event) => patch({ origin: event.target.value })}
             placeholder="San Francisco (SFO)"
+            autoComplete="address-level2"
           />
         </FieldShell>
 

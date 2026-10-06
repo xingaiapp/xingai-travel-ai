@@ -119,6 +119,8 @@ export function DecidePage() {
   const [loadingMode, setLoadingMode] = useState<Mode | null>(null)
   const [errors, setErrors] = useState<Partial<Record<Mode, string>>>({})
   const [errorCodes, setErrorCodes] = useState<Partial<Record<Mode, string>>>({})
+  /** Field validation (empty origin, dates) — not an API failure; no Try again. */
+  const [fieldNotice, setFieldNotice] = useState("")
   const [results, setResults] = useState<Partial<Record<Mode, ModeResult>>>({})
   const current = results[mode]
   const loading = loadingMode === mode
@@ -128,8 +130,21 @@ export function DecidePage() {
   const sessionModeRef = useRef<Mode | null>(null)
   const controllerRef = useRef<AbortController | null>(null)
 
+  function focusTripOrigin() {
+    queueMicrotask(() => {
+      const el = document.getElementById("trip-origin") as HTMLInputElement | null
+      el?.scrollIntoView({ behavior: "smooth", block: "center" })
+      el?.focus()
+    })
+  }
+
   // Derive inspire budget/travelers from trip form (no setState in effect needed)
   const inspireWithTrip: InspireContext = { ...inspire, budget: trip.budget, travelers: trip.travelers }
+
+  function patchTrip(next: TripContext) {
+    setTrip(next)
+    if (next.origin.trim()) setFieldNotice((prev) => (prev === messages.form.originRequired ? "" : prev))
+  }
 
   useEffect(() => {
     let stored = defaultTrip
@@ -176,21 +191,23 @@ export function DecidePage() {
     const isInspire = runMode === "inspire"
     setLoadingMode(runMode)
     setErrors((prev) => ({ ...prev, [runMode]: "" }))
+    setFieldNotice("")
 
     if (!isInspire) {
       if (!trip.origin.trim()) {
         setLoadingMode(null)
-        setErrors((prev) => ({ ...prev, [runMode]: messages.form.originRequired }))
+        setFieldNotice(messages.form.originRequired)
+        focusTripOrigin()
         return
       }
       if (!trip.dates.from || !trip.dates.to || isPastDate(trip.dates.from) || isPastDate(trip.dates.to)) {
         setLoadingMode(null)
-        setErrors((prev) => ({ ...prev, [runMode]: messages.form.datesPastError }))
+        setFieldNotice(messages.form.datesPastError)
         return
       }
       if (new Date(trip.dates.to).getTime() < new Date(trip.dates.from).getTime()) {
         setLoadingMode(null)
-        setErrors((prev) => ({ ...prev, [runMode]: messages.form.datesOrderError }))
+        setFieldNotice(messages.form.datesOrderError)
         return
       }
     }
@@ -348,7 +365,7 @@ export function DecidePage() {
                 tripTravelers={trip.travelers}
               />
             ) : (
-              <TripForm value={trip} onChange={setTrip} />
+              <TripForm value={trip} onChange={patchTrip} />
             )}
 
             <button
@@ -377,7 +394,7 @@ export function DecidePage() {
           {/* Sticky as one column so cards below the snapshot never slide underneath it. */}
           <div className="space-y-4 lg:sticky lg:top-24 lg:self-start">
             <TripSnapshot trip={trip} />
-            {!inspireMode && <StylePaceSelector value={trip} onChange={setTrip} />}
+            {!inspireMode && <StylePaceSelector value={trip} onChange={patchTrip} />}
             {inspireMode && (
               <div className="card-hover rounded-md border border-border bg-card p-4 text-sm text-muted-foreground sm:p-5">
                 <p className="mb-1 font-bold text-foreground">{messages.inspire.budgetNote}</p>
@@ -397,6 +414,16 @@ export function DecidePage() {
         {current?.data.demo ? (
           <p className="mt-4 rounded-md border border-amber-300 bg-amber-100 px-4 py-3 text-sm font-semibold text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
             {messages.result.demoBanner}
+          </p>
+        ) : null}
+
+        {fieldNotice ? (
+          <p
+            role="alert"
+            aria-live="assertive"
+            className="mt-4 rounded-md border border-amber-300 bg-amber-100 px-4 py-3 text-sm font-semibold text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200"
+          >
+            {fieldNotice}
           </p>
         ) : null}
 
