@@ -148,6 +148,7 @@ export const homeCopy = {
     "홍콩은 글로 된 가이드가 있는 첫 도시입니다. 동네, 장소, 참고 코스가 있습니다. 호텔을 대신 예약하지는 않습니다.",
     "Hong Kong es la primera ciudad con una guía escrita: barrios, lugares y rutas de referencia. No reserva un hotel por ti."
   ),
+  hkPrimaryCta: t("Open Hong Kong city guide", "打开香港城市指南", "홍콩 도시 가이드 열기", "Abrir guía de Hong Kong"),
   whyTitle: t("Why XingAI Travel?", "为什么用 XingAI Travel？", "왜 XingAI Travel인가요?", "¿Por qué XingAI Travel?"),
   whyEyebrow: t("Why XingAI Travel?", "为什么用 XingAI Travel？", "왜 XingAI Travel인가요?", "¿Por qué XingAI Travel?"),
   whyHeadlineLead: t("Other travel sites help you search.", "别的旅行网站帮你搜索。", "다른 여행 사이트는 검색을 돕습니다.", "Otros sitios de viaje te ayudan a buscar."),

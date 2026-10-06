@@ -541,42 +541,60 @@ export function HomeLanding() {
         </ul>
       </section>
 
-      <section className="mt-10 border-t border-border pt-8" aria-labelledby="home-hk-start">
+      <section className="mt-14 border-t border-border pt-10" aria-labelledby="home-hk-start">
         <ScrollIn>
-          <div className="card-hover card-hover-media overflow-hidden rounded-2xl border border-border bg-card">
-            <div className="grid lg:grid-cols-2">
-              <div className="relative min-h-52 sm:min-h-60 lg:min-h-[18rem]">
-                <Image
-                  src="/assets/home-hero-harbour-v2.webp"
-                  alt={t(homeCopy.heroHarbourAlt)}
-                  fill
-                  quality={90}
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover object-center"
-                />
-              </div>
-              <div className="px-5 py-6 sm:px-6">
-                <h3 id="home-hk-start" className="flex items-center gap-2 text-xl font-semibold">
-                  <MapPin className="h-5 w-5 text-primary" aria-hidden />
-                  {t(homeCopy.hkTitle)}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(homeCopy.hkBody)}</p>
-                <ul className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-                  {hongKongEntries.map((item) => (
-                    <li key={item.id}>
-                      <Link
-                        href={item.href}
-                        onClick={() => track("home_destination", { id: item.id, target: item.href })}
-                        className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-background px-4 text-sm font-semibold hover:border-primary"
-                      >
-                        <Compass className="h-3.5 w-3.5 text-primary" aria-hidden />
-                        {t(item.label)}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+          <div className="mx-auto max-w-3xl">
+            <h2 id="home-hk-start" className="hero-display-title text-2xl font-semibold tracking-tight sm:text-3xl">
+              {t(homeCopy.hkTitle)}
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground">{t(homeCopy.hkBody)}</p>
+          </div>
+        </ScrollIn>
+
+        <ScrollIn delayMs={40}>
+          <div className="relative mt-6 aspect-[16/10] w-full overflow-hidden rounded-2xl bg-muted sm:aspect-[21/9]">
+            <Image
+              src="/assets/home-hero-harbour-v2.webp"
+              alt={t(homeCopy.heroHarbourAlt)}
+              fill
+              quality={90}
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </div>
+        </ScrollIn>
+
+        <ScrollIn delayMs={80}>
+          <div className="mx-auto mt-6 flex max-w-3xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <Link
+              href="/city/hong-kong"
+              onClick={() => track("home_destination", { id: "hk-guide", target: "/city/hong-kong" })}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-sm motion-safe:transition hover:opacity-90"
+            >
+              {t(homeCopy.hkPrimaryCta)}
+              <ArrowRight className="home-cta-arrow h-4 w-4" aria-hidden />
+            </Link>
+            <ul className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-1 sm:gap-y-1">
+              {hongKongEntries
+                .filter((item) => item.id !== "hk-guide")
+                .map((item, index, list) => (
+                  <li key={item.id} className="flex items-center">
+                    <Link
+                      href={item.href}
+                      onClick={() => track("home_destination", { id: item.id, target: item.href })}
+                      className="inline-flex min-h-11 items-center gap-1 px-1 text-sm font-semibold text-foreground underline-offset-4 hover:text-primary hover:underline"
+                    >
+                      {t(item.label)}
+                      <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />
+                    </Link>
+                    {index < list.length - 1 ? (
+                      <span className="mx-1 hidden text-muted-foreground/50 sm:inline" aria-hidden>
+                        ·
+                      </span>
+                    ) : null}
+                  </li>
+                ))}
+            </ul>
           </div>
         </ScrollIn>
       </section>

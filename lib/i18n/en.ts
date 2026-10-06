@@ -25,6 +25,7 @@ export const en: Messages = {
     affiliate: "Affiliate disclosure",
     exploreBetter: "Decide better",
     exploreBetterBody: "Choose the right trip before you plan the days.",
+    moreNav: "More",
     continueLastTrip: "Continue your last trip idea",
     continueLastTripBody: "Reopen your best-fit plan or compare again.",
     help: "Help & FAQ",

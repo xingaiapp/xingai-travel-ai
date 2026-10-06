@@ -25,6 +25,7 @@ export const ko: Messages = {
     affiliate: "제휴 고지",
     exploreBetter: "더 나은 결정",
     exploreBetterBody: "일정을 짜기 전에 맞는 여행을 먼저 고르세요.",
+    moreNav: "더보기",
     continueLastTrip: "지난 여행 아이디어 이어보기",
     continueLastTripBody: "가장 맞는 계획을 다시 열거나 다시 비교하세요.",
     help: "도움말 및 FAQ",

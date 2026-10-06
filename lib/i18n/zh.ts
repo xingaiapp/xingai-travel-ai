@@ -25,6 +25,7 @@ export const zh: Messages = {
     affiliate: "联盟披露",
     exploreBetter: "先选对旅行",
     exploreBetterBody: "先选对旅行，再规划每天怎么走。",
+    moreNav: "更多",
     continueLastTrip: "继续上次的旅行想法",
     continueLastTripBody: "继续查看最适合的方案，或重新比较。",
     help: "帮助与常见问题",

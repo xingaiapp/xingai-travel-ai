@@ -7,13 +7,18 @@ import {
   ArrowRight,
   BookOpen,
   BriefcaseBusiness,
+  ChevronDown,
   Compass,
+  Ellipsis,
+  FileText,
   House,
+  MapPinned,
   Menu,
   Plane,
+  Scale,
   X,
 } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import { LocaleSwitcher } from "@/components/locale-switcher"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { useLocale } from "@/components/locale-provider"
@@ -39,6 +44,24 @@ const navItems: readonly NavItem[] = [
   // Saved / Profile stay out of the nav until they exist — no dead entries.
   { href: "/trips", key: "trips", icon: BriefcaseBusiness },
 ]
+
+/** Browse destinations — desktop More menu + mobile drawer. Not in bottom tabs. */
+const moreLinks = [
+  { href: "/city", labelKey: "citiesNav" as const, icon: MapPinned },
+  { href: "/compare", labelKey: "compareNav" as const, icon: Scale },
+  { href: "/guides", labelKey: "guidesNav" as const, icon: FileText },
+] as const
+
+function isMoreRoute(pathname: string) {
+  return (
+    pathname === "/city" ||
+    pathname.startsWith("/city/") ||
+    pathname === "/compare" ||
+    pathname.startsWith("/compare/") ||
+    pathname === "/guides" ||
+    pathname.startsWith("/guides/")
+  )
+}
 
 function NewBadge({ label }: Readonly<{ label: string }>) {
   return (
@@ -71,7 +94,9 @@ function mobileHeaderTitle(pathname: string, messages: Messages) {
   if (legal) return messages.chrome[legal.key]
   if (pathname.startsWith("/stories")) return messages.chrome.stories
   if (pathname.startsWith("/trips")) return messages.chrome.trips
-  if (pathname === "/city" || pathname.startsWith("/city/")) return messages.city.eyebrow
+  if (pathname === "/city" || pathname.startsWith("/city/")) return messages.content.citiesNav
+  if (pathname === "/compare" || pathname.startsWith("/compare/")) return messages.content.compareNav
+  if (pathname === "/guides" || pathname.startsWith("/guides/")) return messages.content.guidesNav
   return messages.chrome.decide
 }
 
@@ -115,8 +140,12 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
   const pathname = usePathname()
   const { messages } = useLocale()
   const [open, setOpen] = useState(false)
+  const [moreOpen, setMoreOpen] = useState(false)
   const [soon, setSoon] = useState("")
   const [lastDecision, setLastDecision] = useState<LastDecision | null>(null)
+  const moreMenuId = useId()
+  const moreRef = useRef<HTMLDivElement>(null)
+  const moreActive = isMoreRoute(pathname)
 
   useEffect(() => {
     function syncLastDecision() {
@@ -132,6 +161,26 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
       window.removeEventListener("focus", syncLastDecision)
     }
   }, [])
+
+  useEffect(() => {
+    setMoreOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (!moreOpen) return
+    function onPointerDown(event: MouseEvent) {
+      if (!moreRef.current?.contains(event.target as Node)) setMoreOpen(false)
+    }
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setMoreOpen(false)
+    }
+    document.addEventListener("mousedown", onPointerDown)
+    document.addEventListener("keydown", onKeyDown)
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown)
+      document.removeEventListener("keydown", onKeyDown)
+    }
+  }, [moreOpen])
 
   function showSoon(label: string) {
     setSoon(`${label} · ${messages.chrome.soon}`)
@@ -160,6 +209,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           </Link>
           <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex" aria-label="Primary">
             {navItems.map((item) => {
+              const Icon = item.icon
               const active = isActive(pathname, item.href)
               const label = messages.chrome[item.key]
               if (item.soon) {
@@ -168,8 +218,9 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                     key={item.key}
                     type="button"
                     onClick={() => showSoon(label)}
-                    className="inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                    className="inline-flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-foreground"
                   >
+                    <Icon className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
                     {label}
                   </button>
                 )
@@ -179,15 +230,63 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                   key={item.key}
                   href={item.href}
                   className={cn(
-                    "inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold transition",
+                    "inline-flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-semibold transition",
                     active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                 >
+                  <Icon className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
                   {label}
                   {item.isNew ? <NewBadge label={messages.chrome.newBadge} /> : null}
                 </Link>
               )
             })}
+            <div ref={moreRef} className="relative">
+              <button
+                type="button"
+                aria-haspopup="menu"
+                aria-expanded={moreOpen}
+                aria-controls={moreMenuId}
+                onClick={() => setMoreOpen((value) => !value)}
+                className={cn(
+                  "inline-flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-semibold transition",
+                  moreActive || moreOpen
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                )}
+              >
+                <Ellipsis className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
+                {messages.chrome.moreNav}
+                <ChevronDown className={cn("h-3.5 w-3.5 transition", moreOpen && "rotate-180")} aria-hidden />
+              </button>
+              {moreOpen ? (
+                <div
+                  id={moreMenuId}
+                  role="menu"
+                  aria-label={messages.chrome.moreNav}
+                  className="absolute left-1/2 top-[calc(100%+0.35rem)] z-50 w-52 -translate-x-1/2 rounded-xl border border-border bg-card p-1.5 shadow-lg"
+                >
+                  {moreLinks.map((item) => {
+                    const Icon = item.icon
+                    const active = isActive(pathname, item.href)
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        role="menuitem"
+                        onClick={() => setMoreOpen(false)}
+                        className={cn(
+                          "flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-sm font-semibold transition",
+                          active ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
+                        )}
+                      >
+                        <Icon className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
+                        {messages.content[item.labelKey]}
+                      </Link>
+                    )
+                  })}
+                </div>
+              ) : null}
+            </div>
           </nav>
           <div className="flex shrink-0 items-center gap-1 lg:hidden">
             <LocaleSwitcher className="h-10 max-w-[5.75rem] px-1.5" />
@@ -371,6 +470,32 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                     )
                   })}
                 </nav>
+
+                <div className="mt-5 border-t border-border pt-4">
+                  <p className="px-3 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                    {messages.chrome.moreNav}
+                  </p>
+                  <nav className="mt-2 grid gap-1" aria-label={messages.chrome.moreNav}>
+                    {moreLinks.map((item) => {
+                      const Icon = item.icon
+                      const active = isActive(pathname, item.href)
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setOpen(false)}
+                          className={cn(
+                            "flex min-h-11 items-center gap-3 rounded-md px-3 py-2.5 text-left transition",
+                            active ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
+                          )}
+                        >
+                          <Icon className="h-5 w-5 shrink-0" aria-hidden />
+                          <span className="text-sm font-bold">{messages.content[item.labelKey]}</span>
+                        </Link>
+                      )
+                    })}
+                  </nav>
+                </div>
 
                 <div className="mt-5">
                   <SideInsightCard lastDecision={lastDecision} onNavigate={() => setOpen(false)} />

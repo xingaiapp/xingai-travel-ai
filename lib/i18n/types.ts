@@ -25,6 +25,7 @@ export interface Messages {
     affiliate: string
     exploreBetter: string
     exploreBetterBody: string
+    moreNav: string
     continueLastTrip: string
     continueLastTripBody: string
     help: string
