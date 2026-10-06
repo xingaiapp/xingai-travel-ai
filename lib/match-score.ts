@@ -11,7 +11,9 @@ export function computeMatchScore(overall: number, confidence: Confidence, walka
   const bonus = confidence === "high" ? 15 : confidence === "medium" ? 8 : 2
   const walk = walkabilityTenths(walkability ?? "")
   const walkBonus = walk == null ? 0 : Math.round((walk / 10) * 3)
-  return Math.max(52, Math.min(98, base + bonus + walkBonus))
+  // Low-confidence (e.g. Avoid demotion) may sit below 52 so walkability still separates peers.
+  const floor = confidence === "low" ? 28 : 52
+  return Math.max(floor, Math.min(98, base + bonus + walkBonus))
 }
 
 export function matchScoreLabelBand(score: number): "excellent" | "strong" | "fair" {

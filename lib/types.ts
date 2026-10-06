@@ -69,6 +69,11 @@ export interface CompareResult {
   confidence: Confidence
   destinations: Destination[]
   whyNotOthers: string
+  /**
+   * Set when every candidate violates a hard Avoid constraint (e.g. long flights).
+   * UI shows a conflict banner; the named winner is only the least-bad remaining option.
+   */
+  constraintConflict?: string
   // Stamped client-side when the result arrives, so the UI can tell which mode / language produced it.
   mode?: "compare" | "inspire"
   generatedLocale?: TripContext["locale"]

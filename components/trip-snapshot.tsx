@@ -5,9 +5,10 @@ import type { TripContext, TripRegion } from "@/lib/types"
 import type { Messages } from "@/lib/i18n/types"
 import { useLocale } from "@/components/locale-provider"
 
-function formatDates(ctx: TripContext) {
+function formatDates(ctx: TripContext, nightsLabel: string) {
   if (!ctx.dates.from || !ctx.dates.to) return "-"
-  return `${ctx.dates.from} → ${ctx.dates.to} (${ctx.dates.nights} nights)`
+  const nights = nightsLabel.replace("{n}", String(ctx.dates.nights))
+  return `${ctx.dates.from} → ${ctx.dates.to} (${nights})`
 }
 
 function excerpt(notes?: string) {
@@ -34,7 +35,7 @@ export function TripSnapshot({ trip }: Readonly<{ trip: TripContext }>) {
     [messages.snapshot.origin, trip.origin || "-"],
     [messages.snapshot.region, messages.form.regions[regionLabelKeys[trip.region ?? "anywhere"]]],
     [messages.snapshot.placesInMind, trip.placesInMind || "-"],
-    [messages.snapshot.dates, formatDates(trip)],
+    [messages.snapshot.dates, formatDates(trip, messages.snapshot.nights)],
     [messages.snapshot.budget, `≈ ${trip.budget.currency} ${trip.budget.amount.toLocaleString()}`],
     [messages.snapshot.travelers, `${trip.travelers.count} ${messages.travelers[trip.travelers.type]}`],
     // Vibe always reflects the Style & Pace picks; free-text wishes get their own row.

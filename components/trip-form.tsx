@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils"
 interface TripFormProps {
   value: TripContext
   onChange: (value: TripContext) => void
+  /** When true, origin field is marked invalid (empty-origin Decide validation). */
+  originInvalid?: boolean
 }
 
 function FieldShell({
@@ -51,7 +53,7 @@ function regionLabelKey(region: TripRegion): keyof TripFormMessages["regions"] {
   return regionOptions.find((option) => option.value === region)?.labelKey ?? "anywhere"
 }
 
-export function TripForm({ value, onChange }: TripFormProps) {
+export function TripForm({ value, onChange, originInvalid = false }: TripFormProps) {
   const { messages } = useLocale()
 
   function patch(next: Partial<TripContext>) {
@@ -78,6 +80,7 @@ export function TripForm({ value, onChange }: TripFormProps) {
             <input
               className={inputClass}
               type="date"
+              aria-label={messages.form.dateFrom}
               min={new Date().toISOString().slice(0, 10)}
               value={value.dates.from}
               onChange={(event) => {
@@ -92,6 +95,7 @@ export function TripForm({ value, onChange }: TripFormProps) {
             <input
               className={inputClass}
               type="date"
+              aria-label={messages.form.dateTo}
               min={value.dates.from || new Date().toISOString().slice(0, 10)}
               value={value.dates.to}
               onChange={(event) => {
@@ -113,6 +117,8 @@ export function TripForm({ value, onChange }: TripFormProps) {
             onChange={(event) => patch({ origin: event.target.value })}
             placeholder="San Francisco (SFO)"
             autoComplete="address-level2"
+            aria-invalid={originInvalid || undefined}
+            aria-describedby={originInvalid ? "trip-origin-error" : undefined}
           />
         </FieldShell>
 
@@ -228,7 +234,7 @@ export function TripForm({ value, onChange }: TripFormProps) {
             className="min-h-20 w-full resize-none rounded-md border border-input bg-background px-3 py-3 text-sm font-medium outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15"
             value={value.notes ?? ""}
             onChange={(event) => patch({ notes: event.target.value })}
-            placeholder="Warm weather, walkable cities, great food, minimal driving."
+            placeholder={messages.form.notesPlaceholder}
           />
         </label>
 
@@ -243,7 +249,7 @@ export function TripForm({ value, onChange }: TripFormProps) {
               className={inputClass}
               value={value.avoid ?? ""}
               onChange={(event) => patch({ avoid: event.target.value })}
-              placeholder="Long flights, extreme heat, heavy crowds"
+              placeholder={messages.form.avoidPlaceholder}
             />
           </label>
         </details>

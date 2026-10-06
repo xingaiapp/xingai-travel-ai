@@ -365,7 +365,11 @@ export function DecidePage() {
                 tripTravelers={trip.travelers}
               />
             ) : (
-              <TripForm value={trip} onChange={patchTrip} />
+              <TripForm
+                value={trip}
+                onChange={patchTrip}
+                originInvalid={fieldNotice === messages.form.originRequired}
+              />
             )}
 
             <button
@@ -419,6 +423,7 @@ export function DecidePage() {
 
         {fieldNotice ? (
           <p
+            id="trip-origin-error"
             role="alert"
             aria-live="assertive"
             className="mt-4 rounded-md border border-amber-300 bg-amber-100 px-4 py-3 text-sm font-semibold text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200"

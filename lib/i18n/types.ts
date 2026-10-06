@@ -101,6 +101,10 @@ export interface Messages {
     notes: string
     advanced: string
     avoid: string
+    notesPlaceholder: string
+    avoidPlaceholder: string
+    dateFrom: string
+    dateTo: string
     datesPastError: string
     datesOrderError: string
     originRequired: string
@@ -112,6 +116,7 @@ export interface Messages {
     region: string
     placesInMind: string
     dates: string
+    nights: string
     budget: string
     travelers: string
     vibe: string
@@ -136,9 +141,11 @@ export interface Messages {
     breadcrumb: string
     preview: string
     topPick: string
+    topPickSoft: string
     previewBadge: string
     tapCityPreview: string
     bestFit: string
+    bestFitSoft: string
     matchScore: string
     matchScoreOutOf: string
     matchExcellent: string

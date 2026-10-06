@@ -81,6 +81,26 @@ function avoidDemotedNote(locale: TripContext["locale"] | undefined, names: stri
   }
 }
 
+/** Banner when every candidate violates Avoid (long flights) — decision honesty, not a silent winner. */
+export function avoidAllConflictLine(
+  locale: TripContext["locale"] | undefined,
+  trip: TripContext,
+  hourCap: number
+): string {
+  const origin = trip.origin.trim() || "?"
+  const nights = trip.dates?.nights || "?"
+  switch (avoidLocale(locale)) {
+    case "zh":
+      return `条件冲突：从 ${origin} 出发、约 ${nights} 晚，候选目的地航程都约 ≥${hourCap} 小时，全部违反「避开长途」。下方仍标出一个相对较好的选项，但它们都不满足你的避开条件。可尝试：延长到 7 晚以上、改看更近的区域，或放宽「避开长途」。`
+    case "ko":
+      return `조건 충돌: ${origin} 출발 · ${nights}박 기준으로 후보 모두 약 ≥${hourCap}시간 비행이라 ‘장거리 회피’와 맞지 않습니다. 아래는 상대적으로 나은 옵션일 뿐, Avoid를 만족하지 않습니다. 7박 이상·더 가까운 지역·장거리 회피 완화를 시도해 보세요.`
+    case "es":
+      return `Conflicto: desde ${origin}, ~${nights} noches, todos los candidatos vuelan ≥${hourCap} h y violan Evitar vuelos largos. Lo de abajo es la opción menos mala, no un ajuste limpio. Prueba 7+ noches, una región más cercana, o relajar Evitar.`
+    default:
+      return `Constraint conflict: from ${origin}, ~${nights} nights, every candidate flies about ≥${hourCap}h — all violate Avoid (long flights). The pick below is the least-bad option, not a clean fit. Try 7+ nights, a closer region, or relax Avoid.`
+  }
+}
+
 function isAvoidDemotionLine(line: string): boolean {
   return /violates avoid|违反「避开」|avoid 위반|viola evitar|demoted for avoid|因「避开长途」|장거리 회피|rebaja por evitar/i.test(
     line
@@ -91,7 +111,12 @@ function applyAvoidHardConstraints(
   destinations: Destination[],
   trip: TripContext | undefined,
   whyNotOthers: string
-): { destinations: Destination[]; winner: string; whyNotOthers: string } {
+): {
+  destinations: Destination[]
+  winner: string
+  whyNotOthers: string
+  constraintConflict?: string
+} {
   if (!trip || destinations.length === 0) {
     return {
       destinations,
@@ -128,6 +153,7 @@ function applyAvoidHardConstraints(
 
   // Prefer non-demoted destinations as winner; fall back to best remaining rank.
   const ranked = [...next].sort((a, b) => rankKey(b) - rankKey(a))
+  const allConflict = checkLong && demotedNames.length > 0 && demotedNames.length === next.length
   const preferred = ranked.find((d) => !demotedNames.includes(d.name)) ?? ranked[0]
   const withFlags = next.map((d) => ({
     ...d,
@@ -144,6 +170,7 @@ function applyAvoidHardConstraints(
     destinations: withFlags,
     winner: preferred?.name ?? "",
     whyNotOthers: nextWhy,
+    constraintConflict: allConflict ? avoidAllConflictLine(trip.locale, trip, hourCap) : undefined,
   }
 }
 
@@ -195,5 +222,6 @@ export function normalizeCompareResult(result: CompareResult, trip?: TripContext
     winner: finalWinner,
     whyNotOthers: String(constrained.whyNotOthers ?? "").slice(0, 400),
     destinations: nextDestinations,
+    constraintConflict: constrained.constraintConflict,
   }
 }

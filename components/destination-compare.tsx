@@ -91,6 +91,15 @@ function DestinationCompareInner({
         <h2 className="text-base font-extrabold">{messages.result.preview}</h2>
       </div>
 
+      {result.constraintConflict ? (
+        <div
+          role="status"
+          className="mb-4 rounded-md border border-amber-300 bg-amber-100 px-4 py-3 text-sm font-semibold leading-relaxed text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-100"
+        >
+          {result.constraintConflict}
+        </div>
+      ) : null}
+
       <div className={cn("grid gap-5", compact ? "md:grid-cols-[12rem_1fr]" : "lg:grid-cols-[18rem_1fr]")}>
         <div className="relative min-h-44 overflow-hidden rounded-md bg-muted shadow-inner lg:min-h-52">
           <Image
@@ -112,7 +121,11 @@ function DestinationCompareInner({
                 : "border border-white/30 bg-slate-950/55 text-white backdrop-blur-sm"
             )}
           >
-            {isWinnerFocused ? messages.result.topPick : messages.result.previewBadge}
+            {isWinnerFocused
+              ? result.constraintConflict
+                ? messages.result.topPickSoft
+                : messages.result.topPick
+              : messages.result.previewBadge}
           </span>
           {!isWinnerFocused ? (
             <span className="absolute bottom-3 left-3 rounded-md bg-slate-950/55 px-2 py-1 text-xs font-bold text-white backdrop-blur-sm">
@@ -124,7 +137,10 @@ function DestinationCompareInner({
         <div className="min-w-0">
           <div className="mb-3 flex flex-wrap items-center gap-3">
             <h3 className="text-2xl font-extrabold tracking-tight">
-              {messages.result.bestFit}: <span className="text-primary">{winner.name}, {winner.country}</span>
+              {result.constraintConflict ? messages.result.bestFitSoft : messages.result.bestFit}:{" "}
+              <span className="text-primary">
+                {winner.name}, {winner.country}
+              </span>
             </h3>
           </div>
 

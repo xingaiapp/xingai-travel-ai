@@ -97,6 +97,49 @@ describe("normalizeCompareResult", () => {
     expect(out.destinations.find((d) => d.name === "Lisbon")?.confidence).toBe("low")
     expect(out.whyNotOthers).toMatch(/避开长途/)
     expect(out.destinations.find((d) => d.name === "Lisbon")?.tradeoffs[0]).toMatch(/违反「避开」/)
+    expect(out.constraintConflict).toBeUndefined()
+  })
+
+  it("sets constraintConflict when every destination violates Avoid long flights", () => {
+    const out = normalizeCompareResult(
+      raw({
+        winner: "Barcelona",
+        destinations: [
+          {
+            name: "Barcelona",
+            country: "Spain",
+            isWinner: true,
+            confidence: "high",
+            whyWins: ["food"],
+            tradeoffs: [],
+            scores: { overall: 5, weather: "Mild", flightTime: "~11h (1 stop)", walkability: "Excellent" },
+          },
+          {
+            name: "Lisbon",
+            country: "Portugal",
+            isWinner: false,
+            confidence: "medium",
+            whyWins: ["value"],
+            tradeoffs: [],
+            scores: { overall: 4, weather: "Mild", flightTime: "~12h", walkability: "Good" },
+          },
+          {
+            name: "Rome",
+            country: "Italy",
+            isWinner: false,
+            confidence: "medium",
+            whyWins: ["culture"],
+            tradeoffs: [],
+            scores: { overall: 4, weather: "Mild", flightTime: "~13h", walkability: "Moderate" },
+          },
+        ],
+      }),
+      { ...shortTripAvoidLong, origin: "San Francisco (SFO)", region: "europe", locale: "zh", avoid: "长途飞行" }
+    )
+    expect(out.constraintConflict).toMatch(/条件冲突/)
+    expect(out.constraintConflict).toMatch(/避开长途/)
+    expect(out.winner).toBeTruthy()
+    expect(out.destinations.every((d) => d.confidence === "low")).toBe(true)
   })
 })
 

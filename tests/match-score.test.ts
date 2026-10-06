@@ -3,14 +3,19 @@ import { computeMatchScore, matchScoreLabelBand, overallTenths, rankedAlternativ
 import type { Destination } from "@/lib/types"
 
 describe("computeMatchScore", () => {
-  it("stays within 52–98 for every star/confidence combination", () => {
+  it("stays within floors for confidence bands", () => {
     for (const stars of [-3, 0, 1, 2, 3, 4, 5, 9]) {
       for (const c of ["high", "medium", "low"] as const) {
         const s = computeMatchScore(stars, c)
-        expect(s).toBeGreaterThanOrEqual(52)
+        expect(s).toBeGreaterThanOrEqual(c === "low" ? 28 : 52)
         expect(s).toBeLessThanOrEqual(98)
       }
     }
+  })
+
+  it("lets walkability separate demoted (low-confidence) peers below the old 52 floor", () => {
+    expect(computeMatchScore(2, "low", "Excellent")).toBeGreaterThan(computeMatchScore(2, "low", "Moderate"))
+    expect(computeMatchScore(2, "low", "Moderate")).toBeLessThan(52)
   })
 
   it("ranks higher confidence above lower at equal stars", () => {
