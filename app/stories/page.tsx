@@ -8,7 +8,7 @@ export const metadata: Metadata = pageMeta({
   path: "/stories",
   title: "Travel Stories",
   description:
-    "First-hand travel stories with honest takeaways — then decide whether the destination fits your own trip.",
+    "First-hand Travel Stories from Hong Kong and Macau — honest takeaways from the publisher, then Decide whether the place fits your own trip. Not a user-submitted feed.",
 })
 
 export default function StoriesPage() {

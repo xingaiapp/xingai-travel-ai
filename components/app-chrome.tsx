@@ -311,7 +311,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           </div>
           <div className="hidden shrink-0 items-center gap-2 lg:flex">
             <Link
-              href="/decide"
+              href={isDecideRoute(pathname) ? "/decide#trip-form" : "/decide"}
               className="inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-bold text-primary-foreground shadow-[0_6px_16px_color-mix(in_oklch,var(--primary)_28%,transparent)]"
             >
               {messages.chrome.decideCta}

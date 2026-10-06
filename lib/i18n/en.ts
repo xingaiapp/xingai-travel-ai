@@ -37,6 +37,10 @@ export const en: Messages = {
     footerAllApps: "All apps",
     footerFamilyNav: "More XingAI apps",
   },
+  notFound: {
+    title: "This page is not here",
+    body: "The link may be old or mistyped. Start a decision, browse city guides, or go home.",
+  },
   home: {
     eyebrow: "Travel Decision System",
     headline: "Don't just search for a trip. Make a better travel decision.",

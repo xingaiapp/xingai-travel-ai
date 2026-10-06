@@ -37,6 +37,10 @@ export const zh: Messages = {
     footerAllApps: "全部应用",
     footerFamilyNav: "更多 XingAI 应用",
   },
+  notFound: {
+    title: "找不到这个页面",
+    body: "链接可能过期或输错了。可以从决策开始，浏览城市指南，或回首页。",
+  },
   home: {
     eyebrow: "旅行决策系统",
     headline: "不只是搜索旅行信息，而是帮助你做出更好的旅行决定。",

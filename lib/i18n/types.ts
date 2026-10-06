@@ -37,6 +37,10 @@ export interface Messages {
     footerAllApps: string
     footerFamilyNav: string
   }
+  notFound: {
+    title: string
+    body: string
+  }
   home: {
     eyebrow: string
     headline: string

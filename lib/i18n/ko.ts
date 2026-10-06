@@ -37,6 +37,10 @@ export const ko: Messages = {
     footerAllApps: "모든 앱",
     footerFamilyNav: "다른 XingAI 앱",
   },
+  notFound: {
+    title: "이 페이지를 찾을 수 없습니다",
+    body: "링크가 오래되었거나 잘못되었을 수 있습니다. 결정 시작, 도시 가이드, 또는 홈으로 가세요.",
+  },
   home: {
     eyebrow: "Travel Decision System",
     headline: "여행 검색에서 멈추지 마세요. 더 나은 여행 결정을 하세요.",

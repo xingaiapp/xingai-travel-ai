@@ -419,6 +419,14 @@ export function StoriesIndexView({ seasons }: Readonly<{ seasons: { season: Stor
             "Relatos en primera persona de sitios donde estuve de verdad — y luego una forma de decidir si encajan en tu viaje.",
           )}
         </p>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          {ui(
+            "These are publisher stories, not a community feed. Each season ends with a path into Decide so you can test the place against your own dates, budget, and Avoid list.",
+            "这里是出版方写的故事，不是用户投稿社区。每一季结尾都会链到决策工具，用你自己的日期、预算和「避开」条件检验这座城。",
+            "발행자가 쓴 이야기이며 사용자 투고 커뮤니티가 아닙니다. 시즌 끝에서 Decide로 넘어가 날짜·예산·회피 조건으로 직접 맞춰 보세요.",
+            "Son historias del editor, no un feed de usuarios. Cada temporada termina hacia Decide para probar el destino con tus fechas, presupuesto y Evitar.",
+          )}
+        </p>
         <div className="mt-8 grid gap-5">
           {seasons.map(({ season, count }) => (
             <Link
@@ -436,6 +444,26 @@ export function StoriesIndexView({ seasons }: Readonly<{ seasons: { season: Stor
               </div>
             </Link>
           ))}
+        </div>
+        <div className="mt-10 rounded-md border border-primary/25 bg-primary/5 p-5">
+          <p className="text-sm font-extrabold text-foreground">
+            {ui("Ready to decide?", "准备好做决定了？", "결정할 준비가 됐나요?", "¿Listo para decidir?")}
+          </p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {ui(
+              "Stories show one person's trip. Decide compares options for yours.",
+              "故事是一个人的行程；决策是为你的约束比较选项。",
+              "이야기는 한 사람의 여행입니다. Decide는 당신의 조건으로 비교합니다.",
+              "Las historias son el viaje de una persona. Decide compara opciones para el tuyo.",
+            )}
+          </p>
+          <Link
+            href="/decide"
+            className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-md bg-primary px-5 text-sm font-extrabold text-primary-foreground"
+          >
+            {ui("Make My Travel Decision", "做我的旅行决定", "여행 결정하기", "Tomar mi decisión")}
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
         </div>
       </div>
     </main>

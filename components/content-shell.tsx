@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useLocale } from "@/components/locale-provider"
+import type { Locale, Messages } from "@/lib/i18n/types"
 import { pickLocalized, type FitLabel, type Localized } from "@/lib/content/types"
 import { cn } from "@/lib/utils"
 
@@ -73,8 +74,55 @@ export function DecideCta({ hint }: Readonly<{ hint?: Localized }>) {
   )
 }
 
+/** Turn bare `/decide`, `/stories/…` paths in FAQ prose into real links with human labels. */
+function humanizeSlug(slug: string) {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
+}
+
+function labelForInternalPath(path: string, locale: Locale, messages: Messages) {
+  if (path === "/decide") return messages.chrome.decide
+  if (path === "/faq") return messages.content.faqNav
+  if (path === "/how-it-works") return messages.content.howItWorksNav
+  if (path === "/stories") return messages.chrome.stories
+  if (path === "/city") return messages.content.citiesNav
+  if (path === "/compare") return messages.content.compareNav
+  if (path === "/guides") return messages.content.guidesNav
+
+  const parts = path.split("/").filter(Boolean)
+  const [root, slug, rest] = parts
+  if (root === "stories" && slug && !rest) {
+    const place = humanizeSlug(slug)
+    if (locale === "zh") return `${place} 故事`
+    if (locale === "ko") return `${place} 이야기`
+    if (locale === "es") return `Historias de ${place}`
+    return `${place} stories`
+  }
+  if (root === "city" && slug) return humanizeSlug(slug)
+  if (root === "compare" && slug) return humanizeSlug(slug).replace(/ Vs /g, " vs ")
+  if (root === "guides" && slug) return humanizeSlug(slug)
+  return path
+}
+
+function linkifyInternalPaths(text: string, locale: Locale, messages: Messages) {
+  const parts = text.split(/(\/(?:decide|faq|how-it-works|stories|city|compare|guides)(?:\/[a-z0-9-]+)*)/g)
+  return parts.map((part, index) => {
+    if (part.startsWith("/") && part.length > 1) {
+      return (
+        <Link key={`${part}-${index}`} href={part} className="font-semibold text-primary hover:underline">
+          {labelForInternalPath(part, locale, messages)}
+        </Link>
+      )
+    }
+    return <span key={`t-${index}`}>{part}</span>
+  })
+}
+
 export function FaqBlock({ items }: Readonly<{ items: { q: string; a: string }[] }>) {
-  const { messages } = useLocale()
+  const { messages, locale } = useLocale()
   if (items.length === 0) return null
   return (
     <section className="mt-10">
@@ -83,27 +131,12 @@ export function FaqBlock({ items }: Readonly<{ items: { q: string; a: string }[]
         {items.map((item) => (
           <div key={item.q} className="card-hover rounded-md border border-border bg-card p-4">
             <dt className="text-sm font-extrabold">{item.q}</dt>
-            <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{linkifyInternalPaths(item.a)}</dd>
+            <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{linkifyInternalPaths(item.a, locale, messages)}</dd>
           </div>
         ))}
       </dl>
     </section>
   )
-}
-
-/** Turn bare `/decide`, `/stories/…` paths in FAQ prose into real links. */
-function linkifyInternalPaths(text: string) {
-  const parts = text.split(/(\/(?:decide|faq|how-it-works|stories|city|compare|guides)(?:\/[a-z0-9-]+)*)/g)
-  return parts.map((part, index) => {
-    if (part.startsWith("/") && part.length > 1) {
-      return (
-        <Link key={`${part}-${index}`} href={part} className="font-semibold text-primary hover:underline">
-          {part}
-        </Link>
-      )
-    }
-    return <span key={`t-${index}`}>{part}</span>
-  })
 }
 
 export function ContentShell({ children }: Readonly<{ children: React.ReactNode }>) {
