@@ -8,17 +8,34 @@
 // through Node's type stripping, so lib/cities/ must not use `@/` imports.
 
 import { existsSync } from "node:fs"
+import { barcelona } from "../lib/cities/barcelona.ts"
 import { hongKong } from "../lib/cities/hong-kong.ts"
+import { lisbon } from "../lib/cities/lisbon.ts"
 import { losCabos } from "../lib/cities/los-cabos.ts"
+import { macau } from "../lib/cities/macau.ts"
 import { seoul } from "../lib/cities/seoul.ts"
+import { shanghai } from "../lib/cities/shanghai.ts"
+import { singapore } from "../lib/cities/singapore.ts"
 import { taipei } from "../lib/cities/taipei.ts"
 import { tokyo } from "../lib/cities/tokyo.ts"
 import { cityPhotoPaths, validateCity } from "../lib/cities/validate.ts"
 
-const cities = [hongKong, tokyo, seoul, taipei, losCabos]
+const cities = [
+  hongKong,
+  tokyo,
+  seoul,
+  taipei,
+  macau,
+  singapore,
+  losCabos,
+  shanghai,
+  lisbon,
+  barcelona,
+]
 const errors = cities.flatMap((city) => [
   ...validateCity(city),
   ...cityPhotoPaths(city)
+    .filter((path) => !/^https?:\/\//i.test(path))
     .filter((path) => !existsSync(new URL(`../public${path}`, import.meta.url)))
     .map((path) => `${city.slug} › photo missing on disk: public${path}`),
 ])

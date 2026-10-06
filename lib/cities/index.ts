@@ -1,13 +1,29 @@
 import type { Locale, Messages } from "@/lib/i18n/types"
+import { barcelona } from "./barcelona.ts"
 import { hongKong } from "./hong-kong.ts"
+import { lisbon } from "./lisbon.ts"
 import { losCabos } from "./los-cabos.ts"
+import { macau } from "./macau.ts"
 import { seoul } from "./seoul.ts"
+import { shanghai } from "./shanghai.ts"
+import { singapore } from "./singapore.ts"
 import { taipei } from "./taipei.ts"
 import { tokyo } from "./tokyo.ts"
 import type { City, CityText, Place } from "./types"
 
 /** City registry (ADR 0008). Adding a city = adding its data file here. */
-export const cities: City[] = [hongKong, tokyo, seoul, taipei, losCabos]
+export const cities: City[] = [
+  hongKong,
+  tokyo,
+  seoul,
+  taipei,
+  macau,
+  singapore,
+  losCabos,
+  shanghai,
+  lisbon,
+  barcelona,
+]
 
 export function getCity(slug: string): City | undefined {
   return cities.find((city) => city.slug === slug)
@@ -44,7 +60,12 @@ export function cityDecideHref(city: City) {
     tokyo: "asia",
     seoul: "asia",
     taipei: "asia",
+    macau: "asia",
+    singapore: "asia",
     "los-cabos": "latin_america",
+    shanghai: "asia",
+    lisbon: "europe",
+    barcelona: "europe",
   }
   const params = new URLSearchParams({ places: city.name.en })
   const region = regionBySlug[city.slug]

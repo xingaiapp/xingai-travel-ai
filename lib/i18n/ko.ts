@@ -378,12 +378,12 @@ export const ko: Messages = {
     decideCta: "내 {city} 결정 만들기",
     indexTitle: "도시 가이드",
     indexLead:
-      "출처가 있는 장소와 하루 코스 3개로 된 첫 방문 가이드. 아래 공개 도시를 열고, Coming soon은 홍콩과 같은 기준으로 작성 중이라는 뜻입니다.",
+      "출처가 있는 장소와 하루 코스 3개로 된 첫 방문 가이드. 아래 Top 10 목적지는 모두 공개되어 있으니 아무 도시나 열면 됩니다.",
     indexMeta: "장소 {n}곳 · 코스 {r}개",
     indexOpen: "{city} 열기",
     indexCount: "공개 {live} · 준비 중 {soon} · 목록 {total}",
     indexSoonHint: "가이드 작성 중 — 홍콩과 같은 품질",
-    indexMoreNote: "목록은 출시할수록 늘어납니다. 마카오·싱가포르 다음: 아시아 확장, 그다음 유럽 비치·도시 템플릿.",
+    indexMoreNote: "Top 10이 완성되었습니다. 목록은 같은 기준으로 도시를 더 추가할 수 있습니다.",
   },
   content: {
     howEyebrow: "방법론",

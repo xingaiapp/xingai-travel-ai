@@ -14,6 +14,11 @@ const BOUNDS: Record<string, { lat: [number, number]; lng: [number, number] }> =
   seoul: { lat: [37.42, 37.72], lng: [126.75, 127.2] },
   taipei: { lat: [24.95, 25.2], lng: [121.45, 121.65] },
   "los-cabos": { lat: [22.85, 23.1], lng: [-110.0, -109.65] },
+  macau: { lat: [22.1, 22.25], lng: [113.5, 113.62] },
+  singapore: { lat: [1.22, 1.47], lng: [103.6, 104.05] },
+  shanghai: { lat: [31.14, 31.35], lng: [121.35, 121.6] },
+  lisbon: { lat: [38.69, 38.8], lng: [-9.25, -9.08] },
+  barcelona: { lat: [41.35, 41.45], lng: [2.1, 2.25] },
 }
 
 export function validateCity(city: City): string[] {

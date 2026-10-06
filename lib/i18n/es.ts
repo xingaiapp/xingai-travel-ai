@@ -378,12 +378,12 @@ export const es: Messages = {
     decideCta: "Crear mi decisión sobre {city}",
     indexTitle: "Guías de ciudad",
     indexLead:
-      "Guías de primera visita con lugares citados y 3 rutas de un día. Abre una ciudad publicada abajo; Coming soon significa que aún la escribimos al mismo nivel que Hong Kong.",
+      "Guías de primera visita con lugares citados y 3 rutas de un día. Las diez ciudades Top de abajo ya están publicadas: abre cualquiera.",
     indexMeta: "{n} lugares · {r} rutas",
     indexOpen: "Abrir {city}",
     indexCount: "{live} publicadas · {soon} próximamente · {total} en el mapa",
     indexSoonHint: "Guía en progreso — misma barra de calidad que Hong Kong",
-    indexMoreNote: "Esta lista crece al publicar. Después de Macao y Singapur: más Asia, luego plantillas de playa y ciudad en Europa.",
+    indexMoreNote: "El Top 10 está completo. El directorio puede crecer otra vez con la misma barra de calidad.",
   },
   content: {
     howEyebrow: "Metodología",

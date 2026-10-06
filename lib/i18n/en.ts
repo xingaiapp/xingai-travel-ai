@@ -378,12 +378,12 @@ export const en: Messages = {
     decideCta: "Build my {city} decision",
     indexTitle: "City guides",
     indexLead:
-      "First-visit guides with sourced places and 3 day routes. Open a live city below — Coming soon means we are still writing it to the same standard.",
+      "First-visit guides with sourced places and 3 day routes. The Top 10 destinations below are all live — open any city to start.",
     indexMeta: "{n} places · {r} routes",
     indexOpen: "Open {city}",
     indexCount: "{live} live · {soon} coming soon · {total} on the map",
     indexSoonHint: "Guide in progress — same quality bar as Hong Kong",
-    indexMoreNote: "This list grows as we publish. Next up after Macau and Singapore: more Asia, then Europe beach and city templates.",
+    indexMoreNote: "Top 10 is complete. The directory can grow again when we add the next city to the same standard.",
   },
   content: {
     howEyebrow: "Methodology",

@@ -134,10 +134,10 @@ export const homeCopy = {
   featuresLabel: t("What you can do here", "在这里能做什么", "여기서 할 수 있는 일", "Qué puedes hacer aquí"),
   placesTitle: t("Popular destinations", "热门目的地", "인기 여행지", "Destinos populares"),
   placesNote: t(
-    "Hong Kong, Tokyo, Seoul, Taipei, and Los Cabos have live city guides. See all ten on the Cities page — more coming.",
-    "香港、东京、首尔、台北、洛斯卡沃斯已有城市指南。十座城市总目录在 Cities 页，还会继续加。",
-    "홍콩·도쿄·서울·타이베이·로스카보스 가이드가 열려 있습니다. 열 개 도시 목록은 Cities 페이지에서 — 계속 늘어납니다.",
-    "Hong Kong, Tokio, Seúl, Taipéi y Los Cabos ya tienen guía. Las diez ciudades están en Cities — y habrá más."
+    "All ten Top destinations now have live city guides — Hong Kong through Barcelona. Open Cities for the full list.",
+    "十大热门目的地城市指南已全部上线——从香港到巴塞罗那。完整列表在 Cities。",
+    "상위 열 개 도시 가이드가 모두 열려 있습니다 — 홍콩부터 바르셀로나까지. 전체 목록은 Cities에서.",
+    "Las diez ciudades Top ya tienen guía en vivo — de Hong Kong a Barcelona. La lista completa está en Cities."
   ),
   placesAllCta: t("All city guides", "全部城市指南", "모든 도시 가이드", "Todas las guías de ciudad"),
   soon: t("Coming soon", "即将推出", "곧 제공", "Próximamente"),
