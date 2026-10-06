@@ -76,7 +76,7 @@ Technical crawl of sitemap URLs (HTTP GET, not Search Console) — re-checked **
 - No `noindex` on sitemap routes (`/result` and `/trips` stay `noindex`, out of sitemap)
 - Each indexable page has **1** H1 in the first HTML (including `/city` after SSR fix)
 - Self-canonical + matching `og:url` / Twitter on content routes via `lib/seo-meta.ts`
-- Sitewide JSON-LD in first HTML; city pages add `TouristDestination`; `/` and `/decide` add page JSON-LD
+- Sitewide JSON-LD (Org/WebSite/WebApp) in first HTML; FAQ/HowTo/Article on matching pages; city pages add `TouristDestination`; `/` and `/decide` add page JSON-LD
 - `robots.txt` allows `/` and points at `sitemap.xml`; `/llms.txt` lists primary + content-graph routes
 - Bot parity sample (Googlebot / GPTBot / PerplexityBot) same title + H1 on `/`
 - `/legal/{privacy,terms,disclaimer}` → 307 to local legal pages
