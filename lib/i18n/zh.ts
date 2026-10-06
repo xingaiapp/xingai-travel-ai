@@ -389,7 +389,6 @@ export const zh: Messages = {
     searchEmpty: "没有符合搜索或筛选的城市。",
     searchReset: "显示全部城市",
     filterLabel: "按地区筛选",
-    filterAll: "全部",
     filterAsia: "亚洲",
     filterEurope: "欧洲",
     filterAmericas: "美洲",

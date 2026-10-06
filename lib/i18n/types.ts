@@ -354,7 +354,6 @@ export interface Messages {
     searchEmpty: string
     searchReset: string
     filterLabel: string
-    filterAll: string
     filterAsia: string
     filterEurope: string
     filterAmericas: string

@@ -390,7 +390,6 @@ export const ko: Messages = {
     searchEmpty: "검색·필터에 맞는 도시가 없습니다.",
     searchReset: "모든 도시 보기",
     filterLabel: "지역별 필터",
-    filterAll: "전체",
     filterAsia: "아시아",
     filterEurope: "유럽",
     filterAmericas: "아메리카",

@@ -390,7 +390,6 @@ export const en: Messages = {
     searchEmpty: "No cities match that search or filter.",
     searchReset: "Show all cities",
     filterLabel: "Filter by region",
-    filterAll: "All",
     filterAsia: "Asia",
     filterEurope: "Europe",
     filterAmericas: "Americas",
