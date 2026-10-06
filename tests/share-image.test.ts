@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { cityOgImage, resolveCityImageSrc } from "@/lib/cities/share-image"
+import { cityOgImage, resolveCityImageSrc, toShareJpeg } from "@/lib/cities/share-image"
 
 describe("resolveCityImageSrc", () => {
   it("keeps Unsplash URLs intact", () => {
@@ -18,14 +18,21 @@ describe("resolveCityImageSrc", () => {
   })
 })
 
-describe("cityOgImage", () => {
-  it("uses first-party PNG for remote heroes", () => {
+describe("toShareJpeg / cityOgImage", () => {
+  it("uses first-party JPG for remote heroes", () => {
     expect(
       cityOgImage("https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1600&q=85&auto=format&fit=crop")
     ).toBe("/assets/og-travel-decision-2400.jpg")
   })
 
-  it("keeps local heroes for OG", () => {
-    expect(cityOgImage("/assets/home-hero-hong-kong.webp")).toBe("/assets/home-hero-hong-kong.webp")
+  it("maps local webp heroes to /assets/og/*.jpg", () => {
+    expect(cityOgImage("/assets/home-hero-hong-kong.webp")).toBe("/assets/og/assets-home-hero-hong-kong.jpg")
+    expect(toShareJpeg("/stories/hong-kong/01/harbour-promenade-skyline")).toBe(
+      "/assets/og/stories-hong-kong-01-harbour-promenade-skyline-1600.jpg"
+    )
+  })
+
+  it("keeps existing jpeg paths", () => {
+    expect(toShareJpeg("/assets/og-travel-decision-2400.jpg")).toBe("/assets/og-travel-decision-2400.jpg")
   })
 })

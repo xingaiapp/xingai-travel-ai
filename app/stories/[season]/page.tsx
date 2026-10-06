@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { SeasonView } from "@/components/story-view"
+import { toShareJpeg } from "@/lib/cities/share-image"
 import { pageMeta } from "@/lib/seo-meta"
 import { getSeason, publishedEpisodes, visibleEpisodes, visibleSeasons } from "@/lib/stories"
 
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${season.title.en} — ${season.subtitle.en}`
   const description =
     season.intro.en.length > 160 ? `${season.intro.en.slice(0, 157).trimEnd()}…` : season.intro.en
-  const image = season.cover.src ? `${season.cover.src}-1600.webp` : undefined
+  const image = season.cover.src ? toShareJpeg(season.cover.src) : undefined
   return {
     ...pageMeta({
       path: `/stories/${season.slug}`,

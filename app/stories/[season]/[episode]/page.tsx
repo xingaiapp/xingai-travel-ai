@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { EpisodeView } from "@/components/story-view"
 import { pageMeta } from "@/lib/seo-meta"
+import { toShareJpeg } from "@/lib/cities/share-image"
 import { storyArticleJsonLdHtml } from "@/lib/seo-json-ld"
 import { getEpisode, getSeason, isVisible, visibleEpisodes, visibleSeasons } from "@/lib/stories"
 
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { season, episode } = found
   // Keep document title under ~70 chars (template adds " · XingAI Travel").
   const title = episode.title.en
-  const image = episode.cover.src ? `${episode.cover.src}-1600.webp` : undefined
+  const image = episode.cover.src ? toShareJpeg(episode.cover.src) : undefined
   return {
     ...pageMeta({
       path: `/stories/${season.slug}/${episode.slug}`,
@@ -46,7 +47,7 @@ export default async function EpisodePage({ params }: Props) {
   const found = await load(params)
   if (!found) notFound()
   const { season, episode } = found
-  const imagePath = episode.cover.src ? `${episode.cover.src}-1600.webp` : undefined
+  const imagePath = episode.cover.src ? toShareJpeg(episode.cover.src) : undefined
   return (
     <>
       <script

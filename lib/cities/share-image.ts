@@ -1,11 +1,11 @@
 /**
  * City hero / card image URL helpers.
- * Story-style local bases get `-1600.webp`; http(s) and already-suffixed files stay intact.
- * OG for remote Unsplash heroes uses a first-party high-res share card (WeChat + no query mangling).
+ * Story-style local bases get `-1600.webp` for on-page display.
+ * Open Graph / Twitter always prefer JPEG — many crawlers still mishandle webp.
  */
 
-/** 2400×1260 JPEG from site hero — high-res pixels, share-friendly size. */
-const FIRST_PARTY_OG = "/assets/og-travel-decision-2400.jpg"
+/** 2400×1260 JPEG share card (fallback for remote Unsplash heroes). */
+export const DEFAULT_OG_JPG = "/assets/og-travel-decision-2400.jpg"
 
 /** Resolve a display src for directory cards and page heroes. */
 export function resolveCityImageSrc(src: string): string {
@@ -15,11 +15,27 @@ export function resolveCityImageSrc(src: string): string {
 }
 
 /**
+ * Stable `/assets/og/{stem}.jpg` path for a local webp/png (or story base without extension).
+ * Remote http(s) URLs fall back to {@link DEFAULT_OG_JPG}.
+ */
+export function toShareJpeg(src: string): string {
+  if (/^https?:\/\//i.test(src)) return DEFAULT_OG_JPG
+  if (/\.jpe?g(\?|$)/i.test(src)) return src
+  let key = src
+  if (!/\.(webp|png|jpe?g)(\?|$)/i.test(key)) key = `${key}-1600.webp`
+  const stem = key
+    .replace(/^\//, "")
+    .replace(/\.(webp|png)$/i, "")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+  return `/assets/og/${stem}.jpg`
+}
+
+/**
  * Open Graph / Twitter image for a city page.
- * Remote Unsplash (and similar) URLs must not get `-1600.webp` appended — that corrupts
- * query strings (`…fit=crop-1600.webp`). Prefer a first-party high-res JPG for share previews.
+ * Remote Unsplash URLs must not get `-1600.webp` appended — that corrupts query strings.
+ * Local heroes use generated JPEG crops under `/assets/og/`.
  */
 export function cityOgImage(heroSrc: string): string {
-  if (/^https?:\/\//i.test(heroSrc)) return FIRST_PARTY_OG
-  return resolveCityImageSrc(heroSrc)
+  return toShareJpeg(heroSrc)
 }

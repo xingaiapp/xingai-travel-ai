@@ -500,7 +500,7 @@ export const homeJsonLd = {
       isPartOf: { "@id": `${site}/#website` },
       about: { "@id": `${site}/#app` },
       inLanguage: "en",
-      primaryImageOfPage: `${site}/assets/home-hero-hong-kong.webp`,
+      primaryImageOfPage: `${site}/assets/og-travel-decision-2400.jpg`,
     },
     {
       "@type": "FAQPage",

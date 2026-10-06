@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
+import { DEFAULT_OG_JPG } from "@/lib/cities/share-image"
 
 const DEFAULT_IMAGE = {
-  url: "/assets/home-hero-hong-kong.webp",
+  url: DEFAULT_OG_JPG,
   alt: "Traveler overlooking Victoria Harbour at sunset",
 } as const
 

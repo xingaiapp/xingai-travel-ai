@@ -38,14 +38,14 @@ export const metadata: Metadata = {
     title: "XingAI Travel — Make a better travel decision",
     description: "Compare options and trade-offs so you can decide. Other travel sites help you search. You stay in control.",
     url: "/",
-    images: [{ url: "/assets/home-hero-hong-kong.webp", alt: "Traveler overlooking Victoria Harbour at sunset" }],
+    images: [{ url: "/assets/og-travel-decision-2400.jpg", alt: "Traveler overlooking Victoria Harbour at sunset" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "XingAI Travel — Make a better travel decision",
     description: "Compare options and trade-offs so you can decide. Other travel sites help you search. You stay in control.",
-    images: ["/assets/home-hero-hong-kong.webp"],
+    images: ["/assets/og-travel-decision-2400.jpg"],
   },
   icons: {
     icon: [
