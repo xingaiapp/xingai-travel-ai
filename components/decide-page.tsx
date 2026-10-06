@@ -275,10 +275,11 @@ export function DecidePage() {
   const ctaLabel = inspireMode ? `${messages.home.inspireCta} →` : `${messages.home.compare} →`
 
   return (
-    <main className="decision-grid-bg flex-1 px-4 pb-28 pt-6 sm:px-6 lg:px-10 lg:pb-12">
-      <div className="mx-auto max-w-6xl">
-        <HeroIntro />
+    <main className="flex-1 pb-28 lg:pb-12">
+      <HeroIntro />
 
+      <div className="decision-grid-bg px-4 pt-6 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-6xl">
         {/* Mode toggle */}
         <div className="mb-4 flex items-center gap-2 rounded-full border border-border bg-card p-1">
           <button
@@ -421,6 +422,7 @@ export function DecidePage() {
           </div>
         ) : null}
       </div>
+      </div>
     </main>
   )
 }
@@ -446,19 +448,22 @@ function HeroIntro() {
   ]
 
   return (
-    <section className="mb-6 overflow-hidden rounded-2xl border border-border bg-card">
-      <div className="relative min-h-[26rem] sm:min-h-[26rem] lg:min-h-[26rem]">
+    <section className="w-full">
+      {/* Full-bleed photo stage — same edge-to-edge width as Home (no inset card). */}
+      <div className="relative w-full overflow-hidden min-h-[min(58svh,28rem)] sm:min-h-[22rem] lg:min-h-[28rem]">
         <div
           aria-hidden
           className="absolute inset-0 bg-[url('/assets/hero-travel-decision.webp')] bg-cover bg-[72%_center] lg:bg-center dark:brightness-[1.08] dark:saturate-[1.04]"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,transparent_35%,color-mix(in_oklch,var(--background)_32%,transparent)_62%,color-mix(in_oklch,var(--background)_82%,transparent)_100%)] lg:bg-[linear-gradient(90deg,color-mix(in_oklch,var(--background)_78%,transparent)_0%,color-mix(in_oklch,var(--background)_48%,transparent)_42%,transparent_78%)]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--background)_22%,transparent)_0%,transparent_40%,color-mix(in_oklch,var(--background)_45%,transparent)_72%,color-mix(in_oklch,var(--background)_88%,transparent)_100%)] sm:bg-[linear-gradient(105deg,color-mix(in_oklch,var(--background)_72%,transparent)_0%,color-mix(in_oklch,var(--background)_36%,transparent)_40%,transparent_72%)]"
         />
-        <div className="relative grid gap-6 px-5 pb-8 pt-10 sm:px-8 lg:min-h-[26rem] lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-10 lg:py-10">
+        <div className="relative mx-auto grid h-full w-full max-w-6xl gap-6 px-4 pb-8 pt-10 sm:px-6 lg:min-h-[28rem] lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8 lg:py-12">
           <div className="flex max-w-2xl flex-col justify-end lg:justify-center">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">{messages.home.eyebrow}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)]">
+              {messages.home.eyebrow}
+            </p>
             <h1 className="hero-display-title mt-3 text-[1.65rem] font-semibold leading-[1.15] tracking-tight text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)] sm:text-5xl">
               <span className="block">{messages.home.headlineLead}</span>
               <span className="mt-1 block text-primary">{messages.home.headlineAccent}</span>
@@ -486,12 +491,12 @@ function HeroIntro() {
                     target?.scrollIntoView({ behavior: "smooth", block: "start" })
                   })
                 }}
-                className="inline-flex h-12 items-center justify-center rounded-full border border-foreground/25 bg-card px-6 text-sm font-bold text-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--foreground)_8%,transparent)]"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-foreground/25 bg-background/40 px-6 text-sm font-bold text-foreground backdrop-blur-[1px] sm:bg-card sm:shadow-[0_8px_20px_color-mix(in_oklch,var(--foreground)_8%,transparent)]"
               >
                 {messages.home.secondaryCta}
               </button>
             </div>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_65%,transparent)]">
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-foreground/85 [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_65%,transparent)]">
               {messages.home.trustLine}
             </p>
             <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{messages.home.heroProof}</p>
@@ -542,8 +547,8 @@ function HeroIntro() {
           </div>
         </div>
       </div>
-      <div id="how-to-use-mobile" className="scroll-mt-24 border-t border-border bg-card px-4 py-4 lg:hidden">
-        <div className="rounded-2xl border border-border/80 bg-card p-4">
+      <div id="how-to-use-mobile" className="scroll-mt-24 border-b border-border bg-card px-4 py-4 lg:hidden">
+        <div className="mx-auto max-w-6xl rounded-2xl border border-border/80 bg-card p-4">
           <button
             type="button"
             onClick={() => setHelpOpen((open) => !open)}
@@ -577,8 +582,10 @@ function HeroIntro() {
           </div>
         </div>
       </div>
-      <div className="border-t border-border bg-card px-4 py-4 sm:px-6">
-        <StepProgress active={1} />
+      <div className="border-b border-border bg-card/80 px-4 py-4 sm:px-6">
+        <div className="mx-auto max-w-6xl">
+          <StepProgress active={1} />
+        </div>
       </div>
     </section>
   )

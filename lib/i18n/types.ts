@@ -17,6 +17,7 @@ export interface Messages {
     light: string
     dark: string
     soon: string
+    newBadge: string
     legal: string
     privacy: string
     terms: string

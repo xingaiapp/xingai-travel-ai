@@ -1,0 +1,47 @@
+---
+description: XingAI Travel — all wired photography must stay clean, sharp, and publishable resolution (assets + Next Image).
+alwaysApply: true
+---
+
+# Travel — clean, high-resolution imagery
+
+Applies to **xingai-travel-ai** (`travel.xingai.app`). Source of truth for widths: [`docs/ASSETS.md`](../../docs/ASSETS.md).
+
+## What “clean and high resolution” means
+
+1. **Source files** — Wired photos under `public/` meet minimum width; heroes target **2560×1440** (16:9). No blurry upscales passed off as HD.
+2. **On screen** — No extra softness from dev choices: wrong `quality`, unlisted Next qualities (falls back to **75**), heavy CSS `scale()` on photos, or stacked Ken Burns + zoom on mobile.
+3. **Processing** — Export with `sharp` at **quality 88–93** for new site jobs; strip EXIF on story stills. Prefer re-export from a higher master over re-encoding the same small file.
+
+## Before merge (required)
+
+- Run `npm run check:assets` (also runs on `npm run build`).
+- New `public/` paths: add a job in `scripts/process-site-images.mjs` or `process-story-photos.mjs` and update `docs/ASSETS.md`.
+- Do not link Unsplash/low-res placeholders in production UI without a local `-1600` (or hero-grade) asset plan.
+
+## Next.js `Image` (this repo)
+
+- **`next.config.mjs` `images.qualities`** must include every `quality={…}` used in code (today: **75, 88, 90, 95**). If you add a new quality, update config in the same change.
+- **Full-bleed heroes (2560 WebP masters)** — Prefer **`unoptimized`** on the home carousel so Vercel does not recompress; or serve at `quality={95}` with widths that do not downscale below the master on desktop.
+- **Cards / footer / inline** — Use `quality={88}` or **90** with `sizes` that match layout (avoid `100vw` on tiny thumbs).
+- **Never** ship hero `quality={90}` without listing **90** in config (Next 16 silently uses 75).
+
+## Layout vs clarity (especially mobile)
+
+- Resize the **frame** (aspect ratio, copy outside the photo) before scaling the bitmap with `transform: scale()`.
+- Use per-breakpoint **`object-position`** (CSS vars `--hero-position-mobile` / desktop) instead of zoom hacks when framing subjects.
+- Disable decorative motion (Ken Burns) on mobile if it makes edges look soft.
+
+## When an asset is too small
+
+1. Find or create a **higher-res master** (same scene/style).
+2. `npm run assets:hires -- --force` or the relevant story script.
+3. If no good source exists, **regenerate** art — do not upscale and ship.
+
+## Agent checklist (UI/image touch)
+
+- [ ] Asset width ≥ table in `docs/ASSETS.md`
+- [ ] `check:assets` passes
+- [ ] `quality` values listed in `next.config.mjs`
+- [ ] No new CSS scale on hero photography
+- [ ] README or ASSETS note if paths or minimums change

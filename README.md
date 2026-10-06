@@ -33,10 +33,11 @@ Do not thrash title / brand strings for ~30 days unless a factual error. Brand n
 | **SEO signals (2026-10-05)** | Brand/title/OG/schema/`llms.txt` aligned to **XingAI Travel**. Chrome, footer, legal, and i18n no longer say “Travel AI” / “Explore Better”. Sitewide JSON-LD ships in the **first HTML** (not `afterInteractive`). `/decide` adds its own WebPage + WebApplication JSON-LD and self-canonical OG `url`. `/faq` and `/how-it-works` expose a visible AEO direct-answer block. Footer + drawer ship crawlable XingAI family anchors; `/legal/{privacy,terms,disclaimer}` redirect to local pages (project-init). Technical crawl of sitemap URLs: see [Indexability notes](#indexability-notes-2026-10-05). Google Search Console coverage still needs human confirmation (`site:` ≠ index). |
 | **Decision result (2026-10-02)** | Result shows **XingAI Match Score** (0–100 from overall stars + confidence), factor bars for overall/walkability, ranked alternatives with **Why not {city}?**. Hero is result-oriented: “Stop searching. Start deciding.” + proof line (en / zh / ko / es). **Evidence panel** labels weather / flight / walkability / plan budget / match as estimate·derived·plan (no fake source URLs). Hero “How to use” starts **collapsed** on all breakpoints. |
 | **SEO/AEO/GEO content graph (ADR 0009)** | Live intent pages: `/how-it-works`, `/faq`, `/compare` (+ 5 A-vs-B pages), `/guides` (+ 5 intent pages). `/decide` stays the conversion step. Fit labels stay qualitative. `hreflang` no longer points 中文 / 한국어 / Español at the English `/decide` URL. |
-| **Home (2026-10-05)** | `/` keeps the **4-slide hero carousel** (HK / Tokyo / Seoul / Cabo, 2560×1440) with a **centered segment bar under the hero** (not over the photo). Mobile matches desktop composition: **no glass card** over the photo, stronger bottom scrim, place chip top-right, shorter stage (~72svh). Place chips stay labels only. Primary Decide CTAs only on **hero**, **How it works**, and **page-end**. Footer traveler banner + localized XingAI family links; `/legal/*` aliases redirect. `check:assets` gates wired photo widths — see [`docs/ASSETS.md`](./docs/ASSETS.md). |
+| **Home (2026-10-05)** | `/` keeps the **4-slide hero carousel** (HK / Tokyo / Seoul / Cabo, 2560×1440) with a **centered segment bar under the hero** (not over the photo). Mobile: width-based **4:5** photo + copy below; per-slide mobile focal points; carousel **4.5s**; hero assets `unoptimized` for sharpness. Decision demo steps are clickable. Place chips stay labels only. Primary Decide CTAs only on **hero**, **How it works**, and **page-end**. Footer traveler banner + localized XingAI family links; `/legal/*` aliases redirect. Image quality rule: [`.cursor/rules/travel-image-quality.mdc`](./.cursor/rules/travel-image-quality.mdc) + [`docs/ASSETS.md`](./docs/ASSETS.md). |
+| **Decide hero (2026-10-05)** | `/decide` hero is **full-bleed** (edge-to-edge, same width language as Home) — single decision photo, not the city carousel. Trip form stays in `max-w-6xl` below. |
 | **Stories media (2026-10-05)** | All **31** published episode stills (HK×2 + Macau×2) export at **1600×2133** (`-800`/`-1600` WebP). Story UI prefers the 1600w asset on larger screens. Hero videos unchanged. |
 | **Decision honesty (2026-10-05)** | A missing `OPENAI_API_KEY` returns a labeled demo and does not save it as a trip. A failed compare or plan shows a retry and does not substitute the Lisbon sample. API errors stay generic; server logs OpenAI status / type / `finish_reason` only. Daily demo quota counts **successful** decisions only; rate-limit UI hides Try again. Partner search links stay up. Revenue stays **NOT AVAILABLE** until a `NEXT_PUBLIC_*` partner id is set; the booking note says XingAI is not earning a commission. |
-| **App shell** | Next.js 16 App Router, React 19, Tailwind 4. On desktop the sidebar stays fixed and the main column scrolls. |
+| **App shell** | Next.js 16 App Router, React 19, Tailwind 4. Desktop: top nav (Home / Decide / Stories + red **New** / Your Trips) + CTA — **no sidebar**. Mobile: drawer (no Legal/Help blocks) + bottom tabs. |
 | **Core flow** | `/` explains the product → `/decide` → compare or inspire → `/result` with plan |
 | **Stories** | `/stories` after the decision ([ADR 0006](./docs/adr/0006-stories-after-decision.md)). **My Hong Kong** Season 1: EP01 Victoria Harbour + EP02 streets/food/people. **My Macau** Season 1 EP01–EP02 published. en / 中文 / 한국어 / Español. Contained display; no clear-face stills in authored copy. |
 | **Compare quality** | Prompt + normalize pass require non-blank, distinct weather / flight / walkability rows; Hero copy says compare-then-search (not “actually book”). Past dates blocked; dead Settings control removed. Trip cards pick a city photo by name (EN/中文/한국어 aliases) instead of falling back to Lisbon for every unknown destination. Taipei / Shanghai / New Orleans use local `/assets/destination-*-card.webp` (dead Unsplash IDs were 404). |
@@ -133,7 +134,7 @@ flowchart LR
 | Deploy | Vercel → `travel.xingai.app` |
 | Node | ≥ 20.9 |
 
-Shell pattern forked from `xingai-meal-coach-ai` / `xingai-cook-ai`: shared chrome (sidebar, mobile drawer, bottom nav), locale switcher, theme toggle, legal pages.
+Shell pattern forked from `xingai-meal-coach-ai` / `xingai-cook-ai`: top nav on desktop, mobile drawer + bottom nav, locale switcher, theme toggle, legal pages in footer.
 
 ---
 
@@ -243,7 +244,7 @@ npm run metrics              # last 7 days; `npm run metrics -- 30` for 30
 | `xingai-travel-locale` | UI language (`localStorage`) |
 | `theme` | Light / dark / system (`localStorage`) |
 
-Event `xingai-travel-compare-updated` refreshes the sidebar “Continue your last trip” card.
+Event `xingai-travel-compare-updated` refreshes the mobile drawer “Continue your last trip” card.
 
 **Hydration rule:** never read storage in `useState` initializers. Use stable SSR defaults, then `useEffect` after mount. See [ADR 0003](./docs/adr/0003-session-storage-client-state.md).
 

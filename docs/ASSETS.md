@@ -2,6 +2,8 @@
 
 All **wired** images under `public/` must meet minimum width before merge. `npm run build` runs `check:assets`.
 
+**Agent rule:** `.cursor/rules/travel-image-quality.mdc` — clean, sharp delivery + Next Image config (always on in this repo).
+
 ## Minimum widths
 
 | Use | Path pattern | Min width |

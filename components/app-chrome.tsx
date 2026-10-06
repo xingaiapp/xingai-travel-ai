@@ -7,15 +7,10 @@ import {
   ArrowRight,
   BookOpen,
   BriefcaseBusiness,
-  ChevronDown,
-  CircleHelp,
   Compass,
   House,
   Menu,
-  PanelLeftClose,
-  PanelLeftOpen,
   Plane,
-  ShieldCheck,
   X,
 } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -25,22 +20,33 @@ import { useLocale } from "@/components/locale-provider"
 import type { Messages } from "@/lib/i18n/types"
 import { visibleSeasons } from "@/lib/stories"
 import { COMPARE_STORAGE } from "@/lib/trip-history"
-import { cn, getCityImage, HELP_ANCHOR, openHelp } from "@/lib/utils"
+import { cn, getCityImage } from "@/lib/utils"
 
 type NavItem = {
   href: string
   key: "home" | "decide" | "stories" | "trips"
   icon: typeof Compass
   soon?: boolean
+  isNew?: boolean
 }
+
+const storiesSoon = visibleSeasons().length === 0
 
 const navItems: readonly NavItem[] = [
   { href: "/", key: "home", icon: House },
   { href: "/decide", key: "decide", icon: Compass },
-  { href: "/stories", key: "stories", icon: BookOpen, soon: visibleSeasons().length === 0 },
+  { href: "/stories", key: "stories", icon: BookOpen, soon: storiesSoon, isNew: !storiesSoon },
   // Saved / Profile stay out of the nav until they exist — no dead entries.
   { href: "/trips", key: "trips", icon: BriefcaseBusiness },
 ]
+
+function NewBadge({ label }: Readonly<{ label: string }>) {
+  return (
+    <span className="ml-1.5 inline-flex shrink-0 items-center rounded-sm bg-red-600 px-1.5 py-0.5 text-[0.62rem] font-extrabold uppercase leading-none tracking-wide text-white">
+      {label}
+    </span>
+  )
+}
 
 const legalLinks = [
   { href: "/privacy", key: "privacy" },
@@ -109,9 +115,6 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
   const pathname = usePathname()
   const { messages } = useLocale()
   const [open, setOpen] = useState(false)
-  const [legalOpen, setLegalOpen] = useState(false)
-  const [helpOpen, setHelpOpen] = useState(false)
-  const [desktopNavOpen, setDesktopNavOpen] = useState(true)
   const [soon, setSoon] = useState("")
   const [lastDecision, setLastDecision] = useState<LastDecision | null>(null)
 
@@ -136,128 +139,9 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
   }
 
   return (
-    <div className={cn("min-h-[100dvh] lg:grid lg:h-dvh lg:overflow-hidden", desktopNavOpen ? "lg:grid-cols-[15rem_1fr]" : "lg:grid-cols-[4.75rem_1fr]")}>
-      <aside
-        className={cn(
-          "relative hidden h-dvh border-r border-border bg-card/82 backdrop-blur transition-[width,padding] duration-200 lg:flex lg:flex-col",
-          desktopNavOpen ? "p-5" : "items-center px-3 py-5"
-        )}
-      >
-        <button
-          type="button"
-          onClick={() => setDesktopNavOpen((value) => !value)}
-          className="absolute -right-4 top-1/2 z-50 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md border border-border bg-card text-muted-foreground shadow-md transition hover:border-primary/40 hover:text-primary lg:flex"
-          aria-label={desktopNavOpen ? "Close sidebar" : "Open sidebar"}
-          aria-expanded={desktopNavOpen}
-        >
-          {desktopNavOpen ? <PanelLeftClose className="h-4 w-4" aria-hidden /> : <PanelLeftOpen className="h-4 w-4" aria-hidden />}
-        </button>
-
-        <div className={cn("flex min-h-0 flex-1 flex-col overflow-y-auto", !desktopNavOpen && "w-full items-center")}>
-        <Link
-          href="/"
-          aria-label={messages.chrome.brand}
-          className={cn("flex min-w-0 items-center gap-3", !desktopNavOpen && "justify-center")}
-        >
-          <BrandMark className="h-10 w-10 shrink-0 shadow-sm" />
-          {desktopNavOpen ? (
-            <span className="min-w-0 truncate text-sm font-extrabold leading-tight tracking-tight text-foreground">
-              {messages.chrome.brandShort}
-            </span>
-          ) : null}
-        </Link>
-
-        <nav className={cn("mt-9 flex flex-1 flex-col gap-2", !desktopNavOpen && "w-full items-center")} aria-label="Primary">
-          {navItems.map((item) => {
-            const Icon = item.icon
-            const active = isActive(pathname, item.href)
-            const label = messages.chrome[item.key]
-            if (item.soon) {
-              return (
-                <button
-                  key={item.key}
-                  type="button"
-                  onClick={() => showSoon(label)}
-                  title={!desktopNavOpen ? label : undefined}
-                  className={cn(
-                    "flex h-12 items-center gap-3 rounded-md text-left text-muted-foreground transition hover:bg-muted",
-                    desktopNavOpen ? "px-3" : "w-12 justify-center px-0"
-                  )}
-                >
-                  <Icon className="h-5 w-5" aria-hidden />
-                  <span className={cn("font-semibold", !desktopNavOpen && "sr-only")}>{label}</span>
-                </button>
-              )
-            }
-            return (
-              <Link
-                key={item.key}
-                href={item.href}
-                title={!desktopNavOpen ? label : undefined}
-                className={cn(
-                  "flex h-12 items-center gap-3 rounded-md text-left font-semibold transition",
-                  desktopNavOpen ? "px-3" : "w-12 justify-center px-0",
-                  active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                )}
-              >
-                <Icon className="h-5 w-5" aria-hidden />
-                <span className={cn(!desktopNavOpen && "sr-only")}>{label}</span>
-              </Link>
-            )
-          })}
-        </nav>
-
-        {desktopNavOpen ? (
-          <>
-            <SideInsightCard lastDecision={lastDecision} onNavigate={() => {}} />
-            <div className="mt-5 rounded-md border border-border bg-background p-3">
-              <p className="mb-2 flex items-center gap-2 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">
-                <ShieldCheck className="h-4 w-4" aria-hidden />
-                {messages.chrome.legal}
-              </p>
-              <div className="grid gap-1">
-                {legalLinks.map((item) => (
-                  <Link key={item.href} href={item.href} className="text-xs font-semibold text-muted-foreground transition hover:text-primary">
-                    {messages.chrome[item.key]}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <Link
-              href={`/decide#${HELP_ANCHOR}`}
-              onClick={openHelp}
-              className="mt-5 flex items-center gap-2 text-sm text-muted-foreground transition hover:text-primary"
-            >
-              <CircleHelp className="h-4 w-4" aria-hidden />
-              {messages.chrome.help}
-            </Link>
-          </>
-        ) : (
-          <div className="mt-5 flex flex-col items-center gap-2 border-t border-border pt-4">
-            <Link
-              href="/privacy"
-              title={messages.chrome.legal}
-              className="flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-primary"
-            >
-              <ShieldCheck className="h-5 w-5" aria-hidden />
-              <span className="sr-only">{messages.chrome.legal}</span>
-            </Link>
-            <Link
-              href={`/decide#${HELP_ANCHOR}`}
-              onClick={openHelp}
-              title={messages.chrome.help}
-              className="flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-primary"
-            >
-              <CircleHelp className="h-5 w-5" aria-hidden />
-              <span className="sr-only">{messages.chrome.help}</span>
-            </Link>
-          </div>
-        )}
-        </div>
-      </aside>
-
-      <div className="flex min-w-0 flex-col lg:h-dvh lg:overflow-y-auto">
-        <header className="sticky top-0 z-40 flex h-14 items-center gap-2 border-b border-border bg-background/90 px-4 backdrop-blur lg:h-16 lg:justify-between lg:px-8">
+    <div className="flex min-h-[100dvh] flex-col">
+      <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
+        <div className="mx-auto flex h-14 w-full max-w-6xl items-center gap-2 px-4 lg:h-16 lg:gap-4 lg:px-8">
           <button
             type="button"
             onClick={() => setOpen(true)}
@@ -269,16 +153,47 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
           <div className="min-w-0 flex-1 text-center text-sm font-bold lg:hidden">
             <span className="text-primary">Travel</span> · {mobileHeaderTitle(pathname, messages)}
           </div>
-          <Link href="/" className="hidden min-w-0 items-center lg:flex">
+          <Link href="/" className="hidden min-w-0 shrink-0 items-center lg:flex">
             <span className="truncate text-base font-bold leading-none">
               XingAI <span className="text-primary">Travel</span>
             </span>
           </Link>
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex" aria-label="Primary">
+            {navItems.map((item) => {
+              const active = isActive(pathname, item.href)
+              const label = messages.chrome[item.key]
+              if (item.soon) {
+                return (
+                  <button
+                    key={item.key}
+                    type="button"
+                    onClick={() => showSoon(label)}
+                    className="inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                  >
+                    {label}
+                  </button>
+                )
+              }
+              return (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  className={cn(
+                    "inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold transition",
+                    active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )}
+                >
+                  {label}
+                  {item.isNew ? <NewBadge label={messages.chrome.newBadge} /> : null}
+                </Link>
+              )
+            })}
+          </nav>
           <div className="flex shrink-0 items-center gap-1 lg:hidden">
             <LocaleSwitcher className="h-10 max-w-[5.75rem] px-1.5" />
             <ThemeToggle className="h-10 w-10" />
           </div>
-          <div className="hidden items-center gap-2 lg:flex">
+          <div className="hidden shrink-0 items-center gap-2 lg:flex">
             <Link
               href="/decide"
               className="inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-bold text-primary-foreground shadow-[0_6px_16px_color-mix(in_oklch,var(--primary)_28%,transparent)]"
@@ -289,8 +204,10 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             <LocaleSwitcher />
             <ThemeToggle />
           </div>
-        </header>
+        </div>
+      </header>
 
+      <div className="flex min-w-0 flex-1 flex-col">
         {children}
         <footer className="border-t border-border bg-background/70 px-4 py-5 pb-24 text-xs text-muted-foreground lg:px-8 lg:pb-5">
           <div className="mx-auto mb-5 max-w-6xl overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
@@ -371,8 +288,15 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
               )
             }
             return (
-              <Link key={item.key} href={item.href} className={cn("flex flex-1 flex-col items-center gap-1 rounded-md px-1 py-1.5", active ? "text-primary" : "text-muted-foreground")}>
-                <Icon className="h-5 w-5" aria-hidden />
+              <Link key={item.key} href={item.href} className={cn("relative flex flex-1 flex-col items-center gap-1 rounded-md px-1 py-1.5", active ? "text-primary" : "text-muted-foreground")}>
+                <span className="relative">
+                  <Icon className="h-5 w-5" aria-hidden />
+                  {item.isNew ? (
+                    <span className="absolute -right-2.5 -top-1 rounded-sm bg-red-600 px-1 py-px text-[0.55rem] font-extrabold uppercase leading-none text-white">
+                      {messages.chrome.newBadge}
+                    </span>
+                  ) : null}
+                </span>
                 <span className="text-[0.66rem] font-semibold">{label}</span>
               </Link>
             )
@@ -438,40 +362,23 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                         )}
                       >
                         <Icon className="h-5 w-5 shrink-0" aria-hidden />
-                        <span className="text-sm font-bold">{label}</span>
+                        <span className="inline-flex items-center text-sm font-bold">
+                          {label}
+                          {item.isNew ? <NewBadge label={messages.chrome.newBadge} /> : null}
+                        </span>
                       </Link>
                     )
                   })}
                 </nav>
 
                 <div className="mt-5">
-                  <SideInsightCard lastDecision={lastDecision} onNavigate={() => setOpen(false)} tall />
+                  <SideInsightCard lastDecision={lastDecision} onNavigate={() => setOpen(false)} />
                 </div>
               </div>
 
-              <div className="shrink-0 border-t border-border px-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-                <DrawerAccordion
-                  id="drawer-legal"
-                  title={messages.chrome.legal}
-                  icon={ShieldCheck}
-                  open={legalOpen}
-                  onToggle={() => setLegalOpen((value) => !value)}
-                  pinned
-                >
-                  {legalLinks.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className="rounded-md border border-border px-3 py-2 text-sm font-semibold text-muted-foreground transition hover:border-primary/40 hover:text-primary"
-                    >
-                      {messages.chrome[item.key]}
-                    </Link>
-                  ))}
-                </DrawerAccordion>
-
+              <div className="shrink-0 border-t border-border px-4 py-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
                 <nav
-                  className="mt-3 flex flex-wrap gap-x-3 gap-y-1 border-t border-border pt-3 text-xs text-muted-foreground"
+                  className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground"
                   aria-label={messages.chrome.footerFamilyNav}
                 >
                   <span>
@@ -489,30 +396,6 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                     {messages.chrome.footerAllApps}
                   </a>
                 </nav>
-
-                <DrawerAccordion
-                  id="drawer-help"
-                  title={messages.chrome.help}
-                  icon={CircleHelp}
-                  open={helpOpen}
-                  onToggle={() => setHelpOpen((value) => !value)}
-                  pinned
-                  divided
-                >
-                  <p className="rounded-md border border-border bg-muted/40 px-3 py-2 text-sm leading-relaxed text-muted-foreground">
-                    {messages.chrome.exploreBetterBody}
-                  </p>
-                  <Link
-                    href={`/decide#${HELP_ANCHOR}`}
-                    onClick={() => {
-                      setOpen(false)
-                      openHelp()
-                    }}
-                    className="mt-2 block rounded-md border border-border px-3 py-2 text-sm font-semibold text-muted-foreground transition hover:border-primary/40 hover:text-primary"
-                  >
-                    {messages.chrome.helpHowItWorks} →
-                  </Link>
-                </DrawerAccordion>
               </div>
             </div>
           </aside>
@@ -524,26 +407,12 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
   )
 }
 
-function BrandMark({ className }: Readonly<{ className?: string }>) {
-  return (
-    <span
-      className={cn(
-        "block overflow-hidden rounded-md border border-border bg-[url('/assets/logo-light.png')] bg-cover bg-center dark:bg-[url('/assets/logo-dark.png')]",
-        className
-      )}
-      aria-hidden
-    />
-  )
-}
-
 function SideInsightCard({
   lastDecision,
   onNavigate,
-  tall = false,
 }: Readonly<{
   lastDecision: LastDecision | null
   onNavigate: () => void
-  tall?: boolean
 }>) {
   const { messages } = useLocale()
   const title = lastDecision ? messages.chrome.continueLastTrip : messages.chrome.exploreBetter
@@ -557,10 +426,7 @@ function SideInsightCard({
   const content = (
     <>
       <div
-        className={cn(
-          "mb-3 overflow-hidden rounded-md bg-muted bg-cover bg-center",
-          tall ? "h-24" : "h-20"
-        )}
+        className="mb-3 aspect-[16/10] min-h-36 w-full overflow-hidden rounded-md bg-muted bg-cover bg-center"
         style={isExternal ? { backgroundImage: `url('${cityImageUrl}')` } : undefined}
       >
         {!isExternal && (
@@ -590,44 +456,3 @@ function SideInsightCard({
   return <div className="rounded-md border border-border bg-background p-3">{content}</div>
 }
 
-function DrawerAccordion({
-  id,
-  title,
-  icon: Icon,
-  open,
-  onToggle,
-  children,
-  pinned = false,
-  divided = false,
-}: Readonly<{
-  id: string
-  title: string
-  icon: typeof ShieldCheck
-  open: boolean
-  onToggle: () => void
-  children: React.ReactNode
-  pinned?: boolean
-  divided?: boolean
-}>) {
-  return (
-    <div className={cn(!pinned && "mt-5 border-t border-border pt-4", pinned && "py-3", divided && "border-t border-border")}>
-      <button
-        type="button"
-        id={`${id}-trigger`}
-        aria-expanded={open}
-        aria-controls={id}
-        onClick={onToggle}
-        className="flex w-full items-center justify-between gap-2 rounded-md px-1 py-1 text-left transition hover:bg-muted"
-      >
-        <span className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">
-          <Icon className="h-4 w-4" aria-hidden />
-          {title}
-        </span>
-        <ChevronDown className={cn("h-4 w-4 shrink-0 text-muted-foreground transition", open && "rotate-180")} aria-hidden />
-      </button>
-      <div id={id} role="region" aria-labelledby={`${id}-trigger`} className={cn("mt-2 grid gap-2", open ? "grid" : "hidden")}>
-        {children}
-      </div>
-    </div>
-  )
-}
