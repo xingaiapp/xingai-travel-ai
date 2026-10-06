@@ -25,7 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const found = await load(params)
   if (!found) return {}
   const { season, episode } = found
-  const title = `${episode.title.en} · ${season.title.en}`
+  // Keep document title under ~70 chars (template adds " · XingAI Travel").
+  const title = episode.title.en
   const image = episode.cover.src ? `${episode.cover.src}-1600.webp` : undefined
   return {
     ...pageMeta({

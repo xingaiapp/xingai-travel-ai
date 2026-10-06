@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
-import { CitiesIndexView, parseIntent, parseRegion } from "@/components/city/cities-index"
+import { CitiesIndexView } from "@/components/city/cities-index"
+import { parseIntent, parseRegion } from "@/lib/cities/filters"
 import { pageMeta } from "@/lib/seo-meta"
 
 export const metadata: Metadata = pageMeta({
