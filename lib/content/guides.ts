@@ -25,6 +25,18 @@ export const guides: GuidePage[] = [
         "따뜻하고 걷기 좋으며 음식이 강한 도시가 커플·단기 시티브레이크에 자주 뜹니다. 어깨 시즌은 한여름보다 덜 붐빌 수 있습니다.",
         "Ciudades cálidas, caminables y gastronómicas suelen aparecer para parejas y escapadas cortas. La temporada media puede traer menos muchedumbre que el verano."
       ),
+      L(
+        "November is shoulder season for many temperate cities: milder than August, sometimes softer hotel rates, still enough daylight for walking. Tropical places stay warm year-round — flight budget and visa friction matter more than the month alone.",
+        "对许多温带城市，十一月是肩季：比八月凉快，酒店有时更柔和，日照仍够步行。热带全年偏暖——机票预算和签证摩擦往往比「几月」更关键。",
+        "온대 도시 상당수에 11월은 어깨 시즌입니다. 8월보다 덜 덥고 숙소가 나을 수 있으며 걷기 낮도 충분합니다. 열대는 연중 따뜻하니 달력보다 항공·비자가 더 중요합니다.",
+        "Noviembre es temporada media en muchas ciudades templadas: menos calor que agosto, a veces tarifas más suaves y luz para caminar. En el trópico el calor es anual — vuelo y visa pesan más que el mes."
+      ),
+      L(
+        "On /decide, put real origin and dates first. Add warm weather or shorter flights in notes or Avoid. Then Compare named cities or use Surprise me — a generic November list without those fields cannot beat a constrained decision.",
+        "在 /decide 先填真实出发地和日期。在备注或 Avoid 写要温暖或短途。再比较具体城市或用 Surprise me——没有这些字段的十一月清单赢不了有约束的决策。",
+        "/decide에서 실제 출발지·날짜를 먼저 넣으세요. 노트/Avoid에 따뜻한 날씨나 짧은 항공을 적고 Compare 또는 Surprise me를 쓰세요.",
+        "En /decide pon primero origen y fechas reales. Añade clima cálido o vuelos cortos en notas o Avoid. Luego Compara o usa Surprise me."
+      ),
     ],
     candidates: [
       L("Taipei — warmth + food", "台北 — 温暖 + 美食", "타이베이 — 따뜻함 + 음식", "Taipéi — calor + comida"),
@@ -40,6 +52,15 @@ export const guides: GuidePage[] = [
           "取决于你对温暖的定义和机票预算。在 /decide 用 Surprise me 或 Compare，并在备注写要温暖天气。",
           "따뜻한의 정의와 항공 예산에 달립니다. /decide에서 Surprise me 또는 Compare로 노트에 따뜻한 날씨를 넣으세요.",
           "Depende de qué sea cálido para ti y de tu presupuesto de vuelo. Usa Surprise me o Compare en /decide con clima cálido en notas."
+        ),
+      },
+      {
+        q: L("November from the US — Asia or Latin America?", "从美国出发的十一月：亚洲还是拉美？", "미국에서 11월 — 아시아 vs 중남미?", "¿Noviembre desde EE.UU. — Asia o Latinoamérica?"),
+        a: L(
+          "Latin America often wins on flight hours from many US hubs; Asia can win on food density if you accept longer travel. Put your hub and budget into /decide instead of picking from vibes.",
+          "对许多美国枢纽，拉美常在航程上更优；若能接受更长飞行，亚洲可在美食密度上更强。把枢纽和预算放进 /decide，不要凭感觉选。",
+          "많은 미국 허브에서는 중남미가 항공 시간에, 아시아는 긴 이동을 감수하면 미식 밀도에서 앞설 수 있습니다. /decide에 허브·예산을 넣으세요.",
+          "Latinoamérica suele ganar en horas de vuelo desde muchos hubs US; Asia puede ganar en comida si aceptas más viaje. Mete hub y presupuesto en /decide."
         ),
       },
     ],
@@ -60,6 +81,18 @@ export const guides: GuidePage[] = [
         "说清温暖指海滨酷热还是温和城市。避开与你的 Avoid 冲突的目的地（长途、极端炎热）。",
         "따뜻함이 해변 더위인지 온화한 도시인지 말하세요. Avoid(장거리·極端 더위)와 충돌하는 곳은 피하세요.",
         "Define cálido (calor de playa vs ciudad templada). Evita destinos que choquen con tu lista Avoid."
+      ),
+      L(
+        "Beach heat usually needs transfers, sunscreen budget, and a slower pace; warm cities can pair food walks with transit and still feel fine in long sleeves at night.",
+        "海滨酷热往往要转机、防晒预算和更慢节奏；暖城可以把美食步行和公交配在一起，夜里长袖仍舒服。",
+        "해변 더위는 환승·선크림·느린 속도가 필요하고, 따뜻한 도시는 미식 걷기+교통과 맞물릴 수 있습니다.",
+        "El calor de playa pide traslados, presupuesto de sol y ritmo lento; la ciudad cálida puede mezclar comida a pie con tránsito."
+      ),
+      L(
+        "If Avoid says no long flights, far beach resorts should drop even when they look warm on a map. Put flight hours next to warmth on /decide — not under a hype list.",
+        "若 Avoid 写不要长途，远处海岛度假村应被压低——即使地图看着暖。在 /decide 让航程与温暖并排，而不是压在炒作清单下。",
+        "Avoid에 장거리 금지가 있으면 먼 리조트는 내려가야 합니다. /decide에서 항공·따뜻함을 나란히 두세요.",
+        "Si Avoid dice sin vuelos largos, baja resorts lejanos aunque el mapa diga calor. Pon horas de vuelo junto al calor en /decide."
       ),
     ],
     candidates: [
@@ -96,6 +129,18 @@ export const guides: GuidePage[] = [
         "언덕·더위·짐이 걷기 좋음을 바꿉니다. vibe 단어만이 아니라 속도와 Avoid를 엔진에 말하세요.",
         "Colinas, calor y maletas cambian lo caminable. Di ritmo y Avoid al motor, no solo una palabra vibe."
       ),
+      L(
+        "High walkability helps when neighborhoods are compact and transit fills gaps. It helps less with heavy luggage, toddlers, or extreme heat/rain without cover.",
+        "街区紧凑、公交能补缺口时，高步行分更有用。拖重行李、带幼儿，或极端炎热/下雨又缺少遮蔽时，用处会下降。",
+        "동네가 콤팩트하고 대중교통이 빈틈을 메울 때 도보 점수가 더 빛납니다. 무거운 짐·유아·극한 더위/비면 가치가 줄어듭니다.",
+        "Una alta caminabilidad ayuda con barrios compactos y tránsito. Ayuda menos con maletas pesadas, niños pequeños, o calor/lluvia extrema sin cobijo."
+      ),
+      L(
+        "Put walking-first or no rental car in Style / Avoid, then compare. /city guides show foot routes after you decide — they do not replace the constraint check on /decide.",
+        "在风格/Avoid 写步行优先或不租车，再比较。/city 指南适合决定后再扫步行路线——不能替代 /decide 上的约束核对。",
+        "스타일/Avoid에 걷기 우선·렌트카 없음을 넣고 비교하세요. /city는 결정 후 도보 루트용이지 /decide를 대체하지 않습니다.",
+        "Pon caminar primero o sin coche en estilo/Avoid y compara. Las guías /city no sustituyen el chequeo en /decide."
+      ),
     ],
     candidates: [
       L("Tokyo neighborhoods for dense transit + walking", "东京：密集交通 + 步行街区", "도쿄: 밀집 교통+걷기", "Barrios de Tokio: tránsito denso + caminar"),
@@ -131,6 +176,18 @@ export const guides: GuidePage[] = [
         "출발지 항공을 포함하세요. 먼 싼 도시도 $2,000를 깨뜨릴 수 있습니다. /decide에 통화·인원을 넣으세요.",
         "Incluye vuelos desde tu origen. Una ciudad barata lejana puede romper $2,000. Usa moneda y viajeros en /decide."
       ),
+      L(
+        "Split the cap: flights, lodging, food, local transport, and a buffer for one paid activity. If flights alone eat half the budget from your origin, the destination set shrinks fast — that is honest planning.",
+        "拆开上限：机票、住宿、餐饮、市内交通，再留一项付费活动缓冲。若仅机票就吃掉出发地预算一半，可选集合会迅速变小——这是诚实规划。",
+        "상한을 항공·숙소·식비·시내 교통·유료 활동 버퍼로 나누세요. 항공만 절반을 먹으면 후보가 빠르게 줄습니다 — 정직한 계획입니다.",
+        "Parte el tope: vuelos, alojamiento, comida, transporte local y un colchón. Si el vuelo solo come la mitad, el set se encoge — planificación honesta."
+      ),
+      L(
+        "Two adults under $2,000 USD is a different problem than a family of four. Enter currency and traveler count on /decide before you fall for a far city that only looks cheap per night.",
+        "两名成人 2000 美元上限和一家四口是两道题。先在 /decide 填货币与人数，再迷上只看每晚房价显得便宜的远处城市。",
+        "성인 2명 $2,000과 4인 가족은 다른 문제입니다. 멀리 있어 박당만 싸 보이는 도시에 빠지기 전에 /decide에 통화·인원을 넣으세요.",
+        "Dos adultos con $2,000 USD no es lo mismo que una familia de cuatro. Pon moneda y viajeros en /decide antes de enamorararte de una ciudad lejana solo barata por noche."
+      ),
     ],
     candidates: [
       L("Shorter-haul from your hub often beats far deals", "从枢纽短途往往胜过远处特价", "허브에서 단거리가 먼 특가보다 나을 때가 많음", "Cortos desde tu hub suelen ganar a ofertas lejanas"),
@@ -165,6 +222,18 @@ export const guides: GuidePage[] = [
         "在风格/备注/Surprise 优先级里强调美食。再看取舍：人流、花费、吃饭街区好不好走。",
         "스타일/노트/Surprise 우선순위에 음식을 넣으세요. 그다음 혼잡·비용·미식 동네 도보를 trade-off로 보세요.",
         "Pon comida en estilo/notas/prioridad Surprise. Luego mira muchedumbres, costo y si los barrios gastronómicos son caminables."
+      ),
+      L(
+        "Food-first still fails when jet lag, long transfers, or a tight budget leave no energy for the neighborhoods that matter. Pair food priority with walkability and realistic flight hours.",
+        "以吃为主也会败在时差、长转机或预算太紧——没力气走到真正要紧的街区。把美食优先级与步行友好、现实航程放在一起。",
+        "음식 우선도 시차·긴 환승·빠듯한 예산이면 중요한 동네까지 힘이 안 납니다. 미식 우선과 도보·현실적 항공 시간을 묶으세요.",
+        "Comida primero también falla con jet lag, traslados largos o presupuesto justo. Combina prioridad gastronómica con caminabilidad y horas de vuelo reales."
+      ),
+      L(
+        "Use published Stories for texture (what a place felt like), then Decide for fit (dates and Avoid). A food ranking without your constraints is entertainment; a constrained comparison is a decision.",
+        "用已发布 Stories 感受质感，再用 Decide 看是否匹配日期与 Avoid。没有约束的美食榜是娱乐；有约束的比较才是决策。",
+        "발행된 Stories로 질감을 보고, Decide로 날짜·Avoid 적합성을 보세요. 제약 없는 미식 순위는 오락이고, 제약 있는 비교가 결정입니다.",
+        "Usa Stories publicadas para textura y Decide para encaje (fechas y Avoid). Un ranking sin restricciones es entretenimiento; una comparación restringida es una decisión."
       ),
     ],
     candidates: [

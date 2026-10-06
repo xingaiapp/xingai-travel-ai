@@ -77,10 +77,30 @@ const copy: Record<LegalPageKind, LegalCopy> = {
     koBlurb: "이용 약관입니다. 제안은 참고용이며 예약·규정 준수는 사용자 책임입니다. 문의: contact@xingai.app.",
     effectiveDate: "Effective date: 2026-10-06",
     sections: [
-      ["Decision support", "The product provides travel suggestions, comparisons, and planning assistance, not guaranteed travel outcomes."],
-      ["User responsibility", "Verify live prices, availability, visa rules, health rules, safety conditions, and cancellation policies before booking."],
-      ["Acceptable use", "Do not misuse the service, scrape it, attack it, or submit unlawful content."],
-      ["Changes", "We may update features, routes, content, and these terms as the product evolves."],
+      [
+        "Decision support",
+        "The product provides travel suggestions, destination comparisons, trade-off explanations, and planning assistance. It does not guarantee that a destination, itinerary, price, or booking outcome will match what you need in real life.",
+      ],
+      [
+        "User responsibility",
+        "Before you pay, verify live prices, availability, visa and entry rules, health requirements, safety conditions, insurance needs, and cancellation policies with airlines, hotels, governments, and other providers. You are responsible for your travel documents and for complying with local law.",
+      ],
+      [
+        "Accounts and browser data",
+        "Today most trip context and Your Trips history stay in this browser (sessionStorage / localStorage). Clearing site data removes them. We may add signed-in features later; those terms will say what we store server-side.",
+      ],
+      [
+        "Acceptable use",
+        "Do not misuse the service, scrape it at scale, attack it, attempt to bypass rate limits, or submit unlawful, abusive, or deceptive content. We may throttle or block abuse.",
+      ],
+      [
+        "Third-party booking links",
+        "After a decision, we may show partner search links. Those sites have their own terms and privacy policies. XingAI is not a party to your booking contract unless a separate agreement says so.",
+      ],
+      [
+        "Changes and contact",
+        "We may update features, routes, content, and these terms as the product evolves. Continued use after a posted change means you accept the updated terms. Questions: contact@xingai.app.",
+      ],
     ],
   },
   disclaimer: {
@@ -91,10 +111,26 @@ const copy: Record<LegalPageKind, LegalCopy> = {
     koBlurb: "예약 전 실시간 가격, 입국 규정, 안전 정보, 가능 여부를 직접 확인하세요.",
     effectiveDate: "Effective date: 2026-10-06",
     sections: [
-      ["No live guarantee", "Prices, flight schedules, weather, entry rules, safety alerts, and availability may change after a plan is generated."],
-      ["No professional advice", "The service is not legal, immigration, medical, tax, insurance, or safety advice."],
-      ["AI limitations", "AI output can be incomplete or inaccurate. Treat every plan as a starting point that requires human verification."],
-      ["Emergency and safety", "Follow official government, airline, hotel, health, and local authority guidance."],
+      [
+        "No live guarantee",
+        "Prices, flight schedules, weather, entry rules, safety alerts, hotel availability, and activity inventory may change after a plan or comparison is generated. Treat every number and schedule as an estimate until you confirm it with the provider.",
+      ],
+      [
+        "Suggestions only",
+        "XingAI Travel outputs are decision support for personal travel planning. They are not a booking engine, not a tour operator, and not a substitute for official advisories.",
+      ],
+      [
+        "No professional advice",
+        "The service is not legal, immigration, medical, tax, insurance, financial, or safety advice. For regulated decisions, talk to a qualified professional or the relevant authority.",
+      ],
+      [
+        "AI limitations",
+        "Model output can be incomplete, outdated, or wrong. Match Scores, walkability notes, flight estimates, and itineraries are derived from your inputs and model judgment — not a live ticket or hotel inventory feed. Always re-check before you commit money or travel.",
+      ],
+      [
+        "Emergency and safety",
+        "Follow official government, airline, hotel, health, and local authority guidance. In an emergency, contact local emergency services — not XingAI.",
+      ],
     ],
   },
   affiliate: {

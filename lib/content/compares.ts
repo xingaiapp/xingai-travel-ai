@@ -42,10 +42,10 @@ export const compares: ComparePage[] = [
       "Elige Tokio si priorizas comida y cultura caminable; Seúl si quieres más valor y más vida nocturna."
     ),
     tradeoffs: L(
-      "Tokyo can feel pricier and denser. Seoul may mean more language friction for some travelers and a different food profile.",
-      "东京可能更贵、更密。首尔对部分旅客语言门槛更高，餐饮风格也不同。",
-      "도쿄는 더 비싸고 밀집될 수 있습니다. 서울은 언어 장벽과 음식 스타일이 다를 수 있습니다.",
-      "Tokio puede ser más caro y denso. Seúl puede traer más fricción de idioma y otro perfil gastronómico."
+      "Tokyo can feel pricier and denser — lodging and dining add up quickly for couples who want central neighborhoods. Seoul may mean more language friction for some travelers and a different food profile (BBQ, street markets, late-night energy) than Tokyo’s quieter neighborhood evenings. Neither is “better” without your origin flight hours and Avoid list.",
+      "东京可能更贵、更密——想住核心街区时住宿和餐饮涨得快。首尔对部分旅客语言门槛更高，餐饮风格也不同（烧烤、夜市、深夜活力），与东京更安静的街区夜晚不同。离开出发地航程和 Avoid，谈不上谁更好。",
+      "도쿄는 더 비싸고 밀집될 수 있습니다 — 중심 동네를 원하면 숙식비가 빨리 쌓입니다. 서울은 언어 장벽과 음식 스타일(BBQ·야시장·늦은 밤)이 다를 수 있습니다. 출발 항공·Avoid 없이 ‘더 낫다’고 말하기 어렵습니다.",
+      "Tokio puede ser más caro y denso — alojamiento y comida suman rápido en barrios céntricos. Seúl puede traer más fricción de idioma y otro perfil gastronómico. Sin horas de vuelo y Avoid, no hay “mejor”."
     ),
     faq: [
       {
@@ -55,6 +55,15 @@ export const compares: ComparePage[] = [
           "都可以。想要密集交通与标志街区，东京往往更清晰；首尔更年轻、性价比更好。用你的出发地和预算跑 /decide。",
           "둘 다 가능. 교통·상징 동네가 명확하길 원하면 도쿄, 젊고 가성비가 중요하면 서울. 출발지·예산으로 /decide를 돌리세요.",
           "Ambos sirven. Tokio suele ser más claro para debutantes; Seúl más joven y con mejor valor. Usa /decide con tu origen y presupuesto."
+        ),
+      },
+      {
+        q: L("How many days for Tokyo vs Seoul?", "东京和首尔各要几天？", "도쿄 vs 서울 며칠?", "¿Cuántos días Tokio vs Seúl?"),
+        a: L(
+          "Tokyo usually rewards 5+ days if you want more than one neighborhood. Seoul can feel satisfying in 4–5 for a first pass. Shorter trips favor the city with the shorter flight from your hub — check that on /decide.",
+          "若想逛多个街区，东京通常 5 天以上更值。首尔初访 4–5 天常够。更短行程应偏向出发枢纽航程更短的那座——在 /decide 核对。",
+          "여러 동네를 보려면 도쿄는 보통 5일+, 서울 첫인상은 4–5일도 충분할 수 있습니다. 짧은 일정은 허브에서 항공이 짧은 쪽 — /decide에서 확인.",
+          "Tokio suele pedir 5+ días si quieres más de un barrio. Seúl puede bastar en 4–5. Viajes cortos favorecen el vuelo más corto desde tu hub — mira /decide."
         ),
       },
     ],
@@ -93,10 +102,10 @@ export const compares: ComparePage[] = [
       "Elige Tokio por intensidad urbana y gastronómica; Taipéi si priorizas clima y margen de presupuesto."
     ),
     tradeoffs: L(
-      "Tokyo trips can burn budget faster. Taipei has less “bucket-list” global fame for some travelers.",
-      "东京更容易烧预算。对部分旅客来说，台北的全球「必去」光环较弱。",
-      "도쿄는 예산이 빨리 닳을 수 있습니다. 타이베이는 일부에게 ‘버킷리스트’ 인지도가 덜할 수 있습니다.",
-      "Tokio puede consumir presupuesto más rápido. Taipéi puede tener menos fama de “imprescindible”."
+      "Tokyo trips can burn budget faster once you add central hotels and transit-day food. Taipei has less global “bucket-list” fame for some travelers, which is a feature if you want softer crowds — and a drawback if your group needs globally famous landmarks every day.",
+      "东京一旦加上核心酒店和全天餐饮，预算涨得更快。对部分旅客，台北的全球「必去」光环较弱——想人少是优点，若团队每天要世界级地标则是缺点。",
+      "도쿄는 중심 호텔·하루 식비가 붙으면 예산이 빨리 닳습니다. 타이베이는 ‘버킷리스트’ 인지도가 덜할 수 있어 한산함에는 이득, 매일 세계급 랜드마크가 필요하면 단점입니다.",
+      "Tokio puede consumir presupuesto más rápido con hoteles céntricos. Taipéi puede tener menos fama de “imprescindible” — ventaja si quieres menos muchedumbre; desventaja si el grupo necesita iconos globales cada día."
     ),
     faq: [
       {
@@ -106,6 +115,15 @@ export const compares: ComparePage[] = [
           "都很强。东京品类更广、精致餐饮更多；台北夜市与日常餐饮极强。预算和行程天数往往比「谁更好吃」更关键。",
           "둘 다 훌륭합니다. 도쿄는 폭과 파인 다이닝, 타이베이는 야시장·일상 미식. ‘어디가 더 맛있나’보다 예산·일정이 더 결정적입니다.",
           "Ambas excelentes. Tokio ofrece más rango y alta cocina; Taipéi brilla en mercados nocturnos y excelencia cotidiana. Presupuesto y duración pesan más."
+        ),
+      },
+      {
+        q: L("Which is warmer in winter?", "冬天哪个更暖？", "겨울에 어디가 더 따뜻?", "¿Cuál es más cálida en invierno?"),
+        a: L(
+          "Taipei is usually milder in winter evenings; Tokyo can feel sharper after dark. Still confirm your exact dates on /decide — a warm label without your months is incomplete.",
+          "台北冬夜通常更温和；东京天黑后可能更冷。仍要用确切日期在 /decide 确认——没有月份的「温暖」标签不完整。",
+          "타이베이 겨울 저녁이 대체로 더 온화하고, 도쿄는 해가 지면 더 쌀쌀할 수 있습니다. 정확한 날짜는 /decide에서 확인하세요.",
+          "Taipéi suele ser más suave en noches de invierno; Tokio puede sentirse más cortante. Confirma fechas exactas en /decide."
         ),
       },
     ],
@@ -144,10 +162,10 @@ export const compares: ComparePage[] = [
       "Elige Hong Kong por un viaje compacto y dramático (y nuestras Stories); Tokio si quieres más días de variedad de barrios."
     ),
     tradeoffs: L(
-      "Hong Kong can feel crowded and humid; Tokyo needs more days to feel “done.”",
-      "香港可能更挤、更湿；东京需要更多天才能有「玩透」感。",
-      "홍콩은 붐비고 습할 수 있고, 도쿄는 ‘다 했다’는 느낌이 나려면 날이 더 필요합니다.",
-      "Hong Kong puede sentirse abarrotado y húmedo; Tokio necesita más días para sentirse “completo”."
+      "Hong Kong can feel crowded and humid, especially in peak summer — harbor walks still work, but midday pace should slow. Tokyo needs more days to feel “done” across neighborhoods; stuffing it into a long weekend often means you only see one transit hub.",
+      "香港可能更挤、更湿，盛夏尤甚——海港散步仍值得，但正午节奏要放慢。东京需要更多天才能有「玩透」感；硬塞进一个长周末往往只看到一个交通枢纽周边。",
+      "홍콩은 붐비고 습할 수 있습니다 — 특히 한여름. 항구 산책은 좋지만 한낮은 속도를 낮추세요. 도쿄는 ‘다 했다’는 느낌이 나려면 날이 더 필요하고, 연휴 주말에 우겨 넣으면 교통 허브 주변만 보게 됩니다.",
+      "Hong Kong puede sentirse abarrotado y húmedo — sobre todo en verano. Tokio necesita más días para sentirse “completo”; meterlo en un puente suele dejar solo un hub de tránsito."
     ),
     faq: [
       {
@@ -157,6 +175,15 @@ export const compares: ComparePage[] = [
           "对喜欢美食、交通与港口城市能量的人来说往往值得——但仍取决于日期、预算与节奏。先看 /stories/hong-kong，再到 /decide。",
           "음식·교통·항구 도시 에너지를 좋아하면 많은 사람에게 가치 있습니다. 날짜·예산·속도에 달립니다. /stories/hong-kong을 본 뒤 /decide로.",
           "Sí para muchos que aman comida, tránsito y energía de ciudad-puerto — depende de fechas, presupuesto y ritmo. Lee /stories/hong-kong y luego /decide."
+        ),
+      },
+      {
+        q: L("Better for a 4-day trip?", "4 天行程哪个更好？", "4일 일정에는 어디?", "¿Mejor para 4 días?"),
+        a: L(
+          "Hong Kong’s compact map often fits 4 days better. Tokyo can work in 4 if you pick one or two wards and skip “see everything.” Confirm flight hours from your origin on /decide.",
+          "香港地图更紧凑，4 天往往更合适。东京也能 4 天——若只选一两个区、不追求「全看完」。在 /decide 确认出发地航程。",
+          "홍콩의 콤팩트한 지도가 4일에 더 잘 맞는 편입니다. 도쿄도 1–2개 구만 고르면 가능합니다. /decide에서 출발 항공을 확인하세요.",
+          "El mapa compacto de Hong Kong suele encajar mejor en 4 días. Tokio puede funcionar si eliges uno o dos barrios. Confirma el vuelo en /decide."
         ),
       },
     ],
@@ -195,10 +222,10 @@ export const compares: ComparePage[] = [
       "Elige Hong Kong por energía puerto-y-calle; Singapur por logística más suave y calma verde."
     ),
     tradeoffs: L(
-      "Hong Kong humidity and crowds can fatigue. Singapore can feel more polished and less “raw street” for some travelers.",
-      "香港湿热与拥挤可能更累。新加坡对部分人会显得更精致、少一点「生猛街头」。",
-      "홍콩의 습도·혼잡은 피로를 줄 수 있습니다. 싱가포르는 더 다듬어져 ‘날것의 거리감’이 덜할 수 있습니다.",
-      "La humedad y las multitudes de Hong Kong cansan. Singapur puede sentirse más pulido y menos “calle cruda”."
+      "Hong Kong humidity and crowds can fatigue after long outdoor days. Singapore can feel more polished and less “raw street” for travelers who want chaotic night markets every evening — that polish is exactly why first-timers often find logistics easier.",
+      "香港湿热与拥挤可能让长户外天更累。想要每晚都有狂野夜市的人，会觉得新加坡更精致、少一点「生猛街头」——而这种精致正是新手行程更好办的原因。",
+      "홍콩의 습도·혼잡은 긴 야외 하루 뒤 피로를 줍니다. 매일 거친 야시장을 원하는 이에게 싱가포르는 더 다듬어져 보일 수 있고, 그 정돈이 초보 물류를 쉽게 만듭니다.",
+      "La humedad y las multitudes de Hong Kong cansan. Singapur puede sentirse más pulido y menos “calle cruda” — esa misma facilidad es por la que muchos debutantes prefieren su logística."
     ),
     faq: [
       {
@@ -208,6 +235,15 @@ export const compares: ComparePage[] = [
           "都可以。轻松的第一次同行常更偏新加坡；想密集美食与海港散步更偏香港。用日期在 /decide 确认。",
           "둘 다 가능. 편안한 첫 동행은 싱가포르, 밀집 미식·항구 산책이면 홍콩. /decide에서 날짜로 확인하세요.",
           "Ambos sirven. Singapur suele ser más fácil para un primer viaje relajado; Hong Kong si quieren más comida densa y paseos al puerto. Confirma en /decide."
+        ),
+      },
+      {
+        q: L("Which is easier without speaking the local language?", "不太会当地语言哪个更省心？", "현지어를 못하면 어디가 수월?", "¿Cuál es más fácil sin el idioma local?"),
+        a: L(
+          "Singapore often feels smoother for English-first travelers. Hong Kong is still highly navigable with transit apps and English signage in core areas — your comfort with dense cities matters more than a language binary.",
+          "英语优先的旅客常觉得新加坡更顺。香港在核心区仍可用公交应用和英语标识通行——你对高密度城市的适应，往往比「会不会当地语言」二分更重要。",
+          "영어 우선 여행자에게는 싱가포르가 더 매끄러운 편입니다. 홍콩도 핵심 구역은 앱·영어 표지판으로 다닐 수 있습니다.",
+          "Singapur suele ser más fluido para quien prioriza el inglés. Hong Kong sigue siendo navegable en zonas núcleo con apps y señalética."
         ),
       },
     ],
@@ -246,10 +282,10 @@ export const compares: ComparePage[] = [
       "Elige Lisboa por encanto de ciudad en colina; Barcelona si playa e iconos a escala Gaudí son innegociables."
     ),
     tradeoffs: L(
-      "Lisbon hills tire legs. Barcelona peak seasons can feel overcrowded and pricey.",
-      "里斯本坡多费腿。巴塞罗那旺季可能过挤、更贵。",
-      "리스본 언덕은 다리가 힘듭니다. 바르셀로나 성수기는 붐비고 비쌀 수 있습니다.",
-      "Las colinas de Lisboa cansan. Barcelona en temporada alta puede saturarse y encarecerse."
+      "Lisbon hills tire legs — plan fewer “must see everything” blocks per day and budget for occasional rides. Barcelona peak seasons can feel overcrowded and pricey around iconic sights; shoulder months and early mornings help, but your Avoid list should say so if crowds are a deal-breaker.",
+      "里斯本坡多费腿——少排「一天看完」的块，并预留偶尔打车。巴塞罗那旺季在标志景点附近可能过挤、更贵；肩季和清晨有帮助，若人挤是硬伤，应写进 Avoid。",
+      "리스본 언덕은 다리가 힘듭니다 — 하루 ‘다 보기’를 줄이고 가끔 이동비를 예산에 넣으세요. 바르셀로나 성수기는 명소 주변이 붐비고 비쌀 수 있습니다. 혼잡이 딜브레이커면 Avoid에 적으세요.",
+      "Las colinas de Lisboa cansan — menos bloques “verlo todo” y presupuesto para algún trayecto. Barcelona en temporada alta puede saturarse; si las multitudes son innegociables, dilo en Avoid."
     ),
     faq: [
       {
@@ -259,6 +295,15 @@ export const compares: ComparePage[] = [
           "3–4 天往往更好「盖住」里斯本。若海滨与大体量景点重要，巴塞罗那更值得加天。把出发地航班放进 /decide。",
           "3–4일이면 리스본을 ‘커버’하기 쉬운 편입니다. 해변·대형 명소가 중요하면 바르셀로나에 날을 더. 출발 항공을 /decide에 넣으세요.",
           "Lisboa suele cubrirse mejor en 3–4 días. Barcelona premia días extra si importan playa y grandes vistas. Mete tu vuelo en /decide."
+        ),
+      },
+      {
+        q: L("Better with kids?", "带孩子哪个更合适？", "아이와 가면 어디?", "¿Mejor con niños?"),
+        a: L(
+          "Both can work. Lisbon’s hills and stairs need a stroller plan; Barcelona’s beach days are easier for energy resets. Put family pace and Avoid (long walks, late dinners) into /decide.",
+          "都可以。里斯本坡道台阶要考虑推车；巴塞罗那海滩日更容易回血。把家庭节奏和 Avoid（少长走、勿太晚吃饭）放进 /decide。",
+          "둘 다 가능. 리스본은 언덕·계단에 유모차 계획이 필요하고, 바르셀로나는 해변으로 체력을 회복하기 쉽습니다. 가족 속도와 Avoid를 /decide에 넣으세요.",
+          "Ambas sirven. Lisboa pide plan de carrito por colinas; Barcelona facilita resets en la playa. Pon ritmo familiar y Avoid en /decide."
         ),
       },
     ],

@@ -150,7 +150,7 @@ function Block({ block }: Readonly<{ block: StoryBlock }>) {
 }
 
 function StoryInterestCta({ seasonSlug, placeHint }: Readonly<{ seasonSlug: string; placeHint?: string }>) {
-  const { ui } = useStoryText()
+  const { locale, ui } = useStoryText()
   return (
     <section className="mt-10 rounded-2xl border border-border bg-muted/40 p-5 sm:p-6">
       <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
@@ -173,7 +173,7 @@ function StoryInterestCta({ seasonSlug, placeHint }: Readonly<{ seasonSlug: stri
         )}
       </p>
       <a
-        href={storyInterestMailto(placeHint)}
+        href={storyInterestMailto(placeHint, locale)}
         onClick={() => trackStoryClick("story_submit_interest", seasonSlug)}
         className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-card px-5 text-sm font-bold text-primary hover:border-primary/50"
       >

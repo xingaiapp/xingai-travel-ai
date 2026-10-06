@@ -78,10 +78,31 @@ export function trackStoryClick(
 }
 
 /** Interest gauge only — not a publish pipeline. No photo upload. */
-export function storyInterestMailto(placeHint?: string) {
-  const subject = "Travel story interest — XingAI Travel"
-  const body = placeHint
-    ? `Where I went: ${placeHint}\n\nOne sentence about the trip:\n`
-    : "Where I went:\n\nOne sentence about the trip:\n"
-  return `mailto:contact@xingai.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+export function storyInterestMailto(placeHint?: string, locale: Locale = "en") {
+  const copy =
+    locale === "zh"
+      ? {
+          subject: "旅行故事意向 — XingAI Travel",
+          withPlace: `我去过的地方：${placeHint}\n\n一句话说说这次旅行：\n`,
+          blank: "我去过的地方：\n\n一句话说说这次旅行：\n",
+        }
+      : locale === "ko"
+        ? {
+            subject: "여행 이야기 관심 — XingAI Travel",
+            withPlace: `다녀온 곳: ${placeHint}\n\n여행 한 줄 요약:\n`,
+            blank: "다녀온 곳:\n\n여행 한 줄 요약:\n",
+          }
+        : locale === "es"
+          ? {
+              subject: "Interés en historia de viaje — XingAI Travel",
+              withPlace: `Dónde fui: ${placeHint}\n\nUna frase sobre el viaje:\n`,
+              blank: "Dónde fui:\n\nUna frase sobre el viaje:\n",
+            }
+          : {
+              subject: "Travel story interest — XingAI Travel",
+              withPlace: `Where I went: ${placeHint}\n\nOne sentence about the trip:\n`,
+              blank: "Where I went:\n\nOne sentence about the trip:\n",
+            }
+  const body = placeHint ? copy.withPlace : copy.blank
+  return `mailto:contact@xingai.app?subject=${encodeURIComponent(copy.subject)}&body=${encodeURIComponent(body)}`
 }
