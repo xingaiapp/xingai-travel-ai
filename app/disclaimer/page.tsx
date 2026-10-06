@@ -1,14 +1,9 @@
 import type { Metadata } from "next"
 import { LegalPage } from "@/components/legal-page"
-import { pageMeta } from "@/lib/seo-meta"
+import { pageMetaForStaticPath } from "@/lib/seo-meta"
 
 export async function generateMetadata(): Promise<Metadata> {
-  return pageMeta({
-  path: "/disclaimer",
-  title: "Travel Disclaimer",
-  description:
-    "XingAI Travel provides suggestions and estimates, not professional advice. Verify prices, rules, and safety before you book.",
-})
+  return pageMetaForStaticPath("/disclaimer")
 }
 
 export default function Page() {

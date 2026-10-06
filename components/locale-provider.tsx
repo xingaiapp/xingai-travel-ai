@@ -30,43 +30,39 @@ export function LocaleProvider({
   initialLocale = "en",
   children,
 }: Readonly<{ initialLocale?: Locale; children: React.ReactNode }>) {
-  // Prefer URL locale from the server so /zh and /ko do not hydrate as English.
-  const [locale, setLocaleState] = useState<Locale>(initialLocale)
-  const [ready, setReady] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
+  const { locale: urlLocale, path } = stripLocalePrefix(pathname)
+  const indexable = isIndexablePublicPath(path)
+
+  // Session preference for non-indexable routes (/result, /trips). Indexable locale comes from the URL.
+  const [sessionLocale, setSessionLocale] = useState<Locale>(initialLocale)
 
   useEffect(() => {
-    const { locale: fromUrl, path } = stripLocalePrefix(pathname)
-    if (fromUrl !== "en") {
-      setLocaleState(fromUrl)
-      localStorage.setItem(STORAGE_KEY, fromUrl)
-      setReady(true)
-      return
-    }
-    if (isIndexablePublicPath(path)) {
-      setLocaleState("en")
-      setReady(true)
+    if (indexable) {
+      localStorage.setItem(STORAGE_KEY, urlLocale)
       return
     }
     const stored = localStorage.getItem(STORAGE_KEY)
-    if (isLocale(stored)) setLocaleState(stored)
-    setReady(true)
-  }, [pathname])
+    // Restoring the saved locale must wait for mount (hydration).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (isLocale(stored)) setSessionLocale(stored)
+  }, [indexable, urlLocale])
+
+  const locale: Locale = indexable ? urlLocale : sessionLocale
 
   useEffect(() => {
-    if (!ready) return
     document.documentElement.lang = htmlLang(asPublicLocale(locale))
     localStorage.setItem(STORAGE_KEY, locale)
-  }, [locale, ready])
+  }, [locale])
 
   const setLocale = useCallback(
     (next: Locale) => {
-      setLocaleState(next)
+      setSessionLocale(next)
       localStorage.setItem(STORAGE_KEY, next)
-      const { path } = stripLocalePrefix(pathname)
-      if (!isIndexablePublicPath(path)) return
-      const target = localizedPublicHref(asPublicLocale(next), path)
+      const { path: bare } = stripLocalePrefix(pathname)
+      if (!isIndexablePublicPath(bare)) return
+      const target = localizedPublicHref(asPublicLocale(next), bare)
       if (target !== pathname) router.push(target)
     },
     [pathname, router]

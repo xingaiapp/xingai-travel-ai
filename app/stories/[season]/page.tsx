@@ -2,8 +2,15 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { SeasonView } from "@/components/story-view"
 import { toShareJpeg } from "@/lib/cities/share-image"
+import { requestLocale } from "@/lib/request-locale"
 import { pageMeta } from "@/lib/seo-meta"
-import { getSeason, publishedEpisodes, visibleEpisodes, visibleSeasons } from "@/lib/stories"
+import {
+  getSeason,
+  pickText,
+  publishedEpisodes,
+  visibleEpisodes,
+  visibleSeasons,
+} from "@/lib/stories"
 
 type Props = { params: Promise<{ season: string }> }
 
@@ -16,16 +23,20 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const season = getSeason((await params).season)
   if (!season) return {}
-  const title = `${season.title.en} — ${season.subtitle.en}`
-  const description =
-    season.intro.en.length > 160 ? `${season.intro.en.slice(0, 157).trimEnd()}…` : season.intro.en
+  const locale = await requestLocale()
+  const titleText = pickText(season.title, locale)
+  const subtitle = pickText(season.subtitle, locale)
+  const title = `${titleText} — ${subtitle}`
+  const intro = pickText(season.intro, locale)
+  const description = intro.length > 160 ? `${intro.slice(0, 157).trimEnd()}…` : intro
   const image = season.cover.src ? toShareJpeg(season.cover.src) : undefined
   return {
     ...(await pageMeta({
       path: `/stories/${season.slug}`,
       title,
       description,
-      images: image ? [{ url: image, alt: season.title.en }] : undefined,
+      images: image ? [{ url: image, alt: titleText }] : undefined,
+      locale,
     })),
     robots: publishedEpisodes(season).length > 0 ? undefined : { index: false, follow: false },
   }

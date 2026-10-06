@@ -1,4 +1,8 @@
+import { pickLocalized } from "@/lib/content/types"
 import { faqItems, howItWorksSteps, howItWorksTitle } from "@/lib/content/how-faq"
+import type { Locale } from "@/lib/i18n/types"
+import { absoluteLocalized, type PublicLocale } from "@/lib/public-locale"
+import { schemaInLanguage, staticPageMetaCopy } from "@/lib/seo-page-copy"
 
 const site = "https://travel.xingai.app"
 
@@ -52,71 +56,80 @@ export const seoJsonLdGraph = {
 export const seoJsonLdHtml = JSON.stringify(seoJsonLdGraph).replace(/</g, "\\u003c")
 
 /** Page-level JSON-LD for /decide — SSR with the decision tool route. */
-export const decideJsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "@id": `${site}/decide#webpage`,
-      url: `${site}/decide`,
-      name: "Decide your trip · XingAI Travel",
-      description:
-        "Describe your real constraints, compare destinations with honest trade-offs, then open partner search links to book the key pieces.",
-      isPartOf: { "@id": `${site}/#website` },
-      about: { "@id": `${site}/#app` },
-      inLanguage: "en",
-      primaryImageOfPage: `${site}/assets/og-travel-decision-2400.jpg`,
-    },
-    {
-      "@type": "WebApplication",
-      "@id": `${site}/decide#app`,
-      name: "XingAI Travel Decision Tool",
-      url: `${site}/decide`,
-      applicationCategory: "TravelApplication",
-      operatingSystem: "Web",
-      description:
-        "Enter dates, origin, budget, travelers, and style. XingAI Travel compares destinations, names one winner and two alternatives with trade-offs, then shows book-first partner search links.",
-      isPartOf: { "@id": `${site}/#website` },
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-      inLanguage: ["en", "zh-CN", "ko", "es"],
-    },
-  ],
-} as const
+export function decideJsonLdHtml(locale: Locale | PublicLocale = "en"): string {
+  const copy = staticPageMetaCopy("/decide", locale)!
+  const url = absoluteLocalized(site, locale as PublicLocale, "/decide")
+  const lang = schemaInLanguage(locale)
+  const data = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${url}#webpage`,
+        url,
+        name: copy.title,
+        description: copy.description,
+        isPartOf: { "@id": `${site}/#website` },
+        about: { "@id": `${site}/#app` },
+        inLanguage: lang,
+        primaryImageOfPage: `${site}/assets/og-travel-decision-2400.jpg`,
+      },
+      {
+        "@type": "WebApplication",
+        "@id": `${url}#app`,
+        name: copy.title,
+        url,
+        applicationCategory: "TravelApplication",
+        operatingSystem: "Web",
+        description: copy.description,
+        isPartOf: { "@id": `${site}/#website` },
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        inLanguage: lang,
+      },
+    ],
+  }
+  return JSON.stringify(data).replace(/</g, "\\u003c")
+}
 
-export const decideJsonLdHtml = JSON.stringify(decideJsonLd).replace(/</g, "\\u003c")
-
-/** FAQPage for /faq — matches visible FAQ copy (English for schema). */
-export function faqPageJsonLdHtml(): string {
+/** FAQPage for /faq — matches visible FAQ copy in the page locale. */
+export function faqPageJsonLdHtml(locale: Locale | PublicLocale = "en"): string {
+  const L = locale as Locale
+  const url = absoluteLocalized(site, locale as PublicLocale, "/faq")
   const data = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "@id": `${site}/faq#faq`,
-    url: `${site}/faq`,
+    "@id": `${url}#faq`,
+    url,
+    inLanguage: schemaInLanguage(locale),
     isPartOf: { "@id": `${site}/#website` },
     mainEntity: faqItems.map((item) => ({
       "@type": "Question",
-      name: item.q.en,
-      acceptedAnswer: { "@type": "Answer", text: item.a.en },
+      name: pickLocalized(item.q, L),
+      acceptedAnswer: { "@type": "Answer", text: pickLocalized(item.a, L) },
     })),
   }
   return JSON.stringify(data).replace(/</g, "\\u003c")
 }
 
-/** HowTo for /how-it-works — matches visible steps. */
-export function howToJsonLdHtml(): string {
+/** HowTo for /how-it-works — matches visible steps in the page locale. */
+export function howToJsonLdHtml(locale: Locale | PublicLocale = "en"): string {
+  const L = locale as Locale
+  const url = absoluteLocalized(site, locale as PublicLocale, "/how-it-works")
+  const decideUrl = absoluteLocalized(site, locale as PublicLocale, "/decide")
   const data = {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    "@id": `${site}/how-it-works#howto`,
-    name: howItWorksTitle.en,
-    url: `${site}/how-it-works`,
+    "@id": `${url}#howto`,
+    name: pickLocalized(howItWorksTitle, L),
+    url,
+    inLanguage: schemaInLanguage(locale),
     isPartOf: { "@id": `${site}/#website` },
     step: howItWorksSteps.map((step, index) => ({
       "@type": "HowToStep",
       position: index + 1,
-      name: step.title.en,
-      text: step.body.en,
-      url: `${site}/decide`,
+      name: pickLocalized(step.title, L),
+      text: pickLocalized(step.body, L),
+      url: decideUrl,
     })),
   }
   return JSON.stringify(data).replace(/</g, "\\u003c")
@@ -129,11 +142,16 @@ export type StoryArticleInput = {
   description: string
   publishedAt?: string
   imagePath?: string
+  /** Schema language tag, e.g. en / zh-CN / ko / es */
+  inLanguage?: string
+  /** Canonical page URL including locale prefix when present. */
+  pageUrl?: string
 }
 
 /** Article + Person author for Travel Stories episodes. */
 export function storyArticleJsonLdHtml(input: StoryArticleInput): string {
-  const url = `${site}/stories/${input.seasonSlug}/${input.episodeSlug}`
+  const url =
+    input.pageUrl ?? `${site}/stories/${input.seasonSlug}/${input.episodeSlug}`
   const image = input.imagePath
     ? input.imagePath.startsWith("http")
       ? input.imagePath
@@ -147,7 +165,7 @@ export function storyArticleJsonLdHtml(input: StoryArticleInput): string {
     description: input.description,
     url,
     datePublished: input.publishedAt,
-    inLanguage: "en",
+    inLanguage: input.inLanguage ?? "en",
     isPartOf: { "@id": `${site}/#website` },
     author: {
       "@type": "Person",

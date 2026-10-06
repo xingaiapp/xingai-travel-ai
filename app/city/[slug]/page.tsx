@@ -3,9 +3,14 @@ import { notFound } from "next/navigation"
 import { CityPage } from "@/components/city/city-page"
 import { cities, getCity } from "@/lib/cities"
 import { cityOgImage } from "@/lib/cities/share-image"
+import { absoluteLocalized } from "@/lib/public-locale"
+import { requestLocale } from "@/lib/request-locale"
 import { pageMeta } from "@/lib/seo-meta"
+import { cityGuideMeta, schemaInLanguage } from "@/lib/seo-page-copy"
 
 type Props = { params: Promise<{ slug: string }> }
+
+const SITE = "https://travel.xingai.app"
 
 export const dynamicParams = false
 
@@ -16,31 +21,36 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const city = getCity((await params).slug)
   if (!city) return {}
-  const title = `First time in ${city.name.en}?`
-  const description = `${city.places.length} sourced places and ${city.routes.length} first-visit day routes for ${city.name.en} — with why, who it suits, and trade-offs.`
+  const locale = await requestLocale()
+  const name = city.name[locale] || city.name.en
+  const { title, description } = cityGuideMeta(name, city.places.length, city.routes.length, locale)
   const image = cityOgImage(city.hero.src)
   return pageMeta({
     path: `/city/${city.slug}`,
     title,
     description,
-    images: [{ url: image, alt: `${city.name.en} city guide` }],
+    images: [{ url: image, alt: `${name} city guide` }],
+    locale,
   })
 }
 
 export default async function CityRoute({ params }: Props) {
   const city = getCity((await params).slug)
   if (!city) notFound()
+  const locale = await requestLocale()
+  const url = absoluteLocalized(SITE, locale, `/city/${city.slug}`)
   // Facts only: names, coordinates and the sources behind them. No ratings, hours or prices.
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "TouristDestination",
-    name: city.name.en,
-    description: city.intro.en,
-    url: `https://travel.xingai.app/city/${city.slug}`,
+    name: city.name[locale] || city.name.en,
+    description: city.intro[locale] || city.intro.en,
+    url,
+    inLanguage: schemaInLanguage(locale),
     includesAttraction: city.places.map((place) => ({
       "@type": "TouristAttraction",
-      name: place.name.en,
-      description: place.summary.en,
+      name: place.name[locale] || place.name.en,
+      description: place.summary[locale] || place.summary.en,
       geo: { "@type": "GeoCoordinates", latitude: place.coordinates.lat, longitude: place.coordinates.lng },
       sameAs: place.sources.map((source) => source.url),
     })),

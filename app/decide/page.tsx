@@ -1,25 +1,18 @@
 import type { Metadata } from "next"
 import { DecidePage } from "@/components/decide-page"
 import { decideJsonLdHtml } from "@/lib/seo-json-ld"
-import { pageMeta } from "@/lib/seo-meta"
-
-const title = "Decide your trip · XingAI Travel"
-const description =
-  "Describe your real constraints, compare destinations with honest trade-offs, then open partner search links to book the key pieces."
+import { pageMetaForStaticPath } from "@/lib/seo-meta"
+import { requestLocale } from "@/lib/request-locale"
 
 export async function generateMetadata(): Promise<Metadata> {
-  return pageMeta({
-  path: "/decide",
-  title,
-  description,
-  absoluteTitle: true,
-})
+  return pageMetaForStaticPath("/decide")
 }
 
-export default function Page() {
+export default async function Page() {
+  const locale = await requestLocale()
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: decideJsonLdHtml }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: decideJsonLdHtml(locale) }} />
       <DecidePage />
     </>
   )

@@ -1,14 +1,9 @@
 import type { Metadata } from "next"
 import { CompareIndexView } from "@/components/content-pages"
-import { pageMeta } from "@/lib/seo-meta"
+import { pageMetaForStaticPath } from "@/lib/seo-meta"
 
 export async function generateMetadata(): Promise<Metadata> {
-  return pageMeta({
-  path: "/compare",
-  title: "Destination comparisons",
-  description:
-    "Tokyo vs Seoul, Hong Kong vs Tokyo, Lisbon vs Barcelona, and more — decision-first comparisons with clear verdicts.",
-})
+  return pageMetaForStaticPath("/compare")
 }
 
 export default function Page() {

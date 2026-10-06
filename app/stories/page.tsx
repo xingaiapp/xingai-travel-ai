@@ -1,16 +1,11 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { StoriesIndexView } from "@/components/story-view"
-import { pageMeta } from "@/lib/seo-meta"
+import { pageMetaForStaticPath } from "@/lib/seo-meta"
 import { visibleEpisodes, visibleSeasons } from "@/lib/stories"
 
 export async function generateMetadata(): Promise<Metadata> {
-  return pageMeta({
-  path: "/stories",
-  title: "Travel Stories",
-  description:
-    "First-hand Travel Stories from Hong Kong and Macau — honest takeaways from the publisher, then Decide whether the place fits your own trip. Not a user-submitted feed.",
-})
+  return pageMetaForStaticPath("/stories")
 }
 
 export default function StoriesPage() {

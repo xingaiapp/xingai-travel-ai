@@ -6,6 +6,7 @@ import {
   type PublicLocale,
 } from "@/lib/public-locale"
 import { requestLocale } from "@/lib/request-locale"
+import { staticPageMetaCopy } from "@/lib/seo-page-copy"
 
 const DEFAULT_IMAGE = {
   url: DEFAULT_OG_JPG,
@@ -67,4 +68,20 @@ export async function pageMeta({
       images: imageUrls,
     },
   }
+}
+
+/** Indexable static routes: title/description follow `x-xingai-locale`. */
+export async function pageMetaForStaticPath(path: string): Promise<Metadata> {
+  const locale = await requestLocale()
+  const copy = staticPageMetaCopy(path, locale)
+  if (!copy) {
+    throw new Error(`Missing STATIC_PAGE_COPY for ${path}`)
+  }
+  return pageMeta({
+    path,
+    title: copy.title,
+    description: copy.description,
+    absoluteTitle: copy.absoluteTitle,
+    locale,
+  })
 }
