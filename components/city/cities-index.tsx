@@ -40,8 +40,11 @@ export function CitiesIndexView({
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    setRegion(parseRegion(params.get("region")))
-    setIntent(parseIntent(params.get("intent")))
+    // Defer so SSR HTML stays the full catalog; URL filters apply after hydration.
+    queueMicrotask(() => {
+      setRegion(parseRegion(params.get("region")))
+      setIntent(parseIntent(params.get("intent")))
+    })
   }, [])
 
   function pushFilters(nextRegion: RegionFilter, nextIntent: IntentFilter) {
