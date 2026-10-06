@@ -27,6 +27,16 @@ Storage for that map was added under `xingai-travel-city-map` ([ADR 0003](./0003
 5. **Never re-rank in the browser.** Map marks do not change `/api/compare` scoring, confidence, or result order client-side. They are trip-form soft constraints only.
 6. **City search miss → Decide, not a fake guide.** Empty `/city` search offers **Decide with {q}** → `/decide?places=…`. Do not invent guide pages or ranking rows for typos / missing cities.
 7. **Progress chrome is optional.** Strip on `/`, `/city`, and `/decide` (decide only when something is marked). Not a new nav tab.
+8. **Not Trips.** Want / Been never appear on `/trips`. Trips only lists finished Decide API results in `xingai-travel-trip-history` ([ADR 0007](./0007-local-trip-history.md)). Soft-filling Decide from Want does **not** create a Trips row.
+
+### Boundary vs Your trips
+
+| | Travel map (this ADR) | Your trips (ADR 0007) |
+|--|----------------------|------------------------|
+| URL | `/city` (+ home / decide strips) | `/trips` |
+| Key | `xingai-travel-city-map` | `xingai-travel-trip-history` |
+| User action | Want / Been on a live guide | Complete Compare or Surprise me |
+| Reads the other? | No | No |
 
 ## Consequences
 
@@ -40,11 +50,13 @@ Storage for that map was added under `xingai-travel-city-map` ([ADR 0003](./0003
 
 - Soft-fill is easy to miss if the user already typed places.
 - Been → avoid is a soft demote string; the model may still surface a Been city if other constraints dominate.
+- Easy UX confusion with `/trips` unless copy and docs state the split (see ADR 0007 § Two browser memories).
 
 ## Alternatives considered
 
 - **Public Life Travel 100 page:** rejected — no honest ranked evidence set.
 - **Client-side re-sort of compare results from Want/Been:** rejected — breaks decide-engine trust and ADR 0008’s “city data never feeds comparison” rule.
+- **Show Want marks on `/trips`:** rejected — would redefine Trips as a wishlist; keep decision history honest.
 - **Account-synced map:** deferred; needs auth ADR and product signal first.
 - **Auto-create city pages from search misses:** rejected — quality bar is Hong Kong–class static guides (ADR 0008).
 

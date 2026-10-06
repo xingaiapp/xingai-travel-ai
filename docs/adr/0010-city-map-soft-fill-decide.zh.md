@@ -27,6 +27,16 @@ Travel AI 以决策为先（[ADR 0001](./0001-compare-first-product-scope.zh.md)
 5. **禁止浏览器重排。** 地图标记不改 `/api/compare` 打分、置信度或结果顺序。只作表单软约束。
 6. **城市搜索未命中 → Decide，不造假指南。** `/city` 空搜提供 **Decide with {q}** → `/decide?places=…`。不为错字 / 缺城发明指南页或排行行。
 7. **进度条可选。** 出现在 `/`、`/city`、`/decide`（decide 仅在有标记时）。不是新导航 Tab。
+8. **不是 Trips。** Want / Been 绝不出现在 `/trips`。Trips 只列出 `xingai-travel-trip-history` 里已完成的 Decide API 结果（[ADR 0007](./0007-local-trip-history.zh.md)）。用 Want 软填 Decide **不会**因此生成 Trips 行。
+
+### 与 Your trips 的边界
+
+| | 旅行地图（本 ADR） | Your trips（ADR 0007） |
+|--|-------------------|------------------------|
+| URL | `/city`（+ 首页 / decide 条） | `/trips` |
+| 键 | `xingai-travel-city-map` | `xingai-travel-trip-history` |
+| 用户动作 | 在已上线指南上点 Want / Been | 完成 Compare 或 Surprise me |
+| 读另一套？ | 否 | 否 |
 
 ## 后果
 
@@ -40,11 +50,13 @@ Travel AI 以决策为先（[ADR 0001](./0001-compare-first-product-scope.zh.md)
 
 - 用户若已输入 places，软填不会发生，容易被忽略。
 - Been → avoid 只是软降级字符串；其他约束更强时模型仍可能推荐 Been 城市。
+- 容易和 `/trips` 搞混 — 文案与 ADR 0007「两套浏览器记忆」必须写清。
 
 ## 曾考虑的替代方案
 
 - **公开 Life Travel 100 页：** 否决 — 没有诚实的排名证据集。
 - **浏览器按 Want/Been 重排比较结果：** 否决 — 破坏决策引擎信任，且违反 ADR 0008「城市数据不进入比较」。
+- **在 `/trips` 展示 Want：** 否决 — 会把 Trips 改成心愿单；决策历史必须诚实。
 - **账号同步地图：** 延后；需独立 auth ADR 与产品信号。
 - **搜索未命中自动建城页：** 否决 — 质量条对齐香港级静态指南（ADR 0008）。
 

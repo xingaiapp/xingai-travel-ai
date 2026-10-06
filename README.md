@@ -41,7 +41,7 @@ Do not thrash title / brand strings for ~30 days unless a factual error. Brand n
 | **City guides batch (2026-10-06)** | Live on `/city`: Top 10 + **Xi'an** (Shaanxi 陕西 — not Shanxi 山西). Each guide 15–25 places + 3 routes (ADR 0008). `/city`: **search** + region chips + **trip-style intents** (First city / Beach & rest / Food-first / Culture & history) via `?intent=` / `?region=`. Home **Editor picks / Worth seeing once** + “Browse by trip style”. |
 | **Compare honesty (2026-10-06)** | Related links use city/compare titles (not raw paths); FAQ path linkify; Match Score is the single headline fit number; walkability nudge + flight tie-break; baseline security headers; drop stale “Top 10” copy. [ADR 0013](./docs/adr/0013-compare-honesty-match-headers.md). |
 | **Decide trust (2026-10-06)** | Empty Decide defaults (no SFO / wishes / avoid prefill); region examples stay placeholders. Avoid is hard in compare prompt + normalize (short trips demote ~9h+ flights). Remote city OG uses first-party PNG; home hero drops `unoptimized` (keep first-slide `priority`) — [ADR 0012](./docs/adr/0012-decide-trust-avoid-hard.md) · [tech blog](./docs/tech-blog/2026-10-06-next-image-hero-unoptimized-vs-priority.md). |
-| **Your travel map (2026-10-06)** | Per-browser **Want to go / Been** on live city guides (`localStorage` `xingai-travel-city-map`). Progress strip on `/`, `/city`, and `/decide` (decide only when marked). Not a global Top 100 or Desire Score — device-local memory only; does **not** change Decide ranking. [ADR 0010](./docs/adr/0010-city-map-soft-fill-decide.md). |
+| **Your travel map (2026-10-06)** | Per-browser **Want to go / Been** on live city guides (`localStorage` `xingai-travel-city-map`). Progress strip on `/`, `/city`, and `/decide` (decide only when marked). Not a global Top 100, and **not Your Trips** — Trips only lists finished Decide results (`xingai-travel-trip-history`). [ADR 0010](./docs/adr/0010-city-map-soft-fill-decide.md) · [ADR 0007](./docs/adr/0007-local-trip-history.md). |
 | **SEO/AEO pass (2026-10-06)** | `/city` no longer CSR-bailouts (`useSearchParams` removed — filters from server `searchParams`). Shared `pageMeta()` sets self-canonical + matching `og:url` / Twitter on all sitemap routes. City titles shortened; H1 drops duplicate Latin `localName`. [ADR 0011](./docs/adr/0011-first-html-seo-honesty.md). |
 | **City miss → Decide (2026-10-06)** | `/city` empty search offers **Decide with {q}** → `/decide?places=…`. No fake guide pages. [ADR 0010](./docs/adr/0010-city-map-soft-fill-decide.md). |
 | **Decide reads travel map (2026-10-06)** | On Decide hydrate, empty `placesInMind` soft-fills from Want marks; Been appends to `avoid` (`Already visited: …`). Never overwrites URL/session text; never re-ranks compare results in the browser. [ADR 0010](./docs/adr/0010-city-map-soft-fill-decide.md). |
@@ -253,7 +253,10 @@ npm run metrics              # last 7 days; `npm run metrics -- 30` for 30
 | `xingai-travel-plan-result` | Plan payload (may arrive after navigation) |
 | `xingai-travel-locale` | UI language (`localStorage`) |
 | `theme` | Light / dark / system (`localStorage`) |
-| `xingai-travel-city-map` | Want / Been city slugs for live guides (`localStorage`) |
+| `xingai-travel-trip-history` | Recent Decide results for `/trips` (`localStorage`) — **not** Want/Been |
+| `xingai-travel-city-map` | Want / Been city slugs for live guides (`localStorage`) — **not** Trips |
+
+**Two browser memories:** Want/Been never appear on `/trips`; finished Decide results never appear as city-map marks. Soft-fill from Want into Decide does not create a Trips row. See [ADR 0007](./docs/adr/0007-local-trip-history.md) and [ADR 0010](./docs/adr/0010-city-map-soft-fill-decide.md).
 
 Event `xingai-travel-compare-updated` refreshes the mobile drawer “Continue your last trip” card.
 

@@ -21,6 +21,15 @@
 4. **Saved 和 Profile 从导航中移除**，等真正做好再放回来，不留占位入口。
 5. **用户可控：** 每条记录都能单独删除，也有「全部清除」按钮。页面上注明数据只保存在这个浏览器里，隐私页也同步说明。`/trips` 设为 `noindex`，不放进 sitemap。
 
+### 两套浏览器记忆（不要混）
+
+| 表面 | 存储键 | 存什么 | 怎么写进去 |
+|------|--------|--------|------------|
+| **Your trips**（`/trips`） | `xingai-travel-trip-history` | 已完成的 Decide 结果（compare / inspire） | 跑完 Decide → API 成功 |
+| **Your travel map**（`/city`、首页条） | `xingai-travel-city-map` | 已上线指南上的 Want / Been | 在指南上点 Want 或 Been |
+
+在 [/city](https://travel.xingai.app/city) 标 Want **绝不会**写入 Trips 行。打开 [/trips](https://travel.xingai.app/trips) **绝不会**列出城市地图标记。Want 可以软填 Decide 表单（[ADR 0010](./0010-city-map-soft-fill-decide.zh.md)）；那仍然不是 Trips 条目，直到一次决策完成。
+
 ## 影响
 
 **正面**
@@ -32,13 +41,17 @@
 
 - 历史不能跨设备同步，清除网站数据后会一起删除。
 - 记录保留生成结果时使用的语言。
+- 用户可能以为 Want 会出现在 `/trips` — 产品文案与 ADR 0010 必须把边界说清楚。
 
 ## 考虑过的替代方案
 
 - **保留「即将推出」入口**：否决，因为它就是死导航。
 - **账户 + 服务端存储**：暂不采用，按 ADR 0001 属于范围外。
+- **把 Want 合并进 Trips**：否决 — 城市心愿单不是决策；混在一起会让 `/trips` 对「最近决策」撒谎。
 
 ## 相关
 
 - `lib/trip-history.ts`、`components/trips-page.tsx`、`app/trips/page.tsx`
 - `components/decide-page.tsx`（写入记录）、`components/app-chrome.tsx`（导航）
+- [ADR 0010](./0010-city-map-soft-fill-decide.zh.md)（城市地图 — 另一把键）
+- [ADR 0003](./0003-session-storage-client-state.zh.md)
