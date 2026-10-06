@@ -8,6 +8,7 @@ type LegalCopy = {
   summary: string
   zhBlurb: string
   koBlurb: string
+  esBlurb: string
   sections: [string, string][]
   effectiveDate: string
 }
@@ -21,6 +22,8 @@ const copy: Record<LegalPageKind, LegalCopy> = {
       "本页说明 XingAI Travel 如何处理行程输入、AI 处理、限流、分析和本机存储。隐私问题请发邮件至 contact@xingai.app。",
     koBlurb:
       "이 페이지는 여행 입력, AI 처리, 속도 제한, 분석, 기기 저장을 어떻게 다루는지 설명합니다. 문의: contact@xingai.app.",
+    esBlurb:
+      "Esta página explica cómo XingAI Travel trata entradas del viaje, IA, límites, analítica y almacenamiento local. Privacidad: contact@xingai.app.",
     effectiveDate: "Effective date: 2026-10-06",
     sections: [
       [
@@ -75,6 +78,8 @@ const copy: Record<LegalPageKind, LegalCopy> = {
       "Use XingAI Travel as a decision-support tool. You remain responsible for booking choices, travel documents, and final verification.",
     zhBlurb: "本页说明使用条款：建议仅供决策参考，预订与合规由您自行负责。问题请联系 contact@xingai.app。",
     koBlurb: "이용 약관입니다. 제안은 참고용이며 예약·규정 준수는 사용자 책임입니다. 문의: contact@xingai.app.",
+    esBlurb:
+      "Términos de uso: las sugerencias son apoyo a la decisión; reservas y cumplimiento son tu responsabilidad. Contacto: contact@xingai.app.",
     effectiveDate: "Effective date: 2026-10-06",
     sections: [
       [
@@ -109,6 +114,8 @@ const copy: Record<LegalPageKind, LegalCopy> = {
       "Travel conditions change. Recommendations are based on the information available to the system and the constraints you provide.",
     zhBlurb: "旅行条件会变化。预订前请自行核对实时价格、入境规则、安全信息与可用性。",
     koBlurb: "예약 전 실시간 가격, 입국 규정, 안전 정보, 가능 여부를 직접 확인하세요.",
+    esBlurb:
+      "Las condiciones de viaje cambian. Antes de reservar, verifica precios, normas de entrada, seguridad y disponibilidad.",
     effectiveDate: "Effective date: 2026-10-06",
     sections: [
       [
@@ -139,6 +146,8 @@ const copy: Record<LegalPageKind, LegalCopy> = {
       "Our product principle is simple: decision quality comes first; affiliate links come after the decision.",
     zhBlurb: "决策质量优先；联盟链接只在推荐之后出现，且不影响排名。问题请联系 contact@xingai.app。",
     koBlurb: "추천 품질이 먼저입니다. 제휴 링크는 결정 이후에만 나타나며 순위에 영향을 주지 않습니다. 문의: contact@xingai.app.",
+    esBlurb:
+      "Primero la calidad de la decisión; los enlaces de afiliados aparecen después y no cambian el ranking. Contacto: contact@xingai.app.",
     effectiveDate: "Effective date: 2026-10-06",
     sections: [
       ["Decision first", "Destination winners, rankings, confidence, and trade-off explanations are based on trip fit, not commission."],
@@ -175,6 +184,10 @@ export function LegalPage({ kind }: Readonly<{ kind: LegalPageKind }>) {
           <p className="mt-2">
             <strong className="text-foreground">한국어：</strong>
             {page.koBlurb}
+          </p>
+          <p className="mt-2">
+            <strong className="text-foreground">Español：</strong>
+            {page.esBlurb}
           </p>
         </div>
 

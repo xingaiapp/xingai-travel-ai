@@ -49,7 +49,8 @@ export function LocaleProvider({
     if (isLocale(stored)) setSessionLocale(stored)
   }, [indexable, urlLocale])
 
-  const locale: Locale = indexable ? urlLocale : sessionLocale
+  // Prefixed URLs win. Bare English URLs trust initialLocale from `app/[locale]` (rewrite → /en/…).
+  const locale: Locale = indexable ? (urlLocale !== "en" ? urlLocale : initialLocale) : sessionLocale
 
   useEffect(() => {
     document.documentElement.lang = htmlLang(asPublicLocale(locale))

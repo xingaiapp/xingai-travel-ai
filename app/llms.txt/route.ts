@@ -52,7 +52,12 @@ Core flow:
 - Recommend one best-fit destination plus two alternatives.
 - Produce a book-first checklist and practical itinerary. Partner search links appear after the decision.
 
-Languages: English (unprefixed URLs), 中文 (/zh/…), 한국어 (/ko/…), Español (/es/…). Indexable pages expose hreflang across those four; /result and /trips stay session-only and unprefixed.
+Languages (same content, locale in the path; English unprefixed):
+- English: /, /decide, /city, /compare, /guides, /stories, /faq, /how-it-works, legal pages
+- 中文: /zh, /zh/decide, /zh/city, /zh/compare, /zh/guides, /zh/stories, /zh/faq, /zh/how-it-works, /zh/privacy, …
+- 한국어: /ko, /ko/decide, /ko/city, …
+- Español: /es, /es/decide, /es/city, …
+Indexable pages expose hreflang (en, zh-CN, ko, es, x-default). /result and /trips stay session-only and unprefixed.
 
 Primary pages:
 - / (product home; primary action is Make My Travel Decision)

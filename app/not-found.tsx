@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { AppShell } from "@/components/app-shell"
 import { NotFoundView } from "@/components/not-found-view"
 
 export const metadata: Metadata = {
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 }
 
 export default function NotFound() {
-  return <NotFoundView />
+  return (
+    <AppShell>
+      <NotFoundView />
+    </AppShell>
+  )
 }

@@ -5,7 +5,6 @@ import {
   openGraphLocale,
   type PublicLocale,
 } from "@/lib/public-locale"
-import { requestLocale } from "@/lib/request-locale"
 import { staticPageMetaCopy } from "@/lib/seo-page-copy"
 
 const DEFAULT_IMAGE = {
@@ -25,12 +24,11 @@ type PageMetaInput = {
   images?: { url: string; alt?: string }[]
   type?: "website" | "article"
   publishedTime?: string
-  /** Override request locale (tests / rare callers). */
-  locale?: PublicLocale
+  locale: PublicLocale
 }
 
 /** Shared Metadata for indexable pages: locale-aware canonical + hreflang + OG/Twitter. */
-export async function pageMeta({
+export function pageMeta({
   path,
   title,
   description,
@@ -38,9 +36,8 @@ export async function pageMeta({
   images = [DEFAULT_IMAGE],
   type = "website",
   publishedTime,
-  locale: localeOverride,
-}: PageMetaInput): Promise<Metadata> {
-  const locale = localeOverride ?? (await requestLocale())
+  locale,
+}: PageMetaInput): Metadata {
   const bare = path.startsWith("/") ? path : `/${path}`
   const alt = alternatesFor(SITE, bare, locale)
   const ogImages = images.map((image) =>
@@ -70,9 +67,8 @@ export async function pageMeta({
   }
 }
 
-/** Indexable static routes: title/description follow `x-xingai-locale`. */
-export async function pageMetaForStaticPath(path: string): Promise<Metadata> {
-  const locale = await requestLocale()
+/** Indexable static routes: title/description from the `[locale]` segment. */
+export function pageMetaForStaticPath(path: string, locale: PublicLocale): Metadata {
   const copy = staticPageMetaCopy(path, locale)
   if (!copy) {
     throw new Error(`Missing STATIC_PAGE_COPY for ${path}`)

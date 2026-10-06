@@ -2,12 +2,8 @@ import type { Metadata, Viewport } from "next"
 import { Fraunces, Inter } from "next/font/google"
 import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
-import { AppChrome } from "@/components/app-chrome"
-import { LocaleProvider } from "@/components/locale-provider"
 import { SeoJsonLd } from "@/components/seo-json-ld"
 import { ThemeProvider, themeBootScript } from "@/components/theme-provider"
-import { htmlLang } from "@/lib/public-locale"
-import { requestLocale } from "@/lib/request-locale"
 import "./globals.css"
 
 const inter = Inter({
@@ -72,20 +68,16 @@ export const viewport: Viewport = {
   ],
 }
 
-export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const locale = await requestLocale()
+/** No `headers()` here — keeps the tree eligible for static generation / CDN cache. */
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang={htmlLang(locale)} suppressHydrationWarning className={`dark ${inter.variable} ${fraunces.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`dark ${inter.variable} ${fraunces.variable}`}>
       <body className="font-sans antialiased">
         <Script id="theme-boot" strategy="beforeInteractive">
           {themeBootScript}
         </Script>
         <SeoJsonLd />
-        <ThemeProvider>
-          <LocaleProvider initialLocale={locale}>
-            <AppChrome>{children}</AppChrome>
-          </LocaleProvider>
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>
