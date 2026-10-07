@@ -93,6 +93,7 @@ function mobileHeaderTitle(pathname: string, messages: Messages) {
   if (pathname === "/result") {
     return messages.result.breadcrumb.split("›").pop()?.trim() ?? messages.chrome.decide
   }
+  if (pathname === "/affiliate-disclosure") return messages.chrome.mobileAffiliate
   const legal = legalLinks.find((item) => pathname === item.href)
   if (legal) return messages.chrome[legal.key]
   if (pathname.startsWith("/stories")) return messages.chrome.stories
@@ -101,7 +102,7 @@ function mobileHeaderTitle(pathname: string, messages: Messages) {
   if (pathname === "/compare" || pathname.startsWith("/compare/")) return messages.content.compareNav
   if (pathname === "/guides" || pathname.startsWith("/guides/")) return messages.content.guidesNav
   if (pathname === "/faq") return messages.content.faqNav
-  if (pathname === "/how-it-works") return messages.content.howItWorksNav
+  if (pathname === "/how-it-works") return messages.chrome.mobileHowItWorks
   return messages.chrome.decide
 }
 

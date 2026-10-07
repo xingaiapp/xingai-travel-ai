@@ -23,6 +23,8 @@ export const zh: Messages = {
     terms: "条款",
     disclaimer: "免责声明",
     affiliate: "联盟披露",
+    mobileHowItWorks: "如何运作",
+    mobileAffiliate: "联盟披露",
     exploreBetter: "先选对旅行",
     exploreBetterBody: "先选对旅行，再规划每天怎么走。",
     moreNav: "更多",
