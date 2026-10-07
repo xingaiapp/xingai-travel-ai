@@ -29,17 +29,11 @@ const nextConfig = {
           { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },
         ],
       },
-      // /assets files keep stable names (OG crawlers and old links point at them), so they are not
-      // content-hashed. URLs that carry Vercel's per-deployment `?dpl=` are unique per deploy and can
-      // be cached forever; bare URLs get a short TTL so an in-place re-export shows up within the hour.
+      // /assets files keep stable names (OG crawlers and old links point at them) and are re-exported
+      // in place, so they get a short TTL rather than `immutable`. A long cache would need content-hashed
+      // names; Vercel's `?dpl=` cannot be used for that — skew protection consumes it before header rules run.
       {
         source: "/assets/:path*",
-        has: [{ type: "query", key: "dpl" }],
-        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
-      },
-      {
-        source: "/assets/:path*",
-        missing: [{ type: "query", key: "dpl" }],
         headers: [{ key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=86400" }],
       },
     ]
