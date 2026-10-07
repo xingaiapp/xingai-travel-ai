@@ -43,6 +43,12 @@ export interface GuidePage {
   relatedCompareSlugs?: string[]
 }
 
+/** A titled block of decision context (seasons, getting there, base, who should skip). */
+export interface ContentSection {
+  heading: Localized
+  body: Localized
+}
+
 export interface FaqItem {
   q: Localized
   a: Localized
