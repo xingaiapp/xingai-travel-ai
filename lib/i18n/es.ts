@@ -23,6 +23,8 @@ export const es: Messages = {
     terms: "Términos",
     disclaimer: "Aviso legal",
     affiliate: "Divulgación de afiliados",
+    mobileHowItWorks: "Método",
+    mobileAffiliate: "Afiliados",
     exploreBetter: "Decide mejor",
     exploreBetterBody: "Elige el viaje correcto antes de planear los días.",
     moreNav: "Más",

@@ -23,6 +23,9 @@ export interface Messages {
     terms: string
     disclaimer: string
     affiliate: string
+    /** Shorter labels for the 375px mobile title bar, where the full nav label truncates. */
+    mobileHowItWorks: string
+    mobileAffiliate: string
     exploreBetter: string
     exploreBetterBody: string
     moreNav: string

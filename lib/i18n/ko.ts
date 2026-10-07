@@ -23,6 +23,8 @@ export const ko: Messages = {
     terms: "이용약관",
     disclaimer: "면책고지",
     affiliate: "제휴 고지",
+    mobileHowItWorks: "작동 방식",
+    mobileAffiliate: "제휴 고지",
     exploreBetter: "더 나은 결정",
     exploreBetterBody: "일정을 짜기 전에 맞는 여행을 먼저 고르세요.",
     moreNav: "더보기",

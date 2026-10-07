@@ -23,6 +23,8 @@ export const en: Messages = {
     terms: "Terms",
     disclaimer: "Disclaimer",
     affiliate: "Affiliate disclosure",
+    mobileHowItWorks: "Method",
+    mobileAffiliate: "Affiliates",
     exploreBetter: "Decide better",
     exploreBetterBody: "Choose the right trip before you plan the days.",
     moreNav: "More",
