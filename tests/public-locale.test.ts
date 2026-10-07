@@ -15,6 +15,15 @@ describe("public-locale", () => {
     expect(stripLocalePrefix("/decide")).toEqual({ locale: "en", path: "/decide" })
   })
 
+  it("treats the prerendered /en rewrite target like the bare English URL", () => {
+    expect(stripLocalePrefix("/en/compare/lisbon-vs-barcelona")).toEqual({
+      locale: "en",
+      path: "/compare/lisbon-vs-barcelona",
+    })
+    expect(stripLocalePrefix("/en")).toEqual({ locale: "en", path: "/" })
+    expect(stripLocalePrefix("/enchanted")).toEqual({ locale: "en", path: "/enchanted" })
+  })
+
   it("marks session paths non-indexable", () => {
     expect(isIndexablePublicPath("/result")).toBe(false)
     expect(isIndexablePublicPath("/trips")).toBe(false)
