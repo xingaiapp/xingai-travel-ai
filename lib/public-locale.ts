@@ -28,10 +28,15 @@ export function asPublicLocale(lang: string): PublicLocale {
   return isPublicLocale(lang) ? lang : "en"
 }
 
-/** Path the page actually renders, plus the locale prefix if one was present. */
+/**
+ * Path the page actually renders, plus the locale prefix if one was present.
+ * `/en/…` is accepted too: the proxy rewrites bare English URLs to `/en/…`, and that is the
+ * pathname `usePathname()` sees while English pages are prerendered. Treating it as bare keeps
+ * the static HTML identical to the first client render (no hydration mismatch).
+ */
 export function stripLocalePrefix(pathname: string): { locale: PublicLocale; path: string } {
   const path = pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname || "/"
-  const match = path.match(/^\/(zh|ko|es)(?=\/|$)/)
+  const match = path.match(/^\/(en|zh|ko|es)(?=\/|$)/)
   if (!match) return { locale: "en", path }
   const rest = path.slice(match[0].length) || "/"
   return { locale: match[1] as PublicLocale, path: rest }
