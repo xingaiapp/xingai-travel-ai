@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server"
 import OpenAI from "openai"
 import { z } from "zod"
 import { normalizeBudget } from "@/lib/budget"
+import { neutralizeNationalityClaims } from "@/lib/plan-warnings"
 import { mockPlanResult, mockRawBudget } from "@/lib/mock-data"
 import { logDecisionModelFailure } from "@/lib/openai-safe-log"
 import { buildPlanPrompt } from "@/lib/prompts"
@@ -79,7 +80,12 @@ export async function POST(request: NextRequest) {
     try {
       const plan = JSON.parse(raw) as PlanResult & { budgetEstimate?: unknown }
       // Totals and the fits/over verdict are arithmetic on validated lines — never the model's own sums.
-      return { ...plan, budgetEstimate: normalizeBudget(plan.budgetEstimate, tripContext) }
+      return {
+        ...plan,
+        budgetEstimate: normalizeBudget(plan.budgetEstimate, tripContext),
+        // Backstop for the prompt rule: no nationality-specific visa claims reach the page.
+        warnings: neutralizeNationalityClaims(plan.warnings, tripContext.locale),
+      }
     } catch (err) {
       logDecisionModelFailure("plan", err, {
         finish_reason: choice?.finish_reason,

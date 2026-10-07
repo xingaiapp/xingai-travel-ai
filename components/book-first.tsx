@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useRef } from "react"
 import { BedDouble, CalendarCheck, ExternalLink, MapPin, Plane } from "lucide-react"
 import { useLocale } from "@/components/locale-provider"
-import { affiliateIdsConfigured, buildAffiliateLinks, extractOriginCode, guessIata, usableDates } from "@/lib/affiliate"
+import { affiliateIdsConfigured, buildAffiliateLinks, usableDates } from "@/lib/affiliate"
+import { airportCodeFor, originAirportCode } from "@/lib/airports"
 import type { PlanResult, TripContext } from "@/lib/types"
 
 interface BookCardProps {
@@ -71,12 +72,12 @@ export function BookFirst({ plan, trip }: BookFirstProps) {
   const rootRef = useRef<HTMLDivElement>(null)
 
   const affiliateLinks = useMemo(() => {
-    const originCode = trip ? extractOriginCode(trip.origin) : ""
-    const destCode = guessIata(winner)
+    const destinationCity = winner.split(",")[0].trim()
     return buildAffiliateLinks({
-      originCode,
-      destinationCity: winner.split(",")[0].trim(),
-      destinationCode: destCode,
+      originCode: trip ? originAirportCode(trip.origin) : null,
+      originName: trip?.origin.replace(/\s*\([^)]*\)\s*$/, ""),
+      destinationCity,
+      destinationCode: airportCodeFor(winner),
       dates: { checkIn: trip?.dates.from ?? "", checkOut: trip?.dates.to ?? "" },
       travelers: trip?.travelers.count,
     })
