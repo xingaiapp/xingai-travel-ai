@@ -29,6 +29,19 @@ const nextConfig = {
           { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },
         ],
       },
+      // /assets files keep stable names (OG crawlers and old links point at them), so they are not
+      // content-hashed. URLs that carry Vercel's per-deployment `?dpl=` are unique per deploy and can
+      // be cached forever; bare URLs get a short TTL so an in-place re-export shows up within the hour.
+      {
+        source: "/assets/:path*",
+        has: [{ type: "query", key: "dpl" }],
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
+        source: "/assets/:path*",
+        missing: [{ type: "query", key: "dpl" }],
+        headers: [{ key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=86400" }],
+      },
     ]
   },
   // My Hong Kong Season 1 rebuilt 2026-09-28 (Macau-style EP01–EP02). Old long-form slugs redirect.

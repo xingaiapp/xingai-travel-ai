@@ -13,10 +13,28 @@ import {
   guides,
   howItWorksDirectAnswer,
   howItWorksLead,
+  howItWorksSections,
   howItWorksSteps,
   howItWorksTitle,
 } from "@/lib/content"
-import { pickLocalized } from "@/lib/content/types"
+import { getCompareSections } from "@/lib/content/compare-sections"
+import { getGuideSections } from "@/lib/content/guide-sections"
+import { pickLocalized, type ContentSection } from "@/lib/content/types"
+import type { Locale } from "@/lib/i18n/types"
+
+function ContentSections({ sections, locale }: Readonly<{ sections: ContentSection[]; locale: Locale }>) {
+  if (sections.length === 0) return null
+  return (
+    <div className="mt-8 space-y-6">
+      {sections.map((section) => (
+        <section key={pickLocalized(section.heading, locale)}>
+          <h2 className="text-base font-extrabold">{pickLocalized(section.heading, locale)}</h2>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{pickLocalized(section.body, locale)}</p>
+        </section>
+      ))}
+    </div>
+  )
+}
 
 export function HowItWorksView() {
   const { messages, locale } = useLocale()
@@ -39,6 +57,7 @@ export function HowItWorksView() {
           </li>
         ))}
       </ol>
+      <ContentSections sections={howItWorksSections} locale={locale} />
       <DecideCta />
       <p className="mt-6 text-sm">
         <Link href="/faq" className="font-semibold text-primary hover:underline">
@@ -208,6 +227,8 @@ export function CompareDetailView({ slug }: Readonly<{ slug: string }>) {
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{pickLocalized(page.tradeoffs, locale)}</p>
       </section>
 
+      <ContentSections sections={getCompareSections(page.slug)} locale={locale} />
+
       <FaqBlock
         items={page.faq.map((item) => ({
           q: pickLocalized(item.q, locale),
@@ -291,6 +312,7 @@ export function GuideDetailView({ slug }: Readonly<{ slug: string }>) {
           ))}
         </ul>
       </section>
+      <ContentSections sections={getGuideSections(page.slug)} locale={locale} />
       <FaqBlock
         items={page.faq.map((item) => ({
           q: pickLocalized(item.q, locale),

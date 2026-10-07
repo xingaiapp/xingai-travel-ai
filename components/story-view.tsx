@@ -27,11 +27,15 @@ function useStoryText() {
 export function StoryImage({
   photo,
   className,
-  sizes: _sizes,
   priority = false,
-  /** Kept for call-site compat; delivery always uses the 1600w (or direct) master. */
-  hires: _hires = true,
-}: Readonly<{ photo: StoryPhoto; className?: string; sizes?: string; priority?: boolean; hires?: boolean }>) {
+}: Readonly<{
+  photo: StoryPhoto
+  className?: string
+  /** `sizes` / `hires` stay in the type for call-site compat; delivery always uses the 1600w (or direct) master. */
+  sizes?: string
+  priority?: boolean
+  hires?: boolean
+}>) {
   const { t } = useStoryText()
   if (!photo.src) {
     return (

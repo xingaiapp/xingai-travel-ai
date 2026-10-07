@@ -135,8 +135,36 @@ const copy: Record<LegalPageKind, LegalCopy> = {
         "Model output can be incomplete, outdated, or wrong. Match Scores, walkability notes, flight estimates, and itineraries are derived from your inputs and model judgment — not a live ticket or hotel inventory feed. Always re-check before you commit money or travel.",
       ],
       [
+        "Weather and seasons",
+        "Weather notes describe typical conditions for your dates, not a forecast. Storm seasons, heat waves, heavy rain, and air-quality events can change a trip at short notice. Check an official forecast and any storm advisories close to departure.",
+      ],
+      [
+        "Flights and connections",
+        "Flight times and stop counts are planning estimates from your origin. Airlines add, cut, and reschedule routes, and nonstop service can be seasonal. The real itinerary, fare, and baggage rules are the ones shown by the airline or booking site when you buy.",
+      ],
+      [
+        "Visas, entry, and health rules",
+        "Entry requirements depend on your nationality, passport validity, residence, and travel history, and they change. XingAI Travel does not determine whether you need a visa, an electronic travel authorization, or vaccinations. Check official government sources for every country on your route, including transit stops.",
+      ],
+      [
+        "City guides and Stories",
+        "City guides list places with sources and deliberately leave out opening hours and prices, because those change. Places can still close, move, or change access. Stories describe one person's trip at one point in time; they are not a guarantee that your experience will match, and they never change destination rankings.",
+      ],
+      [
+        "Accessibility and mobility",
+        "Walkability labels assume typical mobility. Hills, stairs, cobbles, station access, and heat can make a “walkable” city difficult for some travelers. If step-free routes or medical needs matter, confirm accessibility directly with transport operators, hotels, and venues.",
+      ],
+      [
+        "Third-party sites",
+        "Partner and reference links lead to sites we do not control. Their content, prices, availability, terms, and privacy practices are their responsibility. A link is not an endorsement of every listing on that site.",
+      ],
+      [
         "Emergency and safety",
         "Follow official government, airline, hotel, health, and local authority guidance. In an emergency, contact local emergency services — not XingAI.",
+      ],
+      [
+        "Questions",
+        "If you find something on XingAI Travel that looks wrong or out of date, email contact@xingai.app so we can review and correct it.",
       ],
     ],
   },
@@ -154,6 +182,30 @@ const copy: Record<LegalPageKind, LegalCopy> = {
       ["Affiliate after trust", "Booking links may appear after the recommendation, comparison, and book-first checklist are shown."],
       ["Possible compensation", "Some booking links may earn XingAI a commission at no extra cost to you — only when partner IDs are configured."],
       ["No pay-to-rank", "Affiliate relationships should not determine which destination is recommended or how trade-offs are explained."],
+      [
+        "Which links are involved",
+        "After a decision, the Book-first section can link to Skyscanner and Google Flights for flights, Booking.com and Expedia for stays, and Viator and GetYourGuide for tours and activities. Google Flights is a plain search link and is not part of any affiliate program.",
+      ],
+      [
+        "Current status",
+        "As of the effective date above, no partner IDs are configured. Every booking link is a plain search URL, XingAI earns no commission from it, and the note next to the links says so. If partner IDs are added later, that note will change to say some links may earn a commission, and this page will be updated.",
+      ],
+      [
+        "How a commission would work",
+        "If a partner ID is configured and you book after clicking a link, the partner may pay XingAI a commission. You pay the partner's normal price; XingAI does not add a fee. Commission rates and rules are set by each partner program.",
+      ],
+      [
+        "What partners receive",
+        "Booking links can include the destination, your travel dates, the number of travelers, and for flights the airport codes, so the partner's search opens pre-filled. We do not send your name, email address, budget, or trip notes. Once you are on a partner site, its own cookies, tracking, and privacy policy apply.",
+      ],
+      [
+        "Where links never appear",
+        "Partner booking links are not placed in Stories, city guides, comparison pages, or decision guides. They appear only in the Book-first section of a decision result, after the recommendation and trade-offs.",
+      ],
+      [
+        "Questions",
+        "Questions about partner links or this disclosure: contact@xingai.app.",
+      ],
     ],
   },
 }
