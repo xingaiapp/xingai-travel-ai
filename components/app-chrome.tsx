@@ -100,6 +100,8 @@ function mobileHeaderTitle(pathname: string, messages: Messages) {
   if (pathname === "/city" || pathname.startsWith("/city/")) return messages.content.citiesNav
   if (pathname === "/compare" || pathname.startsWith("/compare/")) return messages.content.compareNav
   if (pathname === "/guides" || pathname.startsWith("/guides/")) return messages.content.guidesNav
+  if (pathname === "/faq") return messages.content.faqNav
+  if (pathname === "/how-it-works") return messages.content.howItWorksNav
   return messages.chrome.decide
 }
 
