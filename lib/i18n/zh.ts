@@ -35,7 +35,7 @@ export const zh: Messages = {
     footerTravelerAlt: "旅行者坐在香港高处眺望城市天际线",
     footerTravelerCaption: "下一次旅行，从做一个决定开始",
     footerCopyright: "© 2026 XingAI Travel · 做出更好的旅行决定",
-    footerPartOf: "隶属于",
+    footerPartOf: "基于",
     footerAllApps: "全部应用",
     footerFamilyNav: "更多 XingAI 应用",
   },

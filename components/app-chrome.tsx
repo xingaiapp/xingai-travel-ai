@@ -385,7 +385,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             <span>
               {messages.chrome.footerPartOf}{" "}
               <a href="https://xingai.app/" className="font-semibold text-foreground hover:text-primary">
-                XingAI
+                XingAI Decision Systems
               </a>
             </span>
             {familyLinks.map((app) => (
@@ -546,7 +546,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                   <span>
                     {messages.chrome.footerPartOf}{" "}
                     <a href="https://xingai.app/" className="font-semibold text-foreground">
-                      XingAI
+                      XingAI Decision Systems
                     </a>
                   </span>
                   {familyLinks.map((app) => (

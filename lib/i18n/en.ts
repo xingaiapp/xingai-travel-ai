@@ -35,7 +35,7 @@ export const en: Messages = {
     footerTravelerAlt: "Traveler on a Hong Kong overlook looking at the skyline",
     footerTravelerCaption: "Your next trip starts with a decision",
     footerCopyright: "© 2026 XingAI Travel · Make a better travel decision",
-    footerPartOf: "Part of",
+    footerPartOf: "Powered by",
     footerAllApps: "All apps",
     footerFamilyNav: "More XingAI apps",
   },
