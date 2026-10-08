@@ -31,6 +31,7 @@ Do not thrash title / brand strings for ~30 days unless a factual error. Brand n
 
 | Area | State |
 |------|--------|
+| **Save → Return (2026-10-07)** | `/trips` already saved decisions; now shows usage + 7-day active-day counters, **Compare again**, and tracks `retention_event` / reopen. Result CTAs: **Compare again** + **Plan again**. Free / Pro / Unlimited boundaries in `lib/pricing-tiers.ts` (Free only today; no paywall). FAQ copy leaves “forever public beta”. |
 | **SEO signals (2026-10-05)** | Brand/title/OG/schema/`llms.txt` aligned to **XingAI Travel**. Chrome, footer, legal, and i18n no longer say “Travel AI” / “Explore Better”. Sitewide JSON-LD ships in the **first HTML** (not `afterInteractive`). `/decide` adds its own WebPage + WebApplication JSON-LD and self-canonical OG `url`. `/faq` and `/how-it-works` expose a visible AEO direct-answer block. Footer + drawer ship crawlable XingAI family anchors; `/legal/{privacy,terms,disclaimer}` redirect to local pages (project-init). Technical crawl of sitemap URLs: see [Indexability notes](#indexability-notes-2026-10-05). Google Search Console coverage still needs human confirmation (`site:` ≠ index). |
 | **Decision result (2026-10-02)** | Result shows **XingAI Match Score** (0–100 from overall stars + confidence), factor bars for overall/walkability, ranked alternatives with **Why not {city}?**. Hero is result-oriented: “Stop searching. Start deciding.” + proof line (en / zh / ko / es). **Evidence panel** labels weather / flight / walkability / plan budget / match as estimate·derived·plan (no fake source URLs). Hero “How to use” starts **collapsed** on all breakpoints. |
 | **SEO/AEO/GEO content graph (ADR 0009)** | Live intent pages: `/how-it-works`, `/faq`, `/compare` (+ 5 A-vs-B pages), `/guides` (+ 5 intent pages). `/decide` stays the conversion step. Fit labels stay qualitative. |
@@ -268,6 +269,7 @@ npm run metrics              # last 7 days; `npm run metrics -- 30` for 30
 | `xingai-travel-locale` | UI language (`localStorage`) |
 | `theme` | Light / dark / system (`localStorage`) |
 | `xingai-travel-trip-history` | Recent Decide results for `/trips` (`localStorage`) — **not** Want/Been |
+| `xingai-travel-retention-v1` / `xingai-travel-usage-v1` | Coarse 7-day active days + decision usage counters (`localStorage`) |
 | `xingai-travel-city-map` | Want / Been city slugs for live guides (`localStorage`) — **not** Trips |
 
 **Two browser memories:** Want/Been never appear on `/trips`; finished Decide results never appear as city-map marks. Soft-fill from Want into Decide does not create a Trips row. See [ADR 0007](./docs/adr/0007-local-trip-history.md) and [ADR 0010](./docs/adr/0010-city-map-soft-fill-decide.md).

@@ -200,6 +200,7 @@ export interface Messages {
     simple: string
     detailed: string
     replan: string
+    planAgain: string
     save: string
     note: string
     comparing: string
@@ -287,6 +288,9 @@ export interface Messages {
     clearConfirm: string
     savedOn: string
     count: string
+    usage: string
+    tier: string
+    compareAgain: string
   }
   city: {
     eyebrow: string

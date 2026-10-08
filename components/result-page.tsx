@@ -19,7 +19,9 @@ import { UncertaintyNotes } from "@/components/uncertainty-notes"
 import { LanguageMismatch } from "@/components/language-mismatch"
 import { useLocale } from "@/components/locale-provider"
 import { COMPARE_STORAGE, fetchPlan, PLAN_STORAGE, REGENERATE_STORAGE, TRIP_STORAGE } from "@/lib/trip-history"
+import { recordTravelRetention } from "@/lib/travel-retention"
 import type { CompareResult, PlanResult, TripContext } from "@/lib/types"
+import { track } from "@vercel/analytics"
 
 
 function readOptional<T>(key: string): T | null {
@@ -175,9 +177,23 @@ export function ResultPage() {
             <PrintTripButton />
             <Link
               href="/decide"
+              onClick={() => {
+                recordTravelRetention("compare_again")
+                track("compare_again_clicked", { app: "travel", source: "result" })
+              }}
               className="inline-flex h-11 items-center rounded-md border border-border bg-card px-4 text-sm font-extrabold text-primary shadow-sm"
             >
               {messages.result.replan}
+            </Link>
+            <Link
+              href="/decide"
+              onClick={() => {
+                recordTravelRetention("plan_again")
+                track("plan_again_clicked", { app: "travel", source: "result" })
+              }}
+              className="inline-flex h-11 items-center rounded-md border border-border bg-muted/50 px-4 text-sm font-extrabold text-foreground shadow-sm"
+            >
+              {messages.result.planAgain}
             </Link>
           </div>
         </div>

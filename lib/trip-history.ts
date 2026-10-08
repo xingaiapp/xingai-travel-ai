@@ -1,4 +1,5 @@
 import type { CompareResult, PlanResult, TripContext } from "@/lib/types"
+import { recordTravelRetention } from "@/lib/travel-retention"
 
 // Session keys shared by /decide, /result and /trips (see ADR 0003).
 export const TRIP_STORAGE = "xingai-travel-trip-context"
@@ -66,6 +67,8 @@ function write(list: TripHistoryEntry[]) {
 export function addDecision(entry: Omit<TripHistoryEntry, "id" | "savedAt">): string {
   const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`
   write([{ ...entry, id, savedAt: new Date().toISOString() }, ...parse(readHistoryRaw())])
+  recordTravelRetention("decision")
+  recordTravelRetention("save")
   return id
 }
 

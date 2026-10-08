@@ -211,7 +211,7 @@ export const faqItems: FaqItem[] = [
   {
     q: L("Is XingAI Travel free?", "XingAI Travel 免费吗？", "XingAI Travel은 무료인가요?", "¿XingAI Travel es gratis?"),
     a: L(
-      "Yes, it is free to use today, with no account. Because every decision runs an AI model, there is a small daily limit on decisions per network. Your trip history and travel map stay in your browser.",
+      "Live on the Free tier today — no account. Soft daily decision limits apply; Pro and Unlimited are defined next (not a forever public beta). Your trip history and travel map stay in your browser.",
       "是的，目前免费使用，也不需要注册。因为每次决策都要调用 AI 模型，每个网络每天的决策次数有一个不大的上限。你的行程历史和旅行地图保存在你自己的浏览器里。",
       "네, 현재 계정 없이 무료로 사용할 수 있습니다. 결정마다 AI 모델이 실행되기 때문에 네트워크당 하루 결정 횟수에 작은 제한이 있습니다. 여행 기록과 여행 지도는 브라우저에 저장됩니다.",
       "Sí, hoy es gratis y sin cuenta. Como cada decisión ejecuta un modelo de IA, hay un pequeño límite diario de decisiones por red. Tu historial y tu mapa de viajes se quedan en tu navegador."

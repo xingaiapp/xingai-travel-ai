@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useMemo, useSyncExternalStore } from "react"
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react"
 import { ArrowRight, BriefcaseBusiness, Compass, HardDrive, Sparkles, Trash2 } from "lucide-react"
 import { useLocale } from "@/components/locale-provider"
 import {
@@ -15,7 +15,10 @@ import {
   winnerOf,
   type TripHistoryEntry,
 } from "@/lib/trip-history"
+import { countTravelActiveDaysLast7, loadTravelUsage, recordTravelRetention } from "@/lib/travel-retention"
+import { currentTravelTier, travelTierById } from "@/lib/pricing-tiers"
 import { getCityImage } from "@/lib/utils"
+import { track } from "@vercel/analytics"
 
 // Server and first client paint both see "no history"; the real list arrives after hydration (ADR 0003).
 function useHistory() {
@@ -28,11 +31,21 @@ export function TripsPage() {
   const router = useRouter()
   const entries = useHistory()
   const t = messages.trips
+  const [usageN, setUsageN] = useState(0)
+  const [active7, setActive7] = useState(0)
+  useEffect(() => {
+    setUsageN(loadTravelUsage().decisionCount)
+    setActive7(countTravelActiveDaysLast7())
+  }, [entries.length])
+  const tier = travelTierById(currentTravelTier())
+  const tierName = tier.name[locale as keyof typeof tier.name] ?? tier.name.en
 
   const dateFmt = useMemo(() => new Intl.DateTimeFormat(locale, { month: "short", day: "numeric", year: "numeric" }), [locale])
 
   function reopen(entry: TripHistoryEntry) {
     restoreDecision(entry)
+    recordTravelRetention("return")
+    track("history_reopen", { app: "travel" })
     router.push("/result")
   }
 
@@ -68,6 +81,8 @@ export function TripsPage() {
           <span>
             {t.localOnly}
             {entries.length > 0 ? <> · {t.count.replace("{n}", String(entries.length))}</> : null}
+            <> · {t.usage.replace("{n}", String(usageN)).replace("{d}", String(active7))}</>
+            <> · {t.tier.replace("{tier}", tierName)}</>
           </span>
         </p>
 
@@ -127,7 +142,7 @@ export function TripsPage() {
                         <span className="text-xs text-muted-foreground">
                           {t.savedOn} {dateFmt.format(new Date(entry.savedAt))}
                         </span>
-                        <div className="flex gap-2">
+                        <div className="flex flex-wrap gap-2">
                           <button
                             type="button"
                             onClick={() => removeDecision(entry.id)}
@@ -142,6 +157,16 @@ export function TripsPage() {
                           >
                             {t.open} <ArrowRight className="h-4 w-4" aria-hidden />
                           </button>
+                          <Link
+                            href="/decide"
+                            onClick={() => {
+                              recordTravelRetention("compare_again")
+                              track("compare_again_clicked", { app: "travel", source: "trips" })
+                            }}
+                            className="inline-flex h-9 items-center rounded-md border border-border bg-card px-3 text-sm font-extrabold text-foreground transition hover:bg-muted"
+                          >
+                            {t.compareAgain}
+                          </Link>
                         </div>
                       </div>
                     </div>
