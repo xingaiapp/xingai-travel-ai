@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
 import { cities } from "@/lib/cities"
 import { compares, guides } from "@/lib/content"
+import { CITY_CONTENT_DATE, COMPARE_CONTENT_DATE, GUIDE_CONTENT_DATE } from "@/lib/content-dates"
 import {
   hreflangPaths,
   localizedPublicHref,
@@ -50,13 +51,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   )
 
   for (const city of cities) {
-    entries.push(...localizedEntries(`/city/${city.slug}`, 0.8, "monthly"))
+    entries.push(...localizedEntries(`/city/${city.slug}`, 0.8, "monthly", CITY_CONTENT_DATE))
   }
   for (const item of compares) {
-    entries.push(...localizedEntries(`/compare/${item.slug}`, 0.85, "monthly"))
+    entries.push(...localizedEntries(`/compare/${item.slug}`, 0.85, "monthly", COMPARE_CONTENT_DATE))
   }
   for (const item of guides) {
-    entries.push(...localizedEntries(`/guides/${item.slug}`, 0.85, "monthly"))
+    entries.push(...localizedEntries(`/guides/${item.slug}`, 0.85, "monthly", GUIDE_CONTENT_DATE))
   }
 
   const storySeasons = seasons.filter((season) => publishedEpisodes(season).length > 0)
