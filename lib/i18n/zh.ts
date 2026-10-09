@@ -70,11 +70,12 @@ export const zh: Messages = {
     inspireLegal:
       "以下仅为旅行建议，不构成专业出行、安全或签证意见。目的地与预订由你自行决定。出行前请核实天气、安全提醒、价格与入境规定。",
   },
-  steps: { context: "旅行条件", compare: "比较目的地", plan: "可预订计划" },
+  steps: { context: "行程", compare: "比较", plan: "预订" },
   form: {
     title: "你的旅行",
     dates: "日期 / 时间窗口",
     from: "出发地",
+    originPlaceholder: "城市或机场 — 例如 SFO",
     region: "你愿意把范围放在哪里？",
     regionHint: "先选一个大范围；如果已经有想法，再补充城市或地点。",
     placesInMind: "已有想去的地方？（可选）",

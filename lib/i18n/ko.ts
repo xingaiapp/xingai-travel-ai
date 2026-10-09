@@ -70,11 +70,12 @@ export const ko: Messages = {
     inspireLegal:
       "제안일 뿐이며 전문적인 여행·안전·비자 조언이 아닙니다. 목적지와 예약은 본인이 결정하세요. 출발 전 날씨, 여행 경보, 요금, 입국 규정을 확인하세요.",
   },
-  steps: { context: "여행 조건", compare: "목적지 비교", plan: "예약 가능한 계획" },
+  steps: { context: "조건", compare: "비교", plan: "예약" },
   form: {
     title: "여행 정보",
     dates: "날짜 / 기간",
     from: "출발지",
+    originPlaceholder: "도시 또는 공항 — 예: SFO",
     region: "어느 지역까지 열려 있나요?",
     regionHint: "먼저 넓은 범위를 고르세요. 이미 떠오른 도시가 있으면 추가하세요.",
     placesInMind: "생각 중인 장소가 있나요? (선택)",

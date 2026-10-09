@@ -327,27 +327,29 @@ export function DecidePage() {
     <main className="flex-1 pb-28 lg:pb-12">
       <HeroIntro />
 
-      <div className="decision-grid-bg px-4 pt-6 sm:px-6 lg:px-10">
+      <div className="decision-grid-bg px-4 pt-3 sm:px-6 sm:pt-6 lg:px-10">
       <div className="mx-auto max-w-6xl">
         <TravelMapProgress variant="decide" className="mb-4" />
 
-        {/* Mode toggle */}
-        <div className="mb-4 flex items-center gap-2 rounded-full border border-border bg-card p-1">
+        {/* Mode toggle — padded + truncate so long locales don't clip the card edge */}
+        <div className="mb-4 flex min-w-0 items-center gap-1 rounded-full border border-border bg-card p-1 sm:gap-2">
           <button
             type="button"
             onClick={() => setInspireMode(false)}
+            title={messages.home.modeKnowTrip}
             className={cn(
-              "flex h-11 flex-1 items-center justify-center gap-2 rounded-full text-sm font-bold transition",
+              "flex h-11 min-h-11 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-2.5 text-xs font-bold transition sm:gap-2 sm:px-3 sm:text-sm",
               !inspireMode ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
             )}
           >
-            {messages.home.modeKnowTrip}
+            <span className="truncate">{messages.home.modeKnowTrip}</span>
           </button>
           <button
             type="button"
             onClick={() => setInspireMode(true)}
+            title={messages.home.modeSurprise}
             className={cn(
-              "flex h-11 flex-1 items-center justify-center gap-2 rounded-full text-sm font-bold transition",
+              "flex h-11 min-h-11 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-2.5 text-xs font-bold transition sm:gap-2 sm:px-3 sm:text-sm",
               inspireMode ? "surprise-tab-active" : "surprise-tab-idle"
             )}
           >
@@ -358,7 +360,7 @@ export function DecidePage() {
               )}
               aria-hidden
             />
-            {messages.home.modeSurprise}
+            <span className="truncate">{messages.home.modeSurprise}</span>
           </button>
         </div>
 
@@ -513,69 +515,76 @@ function HeroIntro() {
     [messages.home.helpStep3Title, messages.home.helpStep3Body],
   ]
 
+  const openHelp = () => {
+    setHelpOpen(true)
+    requestAnimationFrame(() => {
+      const target =
+        window.matchMedia("(min-width: 1024px)").matches
+          ? document.getElementById(HELP_ANCHOR)
+          : document.getElementById("how-to-use-mobile")
+      target?.scrollIntoView({ behavior: "smooth", block: "start" })
+    })
+  }
+
   return (
     <section className="w-full">
-      {/* Full-bleed photo stage — same edge-to-edge width as Home (no inset card). */}
-      <div className="relative w-full overflow-hidden min-h-[min(58svh,28rem)] sm:min-h-[22rem] lg:min-h-[28rem]">
+      {/*
+        Mobile: short photo band + copy BELOW the image (home pattern) so /decide
+        is a tool page — form reaches the first viewport. Desktop keeps overlay.
+      */}
+      <div className="relative w-full overflow-hidden min-h-[9.5rem] sm:min-h-[18rem] lg:min-h-[24rem]">
         <div
-          aria-hidden
+          role="img"
+          aria-label={messages.home.headlineAccent}
           className="absolute inset-0 bg-[url('/assets/hero-travel-decision.webp')] bg-cover bg-[72%_center] lg:bg-center dark:brightness-[1.08] dark:saturate-[1.04]"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--background)_22%,transparent)_0%,transparent_40%,color-mix(in_oklch,var(--background)_45%,transparent)_72%,color-mix(in_oklch,var(--background)_88%,transparent)_100%)] sm:bg-[linear-gradient(105deg,color-mix(in_oklch,var(--background)_72%,transparent)_0%,color-mix(in_oklch,var(--background)_36%,transparent)_40%,transparent_72%)]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,color-mix(in_oklch,var(--background)_55%,transparent)_55%,color-mix(in_oklch,var(--background)_92%,transparent)_100%)] sm:bg-[linear-gradient(105deg,color-mix(in_oklch,var(--background)_82%,transparent)_0%,color-mix(in_oklch,var(--background)_42%,transparent)_42%,transparent_78%)]"
         />
-        <div className="relative mx-auto grid h-full w-full max-w-6xl gap-6 px-4 pb-8 pt-10 sm:px-6 lg:min-h-[28rem] lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8 lg:py-12">
-          <div className="flex max-w-2xl flex-col justify-end lg:justify-center">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)]">
+        {/* Desktop / tablet overlay copy */}
+        <div className="relative mx-auto hidden h-full w-full max-w-6xl gap-6 px-4 py-10 sm:grid sm:px-6 lg:min-h-[24rem] lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:px-8 lg:py-12">
+          <div className="flex max-w-2xl flex-col justify-center">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-foreground/90">
               {messages.home.eyebrow}
             </p>
-            <h1 className="hero-display-title mt-3 text-[1.65rem] font-semibold leading-[1.15] tracking-tight text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_70%,transparent)] sm:text-5xl">
+            <h1 className="hero-display-title mt-3 text-4xl font-semibold leading-[1.15] tracking-tight text-foreground lg:text-5xl">
               <span className="block">{messages.home.headlineLead}</span>
               <span className="mt-1 block text-primary">{messages.home.headlineAccent}</span>
             </h1>
-            <p className="mt-4 hidden max-w-xl text-base leading-relaxed text-foreground [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_65%,transparent)] sm:block sm:text-lg">
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-foreground/95 lg:text-lg">
               {messages.home.sub}
             </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-6 flex flex-row flex-wrap items-center gap-3">
               <a
                 href="#trip-form"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)]"
+                className="inline-flex h-12 min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)]"
               >
                 {messages.home.primaryCta}
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </a>
               <button
                 type="button"
-                onClick={() => {
-                  setHelpOpen(true)
-                  requestAnimationFrame(() => {
-                    const target =
-                      window.matchMedia("(min-width: 1024px)").matches
-                        ? document.getElementById(HELP_ANCHOR)
-                        : document.getElementById("how-to-use-mobile")
-                    target?.scrollIntoView({ behavior: "smooth", block: "start" })
-                  })
-                }}
-                className="inline-flex h-12 items-center justify-center rounded-full border border-foreground/25 bg-background/40 px-6 text-sm font-bold text-foreground backdrop-blur-[1px] sm:bg-card sm:shadow-[0_8px_20px_color-mix(in_oklch,var(--foreground)_8%,transparent)]"
+                onClick={openHelp}
+                className="inline-flex h-12 min-h-11 items-center justify-center rounded-full border border-border bg-card/90 px-6 text-sm font-bold text-foreground shadow-sm backdrop-blur-sm"
               >
                 {messages.home.secondaryCta}
               </button>
             </div>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-foreground/85 [text-shadow:0_1px_2px_color-mix(in_oklch,var(--background)_65%,transparent)]">
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-foreground/90">
               {messages.home.trustLine}
             </p>
-            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{messages.home.heroProof}</p>
+            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-foreground/70">{messages.home.heroProof}</p>
           </div>
 
-          <div id={HELP_ANCHOR} className="hidden scroll-mt-24 items-center lg:flex">
-            <div className="card-hover w-full rounded-2xl border border-border/80 bg-card/90 p-4 shadow-sm backdrop-blur-sm sm:p-5">
+          <div id={HELP_ANCHOR} className="scroll-mt-24 items-center lg:flex">
+            <div className="card-hover w-full rounded-2xl border border-border bg-card p-4 shadow-md sm:p-5">
               <button
                 type="button"
                 onClick={() => setHelpOpen((open) => !open)}
                 aria-expanded={helpOpen}
                 aria-controls="how-to-use-content"
-                className="flex w-full items-start gap-3 text-left"
+                className="flex min-h-11 w-full items-start gap-3 text-left"
               >
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-background text-primary">
                   <MapPinned className="h-5 w-5" aria-hidden />
@@ -613,42 +622,56 @@ function HeroIntro() {
           </div>
         </div>
       </div>
-      <div id="how-to-use-mobile" className="scroll-mt-24 border-b border-border bg-card px-4 py-4 lg:hidden">
-        <div className="mx-auto max-w-6xl rounded-2xl border border-border/80 bg-card p-4">
+
+      {/* Mobile title strip under the photo — solid background, readable, short */}
+      <div className="border-b border-border bg-background px-4 py-3 sm:hidden">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-[0.65rem] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+            {messages.home.eyebrow}
+          </p>
+          <h1 className="hero-display-title mt-1 text-xl font-semibold leading-snug tracking-tight text-foreground">
+            <span className="text-primary">{messages.home.headlineAccent}</span>
+          </h1>
+          <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+            {messages.home.heroProof} · {messages.home.trustLine}
+          </p>
+          <button
+            type="button"
+            onClick={openHelp}
+            className="mt-2 inline-flex min-h-11 items-center text-xs font-bold text-primary underline-offset-2 hover:underline"
+          >
+            {messages.home.secondaryCta}
+          </button>
+        </div>
+      </div>
+
+      <div id="how-to-use-mobile" className="scroll-mt-24 border-b border-border bg-card px-4 py-2 lg:hidden">
+        <div className="mx-auto max-w-6xl">
           <button
             type="button"
             onClick={() => setHelpOpen((open) => !open)}
             aria-expanded={helpOpen}
             aria-controls="how-to-use-content-mobile"
-            className="flex w-full items-start gap-3 text-left"
+            className="flex min-h-11 w-full items-center gap-2 text-left text-sm font-semibold text-foreground"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-background text-primary">
-              <MapPinned className="h-5 w-5" aria-hidden />
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="flex items-center justify-between gap-2">
-                <h2 className="text-lg font-semibold text-foreground">{messages.home.helpTitle}</h2>
-                <ChevronDown className={cn("h-4 w-4 shrink-0 text-muted-foreground transition", helpOpen && "rotate-180")} aria-hidden />
-              </span>
-              <p className={cn("mt-1 text-sm leading-relaxed text-muted-foreground", !helpOpen && "hidden")}>{messages.home.helpSub}</p>
-            </span>
+            <MapPinned className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+            <span className="min-w-0 flex-1 truncate">{messages.home.helpTitle}</span>
+            <ChevronDown className={cn("h-4 w-4 shrink-0 text-muted-foreground transition", helpOpen && "rotate-180")} aria-hidden />
           </button>
-          <div id="how-to-use-content-mobile" className={cn("mt-4 space-y-3", helpOpen ? "block" : "hidden")}>
+          <div id="how-to-use-content-mobile" className={cn("mt-2 space-y-2 pb-2", helpOpen ? "block" : "hidden")}>
+            <p className="text-xs leading-relaxed text-muted-foreground">{messages.home.helpSub}</p>
             {helpSteps.map(([title, body], index) => (
-              <div key={title} className="card-hover grid grid-cols-[2rem_1fr] gap-3 rounded-xl border border-border/80 bg-background/80 p-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-                  {index + 1}
-                </span>
-                <span>
-                  <span className="block text-sm font-semibold text-foreground">{title}</span>
-                  <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">{body}</span>
-                </span>
+              <div key={title} className="rounded-lg border border-border/80 bg-background/80 p-3">
+                <p className="text-sm font-semibold text-foreground">
+                  {index + 1}. {title}
+                </p>
+                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{body}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div className="border-b border-border bg-card/80 px-4 py-4 sm:px-6">
+      <div className="border-b border-border bg-card/80 px-4 py-2 sm:px-6 sm:py-3">
         <div className="mx-auto max-w-6xl">
           <StepProgress active={1} />
         </div>

@@ -70,11 +70,12 @@ export const es: Messages = {
     inspireLegal:
       "Solo sugerencias — no es asesoramiento profesional de viaje, seguridad o inmigración. Tú decides adónde ir y qué reservar. Verifica clima, alertas, precios y requisitos de entrada antes de viajar.",
   },
-  steps: { context: "Contexto", compare: "Comparar destinos", plan: "Plan reservable" },
+  steps: { context: "Viaje", compare: "Comparar", plan: "Reservar" },
   form: {
     title: "Tu viaje",
     dates: "Fechas / ventana",
     from: "Origen",
+    originPlaceholder: "Ciudad o aeropuerto — p. ej. SFO",
     region: "¿A qué región estás abierto?",
     regionHint: "Elige primero un rango amplio. Agrega ciudades solo si ya tienes ideas.",
     placesInMind: "¿Ya tienes lugares en mente? (opcional)",

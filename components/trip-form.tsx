@@ -17,16 +17,23 @@ function FieldShell({
   icon: Icon,
   label,
   children,
+  required,
 }: Readonly<{
   icon: typeof CalendarDays
   label: string
   children: React.ReactNode
+  required?: boolean
 }>) {
   return (
     <label className="block">
       <span className="mb-1.5 flex items-center gap-2 text-xs font-bold text-foreground">
         <Icon className="h-4 w-4 text-primary" aria-hidden />
         {label}
+        {required ? (
+          <span className="font-extrabold text-primary" aria-hidden>
+            *
+          </span>
+        ) : null}
       </span>
       {children}
     </label>
@@ -109,14 +116,16 @@ export function TripForm({ value, onChange, originInvalid = false }: TripFormPro
           </div>
         </FieldShell>
 
-        <FieldShell icon={MapPin} label={messages.form.from}>
+        <FieldShell icon={MapPin} label={messages.form.from} required>
           <input
             id="trip-origin"
             className={inputClass}
             value={value.origin}
             onChange={(event) => patch({ origin: event.target.value })}
-            placeholder="San Francisco (SFO)"
+            placeholder={messages.form.originPlaceholder}
+            required
             autoComplete="address-level2"
+            aria-required="true"
             aria-invalid={originInvalid || undefined}
             aria-describedby={originInvalid ? "trip-origin-error" : undefined}
           />

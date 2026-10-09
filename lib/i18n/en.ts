@@ -70,11 +70,12 @@ export const en: Messages = {
     inspireLegal:
       "Suggestions only — not professional travel, safety, or immigration advice. You decide where to go and what to book. Check weather, advisories, prices, and entry rules before traveling.",
   },
-  steps: { context: "Trip Context", compare: "Compare Destinations", plan: "Bookable Plan" },
+  steps: { context: "Trip", compare: "Compare", plan: "Book" },
   form: {
     title: "Your Trip",
     dates: "Dates / window",
     from: "From",
+    originPlaceholder: "City or airport — e.g. SFO",
     region: "Where are you open to going?",
     regionHint: "Pick a broad range first. Add cities only if you already have ideas.",
     placesInMind: "Already have places in mind? (optional)",

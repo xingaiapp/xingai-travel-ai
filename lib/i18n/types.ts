@@ -79,6 +79,8 @@ export interface Messages {
     title: string
     dates: string
     from: string
+    /** Placeholder that must not look like a filled value (ADR-0012). */
+    originPlaceholder: string
     region: string
     regionHint: string
     placesInMind: string

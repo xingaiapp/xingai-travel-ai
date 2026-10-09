@@ -39,6 +39,8 @@ type NavItem = {
 }
 
 const storiesSoon = visibleSeasons().length === 0
+/** After the first Stories visit, stop showing the red NEW chip (was permanent noise). */
+const STORIES_NEW_DISMISSED_KEY = "xingai-travel-stories-new-dismissed"
 
 const navItems: readonly NavItem[] = [
   { href: "/", key: "home", icon: House },
@@ -151,6 +153,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
   const [moreOpen, setMoreOpen] = useState(false)
   const [soon, setSoon] = useState("")
   const [lastDecision, setLastDecision] = useState<LastDecision | null>(null)
+  const [storiesNewVisible, setStoriesNewVisible] = useState(false)
   const moreMenuId = useId()
   const moreRef = useRef<HTMLDivElement>(null)
   const moreActive = isMoreRoute(barePath)
@@ -169,6 +172,33 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
       window.removeEventListener("focus", syncLastDecision)
     }
   }, [])
+
+  useEffect(() => {
+    if (storiesSoon) {
+      setStoriesNewVisible(false)
+      return
+    }
+    try {
+      setStoriesNewVisible(window.localStorage.getItem(STORIES_NEW_DISMISSED_KEY) !== "1")
+    } catch {
+      setStoriesNewVisible(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (storiesSoon) return
+    if (!barePath.startsWith("/stories")) return
+    try {
+      window.localStorage.setItem(STORIES_NEW_DISMISSED_KEY, "1")
+    } catch {
+      /* ignore */
+    }
+    setStoriesNewVisible(false)
+  }, [barePath])
+
+  const chromeNavItems = navItems.map((item) =>
+    item.key === "stories" ? { ...item, isNew: storiesNewVisible } : item
+  )
 
   const [morePath, setMorePath] = useState(pathname)
   if (pathname !== morePath) {
@@ -241,7 +271,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             </span>
           </Link>
           <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex" aria-label="Primary">
-            {navItems.map((item) => {
+            {chromeNavItems.map((item) => {
               const active = isActive(barePath, item.href)
               const label = messages.chrome[item.key]
               if (item.soon) {
@@ -402,7 +432,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
 
       <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-background/92 pb-[max(.45rem,env(safe-area-inset-bottom))] backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-md items-stretch justify-between px-2 py-1.5">
-          {navItems.map((item) => {
+          {chromeNavItems.map((item) => {
             const Icon = item.icon
             const active = isActive(barePath, item.href)
             const label = messages.chrome[item.key]
@@ -462,7 +492,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             <div className="flex min-h-0 flex-1 flex-col">
               <div className="flex-1 overflow-y-auto px-4 py-4">
                 <nav className="grid gap-1" aria-label="Mobile primary">
-                  {navItems.map((item) => {
+                  {chromeNavItems.map((item) => {
                     const Icon = item.icon
                     const active = isActive(barePath, item.href)
                     const label = messages.chrome[item.key]
