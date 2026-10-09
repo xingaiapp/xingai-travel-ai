@@ -138,6 +138,7 @@ For warnings:
 - Include 2-4 warnings covering weather, security, visa/entry, and crowd conditions for the specific travel dates
 - Be factual, not alarmist. If the destination is genuinely safe and easy, use "info" level
 - Base warnings on the specific travel dates, not generic year-round conditions
+- Never assume the traveler's citizenship or passport. For visa/entry, say that entry rules depend on nationality and point to the official government source; do not say any nationality is visa-free unless the trip context states nationality.
 `.trim()
 }
 
@@ -172,6 +173,7 @@ User preferences:
 
 Rules:
 - Match the vibe honestly — not just the most popular cities
+- Never assume the traveler's citizenship or passport. For visa/entry, say that entry rules depend on nationality and point to the official government source; do not say any nationality is visa-free unless the trip context states nationality.
 - Include at least one lesser-known gem if vibe is "explore" or "adventure"
 - If a destination is slightly over budget, flag it honestly in tradeoffs
 - Do not claim a destination "fits the budget" or rate its budget fit; describe relative cost instead (e.g. "cheaper than Porto", "hotels spike in December"). A line-by-line cost estimate is produced later.

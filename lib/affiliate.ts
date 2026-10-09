@@ -54,15 +54,20 @@ export function usableDates(dates: TripDates, today = new Date().toISOString().s
 }
 
 export function buildAffiliateLinks(params: {
-  originCode: string         // e.g. "SFO"
+  /** IATA code, or null when the origin text is not a known airport (see lib/airports.ts). */
+  originCode: string | null
+  /** Origin as typed, used in the Google Flights query when there is no code. */
+  originName?: string
   destinationCity: string    // e.g. "Lisbon"
-  destinationCode: string    // e.g. "LIS"
+  /** IATA code, or null when unknown — never a guessed code. */
+  destinationCode: string | null
   dates: TripDates
   /** Party size; everyone is searched as an adult (the form has no child ages). */
   travelers?: number
   suggestedActivities?: string[]
 }): AffiliateLinks {
   const { originCode, destinationCity, destinationCode, suggestedActivities = [] } = params
+  const originName = params.originName?.trim() ?? ""
   const citySlug = destinationCity.toLowerCase().replace(/\s+/g, "-")
   // Shared trip links carry no dates; send partners a plain city search then.
   const dates = usableDates(params.dates)
@@ -70,16 +75,24 @@ export function buildAffiliateLinks(params: {
   const rooms = adults > 0 ? Math.ceil(adults / 2) : 0
   const yymmdd = (d: string) => d.slice(2).replace(/-/g, "")
 
-  // Skyscanner: /{from}/{to}/{YYMMDD}/{YYMMDD}/ for a round trip, adultsv2 = party size.
-  let skyscanner = `https://www.skyscanner.com/transport/flights/${enc(originCode.toLowerCase())}/${enc(destinationCode.toLowerCase())}/`
-  if (dates) skyscanner += `${yymmdd(dates.checkIn)}/${yymmdd(dates.checkOut)}/`
-  if (adults) skyscanner = withParam(withParam(skyscanner, "adultsv2", String(adults)), "rtn", dates ? "1" : "")
-  skyscanner = withParam(skyscanner, "ref", cfg.skyscanner)
+  // Skyscanner's path needs real airport codes on both ends; without them we skip it rather
+  // than send a search to the wrong airport. /{from}/{to}/{YYMMDD}/{YYMMDD}/, adultsv2 = party size.
+  let skyscanner: string | null = null
+  if (originCode && destinationCode) {
+    skyscanner = `https://www.skyscanner.com/transport/flights/${enc(originCode.toLowerCase())}/${enc(destinationCode.toLowerCase())}/`
+    if (dates) skyscanner += `${yymmdd(dates.checkIn)}/${yymmdd(dates.checkOut)}/`
+    if (adults) skyscanner = withParam(withParam(skyscanner, "adultsv2", String(adults)), "rtn", dates ? "1" : "")
+    skyscanner = withParam(skyscanner, "ref", cfg.skyscanner)
+  }
+
+  // Google Flights understands city names, so a missing code falls back to the name.
+  const fromLabel = originCode ?? originName
+  const toLabel = destinationCode ?? destinationCity
 
   // Google Flights parses this exact English phrasing, and only with hl=en; other UI languages
   // (and "from X to Y" order) open an empty search form. Verified 2026-09.
   const googleQuery = [
-    `Flights to ${destinationCode} from ${originCode}`,
+    `Flights to ${toLabel}${fromLabel ? ` from ${fromLabel}` : ""}`,
     dates ? `on ${dates.checkIn} through ${dates.checkOut}` : "",
     adults ? `for ${adults} adult${adults > 1 ? "s" : ""}` : "",
   ].filter(Boolean).join(" ")
@@ -98,11 +111,14 @@ export function buildAffiliateLinks(params: {
   if (dates) gyg += `&date_from=${dates.checkIn}&date_to=${dates.checkOut}`
   gyg = withParam(gyg, "partner_id", cfg.gyg)
 
+  const routeLabel = fromLabel ? `${fromLabel} → ${toLabel}` : toLabel
   const flights: AffiliateLink[] = [
-    { platform: "Skyscanner", label: `${originCode} → ${destinationCode}`, url: skyscanner, sponsored: Boolean(cfg.skyscanner.trim()) },
+    ...(skyscanner
+      ? [{ platform: "Skyscanner", label: routeLabel, url: skyscanner, sponsored: Boolean(cfg.skyscanner.trim()) }]
+      : []),
     {
       platform: "Google Flights",
-      label: `${originCode} → ${destinationCode}`,
+      label: routeLabel,
       url: `https://www.google.com/travel/flights?q=${enc(googleQuery)}&hl=en`,
     },
   ]
@@ -129,27 +145,4 @@ export function buildAffiliateLinks(params: {
   ]
 
   return { flights, hotels, activities }
-}
-
-// Extract IATA-style origin code from freetext like "San Francisco (SFO)"
-export function extractOriginCode(origin: string): string {
-  const match = origin.match(/\(([A-Z]{3})\)/)
-  return match ? match[1] : origin.slice(0, 3).toUpperCase()
-}
-
-// Guess destination IATA from city name (best-effort mapping)
-const IATA_MAP: Record<string, string> = {
-  lisbon: "LIS", porto: "OPO", barcelona: "BCN", madrid: "MAD", paris: "CDG",
-  rome: "FCO", amsterdam: "AMS", prague: "PRG", vienna: "VIE", athens: "ATH",
-  istanbul: "IST", dubai: "DXB", singapore: "SIN", tokyo: "NRT", bangkok: "BKK",
-  bali: "DPS", "new york": "JFK", "mexico city": "MEX", "buenos aires": "EZE",
-  "cape town": "CPT", london: "LHR", berlin: "BER", zurich: "ZRH",
-}
-
-export function guessIata(cityName: string): string {
-  const key = cityName.toLowerCase()
-  for (const [city, code] of Object.entries(IATA_MAP)) {
-    if (key.includes(city)) return code
-  }
-  return cityName.slice(0, 3).toUpperCase()
 }
