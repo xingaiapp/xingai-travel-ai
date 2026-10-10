@@ -19,6 +19,7 @@ import {
 import { useEffect, useId, useRef, useState } from "react"
 import { LocaleSwitcher } from "@/components/locale-switcher"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { TravelBrandMark } from "@/components/travel-brand-mark"
 import { useLocale } from "@/components/locale-provider"
 import type { Messages } from "@/lib/i18n/types"
 import {
@@ -244,28 +245,13 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             className="flex min-w-0 flex-1 items-center justify-center gap-2 lg:hidden"
             aria-label={messages.chrome.brand}
           >
-            <Image
-              src="/assets/logo-mark.svg"
-              alt=""
-              width={28}
-              height={28}
-              className="h-7 w-7 shrink-0"
-              priority
-            />
-            <span className="min-w-0 truncate text-sm font-bold">
-              <span className="text-primary">Travel</span>
-              <span className="text-muted-foreground"> · {mobileHeaderTitle(barePath, messages)}</span>
+            <TravelBrandMark className="h-9 w-9 shrink-0" title={messages.chrome.brand} />
+            <span className="min-w-0 truncate text-sm font-bold text-muted-foreground">
+              {mobileHeaderTitle(barePath, messages)}
             </span>
           </Link>
           <Link href={hrefFor("/")} className="hidden min-w-0 shrink-0 items-center gap-2.5 lg:flex" aria-label={messages.chrome.brand}>
-            <Image
-              src="/assets/logo-mark.svg"
-              alt=""
-              width={32}
-              height={32}
-              className="h-8 w-8 shrink-0"
-              priority
-            />
+            <TravelBrandMark className="h-10 w-10 shrink-0" title={messages.chrome.brand} />
             <span className="truncate text-base font-bold leading-none">
               XingAI <span className="text-primary">Travel</span>
             </span>
@@ -406,6 +392,14 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
             <Link href={hrefFor("/city")} className="hover:text-primary">{messages.content.citiesNav}</Link>
             <Link href={hrefFor("/compare")} className="hover:text-primary">{messages.content.compareNav}</Link>
             <Link href={hrefFor("/guides")} className="hover:text-primary">{messages.content.guidesNav}</Link>
+            <a
+              href="https://www.youtube.com/@xingaitravel"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary"
+            >
+              {messages.chrome.footerYouTube}
+            </a>
           </div>
           {/* XingAI family links: plain anchors so crawlers follow them (project-init footer). */}
           <nav
@@ -472,13 +466,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                 className="flex min-w-0 items-center gap-3"
                 aria-label={messages.chrome.brand}
               >
-                <Image
-                  src="/assets/logo-mark.svg"
-                  alt=""
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 shrink-0"
-                />
+                <TravelBrandMark className="h-12 w-12 shrink-0" title={messages.chrome.brand} />
                 <span className="min-w-0 leading-tight">
                   <span className="block truncate text-sm font-extrabold">XingAI</span>
                   <span className="block truncate text-xs font-bold text-primary">Travel</span>
@@ -586,6 +574,14 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
                   ))}
                   <a href="https://xingai.app/apps" className="hover:text-primary">
                     {messages.chrome.footerAllApps}
+                  </a>
+                  <a
+                    href="https://www.youtube.com/@xingaitravel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-primary"
+                  >
+                    {messages.chrome.footerYouTube}
                   </a>
                 </nav>
               </div>

@@ -38,6 +38,7 @@ export const zh: Messages = {
     footerPartOf: "基于",
     footerAllApps: "全部应用",
     footerFamilyNav: "更多 XingAI 应用",
+    footerYouTube: "YouTube 频道",
   },
   notFound: {
     title: "找不到这个页面",

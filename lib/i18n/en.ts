@@ -38,6 +38,7 @@ export const en: Messages = {
     footerPartOf: "Powered by",
     footerAllApps: "All apps",
     footerFamilyNav: "More XingAI apps",
+    footerYouTube: "YouTube",
   },
   notFound: {
     title: "This page is not here",

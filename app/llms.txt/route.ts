@@ -75,6 +75,7 @@ Product principle:
 - Decision quality comes first.
 - Affiliate links may appear after the recommendation and should not influence destination ranking, winner selection, confidence, or trade-off explanations.
 
+YouTube: https://www.youtube.com/@xingaitravel
 Publisher: XingAI (https://xingai.app/) — AI decision systems for everyday life.
 
 Related XingAI apps:

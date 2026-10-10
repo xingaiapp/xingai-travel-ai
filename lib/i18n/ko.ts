@@ -38,6 +38,7 @@ export const ko: Messages = {
     footerPartOf: "Powered by",
     footerAllApps: "모든 앱",
     footerFamilyNav: "다른 XingAI 앱",
+    footerYouTube: "YouTube",
   },
   notFound: {
     title: "이 페이지를 찾을 수 없습니다",

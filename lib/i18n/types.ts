@@ -39,6 +39,7 @@ export interface Messages {
     footerPartOf: string
     footerAllApps: string
     footerFamilyNav: string
+    footerYouTube: string
   }
   notFound: {
     title: string
