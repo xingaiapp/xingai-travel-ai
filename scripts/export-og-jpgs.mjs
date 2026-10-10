@@ -49,6 +49,14 @@ const srcs = [
   "/stories/hong-kong/02/roast-meat-rice-eggs",
   "/stories/macau/01/londoner-big-ben",
   "/stories/macau/02/portuguese-paving-lanterns",
+  "/stories/los-cabos/01/morning-by-the-sea",
+  "/stories/los-cabos/01/shore-gold-sunrise",
+  "/stories/los-cabos/02/a-little-time-away",
+  "/stories/los-cabos/02/infinity-pool-ocean",
+  "/stories/los-cabos/03/an-evening-to-savor",
+  "/stories/los-cabos/03/oysters-mist-pour",
+  "/stories/los-cabos/04/memories-between-the-views",
+  "/stories/los-cabos/04/footprints-along-shore",
 ]
 
 const W = 2400

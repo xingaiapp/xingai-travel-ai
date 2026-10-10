@@ -1,9 +1,10 @@
 import { hongKong } from "@/lib/stories/hong-kong"
+import { losCabos } from "@/lib/stories/los-cabos"
 import { macau } from "@/lib/stories/macau"
 import type { StoryEpisode, StorySeason, StoryText } from "@/lib/stories/types"
 import type { Locale } from "@/lib/i18n/types"
 
-export const seasons: StorySeason[] = [hongKong, macau]
+export const seasons: StorySeason[] = [hongKong, macau, losCabos]
 
 /** Drafts render locally (and on previews with STORIES_SHOW_DRAFTS=1) but 404 in production. */
 const showDrafts = process.env.NODE_ENV !== "production" || process.env.STORIES_SHOW_DRAFTS === "1"

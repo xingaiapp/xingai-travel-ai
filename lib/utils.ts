@@ -83,6 +83,13 @@ export const CITY_IMAGES: Record<string, string> = {
   // Americas
   "new york": unsplash("photo-1496442226666-8d4d0e62e6e9"),
   "new orleans": "/assets/destination-new-orleans-card.webp",
+  "los cabos": "/stories/los-cabos/01/morning-by-the-sea-1600.webp",
+  cabo: "/stories/los-cabos/01/morning-by-the-sea-1600.webp",
+  "cabo san lucas": "/stories/los-cabos/01/morning-by-the-sea-1600.webp",
+  洛斯卡沃스: "/stories/los-cabos/01/morning-by-the-sea-1600.webp",
+  卡波: "/stories/los-cabos/01/morning-by-the-sea-1600.webp",
+  로스카보스: "/stories/los-cabos/01/morning-by-the-sea-1600.webp",
+  카보: "/stories/los-cabos/01/morning-by-the-sea-1600.webp",
   "mexico city": unsplash("photo-1518105779142-d975f22f1b0a"),
   "ciudad de méxico": unsplash("photo-1518105779142-d975f22f1b0a"),
   "ciudad de mexico": unsplash("photo-1518105779142-d975f22f1b0a"),
