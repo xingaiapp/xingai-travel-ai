@@ -11,6 +11,36 @@ export type ScenarioQuestion = {
 
 export const scenarioQuestions: ScenarioQuestion[] = [
   {
+    id: "hk-shanghai-4-days",
+    question: L(
+      "Hong Kong or Shanghai for 4 days — which city?",
+      "香港和上海，4 天选哪个？",
+      "홍콩 vs 상하이, 4일이면 어디?",
+      "¿Hong Kong o Shanghái para 4 días?",
+    ),
+    href: "/compare/hong-kong-vs-shanghai",
+  },
+  {
+    id: "tokyo-vs-shanghai",
+    question: L(
+      "Tokyo or Shanghai — Japan or China megacity?",
+      "东京还是上海——日本还是中国大都市？",
+      "도쿄 vs 상하이 — 일본 vs 중국 메가시티?",
+      "¿Tokio o Shanghái — Japón o megaciudad china?",
+    ),
+    href: "/compare/tokyo-vs-shanghai",
+  },
+  {
+    id: "xian-vs-shanghai",
+    question: L(
+      "Xi'an or Shanghai — history China or modern coast?",
+      "西安还是上海——历史中国还是现代海岸？",
+      "시안 vs 상하이 — 역사 중국 vs 현대 해안?",
+      "¿Xi'an o Shanghái — China histórica o costa moderna?",
+    ),
+    href: "/compare/xian-vs-shanghai",
+  },
+  {
     id: "hk-macau-3-days",
     question: L(
       "Hong Kong or Macau for 3 days — which one?",

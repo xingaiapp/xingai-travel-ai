@@ -349,6 +349,96 @@ export const compareSections: Record<string, ContentSection[]> = {
       )
     ),
   ],
+
+  "hong-kong-vs-shanghai": [
+    S(
+      L("When to go", "什么时候去", "언제 갈까", "Cuándo ir"),
+      L(
+        "Hong Kong is most comfortable from October to December; summers are hot, humid, and stormy. Shanghai has four seasons — spring and autumn walk best; summers are hot and humid, winters cooler than Hong Kong. Typhoon and rain risks differ by month — confirm your dates before you lock hotels.",
+        "香港十月到十二月通常最舒服；夏天湿热多风雨。上海四季分明——春秋最好走；夏天湿热，冬天比香港凉。台风与降雨因月份而异，订酒店前核对日期。",
+        "홍콩은 10–12월이 쾌적한 편이고 여름은 덥고 습합니다. 상하이는 사계절 — 봄·가을이 걷기 좋고 여름은 습하며 겨울은 홍콩보다 춥습니다. 태풍·비는 달마다 다르니 날짜를 확인하세요.",
+        "Hong Kong es más agradable de octubre a diciembre. Shanghái tiene cuatro estaciones — primavera y otoño caminan mejor. Confirma fechas antes de hoteles."
+      )
+    ),
+    S(
+      L("How many days each needs", "各需要几天", "도시별로 며칠", "Cuántos días pide cada una"),
+      L(
+        "Hong Kong’s compact map often fits 3–4 nights well. Shanghai usually wants 4–5 if you want more than the Bund spine. Doing both in under a week is rushed unless you already know both maps.",
+        "香港地图紧凑，3–4 晚往往够。上海若不止外滩主轴，通常要 4–5 晚。一周内两地都去会很赶，除非你已熟两地。",
+        "홍콩은 3–4박이 잘 맞는 편. 상하이는 Bund 축 이상이면 4–5박. 일주일 안에 둘 다는 빠듯합니다.",
+        "Hong Kong suele encajar en 3–4 noches. Shanghái pide 4–5 si quieres más que el Bund. Combinar en menos de una semana es apresurado."
+      )
+    ),
+    S(
+      L("Who should skip which", "什么人该跳过哪一个", "누가 어느 쪽을 건너뛸까", "Quién debería saltarse cuál"),
+      L(
+        "Skip Hong Kong if steep hills are a hard limit. Skip Shanghai if you only want a compact walkable core and hate huge metro maps. Visa and entry rules differ — check your passport before you choose on vibes alone.",
+        "若陡坡是硬限制，就别选香港。若只要紧凑可步行核心、讨厌超大地铁图，就别选上海。签证与入境因护照而异——别只凭感觉选。",
+        "언덕이 하드 리밋이면 홍콩을 건너뛰세요. 콤팩트 핵심만 원하고 거대한 지하철 지도가 싫으면 상하이를 건너뛰세요. 비자·입국은 여권마다 다릅니다.",
+        "Sáltate Hong Kong si las cuestas son límite. Sáltate Shanghái si solo quieres un núcleo compacto. Visa y entrada varían por pasaporte."
+      )
+    ),
+  ],
+
+  "tokyo-vs-shanghai": [
+    S(
+      L("When to go", "什么时候去", "언제 갈까", "Cuándo ir"),
+      L(
+        "Tokyo is best in spring and autumn; summers humid with rainy stretch and typhoon risk into early autumn. Shanghai’s shoulder seasons also walk best; summers are hot and humid, winters cooler than Hong Kong but milder than northern China. Match your month to walking comfort first.",
+        "东京春秋最好；夏天湿热有雨季，夏末到初秋有台风风险。上海肩季也最适合步行；夏天湿热，冬天比香港凉、比华北温和。先按步行舒适度选月份。",
+        "도쿄는 봄·가을이 좋고 여름은 습·장마·태풍 위험이 있습니다. 상하이도 어깨 시즌이 걷기 낫고 여름은 습합니다. 먼저 걷기 쾌적한 달을 고르세요.",
+        "Tokio está mejor en primavera y otoño. Shanghái también camina mejor en temporadas intermedias. Elige el mes por confort al caminar."
+      )
+    ),
+    S(
+      L("What kind of first trip each is", "第一次去分别是什么感觉", "첫 방문은 각각 어떤가", "Qué tipo de primer viaje es cada una"),
+      L(
+        "Tokyo is a Japan neighborhood marathon with dense transit. Shanghai is a mainland China megacity sample with Bund contrast and lane texture. Neither is a beach trip. Put origin flight hours and Avoid into /decide.",
+        "东京是日本街区马拉松 + 密集交通。上海是内地大都市采样 + 外滩反差与弄堂质感。都不是海滩行。把出发航程和 Avoid 放进 /decide。",
+        "도쿄는 일본 동네 마라톤+밀집 교통. 상하이는 본토 메가시티 샘플+Bund·골목. 둘 다 해변이 아닙니다. 출발 항공·Avoid를 /decide에.",
+        "Tokio es un maratón de barrios japoneses. Shanghái es una muestra de megaciudad continental. Ninguna es playa. Usa /decide."
+      )
+    ),
+    S(
+      L("Who should skip which", "什么人该跳过哪一个", "누가 어느 쪽을 건너뛸까", "Quién debería saltarse cuál"),
+      L(
+        "Skip Tokyo if you only have three nights and hate learning dense transit. Skip Shanghai if Japan is the real priority and China can wait. Confirm entry rules for your passport before you book.",
+        "若只有三晚又讨厌学密集交通，就别选东京。若日本才是真优先、中国可以等，就别选上海。订票前确认护照入境规则。",
+        "3박뿐인데 밀집 교통 학습이 싫으면 도쿄를 건너뛰세요. 일본이 진짜 우선이면 상하이를 건너뛰세요. 입국 규칙을 먼저 확인하세요.",
+        "Sáltate Tokio si solo tienes tres noches y odias el tránsito denso. Sáltate Shanghái si Japón es la prioridad real. Confirma entrada por pasaporte."
+      )
+    ),
+  ],
+
+  "xian-vs-shanghai": [
+    S(
+      L("When to go", "什么时候去", "언제 갈까", "Cuándo ir"),
+      L(
+        "Xi'an has colder winters and hot summers; spring and autumn are the usual walking windows for wall and old-town days. Shanghai’s shoulder seasons also walk best. Summer heat hits both — build shade and shorter outdoor blocks.",
+        "西安冬冷夏热；城墙与老城日通常春秋更好走。上海肩季也最适合步行。两地夏天都热——预留遮阴和更短的户外段。",
+        "시안은 겨울 춥고 여름 덥습니다. 성벽·구시가지는 봄·가을이 걷기 낫습니다. 상하이도 어깨 시즌이 낫고 여름은 둘 다 덥습니다.",
+        "Xi'an tiene inviernos fríos y veranos calurosos; primavera y otoño caminan mejor. Shanghái también. El calor de verano pega en ambas."
+      )
+    ),
+    S(
+      L("Getting between them", "两地之间怎么走", "두 도시 사이 이동", "Cómo moverse entre ambas"),
+      L(
+        "High-speed rail links Xi'an and Shanghai in roughly half a day door-to-station depending on train. Combining both is realistic on a week-plus China trip; under five nights total, pick one story — history or modern coast — and do it properly.",
+        "高铁连接西安与上海，门到站大约半天（视车次）。一周以上中国行程可以两地都去；总共不到五晚时，先选一个故事——历史或现代海岸——并把它看透。",
+        "고속철이 시안–상하이를 잇고 역까지 대략 반나절입니다. 일주일+면 둘 다 가능. 총 5박 미만이면 역사 vs 현대 해안 중 하나를 제대로.",
+        "El AVE las une en aproximadamente media jornada. Combinar es realista con una semana+; con menos de cinco noches, elige una historia."
+      )
+    ),
+    S(
+      L("Who should skip which", "什么人该跳过哪一个", "누가 어느 쪽을 건너뛸까", "Quién debería saltarse cuál"),
+      L(
+        "Skip Xi'an if tomb day-trips and early starts are on your Avoid list. Skip Shanghai if you came for walls and archaeology, not Bund nights. Neither is a beach-rest answer.",
+        "若陵墓一日游和早起在 Avoid 里，就别选西安。若你是为城墙与考古而来、不是外滩夜晚，就别选上海。两者都不是海滩休息答案。",
+        "능묘 당일치기·이른 출발이 Avoid면 시안을 건너뛰세요. 성벽·고고가 목적이고 Bund 밤이 아니면 상하이를 건너뛰세요. 둘 다 해변 휴식이 아닙니다.",
+        "Sáltate Xi'an si las excursiones a tumbas están en Avoid. Sáltate Shanghái si viniste por murallas, no por el Bund. Ninguna es playa."
+      )
+    ),
+  ],
 }
 
 export function getCompareSections(slug: string): ContentSection[] {

@@ -469,7 +469,14 @@ export function StoriesIndexView({ seasons }: Readonly<{ seasons: { season: Stor
             "Son historias del editor, no un feed de usuarios. Cada temporada termina hacia Decide para probar el destino con tus fechas, presupuesto y Evitar.",
           )}
         </p>
-        <ScenarioQuestions className="mt-8" limit={4} />
+        <div className="mt-8">
+          <ScenarioQuestions limit={6} />
+          <p className="mt-4">
+            <Link href="/compare" className="text-sm font-semibold text-primary hover:underline">
+              {ui("Browse all comparisons →", "查看全部对比 →", "모든 비교 보기 →", "Ver todas las comparaciones →")}
+            </Link>
+          </p>
+        </div>
         <div className="mt-8 grid gap-5">
           {seasons.map(({ season, count }) => (
             <Link

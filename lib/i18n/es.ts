@@ -440,6 +440,12 @@ export const es: Messages = {
     compareEyebrow: "Comparar",
     guidesEyebrow: "Guías",
     compareIndexTitle: "Comparaciones de destinos",
+    compareIndexLead:
+      "No leas toda la lista. Responde una pregunta real — o toca una ciudad que ya estás considerando.",
+    compareFilterAll: "Todos los pares",
+    compareFilterHint: "Filtra por una ciudad que ya tienes en mente",
+    compareEmptyFilter: "Aún no hay compare para esa ciudad. Usa Decide con tus dos lugares.",
+    compareBrowseAll: "Ver todas las comparaciones →",
     guidesIndexTitle: "Guías de decisión de viaje",
     bestFor: "Mejor para",
     pickWhen: "Cuándo elegir cada una",

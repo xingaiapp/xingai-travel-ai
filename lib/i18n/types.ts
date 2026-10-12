@@ -406,6 +406,12 @@ export interface Messages {
     compareEyebrow: string
     guidesEyebrow: string
     compareIndexTitle: string
+    /** Lead under compare index hero — how to pick without overthinking. */
+    compareIndexLead: string
+    compareFilterAll: string
+    compareFilterHint: string
+    compareEmptyFilter: string
+    compareBrowseAll: string
     guidesIndexTitle: string
     bestFor: string
     pickWhen: string

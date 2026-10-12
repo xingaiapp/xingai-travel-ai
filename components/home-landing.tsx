@@ -365,7 +365,7 @@ function HeroCarousel({
 }
 
 export function HomeLanding() {
-  const { locale } = useLocale()
+  const { locale, messages } = useLocale()
   const t = (value: Parameters<typeof pickLocalized>[0]) => textOf(value, locale)
 
   const heroChips = [
@@ -397,7 +397,14 @@ export function HomeLanding() {
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">{t(homeCopy.control)}</p>
         </section>
 
-        <ScenarioQuestions className="mt-12 border-t border-border pt-8" limit={4} />
+        <div className="mt-12 border-t border-border pt-8">
+          <ScenarioQuestions limit={6} />
+          <p className="mt-4">
+            <Link href="/compare" className="text-sm font-semibold text-primary hover:underline">
+              {messages.content.compareBrowseAll}
+            </Link>
+          </p>
+        </div>
 
       <section className="mt-12 border-t border-border pt-8" aria-labelledby="home-places">
         <ScrollIn>

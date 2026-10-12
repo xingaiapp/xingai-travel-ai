@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useMemo, useState } from "react"
 import {
   ContentHero,
   ContentShell,
@@ -14,6 +15,7 @@ import { ScenarioQuestions } from "@/components/scenario-questions"
 import { getSeason, pickText } from "@/lib/stories"
 import { useLocale } from "@/components/locale-provider"
 import { getCity } from "@/lib/cities"
+import { cn } from "@/lib/utils"
 import {
   compares,
   faqDirectAnswer,
@@ -118,26 +120,106 @@ export function FaqView() {
 
 export function CompareIndexView() {
   const { messages, locale } = useLocale()
+  const [cityFilter, setCityFilter] = useState<string | null>(null)
+
+  const filterCities = useMemo(() => {
+    const counts = new Map<string, number>()
+    for (const item of compares) {
+      for (const slug of item.relatedCitySlugs ?? []) {
+        counts.set(slug, (counts.get(slug) ?? 0) + 1)
+      }
+    }
+    return [...counts.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([slug]) => slug)
+      .filter((slug) => getCity(slug))
+  }, [])
+
+  const visible = useMemo(() => {
+    if (!cityFilter) return compares
+    return compares.filter((item) => item.relatedCitySlugs?.includes(cityFilter))
+  }, [cityFilter])
+
   return (
     <ContentShell>
       <ContentHero
         eyebrow={messages.content.compareEyebrow}
         title={messages.content.compareIndexTitle}
-        oneLiner={messages.content.ctaBody}
+        oneLiner={messages.content.compareIndexLead}
       />
-      <ul className="space-y-3">
-        {compares.map((item) => (
-          <li key={item.slug}>
-            <Link
-              href={`/compare/${item.slug}`}
-              className="card-hover block rounded-md border border-border bg-card p-4"
-            >
-              <p className="text-sm font-extrabold">{pickLocalized(item.title, locale)}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{pickLocalized(item.oneLiner, locale)}</p>
+
+      {/* Path 1 — answer a search-shaped question (no list scanning). */}
+      <ScenarioQuestions className="mt-8" />
+
+      {/* Path 2 — tap a city you already have in mind. */}
+      <section className="mt-10" aria-labelledby="compare-filter-heading">
+        <h2 id="compare-filter-heading" className="text-base font-extrabold">
+          {messages.content.compareFilterHint}
+        </h2>
+        <div
+          className="-mx-4 mt-3 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+          role="toolbar"
+          aria-label={messages.content.compareFilterHint}
+        >
+          <button
+            type="button"
+            aria-pressed={cityFilter === null}
+            onClick={() => setCityFilter(null)}
+            className={cn(
+              "inline-flex min-h-11 shrink-0 items-center rounded-full border px-4 text-sm font-semibold transition-colors",
+              cityFilter === null
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-card text-foreground hover:border-primary/40",
+            )}
+          >
+            {messages.content.compareFilterAll}
+          </button>
+          {filterCities.map((slug) => {
+            const city = getCity(slug)!
+            const active = cityFilter === slug
+            return (
+              <button
+                key={slug}
+                type="button"
+                aria-pressed={active}
+                onClick={() => setCityFilter(active ? null : slug)}
+                className={cn(
+                  "inline-flex min-h-11 shrink-0 items-center rounded-full border px-4 text-sm font-semibold transition-colors",
+                  active
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card text-foreground hover:border-primary/40",
+                )}
+              >
+                {pickLocalized(city.name, locale)}
+              </button>
+            )
+          })}
+        </div>
+
+        <ul className="mt-5 space-y-3">
+          {visible.map((item) => (
+            <li key={item.slug}>
+              <Link
+                href={`/compare/${item.slug}`}
+                className="card-hover block rounded-md border border-border bg-card p-4"
+              >
+                <p className="text-sm font-extrabold">{pickLocalized(item.title, locale)}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{pickLocalized(item.oneLiner, locale)}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {visible.length === 0 ? (
+          <p className="mt-4 text-sm text-muted-foreground">
+            {messages.content.compareEmptyFilter}{" "}
+            <Link href="/decide#trip-form" className="font-semibold text-primary hover:underline">
+              {messages.content.ctaButton}
             </Link>
-          </li>
-        ))}
-      </ul>
+          </p>
+        ) : null}
+      </section>
+
       <DecideCta />
     </ContentShell>
   )

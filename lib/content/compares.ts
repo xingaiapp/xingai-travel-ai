@@ -599,6 +599,205 @@ export const compares: ComparePage[] = [
     relatedCitySlugs: ["seoul", "taipei"],
   },
 
+  {
+    slug: "hong-kong-vs-shanghai",
+    title: L("Hong Kong vs Shanghai: which city trip fits?", "香港 vs 上海：哪次城市行更合适？", "홍콩 vs 상하이: 어디에 더 맞을까?", "Hong Kong vs Shanghái: ¿qué viaje urbano encaja?"),
+    oneLiner: L(
+      "Hong Kong wins for harbor drama, compact transit, and Cantonese food density; Shanghai wins for Bund-and-lane scale, mainland megacity energy, and a wider modern-China map.",
+      "香港胜在海港戏剧感、紧凑交通与粤菜密度；上海胜在外滩与弄堂的体量、内地大都市能量，以及更广的现代中国地图。",
+      "홍콩은 항구 드라마·콤팩트 교통·광둥 음식 밀도에서, 상하이는 Bund·골목 규모·본토 메가시티 에너지와 더 넓은 현대 중국 지도에서 앞섭니다.",
+      "Hong Kong gana en drama de puerto, tránsito compacto y densidad cantonesa; Shanghái en escala Bund-callejones, energía de megaciudad y un mapa de China moderna más amplio."
+    ),
+    aName: L("Hong Kong", "香港", "홍콩", "Hong Kong"),
+    bName: L("Shanghai", "上海", "상하이", "Shanghái"),
+    aBestFor: [
+      L("Harbor + street contrast on a short trip", "短途里的海港与街道反差", "짧은 일정의 항구·거리 대비", "Contraste puerto-calle en viaje corto"),
+      L("Cantonese food and dense MTR days", "粤菜与密集地铁日", "광둥 음식·밀집 MTR 일정", "Comida cantonesa y días de MTR densos"),
+    ],
+    bBestFor: [
+      L("Bund skyline + lane neighborhoods", "外滩天际线 + 弄堂街区", "Bund 스카이라인 + 골목 동네", "Skyline del Bund + callejones"),
+      L("Mainland megacity first look", "第一次看内地大都市", "본토 메가시티 첫인상", "Primera mirada a megaciudad continental"),
+    ],
+    pickWhenA: [
+      L("You want Victoria Harbour and steep-street food density without a huge mainland map.", "你想要维港与陡街美食密度，又不想啃一张超大的内地地图。", "빅토리아 하버·가파른 거리 음식 밀도를 원하면서 거대한 본토 지도는 원치 않을 때.", "Quieres Victoria Harbour y densidad de comida en cuestas sin un mapa continental enorme."),
+      L("A compact 3–4 night city break is the whole trip.", "整个行程就是紧凑的 3–4 晚城市短途。", "여행 전체가 콤팩트한 3–4박 시티 브레이크일 때.", "El viaje entero es una escapada urbana compacta de 3–4 noches."),
+    ],
+    pickWhenB: [
+      L("You want Bund nights, French Concession lanes, and a sense of Shanghai’s scale.", "你想要外滩夜晚、法租界弄堂，以及上海体量的感觉。", "Bund 밤·프랑스 조계 골목·상하이 규모감을 원할 때.", "Quieres noches del Bund, callejones de la Concesión Francesa y la escala de Shanghái."),
+      L("The trip is a first mainland China megacity sample, not a Pearl River Delta hop.", "这次是第一次内地大都市采样，不是珠三角短跳。", "주강 삼각주 짧은 점프가 아니라 첫 본토 메가시티 샘플일 때.", "Es una primera muestra de megaciudad continental, no un salto del delta."),
+    ],
+    factors: [
+      factor("Harbor / skyline", "海港 / 天际线", "항구·스카이라인", "Puerto / skyline", "strong", "strong"),
+      factor("Compact walking", "紧凑步行", "콤팩트 도보", "Caminar compacto", "strong", "mixed"),
+      factor("Food density", "美食密度", "음식 밀도", "Densidad comida", "strong", "strong"),
+      factor("Megacity scale", "大都市体量", "메가시티 규모", "Escala megaciudad", "good", "strong"),
+      factor("Short-trip fit", "短途适合度", "짧은 일정 적합", "Encaje viaje corto", "strong", "good"),
+    ],
+    verdict: L(
+      "Pick Hong Kong for a compact harbor-and-street break; pick Shanghai when Bund scale and mainland megacity energy are the point.",
+      "要紧凑的海港与街道短途选香港；外滩体量与内地大都市能量才是重点选上海。",
+      "콤팩트한 항구·거리 브레이크면 홍콩, Bund 규모와 본토 메가시티 에너지가 목적이면 상하이.",
+      "Elige Hong Kong por una escapada compacta puerto-calle; Shanghái si manda la escala del Bund y la energía continental."
+    ),
+    tradeoffs: L(
+      "Hong Kong hills and humidity tire some groups. Shanghai’s metro map is huge — stuffing “see everything” into four nights usually means you only see the Bund spine. Visa and entry rules differ by passport; confirm before you book.",
+      "香港的坡与潮湿会累到部分人。上海地铁地图很大——四晚硬塞「全看完」往往只剩外滩主轴。签证与入境因护照而异，订票前自行确认。",
+      "홍콩 언덕·습도는 부담일 수 있습니다. 상하이 지하철 지도는 거대합니다 — 4박에 ‘다 보기’는 대개 Bund 축만 남깁니다. 비자·입국은 여권마다 다릅니다.",
+      "Las cuestas y la humedad de Hong Kong cansan. El metro de Shanghái es enorme — en cuatro noches suele quedar solo el eje del Bund. Visa y entrada varían por pasaporte."
+    ),
+    faq: [
+      {
+        q: L("Hong Kong or Shanghai for 4 days?", "香港和上海，4 天选哪个？", "홍콩 vs 상하이, 4일이면 어디?", "¿Hong Kong o Shanghái para 4 días?"),
+        a: L(
+          "Hong Kong’s compact map often fits 4 days better. Shanghai can work if you pick one spine (Bund + one neighborhood) and skip “see the whole city.” Put your origin flight into /decide.",
+          "香港地图更紧凑，4 天往往更合适。上海也能 4 天——若只选一条主轴（外滩 + 一个街区）、不追求全城。把出发航班放进 /decide。",
+          "홍콩의 콤팩트 지도가 4일에 더 잘 맞는 편. 상하이도 Bund+동네 하나면 가능. 출발 항공은 /decide에.",
+          "El mapa compacto de Hong Kong suele encajar mejor en 4 días. Shanghái puede funcionar con un eje (Bund + un barrio). Mete el vuelo en /decide."
+        ),
+      },
+      {
+        q: L("Which is better for food?", "吃货哪个更好？", "음식만 보면 어디?", "¿Cuál es mejor para comida?"),
+        a: L(
+          "Both are excellent. Hong Kong leans Cantonese, dai pai dong energy, and harbor-city density; Shanghai leans Shanghainese classics, lanes, and a wider mainland restaurant map. Budget and walking pace decide as much as taste.",
+          "都很强。香港偏粤菜、大排档能量与港口城市密度；上海偏本帮菜、弄堂与更广的内地餐饮地图。预算和步行节奏往往跟口味一样关键。",
+          "둘 다 강합니다. 홍콩은 광둥·노점 에너지, 상하이는 본帮·골목·더 넓은 본토 식당 지도. 예산·걷기 속도도 취향만큼 결정적입니다.",
+          "Ambas excelentes. Hong Kong hacia lo cantonés; Shanghái hacia clásicos locales y callejones. Presupuesto y ritmo pesan tanto como el gusto."
+        ),
+      },
+    ],
+    relatedCitySlugs: ["hong-kong", "shanghai"],
+    relatedStorySlugs: ["hong-kong"],
+  },
+
+  {
+    slug: "tokyo-vs-shanghai",
+    title: L("Tokyo vs Shanghai: Japan or China megacity?", "东京 vs 上海：日本还是中国大都市？", "도쿄 vs 상하이: 일본 vs 중국 메가시티?", "Tokio vs Shanghái: ¿Japón o megaciudad china?"),
+    oneLiner: L(
+      "Tokyo wins for neighborhood depth, transit clarity for many first-timers, and a Japan food marathon; Shanghai wins for Bund drama, lane texture, and a first mainland China megacity sample.",
+      "东京胜在街区深度、许多初次访客更清晰的交通，以及日本美食马拉松；上海胜在外滩戏剧感、弄堂质感，以及第一次内地大都市采样。",
+      "도쿄는 동네 깊이·많은 첫 방문객에게 더 명확한 교통·일본 미식 마라톤에서, 상하이는 Bund 드라마·골목 질감·첫 본토 메가시티 샘플에서 앞섭니다.",
+      "Tokio gana en profundidad de barrios, claridad de tránsito para muchos debutantes y maratón gastronómico japonés; Shanghái en drama del Bund, textura de callejones y una primera muestra de megaciudad continental."
+    ),
+    aName: L("Tokyo", "东京", "도쿄", "Tokio"),
+    bName: L("Shanghai", "上海", "상하이", "Shanghái"),
+    aBestFor: [
+      L("Neighborhood hopping by train", "坐电车跳街区", "전철로 동네 이동", "Saltar barrios en tren"),
+      L("Japan food and culture depth", "日本美食与文化深度", "일본 미식·문화 깊이", "Profundidad japonesa"),
+    ],
+    bBestFor: [
+      L("Bund + lane city contrast", "外滩 + 弄堂城市反差", "Bund + 골목 도시 대비", "Contraste Bund y callejones"),
+      L("Mainland China megacity first trip", "第一次内地中国大都市", "첫 본토 중국 메가시티", "Primera megaciudad continental"),
+    ],
+    pickWhenA: [
+      L("Japan itself is the priority destination — not “Asia somewhere.”", "日本本身是优先目的地，不只是「亚洲随便哪」。", "일본 자체가 우선 목적지일 때 — ‘아시아 어딘가’가 아니라.", "Japón es el destino prioritario, no solo “Asia en algún sitio”."),
+      L("You want ward variety and denser neighborhood evenings over one skyline spine.", "你想要区级多样性与更密的街区夜晚，而不是一条天际线主轴。", "스카이라인 한 축보다 구(ward) 다양성과 더 밀한 동네 저녁을 원할 때.", "Quieres variedad de barrios y noches densas más que un solo eje de skyline."),
+    ],
+    pickWhenB: [
+      L("You want a first look at a mainland China megacity with Bund nights.", "你想第一次看内地大都市，并有外滩夜晚。", "Bund 밤이 있는 첫 본토 메가시티를 원할 때.", "Quieres una primera mirada a una megaciudad continental con noches del Bund."),
+      L("The trip is China-first, and Tokyo can wait for a later Japan window.", "这次以中国为先，东京可以留给下一次日本窗口。", "이번은 중국 우선이고 도쿄는 다음 일본 일정으로 미뤄도 될 때.", "El viaje es China-first y Tokio puede esperar a otra ventana Japón."),
+    ],
+    factors: [
+      factor("Food depth", "美食深度", "음식 깊이", "Profundidad comida", "strong", "strong"),
+      factor("Neighborhood variety", "街区多样性", "동네 다양성", "Variedad de barrios", "strong", "good"),
+      factor("Skyline drama", "天际线戏剧感", "스카이라인 드라마", "Drama de skyline", "good", "strong"),
+      factor("First-timer clarity", "初次清晰度", "첫 방문 명확도", "Claridad debutante", "strong", "good"),
+      factor("Trip length needed", "需要的行程天数", "필요한 일정 길이", "Días que pide", "mixed", "good"),
+    ],
+    verdict: L(
+      "Pick Tokyo when Japan depth is the trip; pick Shanghai when mainland megacity + Bund contrast is the point.",
+      "日本深度才是行程选东京；内地大都市 + 外滩反差才是重点选上海。",
+      "일본 깊이가 목적이면 도쿄, 본토 메가시티+Bund 대비가 목적이면 상하이.",
+      "Elige Tokio si manda la profundidad japonesa; Shanghái si manda megaciudad continental + contraste Bund."
+    ),
+    tradeoffs: L(
+      "Tokyo needs more days to feel complete across wards; winter evenings are cooler. Shanghai can feel vast and smoggy on bad air days — pick one or two districts. Entry rules and flight hours from your origin often decide more than vibes.",
+      "东京要更多天才有跨区「玩透」感；冬夜更凉。上海在空气差的日子可能显得很大、灰——先选一两个区。出发地航程与入境规则往往比气质更决定。",
+      "도쿄는 구를 넘기려면 날이 더 필요하고 겨울 저녁이 더 춥습니다. 상하이는 대기 나쁜 날 광활·흐릿할 수 있어 구 1–2개만 고르세요. 출발 항공·입국 규칙이 분위기보다 결정적일 때가 많습니다.",
+      "Tokio pide más días; las noches de invierno son más frescas. Shanghái puede sentirse vasto — elige uno o dos distritos. Vuelos y entrada suelen pesar más que el vibe."
+    ),
+    faq: [
+      {
+        q: L("Better for a first Asia megacity?", "第一次亚洲大都市哪个更好？", "첫 아시아 메가시티엔 어디?", "¿Mejor para una primera megaciudad en Asia?"),
+        a: L(
+          "Tokyo often feels clearer for transit-and-neighborhood first-timers. Shanghai fits if China is the priority and you accept a bigger map. Confirm visas and flight hours on /decide — do not pick on skyline photos alone.",
+          "想要交通与街区更清晰，东京往往更合适。若中国是优先且能接受更大地图，选上海。在 /decide 确认签证与航程——别只凭天际线照片选。",
+          "교통·동네가 더 명확하길 원하면 도쿄가 자주 낫습니다. 중국이 우선이고 큰 지도를 감수하면 상하이. /decide에서 비자·항공 확인 — 스카이라인 사진만으로 고르지 마세요.",
+          "Tokio suele ser más claro para debutantes. Shanghái encaja si China es prioritaria. Confirma visados y vuelos en /decide."
+        ),
+      },
+    ],
+    relatedCitySlugs: ["tokyo", "shanghai"],
+  },
+
+  {
+    slug: "xian-vs-shanghai",
+    title: L("Xi'an vs Shanghai: history China or modern coast?", "西安 vs 上海：历史中国还是现代海岸？", "시안 vs 상하이: 역사 중국 vs 현대 해안?", "Xi'an vs Shanghái: ¿China histórica o costa moderna?"),
+    oneLiner: L(
+      "Xi'an wins for walls, tombs, and a history-first China trip; Shanghai wins for Bund nights, lanes, and modern megacity pacing.",
+      "西安胜在城墙、陵墓与以历史为主线的中国行；上海胜在外滩夜晚、弄堂与现代大都市节奏。",
+      "시안은 성벽·능묘·역사 중심 중국 여행에서, 상하이는 Bund 밤·골목·현대 메가시티 속도에서 앞섭니다.",
+      "Xi'an gana en murallas, tumbas y un viaje China-historia; Shanghái en noches del Bund, callejones y ritmo de megaciudad moderna."
+    ),
+    aName: L("Xi'an", "西安", "시안", "Xi'an"),
+    bName: L("Shanghai", "上海", "상하이", "Shanghái"),
+    aBestFor: [
+      L("History and archaeology days", "历史与考古日", "역사·고고 일정", "Días de historia y arqueología"),
+      L("City wall + old-town pacing", "城墙 + 老城节奏", "성벽 + 구시가지 속도", "Muralla + ritmo de casco"),
+    ],
+    bBestFor: [
+      L("Modern skyline and lane food", "现代天际线与弄堂美食", "현대 스카이라인·골목 음식", "Skyline moderno y comida de callejón"),
+      L("Coastal megacity energy", "沿海大都市能量", "해안 메가시티 에너지", "Energía de megaciudad costera"),
+    ],
+    pickWhenA: [
+      L("Terracotta / wall days are the reason you came to China this time.", "兵马俑 / 城墙日才是这次来中国的理由。", "병마용·성벽 일정이 이번 중국행의 이유일 때.", "Los días de terracota/muralla son la razón de venir a China."),
+      L("You want a clearer “old China” story than a Bund skyline trip.", "你想要比外滩天际线更清晰的「老中国」故事。", "Bund 스카이라인보다 더 선명한 ‘옛 중국’ 이야기를 원할 때.", "Quieres una historia de “China antigua” más clara que un viaje de skyline."),
+    ],
+    pickWhenB: [
+      L("Bund nights, shopping streets, and modern China pacing are the point.", "外滩夜晚、购物街与现代中国节奏才是重点。", "Bund 밤·쇼핑 거리·현대 중국 속도가 목적일 때.", "El punto son noches del Bund, calles comerciales y ritmo moderno."),
+      L("You prefer one coastal hub with dense metro food over tomb day-trips.", "你更喜欢一个沿海枢纽 + 密集地铁美食，而不是陵墓一日游。", "능묘 당일치기보다 해안 허브+밀집 지하철 음식을 선호할 때.", "Prefieres un hub costero con comida en metro denso a excursiones a tumbas."),
+    ],
+    factors: [
+      factor("History depth", "历史深度", "역사 깊이", "Profundidad histórica", "strong", "mixed"),
+      factor("Modern skyline", "现代天际线", "현대 스카이라인", "Skyline moderno", "weaker", "strong"),
+      factor("Food variety", "餐饮多样性", "음식 다양성", "Variedad comida", "good", "strong"),
+      factor("Walkable core", "可步行核心", "걷기 좋은 핵심", "Núcleo caminable", "strong", "good"),
+      factor("First China story", "第一次中国故事清晰度", "첫 중국 이야기 명확도", "Claridad primera China", "strong", "good"),
+    ],
+    verdict: L(
+      "Pick Xi'an for a history-first China trip; pick Shanghai when modern coast and Bund contrast matter more.",
+      "以历史为主线的中国行选西安；更看重现代海岸与外滩反差选上海。",
+      "역사 중심 중국 여행이면 시안, 현대 해안·Bund 대비가 더 중요하면 상하이.",
+      "Elige Xi'an por China-historia; Shanghái si mandan costa moderna y contraste Bund."
+    ),
+    tradeoffs: L(
+      "Xi'an day trips to major sites need early starts and transport buffers. Shanghai’s map is huge — four nights without a district plan feel unfinished. Neither replaces the other; combining both usually wants a week-plus China itinerary.",
+      "西安去主要遗址需要早起和交通缓冲。上海地图很大——四晚没有分区计划会觉得没看完。两者不能互相替代；两个都去通常要一周以上的中国行程。",
+      "시안 주요 유적은 이른 출발·이동 버퍼가 필요합니다. 상하이 지도는 커서 구 계획 없는 4박은 미완처럼 느껴집니다. 둘 다 가려면 대개 일주일+ 중국 일정입니다.",
+      "Xi'an pide madrugones y márgenes de transporte. Shanghái es enorme sin un plan de distritos. Combinar ambas suele pedir una semana o más."
+    ),
+    faq: [
+      {
+        q: L("First trip to China — Xi'an or Shanghai?", "第一次去中国选西安还是上海？", "첫 중국 여행, 시안 vs 상하이?", "¿Primera China — Xi'an o Shanghái?"),
+        a: L(
+          "If history is why you came, start with Xi'an. If modern megacity nights are why you came, start with Shanghai. Many travelers eventually do both on longer China trips — run your days and Avoid on /decide.",
+          "若历史是来的理由，先西安。若现代大都市夜晚是理由，先上海。更长中国行程很多人两个都会去——用天数和 Avoid 跑 /decide。",
+          "역사가 이유면 시안부터, 현대 메가시티 밤이 이유면 상하이부터. 긴 중국 일정에선 둘 다 가는 경우가 많습니다 — /decide에 일수·Avoid.",
+          "Si viniste por historia, Xi'an. Si por noches de megaciudad, Shanghái. En viajes largos muchos hacen ambas — usa /decide."
+        ),
+      },
+      {
+        q: L("Can I do both in one week?", "一周能两个都去吗？", "일주일에 둘 다 가능할까?", "¿Puedo hacer ambas en una semana?"),
+        a: L(
+          "Possible but tight: high-speed rail links them, yet each city wants real days. Prefer 3+3 or accept one shallow stop. Put exact dates into /decide.",
+          "可以但紧：高铁连得上，但每座城市都要实打实的天数。最好 3+3，或接受一地只能浅看。把确切日期放进 /decide。",
+          "가능하지만 빠듯합니다. 고속철은 잇지만 각 도시에 날이 필요합니다. 3+3이 낫거나 한쪽은 얕게. 정확한 날짜는 /decide에.",
+          "Posible pero justo: el AVE las une, pero cada ciudad pide días reales. Prefiere 3+3. Mete fechas en /decide."
+        ),
+      },
+    ],
+    relatedCitySlugs: ["xian", "shanghai"],
+  },
+
 ]
 
 export function getCompare(slug: string) {

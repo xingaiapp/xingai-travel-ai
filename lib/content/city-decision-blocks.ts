@@ -88,10 +88,10 @@ export const cityDecisionBlocks: Record<string, CityDecisionBlock> = {
       S(
         L("Who it fits", "适合谁", "누구에게 맞나", "Para quién"),
         L(
-          "Strong for food-first city trips, harbor walks, and dense transit. Steep streets and humidity tire some groups — put that in Avoid if it matters. First-hand harbour and street stories: /stories/hong-kong. Still choosing vs Macau for a short trip? /compare/hong-kong-vs-macau.",
-          "适合以吃为主的城市行、海港散步和密集公交。陡坡与潮湿会累到部分人——重要就写进 Avoid。第一手维港与街巷故事：/stories/hong-kong。短途还在港澳之间选？/compare/hong-kong-vs-macau。",
-          "음식 중심 도시 여행, 항구 산책, 밀집 교통에 강합니다. 가파른 길·습도가 힘들면 Avoid에 적으세요. 현장 이야기: /stories/hong-kong. 짧은 일정으로 마카오와 고르는 중이면 /compare/hong-kong-vs-macau.",
-          "Fuerte para viajes urbanos de comida, paseos al puerto y tránsito denso. Calles empinadas y humedad cansan a algunos — dilo en Avoid. Historias: /stories/hong-kong. ¿Eligiendo vs Macao en un viaje corto? /compare/hong-kong-vs-macau.",
+          "Strong for food-first city trips, harbor walks, and dense transit. Steep streets and humidity tire some groups — put that in Avoid if it matters. First-hand harbour and street stories: /stories/hong-kong. Short trip vs Macau: /compare/hong-kong-vs-macau. Vs Shanghai: /compare/hong-kong-vs-shanghai.",
+          "适合以吃为主的城市行、海港散步和密集公交。陡坡与潮湿会累到部分人——重要就写进 Avoid。第一手维港与街巷故事：/stories/hong-kong。短途对澳门：/compare/hong-kong-vs-macau。对上海：/compare/hong-kong-vs-shanghai。",
+          "음식 중심 도시 여행, 항구 산책, 밀집 교통에 강합니다. 가파른 길·습도가 힘들면 Avoid에 적으세요. 현장 이야기: /stories/hong-kong. 마카오: /compare/hong-kong-vs-macau. 상하이: /compare/hong-kong-vs-shanghai.",
+          "Fuerte para viajes urbanos de comida, paseos al puerto y tránsito denso. Calles empinadas y humedad cansan a algunos — dilo en Avoid. Historias: /stories/hong-kong. Vs Macao: /compare/hong-kong-vs-macau. Vs Shanghái: /compare/hong-kong-vs-shanghai.",
         ),
       ),
     ],
@@ -168,6 +168,56 @@ export const cityDecisionBlocks: Record<string, CityDecisionBlock> = {
           "适合看重性价比的城市行、夜生活能量与韩餐密度。短途美食城对台北：/compare/seoul-vs-taipei。对东京：/compare/tokyo-vs-seoul。",
           "가성비 도시 여행, 나이트 에너지, 한식 밀도에 맞습니다. 짧은 음식 도시로 타이베이와: /compare/seoul-vs-taipei. 도쿄: /compare/tokyo-vs-seoul.",
           "Encaja con viajes urbanos de valor, energía nocturna y densidad de comida coreana. Ciudad comida corta vs Taipéi: /compare/seoul-vs-taipei. Vs Tokio: /compare/tokyo-vs-seoul.",
+        ),
+      ),
+    ],
+    faq: [],
+  },
+
+  shanghai: {
+    relatedCompareSlug: "hong-kong-vs-shanghai",
+    sections: [
+      S(
+        L("When to go", "什么时候去", "언제 갈까", "Cuándo ir"),
+        L(
+          "Spring and autumn are the most comfortable for Bund walks and lane days. Summers are hot and humid; winters are cooler than Hong Kong. Build flexibility around rain and air-quality days.",
+          "春秋最适合外滩散步与弄堂日。夏天湿热；冬天比香港凉。雨天与空气质量差的日子要留弹性。",
+          "봄·가을이 Bund 산책·골목 일정에 가장 쾌적합니다. 여름은 습하고 겨울은 홍콩보다 춥습니다. 비·대기질 나쁜 날에 여유를 두세요.",
+          "Primavera y otoño son lo más cómodo para el Bund y los callejones. El verano es húmedo; el invierno, más fresco que Hong Kong. Deja margen para lluvia y calidad del aire.",
+        ),
+      ),
+      S(
+        L("Who it fits", "适合谁", "누구에게 맞나", "Para quién"),
+        L(
+          "Fits travelers who want Bund nights, lane texture, and a mainland megacity sample. Still choosing vs Hong Kong on a short trip? /compare/hong-kong-vs-shanghai. Vs Tokyo: /compare/tokyo-vs-shanghai. History-first China vs modern coast: /compare/xian-vs-shanghai.",
+          "适合想要外滩夜晚、弄堂质感与内地大都市采样的人。短途还在和香港之间选？/compare/hong-kong-vs-shanghai。对东京：/compare/tokyo-vs-shanghai。历史中国 vs 现代海岸：/compare/xian-vs-shanghai。",
+          "Bund 밤·골목 질감·본토 메가시티 샘플을 원하는 사람에게 맞습니다. 짧은 일정으로 홍콩과: /compare/hong-kong-vs-shanghai. 도쿄: /compare/tokyo-vs-shanghai. 역사 vs 현대 해안: /compare/xian-vs-shanghai.",
+          "Encaja si quieres noches del Bund, callejones y una muestra de megaciudad. ¿Vs Hong Kong en viaje corto? /compare/hong-kong-vs-shanghai. Vs Tokio: /compare/tokyo-vs-shanghai. Historia vs costa moderna: /compare/xian-vs-shanghai.",
+        ),
+      ),
+    ],
+    faq: [],
+  },
+
+  xian: {
+    relatedCompareSlug: "xian-vs-shanghai",
+    sections: [
+      S(
+        L("When to go", "什么时候去", "언제 갈까", "Cuándo ir"),
+        L(
+          "Spring and autumn are the usual windows for wall walks and tomb day-trips. Winters are cold; summers are hot. Early starts help for major sites outside the center.",
+          "城墙步行与陵墓一日游通常春秋最好。冬天冷；夏天热。城外主要遗址建议早出发。",
+          "성벽 걷기·능묘 당일치기는 대개 봄·가을이 낫습니다. 겨울 춥고 여름 덥습니다. 시외 주요 유적은 이른 출발이 도움이 됩니다.",
+          "Primavera y otoño suelen ser mejores para muralla y tumbas. Inviernos fríos; veranos calurosos. Madruga para sitios fuera del centro.",
+        ),
+      ),
+      S(
+        L("Who it fits", "适合谁", "누구에게 맞나", "Para quién"),
+        L(
+          "Fits history-first China trips — walls, tombs, and a clearer “old China” story than a Bund-only itinerary. Still choosing vs Shanghai? /compare/xian-vs-shanghai.",
+          "适合以历史为主线的中国行——城墙、陵墓，以及比纯外滩行程更清晰的「老中国」故事。还在和上海之间选？/compare/xian-vs-shanghai。",
+          "역사 중심 중국 여행에 맞습니다 — 성벽·능묘, Bund만 도는 것보다 선명한 ‘옛 중국’ 이야기. 상하이와 고르는 중이면 /compare/xian-vs-shanghai.",
+          "Encaja con China-historia — murallas, tumbas y una historia más clara que un itinerario solo Bund. ¿Vs Shanghái? /compare/xian-vs-shanghai.",
         ),
       ),
     ],
