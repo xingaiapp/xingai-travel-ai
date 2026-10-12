@@ -91,6 +91,29 @@ export function decideJsonLdHtml(locale: Locale | PublicLocale = "en"): string {
   return JSON.stringify(data).replace(/</g, "\\u003c")
 }
 
+/** FAQPage for a compare detail page — matches the visible FAQ block on that slug. */
+export function compareFaqJsonLdHtml(
+  slug: string,
+  locale: Locale | PublicLocale,
+  items: { q: string; a: string }[]
+): string {
+  const url = absoluteLocalized(site, locale as PublicLocale, `/compare/${slug}`)
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${url}#faq`,
+    url,
+    inLanguage: schemaInLanguage(locale),
+    isPartOf: { "@id": `${site}/#website` },
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  }
+  return JSON.stringify(data).replace(/</g, "\\u003c")
+}
+
 /** FAQPage for /faq — matches visible FAQ copy in the page locale. */
 export function faqPageJsonLdHtml(locale: Locale | PublicLocale = "en"): string {
   const L = locale as Locale

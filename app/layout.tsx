@@ -1,22 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Fraunces, Inter } from "next/font/google"
-import Script from "next/script"
-import { Analytics } from "@vercel/analytics/next"
-import { SeoJsonLd } from "@/components/seo-json-ld"
-import { ThemeProvider, themeBootScript } from "@/components/theme-provider"
 import "./globals.css"
-
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-inter",
-  display: "swap",
-})
-
-const fraunces = Fraunces({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-display",
-  display: "swap",
-})
 
 export const metadata: Metadata = {
   title: {
@@ -68,18 +51,11 @@ export const viewport: Viewport = {
   ],
 }
 
-/** No `headers()` here — keeps the tree eligible for static generation / CDN cache. */
+/**
+ * Pass-through root. `<html lang>` lives in `app/[locale]/layout` (indexable)
+ * and `app/(session)/layout` (result/trips/share) so each tree can set lang
+ * without `headers()` — keeps evergreen HTML CDN-cacheable.
+ */
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <html lang="en" suppressHydrationWarning className={`dark ${inter.variable} ${fraunces.variable}`}>
-      <body className="font-sans antialiased">
-        <Script id="theme-boot" strategy="beforeInteractive">
-          {themeBootScript}
-        </Script>
-        <SeoJsonLd />
-        <ThemeProvider>{children}</ThemeProvider>
-        {process.env.NODE_ENV === "production" && <Analytics />}
-      </body>
-    </html>
-  )
+  return children
 }

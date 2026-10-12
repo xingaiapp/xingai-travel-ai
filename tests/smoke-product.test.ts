@@ -50,7 +50,11 @@ describe("new Orleans live guide + compare pickWhen", () => {
 
 describe("404 document title", () => {
   it("exports Page not found metadata", async () => {
-    const mod = await import("@/app/not-found")
-    expect(mod.metadata.title).toBe("Page not found")
+    // Read source — importing the module pulls next/font via RootDocument in vitest.
+    const { readFileSync } = await import("node:fs")
+    const { join } = await import("node:path")
+    const src = readFileSync(join(process.cwd(), "app/not-found.tsx"), "utf8")
+    expect(src).toMatch(/title:\s*"Page not found"/)
+    expect(src).toMatch(/robots:\s*\{\s*index:\s*false/)
   })
 })

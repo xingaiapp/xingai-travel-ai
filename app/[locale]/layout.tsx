@@ -1,6 +1,7 @@
 import { AppShell } from "@/components/app-shell"
+import { RootDocument } from "@/components/root-document"
 import { localeFromParams } from "@/lib/locale-params"
-import { PUBLIC_LOCALES } from "@/lib/public-locale"
+import { htmlLang, PUBLIC_LOCALES } from "@/lib/public-locale"
 
 export function generateStaticParams() {
   return PUBLIC_LOCALES.map((locale) => ({ locale }))
@@ -14,5 +15,9 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>
 }>) {
   const locale = await localeFromParams(params)
-  return <AppShell locale={locale}>{children}</AppShell>
+  return (
+    <RootDocument lang={htmlLang(locale)}>
+      <AppShell locale={locale}>{children}</AppShell>
+    </RootDocument>
+  )
 }

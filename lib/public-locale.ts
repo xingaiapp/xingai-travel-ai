@@ -88,8 +88,9 @@ export function openGraphLocale(locale: PublicLocale): "en_US" | "zh_CN" | "ko_K
   return "en_US"
 }
 
-export function htmlLang(locale: PublicLocale): "en" | "zh-Hans" | "ko" | "es" {
-  if (locale === "zh") return "zh-Hans"
+/** BCP 47 tags for `<html lang>` — zh uses `zh-CN` to match hreflang / Open Graph. */
+export function htmlLang(locale: PublicLocale): "en" | "zh-CN" | "ko" | "es" {
+  if (locale === "zh") return "zh-CN"
   if (locale === "ko") return "ko"
   if (locale === "es") return "es"
   return "en"

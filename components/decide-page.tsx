@@ -548,10 +548,11 @@ function HeroIntro() {
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-foreground/90">
               {messages.home.eyebrow}
             </p>
-            <h1 className="hero-display-title mt-3 text-4xl font-semibold leading-[1.15] tracking-tight text-foreground lg:text-5xl">
+            {/* Visual twin of the mobile <h1> — one H1 per page (mobile strip owns semantics). */}
+            <p className="hero-display-title mt-3 text-4xl font-semibold leading-[1.15] tracking-tight text-foreground lg:text-5xl">
               <span className="block">{messages.home.headlineLead}</span>
               <span className="mt-1 block text-primary">{messages.home.headlineAccent}</span>
-            </h1>
+            </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-foreground/95 lg:text-lg">
               {messages.home.sub}
             </p>
@@ -630,7 +631,8 @@ function HeroIntro() {
             {messages.home.eyebrow}
           </p>
           <h1 className="hero-display-title mt-1 text-xl font-semibold leading-snug tracking-tight text-foreground">
-            <span className="text-primary">{messages.home.headlineAccent}</span>
+            <span className="block text-foreground/90">{messages.home.headlineLead}</span>
+            <span className="mt-0.5 block text-primary">{messages.home.headlineAccent}</span>
           </h1>
           <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
             {messages.home.heroProof} · {messages.home.trustLine}

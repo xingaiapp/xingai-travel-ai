@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 import {
   alternatesFor,
+  htmlLang,
   hreflangPaths,
   isIndexablePublicPath,
   localizedPublicHref,
@@ -36,6 +37,13 @@ describe("public-locale", () => {
     expect(localizedPublicHref("ko", "/decide")).toBe("/ko/decide")
     expect(localizedPublicHref("es", "/result")).toBe("/result")
     expect(localizedPublicHref("en", "/city")).toBe("/city")
+  })
+
+  it("maps public locales to html lang tags", () => {
+    expect(htmlLang("en")).toBe("en")
+    expect(htmlLang("zh")).toBe("zh-CN")
+    expect(htmlLang("ko")).toBe("ko")
+    expect(htmlLang("es")).toBe("es")
   })
 
   it("emits matching hreflang and canonical sets", () => {

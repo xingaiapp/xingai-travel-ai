@@ -1,7 +1,13 @@
 import type { MetadataRoute } from "next"
 import { cities } from "@/lib/cities"
 import { compares, guides } from "@/lib/content"
-import { CITY_CONTENT_DATE, COMPARE_CONTENT_DATE, GUIDE_CONTENT_DATE } from "@/lib/content-dates"
+import {
+  CITY_CONTENT_DATE,
+  COMPARE_CONTENT_DATE,
+  GUIDE_CONTENT_DATE,
+  SHELL_CONTENT_DATE,
+  STORIES_INDEX_DATE,
+} from "@/lib/content-dates"
 import {
   hreflangPaths,
   localizedPublicHref,
@@ -33,21 +39,21 @@ function localizedEntries(
 export default function sitemap(): MetadataRoute.Sitemap {
   // /result and /trips are excluded: session/local state, not crawlable
   const staticPages = [
-    { path: "/", priority: 1, changeFrequency: "weekly" as const },
-    { path: "/decide", priority: 0.9, changeFrequency: "weekly" as const },
-    { path: "/how-it-works", priority: 0.8, changeFrequency: "weekly" as const },
-    { path: "/faq", priority: 0.8, changeFrequency: "weekly" as const },
-    { path: "/privacy", priority: 0.5, changeFrequency: "weekly" as const },
-    { path: "/terms", priority: 0.5, changeFrequency: "weekly" as const },
-    { path: "/disclaimer", priority: 0.5, changeFrequency: "weekly" as const },
-    { path: "/affiliate-disclosure", priority: 0.5, changeFrequency: "weekly" as const },
-    { path: "/city", priority: 0.85, changeFrequency: "weekly" as const },
-    { path: "/compare", priority: 0.85, changeFrequency: "weekly" as const },
-    { path: "/guides", priority: 0.85, changeFrequency: "weekly" as const },
+    { path: "/", priority: 1, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
+    { path: "/decide", priority: 0.9, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
+    { path: "/how-it-works", priority: 0.8, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
+    { path: "/faq", priority: 0.8, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
+    { path: "/privacy", priority: 0.5, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
+    { path: "/terms", priority: 0.5, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
+    { path: "/disclaimer", priority: 0.5, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
+    { path: "/affiliate-disclosure", priority: 0.5, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
+    { path: "/city", priority: 0.85, changeFrequency: "weekly" as const, lastModified: CITY_CONTENT_DATE },
+    { path: "/compare", priority: 0.85, changeFrequency: "weekly" as const, lastModified: COMPARE_CONTENT_DATE },
+    { path: "/guides", priority: 0.85, changeFrequency: "weekly" as const, lastModified: GUIDE_CONTENT_DATE },
   ]
 
   const entries: MetadataRoute.Sitemap = staticPages.flatMap((page) =>
-    localizedEntries(page.path, page.priority, page.changeFrequency)
+    localizedEntries(page.path, page.priority, page.changeFrequency, page.lastModified)
   )
 
   for (const city of cities) {
@@ -62,16 +68,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const storySeasons = seasons.filter((season) => publishedEpisodes(season).length > 0)
   if (storySeasons.length > 0) {
-    entries.push(...localizedEntries("/stories", 0.7, "weekly"))
+    entries.push(...localizedEntries("/stories", 0.7, "weekly", STORIES_INDEX_DATE))
     for (const season of storySeasons) {
-      entries.push(...localizedEntries(`/stories/${season.slug}`, 0.8, "weekly"))
+      const seasonDate = publishedEpisodes(season)
+        .map((ep) => (ep.publishedAt ? new Date(ep.publishedAt).getTime() : 0))
+        .reduce((max, t) => Math.max(max, t), STORIES_INDEX_DATE.getTime())
+      entries.push(
+        ...localizedEntries(`/stories/${season.slug}`, 0.8, "weekly", new Date(seasonDate))
+      )
       for (const episode of publishedEpisodes(season)) {
         entries.push(
           ...localizedEntries(
             `/stories/${season.slug}/${episode.slug}`,
             0.7,
             "monthly",
-            episode.publishedAt ? new Date(episode.publishedAt) : undefined
+            episode.publishedAt ? new Date(episode.publishedAt) : STORIES_INDEX_DATE
           )
         )
       }
