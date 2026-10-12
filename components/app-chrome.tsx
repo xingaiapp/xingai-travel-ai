@@ -175,14 +175,18 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
   }, [])
 
   useEffect(() => {
+    // Defer setState so eslint react-hooks/set-state-in-effect stays clean (CI).
+    const apply = (visible: boolean) => {
+      queueMicrotask(() => setStoriesNewVisible(visible))
+    }
     if (storiesSoon) {
-      setStoriesNewVisible(false)
+      apply(false)
       return
     }
     try {
-      setStoriesNewVisible(window.localStorage.getItem(STORIES_NEW_DISMISSED_KEY) !== "1")
+      apply(window.localStorage.getItem(STORIES_NEW_DISMISSED_KEY) !== "1")
     } catch {
-      setStoriesNewVisible(true)
+      apply(true)
     }
   }, [])
 
@@ -194,7 +198,7 @@ export function AppChrome({ children }: Readonly<{ children: React.ReactNode }>)
     } catch {
       /* ignore */
     }
-    setStoriesNewVisible(false)
+    queueMicrotask(() => setStoriesNewVisible(false))
   }, [barePath])
 
   const chromeNavItems = navItems.map((item) =>

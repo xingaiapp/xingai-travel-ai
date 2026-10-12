@@ -22,3 +22,11 @@ Verified against live `travel.xingai.app` before code changes. Closes the “待
 - Sample ≥3 URLs per page type (home, decide, city, compare, guide, story) × locale.
 - Prefer byte/hash equality for `llms.txt`, not line counts.
 - Do not raise P1 solely because the verification method changed.
+- Grep hreflang with `hrefLang|hreflang` (Next emits camelCase `hrefLang`).
+- Before flagging `/pricing` 404: check sitemap + in-app links; no product page ⇒ not a defect.
+- Re-verify badge/count claims against the same data source as the hero (do not hand-count RSC duplicates).
+
+## CI lint follow-up (same day)
+
+- `react-hooks/set-state-in-effect`: Stories NEW badge + Trips usage counters hydrate via `queueMicrotask` after mount.
+- Theme boot: inline script at body start (avoids `next/script` `beforeInteractive` outside `pages/_document`).

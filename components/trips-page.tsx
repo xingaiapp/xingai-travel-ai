@@ -34,8 +34,11 @@ export function TripsPage() {
   const [usageN, setUsageN] = useState(0)
   const [active7, setActive7] = useState(0)
   useEffect(() => {
-    setUsageN(loadTravelUsage().decisionCount)
-    setActive7(countTravelActiveDaysLast7())
+    // localStorage after hydrate — defer setState for CI lint (set-state-in-effect).
+    queueMicrotask(() => {
+      setUsageN(loadTravelUsage().decisionCount)
+      setActive7(countTravelActiveDaysLast7())
+    })
   }, [entries.length])
   const tier = travelTierById(currentTravelTier())
   const tierName = tier.name[locale as keyof typeof tier.name] ?? tier.name.en

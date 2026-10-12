@@ -1,5 +1,4 @@
 import { Fraunces, Inter } from "next/font/google"
-import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 import { SeoJsonLd } from "@/components/seo-json-ld"
 import { ThemeProvider, themeBootScript } from "@/components/theme-provider"
@@ -29,10 +28,9 @@ export function RootDocument({
 }>) {
   return (
     <html lang={lang} suppressHydrationWarning className={`dark ${inter.variable} ${fraunces.variable}`}>
+      {/* Inline theme boot in body start — no next/script beforeInteractive, no raw <head>. */}
       <body className="font-sans antialiased">
-        <Script id="theme-boot" strategy="beforeInteractive">
-          {themeBootScript}
-        </Script>
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         <SeoJsonLd />
         <ThemeProvider>{children}</ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
