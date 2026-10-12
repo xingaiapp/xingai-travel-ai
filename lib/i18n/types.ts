@@ -417,7 +417,14 @@ export interface Messages {
     faqHeading: string
     ctaTitle: string
     ctaBody: string
+    /** Evergreen pages: read compare/city first, then Decide. */
+    ctaBodyEvergreen: string
+    ctaReadFirst: string
     ctaButton: string
+    scenarioEyebrow: string
+    scenarioTitle: string
+    decisionContextEyebrow: string
+    decisionContextTitle: string
     fitStrong: string
     fitGood: string
     fitMixed: string

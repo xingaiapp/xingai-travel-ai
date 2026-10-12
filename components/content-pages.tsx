@@ -1,7 +1,17 @@
 "use client"
 
 import Link from "next/link"
-import { ContentHero, ContentShell, DecideCta, DirectAnswer, FaqBlock, FitPill } from "@/components/content-shell"
+import {
+  ContentHero,
+  ContentShell,
+  DecideCta,
+  DirectAnswer,
+  EvergreenCta,
+  FaqBlock,
+  FitPill,
+} from "@/components/content-shell"
+import { ScenarioQuestions } from "@/components/scenario-questions"
+import { getSeason, pickText } from "@/lib/stories"
 import { useLocale } from "@/components/locale-provider"
 import { getCity } from "@/lib/cities"
 import {
@@ -95,6 +105,7 @@ export function FaqView() {
           a: pickLocalized(item.a, locale),
         }))}
       />
+      <ScenarioQuestions className="mt-10" />
       <DecideCta />
       <p className="mt-6 text-sm">
         <Link href="/how-it-works" className="font-semibold text-primary hover:underline">
@@ -236,10 +247,10 @@ export function CompareDetailView({ slug }: Readonly<{ slug: string }>) {
         }))}
       />
 
-      {(page.relatedCitySlugs?.length || 0) > 0 ? (
+      {(page.relatedCitySlugs?.length || 0) > 0 || (page.relatedStorySlugs?.length || 0) > 0 ? (
         <p className="mt-6 text-sm">
           <span className="font-semibold">{messages.content.related}: </span>
-          {page.relatedCitySlugs!.map((slug) => {
+          {page.relatedCitySlugs?.map((slug) => {
             const city = getCity(slug)
             const label = city ? pickLocalized(city.name, locale) : slug
             return (
@@ -248,10 +259,33 @@ export function CompareDetailView({ slug }: Readonly<{ slug: string }>) {
               </Link>
             )
           })}
+          {page.relatedStorySlugs?.map((slug) => {
+            const season = getSeason(slug)
+            if (!season) return null
+            return (
+              <Link key={slug} href={`/stories/${slug}`} className="mr-3 font-semibold text-primary hover:underline">
+                {pickText(season.title, locale)}
+              </Link>
+            )
+          })}
         </p>
       ) : null}
 
-      <DecideCta />
+      <EvergreenCta
+        hint={page.decideHint}
+        primaryHref={page.relatedCitySlugs?.[0] ? `/city/${page.relatedCitySlugs[0]}` : undefined}
+        primaryLabel={
+          page.relatedCitySlugs?.[0]
+            ? {
+                en: `Open ${pickLocalized(page.aName, "en")} city guide`,
+                zh: `打开${pickLocalized(page.aName, "zh")}城市指南`,
+                ko: `${pickLocalized(page.aName, "ko")} 가이드 열기`,
+                es: `Abrir guía de ${pickLocalized(page.aName, "es")}`,
+              }
+            : undefined
+        }
+        decidePlaces={`${pickLocalized(page.aName, "en")}, ${pickLocalized(page.bName, "en")}`}
+      />
     </ContentShell>
   )
 }

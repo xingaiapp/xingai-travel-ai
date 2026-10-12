@@ -30,6 +30,8 @@ export interface ComparePage {
   tradeoffs: Localized
   faq: { q: Localized; a: Localized }[]
   relatedCitySlugs?: string[]
+  /** Publisher story seasons (first-hand proof — never scores the decision). */
+  relatedStorySlugs?: string[]
   decideHint?: Localized
 }
 

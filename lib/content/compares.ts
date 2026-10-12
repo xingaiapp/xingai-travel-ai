@@ -409,6 +409,196 @@ export const compares: ComparePage[] = [
     relatedCitySlugs: ["new-orleans", "los-cabos"],
   },
 
+  {
+    slug: "hong-kong-vs-macau",
+    title: L("Hong Kong vs Macau: which for a short trip?", "香港 vs 澳门：短途选哪个？", "홍콩 vs 마카오: 짧은 일정엔 어디?", "Hong Kong vs Macao: ¿cuál para un viaje corto?"),
+    oneLiner: L(
+      "Hong Kong wins for harbor density, street food, and transit depth; Macau wins for Cotai spectacle plus old-town plazas on a compact map.",
+      "香港胜在海港密度、街头美食与交通深度；澳门胜在路氹奇观加老城广场的紧凑地图。",
+      "홍콩은 항구 밀도·길거리 음식·교통 깊이에서, 마카오는 코타이 스펙터클과 구시가지 광장의 콤팩트 지도에서 앞섭니다.",
+      "Hong Kong gana en densidad de puerto, comida de calle y tránsito; Macao en espectáculo Cotai más plazas del casco en un mapa compacto."
+    ),
+    aName: L("Hong Kong", "香港", "홍콩", "Hong Kong"),
+    bName: L("Macau", "澳门", "마카오", "Macao"),
+    aBestFor: [
+      L("Harbor + street city days", "海港 + 街道城市日", "항구+거리 도시일", "Días de puerto y calles"),
+      L("Dense transit and food maps", "密集交通与美食地图", "밀집 교통·음식 지도", "Tránsito denso y mapa de comida"),
+    ],
+    bBestFor: [
+      L("Cotai + old town in one base", "路氹 + 老城一个基地", "코타이+구시가지 한 거점", "Cotai y casco en una base"),
+      L("Shorter walking loops", "更短的步行环线", "더 짧은 도보 루프", "Bucles a pie más cortos"),
+    ],
+    pickWhenA: [
+      L("You want Victoria Harbour, steep streets, and Cantonese food density as the main story.", "你想把维港、陡街和粤菜密度当成主线。", "빅토리아 하버·가파른 거리·광둥 음식 밀도가 메인일 때.", "Quieres Victoria Harbour, calles empinadas y densidad cantonesa como historia principal."),
+      L("Three days should feel like a full city — not a day-trip add-on.", "三天要像完整城市行，而不是顺路一日游。", "3일이 완전한 도시 여행이어야 할 때 — 당일 추가가 아니라.", "Tres días deben sentirse ciudad completa, no un día añadido."),
+    ],
+    pickWhenB: [
+      L("You want Cotai “Europe strip” photos plus Senado Square lanes without splitting bases.", "你想在一个基地拍路氹「欧洲条」和议事亭前地巷弄。", "코타이 ‘유럽 스트립’과 세나두 광장 골목을 거점 하나에서 원할 때.", "Quieres Cotai y las calles de Senado sin partir bases."),
+      L("Gambling floors are optional — plazas and food can fill the day.", "赌场可选——广场和美食就能填满一天。", "카지노는 선택 — 광장과 음식으로 하루가 찰 때.", "El juego es opcional — plazas y comida llenan el día."),
+    ],
+    factors: [
+      factor("Food", "美食", "음식", "Comida", "strong", "good"),
+      factor("Harbor / skyline", "海港 / 天际线", "항구·스카이라인", "Puerto / skyline", "strong", "mixed"),
+      factor("Compact walking", "紧凑步行", "콤팩트 도보", "Caminar compacto", "good", "strong"),
+      factor("Spectacle resorts", "奇观度假综合体", "스펙터클 리조트", "Resorts espectáculo", "mixed", "strong"),
+      factor("Transit depth", "交通深度", "교통 깊이", "Profundidad de tránsito", "strong", "good"),
+    ],
+    verdict: L(
+      "Pick Hong Kong when harbor-and-street density is the trip; pick Macau when Cotai-plus-old-town on one compact map matters more.",
+      "海港与街道密度是重点选香港；更看重一个紧凑地图上的路氹+老城选澳门。",
+      "항구·거리 밀도가 핵심이면 홍콩, 콤팩트 지도의 코타이+구시가지가 더 중요하면 마카오.",
+      "Elige Hong Kong si manda la densidad puerto-calle; Macao si Cotai más casco en un mapa compacto importa más."
+    ),
+    tradeoffs: L(
+      "Hong Kong hills and humidity tire some groups on short trips. Macau’s Cotai strip can feel theme-park heavy if you only want quiet lanes — and ferry or bridge logistics still matter between Hong Kong and Macau when you try both.",
+      "香港的坡与潮湿会让部分人在短途里累。若你只想安静巷弄，澳门路氹可能偏主题乐园；想两地都去时，渡轮或大桥仍要算进行程。",
+      "홍콩의 언덕·습도는 짧은 일정에 지칠 수 있습니다. 조용한 골목만 원하면 마카오 코타이가 테마파크처럼 느껴질 수 있고, 둘 다 가면 페리·다리 물류가 남습니다.",
+      "Las cuestas y la humedad de Hong Kong cansan en viajes cortos. Cotai puede sentirse de parque temático si solo quieres callejones — y ferry o puente siguen importando si haces ambas."
+    ),
+    faq: [
+      {
+        q: L("Hong Kong or Macau for 3 days?", "香港和澳门，3 天选哪个？", "홍콩과 마카오, 3일이면 어디?", "¿Hong Kong o Macao para 3 días?"),
+        a: L(
+          "Most first-timers with only three days pick one base. Hong Kong fits if harbor streets and transit food are the priority; Macau fits if Cotai and old-town plazas are enough. Read /stories/hong-kong and /stories/macau, then run /decide with your origin.",
+          "多数第一次来、只有三天的人只选一个基地。海港街道与交通美食优先选香港；路氹与老城广场够用选澳门。先看 /stories/hong-kong 和 /stories/macau，再用出发地跑 /decide。",
+          "3일만 있는 첫 방문은 대개 거점 하나. 항구 거리·교통 음식이면 홍콩, 코타이·구시가지 광장이면 마카오. /stories/hong-kong·/stories/macau를 본 뒤 /decide.",
+          "Con solo tres días, la mayoría elige una base. Hong Kong si mandan calles-puerto y comida en tránsito; Macao si bastan Cotai y plazas. Lee /stories/hong-kong y /stories/macau, luego /decide."
+        ),
+      },
+      {
+        q: L("Can I do both in one weekend?", "一个周末能两个都去吗？", "주말에 둘 다 가능할까?", "¿Puedo hacer ambas en un fin de semana?"),
+        a: L(
+          "Possible but rushed. Ferry or bridge transfers eat half-days. Prefer one city done well unless you already know both maps. Put real flight hours into /decide.",
+          "可以但很赶。渡轮或大桥会吃掉半天。除非你已熟两地地图，否则宁可把一座看透。把真实航程放进 /decide。",
+          "가능하지만 빠듯합니다. 페리·다리가 반나절을 먹습니다. 지도를 이미 아는 게 아니면 한 곳을 제대로. 실제 항공은 /decide에.",
+          "Posible pero apresurado. Ferry o puente comen medias jornadas. Prefiere una ciudad bien vista. Mete horas reales en /decide."
+        ),
+      },
+    ],
+    relatedCitySlugs: ["hong-kong", "macau"],
+    relatedStorySlugs: ["hong-kong", "macau"],
+  },
+
+  {
+    slug: "tokyo-vs-singapore",
+    title: L("Tokyo vs Singapore: which Asia hub trip fits?", "东京 vs 新加坡：哪次亚洲枢纽更合适？", "도쿄 vs 싱가포르: 어느 아시아 허브가 맞을까?", "Tokio vs Singapur: ¿qué hub de Asia encaja?"),
+    oneLiner: L(
+      "Tokyo wins for neighborhood depth and food marathon days; Singapore wins for planning ease, polish, and warmer evenings most of the year.",
+      "东京胜在街区深度与美食马拉松；新加坡胜在规划轻松、整洁，以及一年多数时候更暖的夜晚。",
+      "도쿄는 동네 깊이와 미식 마라톤에서, 싱가포르는 계획 용이·정돈·연중 더 따뜻한 저녁에서 앞섭니다.",
+      "Tokio gana en profundidad de barrios y maratones de comida; Singapur en facilidad, pulido y noches más cálidas casi todo el año."
+    ),
+    aName: L("Tokyo", "东京", "도쿄", "Tokio"),
+    bName: L("Singapore", "新加坡", "싱가포르", "Singapur"),
+    aBestFor: [
+      L("Neighborhood hopping by train", "坐电车跳街区", "전철로 동네 이동", "Saltar barrios en tren"),
+      L("Deep food exploration", "深度吃货", "깊은 미식", "Exploración gastronómica"),
+    ],
+    bBestFor: [
+      L("First Asia hub with easy English", "英语轻松的第一亚洲枢纽", "영어 편한 첫 아시아 허브", "Primer hub Asia con inglés fácil"),
+      L("Warm evenings and garden-city pacing", "暖夜与花园城市节奏", "따뜻한 저녁·가든시티 속도", "Noches cálidas y ritmo garden-city"),
+    ],
+    pickWhenA: [
+      L("You want maximum ward variety and Japan food depth on one trip.", "你想一次行程里拿到最大区级多样性与日本美食深度。", "한 번에 구(ward) 다양성과 일본 미식 깊이를 원할 때.", "Quieres máxima variedad de barrios y profundidad japonesa."),
+      L("Cooler seasons are fine if the culture payoff is higher.", "若文化回报更高，凉一点的季节也能接受。", "문화 보상이 크면 더 선선한 계절도 괜찮을 때.", "El clima más fresco vale si la cultura compensa."),
+    ],
+    pickWhenB: [
+      L("You want warm nights, clear signage, and lower planning friction.", "你想要暖夜、清晰标识和更低的规划摩擦。", "따뜻한 밤·명확한 표지·낮은 계획 마찰을 원할 때.", "Quieres noches cálidas, señalética clara y menos fricción."),
+      L("A polished city break matters more than neighborhood marathon days.", "更看重精致城市短途，而不是街区马拉松。", "동네 마라톤보다 정돈된 시티 브레이크가 중요할 때.", "Importa más una escapada pulida que un maratón de barrios."),
+    ],
+    factors: [
+      factor("Food depth", "美食深度", "음식 깊이", "Profundidad comida", "strong", "good"),
+      factor("Planning ease", "规划轻松度", "계획 용이", "Facilidad de plan", "good", "strong"),
+      factor("Warm evenings", "暖夜", "따뜻한 저녁", "Noches cálidas", "mixed", "strong"),
+      factor("Neighborhood variety", "街区多样性", "동네 다양성", "Variedad de barrios", "strong", "good"),
+      factor("First-timer clarity", "初次清晰度", "첫 방문 명확도", "Claridad debutante", "good", "strong"),
+    ],
+    verdict: L(
+      "Pick Tokyo for depth and food marathon days; pick Singapore when warmth and planning ease matter more on a first hub trip.",
+      "要深度与美食马拉松选东京；第一次枢纽更看重温暖与规划轻松选新加坡。",
+      "깊이와 미식 마라톤이면 도쿄, 첫 허브에서 따뜻함·계획 용이면 싱가포르.",
+      "Elige Tokio por profundidad; Singapur si calor y facilidad mandan en un primer hub."
+    ),
+    tradeoffs: L(
+      "Tokyo needs more days to feel complete across wards; winter evenings are cooler. Singapore can feel costly for some travelers and less “neighborhood maze” than Tokyo — a feature if you want clarity.",
+      "东京要更多天才有跨区「玩透」感；冬夜更凉。新加坡对部分人偏贵，也少一点东京式街区迷宫——想清晰反而是优点。",
+      "도쿄는 구를 넘기려면 날이 더 필요하고 겨울 저녁이 더 춥습니다. 싱가포르는 비쌀 수 있고 도쿄식 미로감이 덜합니다 — 명확함을 원하면 장점.",
+      "Tokio pide más días para sentirse completo; las noches de invierno son más frescas. Singapur puede salir caro y con menos laberinto de barrios — ventaja si quieres claridad."
+    ),
+    faq: [
+      {
+        q: L("Better for a first Asia trip?", "第一次去亚洲哪个更好？", "첫 아시아 여행엔 어디?", "¿Mejor para un primer viaje a Asia?"),
+        a: L(
+          "Singapore often feels clearer for first-timers who want English-heavy signage and warm weather. Tokyo rewards travelers ready for denser transit and neighborhood hopping. Confirm flight hours on /decide.",
+          "想要英语标识多、天气更暖，新加坡往往更清晰。东京适合能接受更密交通与跳街区的人。在 /decide 确认航程。",
+          "영어 표지·따뜻한 날씨를 원하면 싱가포르가 더 명확한 편. 도쿄는 밀집 교통과 동네 이동을 감수할 때. /decide에서 항공 확인.",
+          "Singapur suele ser más claro para debutantes; Tokio premia a quien acepta tránsito denso. Confirma vuelos en /decide."
+        ),
+      },
+    ],
+    relatedCitySlugs: ["tokyo", "singapore"],
+  },
+
+  {
+    slug: "seoul-vs-taipei",
+    title: L("Seoul vs Taipei: food and short city days", "首尔 vs 台北：吃与短城市日怎么选", "서울 vs 타이베이: 음식과 짧은 도시 일정", "Seúl vs Taipéi: comida y días urbanos cortos"),
+    oneLiner: L(
+      "Seoul often wins for nightlife energy and Korean food density; Taipei often wins for night markets, warmer evenings, and a softer mid-range budget.",
+      "首尔常在夜生活能量与韩餐密度上更强；台北常在夜市、更暖的夜晚与更柔的中档预算上占优。",
+      "서울은 나이트 에너지·한식 밀도에서, 타이베이는 야시장·더 따뜻한 저녁·부드러운 중예산에서 자주 앞섭니다.",
+      "Seúl suele ganar en noche y densidad coreana; Taipéi en mercados nocturnos, noches más cálidas y presupuesto medio más suave."
+    ),
+    aName: L("Seoul", "首尔", "서울", "Seúl"),
+    bName: L("Taipei", "台北", "타이베이", "Taipéi"),
+    aBestFor: [
+      L("Nightlife and youth streets", "夜生活与年轻街道", "나이트·젊은 거리", "Noche y calles jóvenes"),
+      L("Korean food density", "韩餐密度", "한식 밀도", "Densidad de comida coreana"),
+    ],
+    bBestFor: [
+      L("Night markets and everyday food", "夜市与日常餐饮", "야시장·일상 식사", "Mercados nocturnos y comida diaria"),
+      L("Warmer short breaks", "偏暖的短途", "따뜻한 단기", "Escapadas más cálidas"),
+    ],
+    pickWhenA: [
+      L("Late nights, K-food, and a younger street vibe are the point.", "深夜、韩餐与年轻街头气质才是重点。", "늦은 밤·한식·젊은 거리 기운이 목적일 때.", "Noches largas, comida coreana y vibe joven son el punto."),
+      L("You already compared Tokyo and still want a Korea-first city.", "你已对比过东京，仍想要韩国优先的城市。", "도쿄와 비교한 뒤에도 한국 우선 도시를 원할 때.", "Ya comparaste Tokio y aún quieres una ciudad Corea-first."),
+    ],
+    pickWhenB: [
+      L("Night markets and mild evenings matter more than nightlife clubs.", "更看重夜市与温和夜晚，而不是夜店。", "클럽보다 야시장·온화한 저녁이 중요할 때.", "Importan más mercados nocturnos y noches suaves que clubs."),
+      L("You want a softer hotel and food bill on a short Asia hop.", "你想在短途亚洲跳上更柔的住宿和餐饮账单。", "짧은 아시아 이동에서 더 부드러운 숙식비를 원할 때.", "Quieres una cuenta de hotel y comida más suave en un salto corto."),
+    ],
+    factors: [
+      factor("Food", "美食", "음식", "Comida", "strong", "strong"),
+      factor("Nightlife", "夜生活", "나이트", "Vida nocturna", "strong", "good"),
+      factor("Warm evenings", "暖夜", "따뜻한 저녁", "Noches cálidas", "mixed", "strong"),
+      factor("Value", "性价比", "가성비", "Valor", "good", "strong"),
+      factor("Hills / walking", "坡度 / 步行", "언덕·도보", "Cuestas / caminar", "mixed", "good"),
+    ],
+    verdict: L(
+      "Pick Seoul for nightlife and Korean food density; pick Taipei when night markets and warmer evenings stretch the same short trip.",
+      "要夜生活与韩餐密度选首尔；夜市与更暖夜晚更能拉长同一次短途选台北。",
+      "나이트·한식 밀도면 서울, 야시장·따뜻한 저녁이 같은 짧은 여행을 늘리면 타이베이.",
+      "Elige Seúl por noche y comida coreana; Taipéi si mercados y noches cálidas estiran el mismo viaje corto."
+    ),
+    tradeoffs: L(
+      "Seoul winters are colder; hills near some neighborhoods add effort. Taipei summers are hot and humid with typhoon risk — shoulder months feel better for walking.",
+      "首尔冬天更冷；部分街区附近的坡会加体力。台北夏天湿热有台风风险——肩季更适合步行。",
+      "서울 겨울이 더 춥고 일부 동네 언덕이 부담입니다. 타이베이 여름은 덥고 습하며 태풍 위험이 있어 어깨 시즌이 걷기에 낫습니다.",
+      "Los inviernos de Seúl son más fríos; las cuestas suman esfuerzo. Los veranos de Taipéi son húmedos con tifones — los meses intermedios caminan mejor."
+    ),
+    faq: [
+      {
+        q: L("Seoul or Taipei for food?", "吃货选首尔还是台北？", "음식만 보면 서울 vs 타이베이?", "¿Seúl o Taipéi para comida?"),
+        a: L(
+          "Both excel. Seoul leans BBQ, late-night streets, and Korean classics; Taipei leans night markets and everyday excellence. Budget and weather decide as much as taste.",
+          "都很强。首尔偏烧烤、深夜街道与韩式经典；台北偏夜市与日常高水准。预算和天气往往跟口味一样决定。",
+          "둘 다 강합니다. 서울은 BBQ·심야 거리·한식 클래식, 타이베이는 야시장·일상 미식. 예산·날씨도 취향만큼 결정적입니다.",
+          "Ambas excelentes. Seúl hacia BBQ y noches; Taipéi hacia mercados. Presupuesto y clima pesan tanto como el gusto."
+        ),
+      },
+    ],
+    relatedCitySlugs: ["seoul", "taipei"],
+  },
+
 ]
 
 export function getCompare(slug: string) {

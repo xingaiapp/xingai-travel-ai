@@ -25,6 +25,7 @@ import {
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from "react"
 import { TravelMapProgress } from "@/components/city/travel-map-progress"
 import { useLocale } from "@/components/locale-provider"
+import { ScenarioQuestions } from "@/components/scenario-questions"
 import {
   decideSteps,
   editorPicks,
@@ -395,6 +396,8 @@ export function HomeLanding() {
           </ul>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">{t(homeCopy.control)}</p>
         </section>
+
+        <ScenarioQuestions className="mt-12 border-t border-border pt-8" limit={4} />
 
       <section className="mt-12 border-t border-border pt-8" aria-labelledby="home-places">
         <ScrollIn>

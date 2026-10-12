@@ -11,9 +11,12 @@ import { PlaceCard } from "@/components/city/place-card"
 import { RouteCard } from "@/components/city/route-card"
 import { RouteExplanation } from "@/components/city/route-explanation"
 import { RouteTimeline } from "@/components/city/route-timeline"
+import { CityDecisionPanel } from "@/components/city/city-decision-panel"
 import { TravelMap } from "@/components/city/travel-map"
+import { EvergreenCta } from "@/components/content-shell"
 import { UncertaintyNotes } from "@/components/uncertainty-notes"
 import { cityDecideHref, cityText, fill, trackCityEvent } from "@/lib/cities"
+import { getCityDecisionBlock } from "@/lib/content/city-decision-blocks"
 import { adjustRoute, type AdjustToggle } from "@/lib/cities/adjust"
 import type { City, PlaceCategory } from "@/lib/cities/types"
 import { cn } from "@/lib/utils"
@@ -198,23 +201,58 @@ export function CityPage({ city }: Readonly<{ city: City }>) {
           </div>
         )}
 
-        <section className="card-hover mt-12 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6" aria-labelledby="city-decide-heading">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">{m.decideEyebrow}</p>
-          <h2 id="city-decide-heading" className="mt-2 hero-display-title text-2xl font-semibold tracking-tight sm:text-3xl">
-            {fill(m.decideTitle, { city: name })}
-          </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            {fill(m.decideBody, { city: name })}
-          </p>
-          <Link
-            href={cityDecideHref(city)}
-            onClick={() => trackCityEvent("city_to_decide", city.slug)}
-            className="mt-5 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)]"
-          >
-            {fill(m.decideCta, { city: name })}
-            <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
-        </section>
+        <CityDecisionPanel citySlug={city.slug} />
+
+        {(() => {
+          const decision = getCityDecisionBlock(city.slug)
+          const compareHref = decision?.relatedCompareSlug ? `/compare/${decision.relatedCompareSlug}` : undefined
+          const storyHref = decision?.relatedStorySlug ? `/stories/${decision.relatedStorySlug}` : undefined
+          const primaryHref = compareHref ?? storyHref
+          return (
+            <div
+              className="mt-10"
+              onClickCapture={(event) => {
+                const target = event.target as HTMLElement
+                if (target.closest(`a[href^="/decide"]`)) trackCityEvent("city_to_decide", city.slug)
+              }}
+            >
+              <EvergreenCta
+                hint={{
+                  en: fill(m.decideBody, { city: name }),
+                  zh: fill(m.decideBody, { city: name }),
+                  ko: fill(m.decideBody, { city: name }),
+                  es: fill(m.decideBody, { city: name }),
+                }}
+                primaryHref={primaryHref}
+                primaryLabel={
+                  compareHref
+                    ? {
+                        en: "Read the related compare first",
+                        zh: "先读相关对比页",
+                        ko: "관련 비교 페이지 먼저",
+                        es: "Lee primero el compare relacionado",
+                      }
+                    : storyHref
+                      ? {
+                          en: "Read first-hand stories",
+                          zh: "先看第一手故事",
+                          ko: "현장 이야기 먼저",
+                          es: "Lee historias de primera mano",
+                        }
+                      : undefined
+                }
+                decidePlaces={cityText(city.name, "en")}
+              />
+              {!primaryHref ? (
+                <p className="mt-3 text-center text-xs text-muted-foreground">
+                  <Link href={cityDecideHref(city)} className="font-semibold text-primary hover:underline">
+                    {fill(m.decideCta, { city: name })}
+                  </Link>
+                </p>
+              ) : null}
+            </div>
+          )
+        })()}
 
         <div className="mt-8">
           <UncertaintyNotes

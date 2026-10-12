@@ -4,6 +4,7 @@ import Link from "next/link"
 import { ArrowLeft, ArrowRight, Camera, Gem, Map as MapIcon, RotateCcw, ThumbsDown, Lightbulb } from "lucide-react"
 import { useLocale } from "@/components/locale-provider"
 import { citiesForDestinations, fill } from "@/lib/cities"
+import { ScenarioQuestions } from "@/components/scenario-questions"
 import { decideHref, episodeLabel, pickText, storyInterestMailto, trackStoryClick } from "@/lib/stories"
 import type { StoryBlock, StoryEpisode, StoryPhoto, StorySeason, TakeKind } from "@/lib/stories/types"
 import { cn } from "@/lib/utils"
@@ -468,6 +469,7 @@ export function StoriesIndexView({ seasons }: Readonly<{ seasons: { season: Stor
             "Son historias del editor, no un feed de usuarios. Cada temporada termina hacia Decide para probar el destino con tus fechas, presupuesto y Evitar.",
           )}
         </p>
+        <ScenarioQuestions className="mt-8" limit={4} />
         <div className="mt-8 grid gap-5">
           {seasons.map(({ season, count }) => (
             <Link

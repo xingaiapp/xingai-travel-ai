@@ -56,22 +56,69 @@ export function DirectAnswer({ question, answer }: Readonly<{ question: string; 
   )
 }
 
-export function DecideCta({ hint }: Readonly<{ hint?: Localized }>) {
+/**
+ * End-of-page CTA for evergreen content: read compare/city/stories first,
+ * then Decide with optional places prefilled. Never form-only.
+ */
+export function EvergreenCta({
+  hint,
+  primaryHref,
+  primaryLabel,
+  decidePlaces,
+  decideRegion,
+}: Readonly<{
+  hint?: Localized
+  primaryHref?: string
+  primaryLabel?: Localized
+  decidePlaces?: string
+  decideRegion?: string
+}>) {
   const { messages, locale } = useLocale()
+  const decideParams = new URLSearchParams()
+  if (decidePlaces) decideParams.set("places", decidePlaces)
+  if (decideRegion) decideParams.set("region", decideRegion)
+  const decideHref = decideParams.size > 0 ? `/decide?${decideParams.toString()}#trip-form` : "/decide#trip-form"
+  const primaryText = primaryLabel
+    ? pickLocalized(primaryLabel, locale)
+    : messages.content.ctaReadFirst
+
   return (
     <section className="card-hover mt-10 rounded-md border border-primary/30 bg-primary/5 p-5">
       <h2 className="text-base font-extrabold">{messages.content.ctaTitle}</h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        {hint ? pickLocalized(hint, locale) : messages.content.ctaBody}
+        {hint ? pickLocalized(hint, locale) : messages.content.ctaBodyEvergreen}
       </p>
-      <Link
-        href="/decide"
-        className="mt-4 inline-flex h-11 min-h-11 items-center justify-center rounded-md bg-primary px-5 text-sm font-extrabold text-primary-foreground shadow-sm"
-      >
-        {messages.content.ctaButton}
-      </Link>
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        {primaryHref ? (
+          <Link
+            href={primaryHref}
+            className="inline-flex h-11 min-h-11 items-center justify-center rounded-md bg-primary px-5 text-sm font-extrabold text-primary-foreground shadow-sm"
+          >
+            {primaryText}
+          </Link>
+        ) : null}
+        <Link
+          href={decideHref}
+          className={
+            primaryHref
+              ? "inline-flex h-11 min-h-11 items-center justify-center rounded-md border border-border bg-card px-5 text-sm font-extrabold text-foreground"
+              : "inline-flex h-11 min-h-11 items-center justify-center rounded-md bg-primary px-5 text-sm font-extrabold text-primary-foreground shadow-sm"
+          }
+        >
+          {messages.content.ctaButton}
+        </Link>
+      </div>
     </section>
   )
+}
+
+/** @deprecated Prefer EvergreenCta — kept for call sites that only need Decide. */
+export function DecideCta({
+  hint,
+  decidePlaces,
+  decideRegion,
+}: Readonly<{ hint?: Localized; decidePlaces?: string; decideRegion?: string }>) {
+  return <EvergreenCta hint={hint} decidePlaces={decidePlaces} decideRegion={decideRegion} />
 }
 
 /** Turn bare `/decide`, `/stories/…` paths in FAQ prose into real links with human labels. */

@@ -250,6 +250,105 @@ export const compareSections: Record<string, ContentSection[]> = {
       )
     ),
   ],
+
+  "hong-kong-vs-macau": [
+    S(
+      L("When to go", "什么时候去", "언제 갈까", "Cuándo ir"),
+      L(
+        "Both sit in the Pearl River Delta. October–December is usually the most comfortable for walking; summer is hot, humid, and stormy, with typhoon signals that can pause outdoor plans. Spring can feel sticky. For a three-day trip, pick shoulder or dry-season weeks when you can.",
+        "两地都在珠三角。十月到十二月通常最适合步行；夏天湿热多风雨，台风信号可能暂停户外。春天可能闷湿。三天短途尽量挑肩季或干季。",
+        "둘 다 주강 삼각주. 10–12월이 걷기에 가장 쾌적한 편이고, 여름은 덥고 습하며 태풍 신호로 야외가 멈출 수 있습니다. 봄은 끈적할 수 있습니다. 3일이면 어깨·건기를 고르세요.",
+        "Ambas están en el delta. Octubre–diciembre suele ser lo más cómodo; el verano es húmedo y tormentoso. En tres días, elige semanas intermedias o secas si puedes."
+      )
+    ),
+    S(
+      L("Getting between them", "两地之间怎么走", "두 도시 사이 이동", "Cómo moverse entre ambas"),
+      L(
+        "Ferries and the Hong Kong–Zhuhai–Macau Bridge both work; transfers still eat half-days on a short trip. Most first-timers with only three days pick one base. Combining both is more realistic on five nights or more.",
+        "渡轮与港珠澳大桥都可以；短途里换乘仍会吃掉半天。多数只有三天的人只选一个基地。五晚以上再认真考虑两地都去。",
+        "페리와 강주아오 대교 모두 가능하지만 짧은 일정에선 환승이 반나절을 먹습니다. 3일이면 대개 거점 하나. 5박 이상이면 둘 다 현실적입니다.",
+        "Ferry y el puente funcionan; los traslados aún comen medias jornadas. Con tres días, una base. Con cinco noches o más, combinar es más realista."
+      )
+    ),
+    S(
+      L("What each trip feels like", "两地行程各是什么感觉", "각각 어떤 여행 느낌인가", "Qué se siente en cada viaje"),
+      L(
+        "Hong Kong is harbor, steep streets, and dense transit food. Macau is Cotai spectacle plus old-town plazas on a smaller map. Gambling is optional in Macau — plazas and food can fill the day. First-hand frames: /stories/hong-kong and /stories/macau.",
+        "香港是海港、陡街与密集交通美食。澳门是路氹奇观加更小地图上的老城广场。赌场可选——广场和美食就能填满一天。第一手画面：/stories/hong-kong 与 /stories/macau。",
+        "홍콩은 항구·가파른 거리·밀집 교통 음식. 마카오는 코타이 스펙터클과 작은 지도의 구시가지 광장. 카지노는 선택. 현장: /stories/hong-kong, /stories/macau.",
+        "Hong Kong es puerto, cuestas y comida en tránsito. Macao es Cotai más plazas en un mapa menor. El juego es opcional. Historias: /stories/hong-kong y /stories/macau."
+      )
+    ),
+    S(
+      L("Who should skip which", "什么人该跳过哪一个", "누가 어느 쪽을 건너뛸까", "Quién debería saltarse cuál"),
+      L(
+        "Skip Hong Kong if steep hills and humidity are hard limits for someone in your group. Skip Macau if you only want quiet lanes and Cotai’s theme-park energy would annoy you. Skip both if the trip is mainly beaches — look at Los Cabos or a resort coast instead.",
+        "若同行有人爬不了陡坡、受不了潮湿，就别选香港。若你只要安静巷弄、路氹主题乐园感会烦你，就别选澳门。若这次主要是海滩，两个都别选——看洛斯卡沃斯或度假海岸。",
+        "언덕·습도가 한계면 홍콩을 건너뛰세요. 조용한 골목만 원하고 코타이 테마파크감이 거슬리면 마카오를 건너뛰세요. 해변 중심이면 둘 다 말고 로스카보스 쪽을 보세요.",
+        "Sáltate Hong Kong si las cuestas y la humedad son límite. Sáltate Macao si solo quieres callejones y Cotai te molesta. Sáltate ambas si el viaje es playa — mira Los Cabos."
+      )
+    ),
+  ],
+
+  "tokyo-vs-singapore": [
+    S(
+      L("When to go", "什么时候去", "언제 갈까", "Cuándo ir"),
+      L(
+        "Tokyo is most comfortable in spring and autumn; summers are humid with a rainy stretch and typhoon risk into early autumn. Singapore is tropical year-round — warm evenings most months, with afternoon storms common. December feels mild in Singapore and coat-weather in Tokyo.",
+        "东京春秋最舒服；夏天湿热有雨季，夏末到初秋有台风风险。新加坡全年热带——多数月份夜晚暖，午后雷阵雨常见。十二月新加坡温和，东京要大衣。",
+        "도쿄는 봄·가을이 쾌적하고 여름은 습하며 장마·태풍 위험이 있습니다. 싱가포르는 연중 열대 — 저녁이 따뜻하고 오후 소나기가 흔합니다. 12월 싱가포르는 온화, 도쿄는 코트.",
+        "Tokio está mejor en primavera y otoño. Singapur es tropical todo el año. En diciembre, Singapur es templado y Tokio pide abrigo."
+      )
+    ),
+    S(
+      L("Hub logistics", "枢纽怎么走", "허브 물류", "Logística de hub"),
+      L(
+        "Both are major hubs. Tokyo splits between Haneda (closer) and Narita (farther). Singapore’s Changi is often praised for ease. From many long-haul origins, flight time differs more than city vibe — put your origin into /decide before you pick on vibes alone.",
+        "两地都是重要枢纽。东京分羽田（更近）与成田（更远）。樟宜常以方便被称赞。许多长途出发地航程差比城市气质更关键——先用出发地跑 /decide，别只凭感觉选。",
+        "둘 다 주요 허브. 도쿄는 하네다(가깝)·나리타(멀다). 창이는 편리하기로 유명. 장거리 출발지에선 항공 시간 차이가 분위기보다 클 수 있어 /decide에 출발지를 넣으세요.",
+        "Ambos son hubs. Tokio parte Haneda/Narita. Changi es fácil. Desde muchos orígenes, el vuelo pesa más que el vibe — usa /decide."
+      )
+    ),
+    S(
+      L("Who should skip which", "什么人该跳过哪一个", "누가 어느 쪽을 건너뛸까", "Quién debería saltarse cuál"),
+      L(
+        "Skip Tokyo if you only have three nights and hate dense transit learning curves. Skip Singapore if you want cold-season city walking or a food map built around winter markets. Neither replaces a beach-rest trip.",
+        "若只有三晚又讨厌学习密集交通，就别选东京。若你想要冷季步行或冬日市集式美食地图，就别选新加坡。两者都不能替代海滩休息行。",
+        "3박뿐인데 밀집 교통 학습이 싫으면 도쿄를 건너뛰세요. 추운 계절 걷기나 겨울 시장형 음식 지도를 원하면 싱가포르를 건너뛰세요. 둘 다 해변 휴식을 대체하지 않습니다.",
+        "Sáltate Tokio si solo tienes tres noches y odias la curva de tránsito. Sáltate Singapur si quieres invierno urbano o mercados de frío. Ninguna sustituye un viaje de playa."
+      )
+    ),
+  ],
+
+  "seoul-vs-taipei": [
+    S(
+      L("When to go", "什么时候去", "언제 갈까", "Cuándo ir"),
+      L(
+        "Seoul is best in spring and autumn; winters are cold and summers humid. Taipei is subtropical — milder winters, hotter wetter summers, typhoon risk roughly July–September. For short food-city trips, shoulder months usually walk better in both.",
+        "首尔春秋最好；冬天冷、夏天湿。台北亚热带——冬更暖、夏更湿热，台风大约七到九月。短途美食城行，两地肩季通常更好走。",
+        "서울은 봄·가을이 좋고 겨울 춥고 여름 습합니다. 타이베이는 아열대 — 겨울 온화, 여름 덥고 습, 태풍 대략 7–9월. 짧은 음식 도시 여행은 어깨 시즌이 걷기 낫습니다.",
+        "Seúl está mejor en primavera y otoño. Taipéi es subtropical. Para viajes cortos de comida, los meses intermedios caminan mejor."
+      )
+    ),
+    S(
+      L("Food-city pacing", "美食城节奏", "음식 도시 속도", "Ritmo de ciudad gastronómica"),
+      L(
+        "Seoul evenings often lean late streets and Korean classics; Taipei evenings lean night markets and everyday plates. Both reward walking, but Seoul’s hills near some neighborhoods add effort. Put Avoid items (noise, heat, hills) into /decide.",
+        "首尔夜晚常偏深夜街道与韩式经典；台北夜晚偏夜市与日常小馆。都适合步行，但首尔部分街区附近的坡更累。把 Avoid（吵、热、坡）放进 /decide。",
+        "서울 저녁은 심야 거리·한식 클래식, 타이베이는 야시장·일상 식사가 강합니다. 둘 다 걷기 좋지만 서울 일부 언덕이 부담입니다. Avoid를 /decide에 넣으세요.",
+        "Seúl inclina a noches largas y clásicos coreanos; Taipéi a mercados. Ambos se caminan; las cuestas de Seúl suman. Mete Avoid en /decide."
+      )
+    ),
+    S(
+      L("Who should skip which", "什么人该跳过哪一个", "누가 어느 쪽을 건너뛸까", "Quién debería saltarse cuál"),
+      L(
+        "Skip Seoul if winter cold or nightlife noise is a hard Avoid. Skip Taipei if peak summer humidity and typhoon weeks cannot move. Neither is a beach-first answer.",
+        "若冬天寒冷或夜生活噪音是硬 Avoid，就别选首尔。若盛夏湿热与台风周无法改期，就别选台北。两者都不是海滩优先答案。",
+        "겨울 추위나 나이트 소음이 하드 Avoid면 서울을 건너뛰세요. 한여름 습도와 태풍 주를 못 옮기면 타이베이를 건너뛰세요. 둘 다 해변 우선이 아닙니다.",
+        "Sáltate Seúl si el frío o el ruido nocturno son Avoid duros. Sáltate Taipéi si humedad y tifones de verano no se pueden mover. Ninguna es playa primero."
+      )
+    ),
+  ],
 }
 
 export function getCompareSections(slug: string): ContentSection[] {
