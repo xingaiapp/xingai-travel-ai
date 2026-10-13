@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { CalendarDays, ChevronDown, DollarSign, Globe2, MapPin, Plane, UsersRound } from "lucide-react"
 import type { TripContext, TripRegion } from "@/lib/types"
 import type { Messages } from "@/lib/i18n/types"
@@ -43,6 +44,14 @@ function FieldShell({
 const inputClass =
   "h-11 w-full rounded-md border border-input bg-background px-3 text-sm font-medium outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15"
 
+/** Local calendar day. `toISOString()` is UTC and a static build freezes yesterday into the HTML. */
+function localDateInputValue(date = new Date()) {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, "0")
+  const d = String(date.getDate()).padStart(2, "0")
+  return `${y}-${m}-${d}`
+}
+
 type TripFormMessages = Messages["form"]
 
 const regionOptions: Array<{ value: TripRegion; labelKey: keyof TripFormMessages["regions"] }> = [
@@ -62,6 +71,11 @@ function regionLabelKey(region: TripRegion): keyof TripFormMessages["regions"] {
 
 export function TripForm({ value, onChange, originInvalid = false }: TripFormProps) {
   const { messages } = useLocale()
+  const [today, setToday] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    setToday(localDateInputValue())
+  }, [])
 
   function patch(next: Partial<TripContext>) {
     onChange({ ...value, ...next })
@@ -88,7 +102,7 @@ export function TripForm({ value, onChange, originInvalid = false }: TripFormPro
               className={inputClass}
               type="date"
               aria-label={messages.form.dateFrom}
-              min={new Date().toISOString().slice(0, 10)}
+              min={today}
               value={value.dates.from}
               onChange={(event) => {
                 const from = event.target.value
@@ -103,7 +117,7 @@ export function TripForm({ value, onChange, originInvalid = false }: TripFormPro
               className={inputClass}
               type="date"
               aria-label={messages.form.dateTo}
-              min={value.dates.from || new Date().toISOString().slice(0, 10)}
+              min={value.dates.from || today}
               value={value.dates.to}
               onChange={(event) => {
                 const to = event.target.value
