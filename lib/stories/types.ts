@@ -22,6 +22,7 @@ export type StoryBlock =
   | { type: "photo"; photo: StoryPhoto; wide?: boolean }
   | { type: "pair"; photos: [StoryPhoto, StoryPhoto] }
   | { type: "quote"; body: StoryText }
+  | { type: "youtube"; youtubeId: string; title: StoryText }
   | { type: "take"; items: { kind: TakeKind; text: StoryText }[] }
   | { type: "verdict"; intro: StoryText; rows: { label: StoryText; body: StoryText }[] }
 
@@ -40,8 +41,12 @@ export interface StoryEpisode {
 
 export interface StorySeason {
   slug: string
-  /** Destination passed to /decide when a reader wants their own version of this trip. */
-  destination: string
+  /**
+   * Destination passed to /decide when a reader wants their own version of this trip.
+   * Optional: cross-place seasons (e.g. My Lord, Holy) have no single destination —
+   * the decide CTA and destination matching are skipped for them.
+   */
+  destination?: string
   /** Reader-facing place name. `destination` stays the query value used to match comparisons. */
   place: StoryText
   region: TripRegion

@@ -1,10 +1,11 @@
 import { hongKong } from "@/lib/stories/hong-kong"
 import { losCabos } from "@/lib/stories/los-cabos"
 import { macau } from "@/lib/stories/macau"
+import { myLordHoly } from "@/lib/stories/my-lord-holy"
 import type { StoryEpisode, StorySeason, StoryText } from "@/lib/stories/types"
 import type { Locale } from "@/lib/i18n/types"
 
-export const seasons: StorySeason[] = [hongKong, macau, losCabos]
+export const seasons: StorySeason[] = [hongKong, macau, losCabos, myLordHoly]
 
 /** Drafts render locally (and on previews with STORIES_SHOW_DRAFTS=1) but 404 in production. */
 const showDrafts = process.env.NODE_ENV !== "production" || process.env.STORIES_SHOW_DRAFTS === "1"
@@ -46,7 +47,8 @@ export function episodeLabel(episode: StoryEpisode) {
 
 /** Readers leave a story with the destination prefilled, not with Xing's trip copied. */
 export function decideHref(season: StorySeason) {
-  const params = new URLSearchParams({ places: season.destination, region: season.region })
+  const params = new URLSearchParams({ region: season.region })
+  if (season.destination) params.set("places", season.destination)
   return `/decide?${params.toString()}#trip-form`
 }
 
@@ -61,6 +63,7 @@ function normalizePlace(name: string) {
 export function storiesForDestinations(names: string[]) {
   const wanted = names.map(normalizePlace)
   return visibleSeasons().filter((season) => {
+    if (!season.destination) return false
     const place = normalizePlace(season.destination)
     return wanted.some((name) => name === place || name.startsWith(`${place} `) || place.startsWith(`${name} `))
   })

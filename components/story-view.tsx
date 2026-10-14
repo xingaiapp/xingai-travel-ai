@@ -116,6 +116,31 @@ function Block({ block }: Readonly<{ block: StoryBlock }>) {
           {t(block.body)}
         </blockquote>
       )
+    case "youtube":
+      return (
+        <figure className="my-8">
+          <div className="relative mx-auto aspect-[9/16] w-full max-w-[22.5rem] overflow-hidden rounded-2xl bg-black shadow-sm">
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${block.youtubeId}`}
+              title={t(block.title)}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="absolute inset-0 h-full w-full"
+            />
+          </div>
+          <figcaption className="mt-3 text-center text-sm">
+            <a
+              href={`https://youtube.com/shorts/${block.youtubeId}`}
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-primary hover:underline"
+            >
+              {ui("Watch on YouTube", "在 YouTube 觀看", "YouTube에서 보기", "Ver en YouTube")}
+            </a>
+          </figcaption>
+        </figure>
+      )
     case "take":
       return (
         <div className="my-8 grid gap-3 sm:grid-cols-2">
@@ -191,6 +216,7 @@ function StoryInterestCta({ seasonSlug, placeHint }: Readonly<{ seasonSlug: stri
 
 function DecideCta({ season }: Readonly<{ season: StorySeason }>) {
   const { t, ui } = useStoryText()
+  if (!season.destination) return null
   const place = t(season.place)
   return (
     <section className="card-hover mt-12 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
@@ -282,6 +308,7 @@ function EpisodeList({ season, episodes, currentSlug }: Readonly<{ season: Story
 function CityGuideCta({ season }: Readonly<{ season: StorySeason }>) {
   const { t } = useStoryText()
   const { messages } = useLocale()
+  if (!season.destination) return null
   const city = citiesForDestinations([season.destination])[0]
   if (!city) return null
   return (
