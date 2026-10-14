@@ -348,7 +348,23 @@ export function SeasonView({ season, linkable }: Readonly<{ season: StorySeason;
         />
       </div>
       <div className="mx-auto max-w-3xl px-4 pt-6 sm:px-6 lg:px-10">
-        <p className="text-base leading-relaxed text-foreground/90 sm:text-lg">{t(season.intro)}</p>
+        {season.introLead ? (
+          <h2 className="text-xl font-semibold leading-snug tracking-tight text-foreground sm:text-2xl">
+            {t(season.introLead)}
+          </h2>
+        ) : null}
+        {season.introLeadSub ? (
+          <p className="mt-2 text-base leading-relaxed text-muted-foreground sm:text-lg">{t(season.introLeadSub)}</p>
+        ) : null}
+        <p
+          className={
+            season.introLead
+              ? "mt-4 text-base leading-relaxed text-foreground/90 sm:text-lg"
+              : "text-base leading-relaxed text-foreground/90 sm:text-lg"
+          }
+        >
+          {t(season.intro)}
+        </p>
         <section className="mt-10">
           <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
             {ui("Episodes", "分集", "에피소드", "Episodios")}

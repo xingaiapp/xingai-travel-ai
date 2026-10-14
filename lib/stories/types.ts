@@ -52,6 +52,9 @@ export interface StorySeason {
   region: TripRegion
   title: StoryText
   subtitle: StoryText
+  /** Optional emotional lead-in shown directly above the season intro (set only where a season wants one). */
+  introLead?: StoryText
+  introLeadSub?: StoryText
   intro: StoryText
   cover: StoryPhoto
   episodes: StoryEpisode[]

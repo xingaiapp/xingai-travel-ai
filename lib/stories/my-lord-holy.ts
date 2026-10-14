@@ -44,7 +44,7 @@ const ep01: StoryEpisode = {
     {
       type: "text",
       body: {
-        en: "I stood in the mist at Niagara and felt very small. The water never stops — not at noon, not at midnight — and standing there, soaked and laughing, I thought: neither does His mercy. I did not have a speech ready. I just whispered it under the roar: My Lord, holy.",
+        en: "I stood in the mist at Niagara and felt very small. The water never stops — not at noon, not at midnight — it just keeps pouring, and pouring, and pouring. I stood there soaked and laughing, and my heart was so full it ached, because if His mercy is anything like this water, then it has never once run dry on me. Not on my best days. Not on my worst. I did not have a speech ready. I just whispered it under the roar, the only words that fit: My Lord, holy.",
       },
     },
     {
@@ -76,7 +76,7 @@ const ep02: StoryEpisode = {
     {
       type: "text",
       body: {
-        en: "I was the one awake at 3am, anxious, watching a ferry cross Victoria Harbour in the dark. The whole city was asleep, but that little ferry was still crossing — back and forth, faithful in the night. And I remembered: He never sleeps, so I can. My Lord, holy.",
+        en: "That night, I was the one still awake at 3am — anxious, worn out, carrying worries I could not put down — watching a ferry cross Victoria Harbour in the dark. The whole city was asleep, but that little ferry was still crossing, back and forth, quiet and faithful in the middle of the night. And something tight in me finally let go. He never sleeps, so I can. I do not have to hold the whole world together until morning. He is awake. He is watching. I can rest. My Lord, holy.",
       },
     },
     {
@@ -108,7 +108,7 @@ const ep03: StoryEpisode = {
     {
       type: "text",
       body: {
-        en: "Morning at the camp. The sun came up over the cabins and the tower like it had been sent on purpose. Nobody had done anything yet — no work, no striving, nothing to show — and His mercies were already there ahead of us, poured over the grass with the light. I just stood there and received it. My Lord, holy.",
+        en: "Morning at the camp. The sun came up over the cabins and the tower like it had been sent on purpose, just for us. Nobody had done anything yet — no work, no striving, nothing to earn it, nothing to prove — and His mercies were already there, ahead of us, poured out over the grass with the light. I just stood there, empty-handed and grateful, and received it. Grace before breakfast. Grace before anything. My Lord, holy.",
       },
     },
     {
@@ -132,8 +132,10 @@ export const myLordHoly: StorySeason = {
   place: { en: "Places that made me pray" },
   title: { en: "My Lord, Holy" },
   subtitle: { en: "Places That Made Me Pray" },
+  introLead: { en: "Where Your Soul Comes Home" },
+  introLeadSub: { en: "The once-in-a-lifetime places that wash a weary heart clean." },
   intro: {
-    en: "Some places you visit. A few of them stop you in your tracks. These are the places where the view was so full of God's glory that my heart just cried out, \"My Lord, Holy.\" Every film on this page is a real place from my own travels — nothing staged, nothing borrowed. May they lead you into worship too. 🙏",
+    en: "In a world that never stops worrying, every heart needs a place to land. These are the places where mine did. Every scene here is real, somewhere I have stood myself, in the wind, in the light — and every time, God was already there, walking beside me, letting me take in His beautiful world with a quiet heart. This is what a journey means to me: not just seeing beautiful places, but walking through life with Him, one beautiful stop at a time, until the journey is complete. May these places give your heart a place to land, too. 🙏",
   },
   cover: niagaraCover,
   episodes: [ep01, ep02, ep03],
