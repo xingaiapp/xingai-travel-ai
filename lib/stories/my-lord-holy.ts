@@ -35,7 +35,7 @@ const niagaraCover = cover(
 const ep01: StoryEpisode = {
   number: 1,
   slug: "01-niagara-falls",
-  status: "draft",
+  status: "published",
   title: { en: "Niagara Falls — The Water Never Stops" },
   dek: { en: "Standing in the mist of the falls, feeling very small — and very kept." },
   cover: niagaraCover,
@@ -61,7 +61,7 @@ const ep01: StoryEpisode = {
 const ep02: StoryEpisode = {
   number: 2,
   slug: "02-hong-kong-harbour-night",
-  status: "draft",
+  status: "published",
   title: { en: "Hong Kong — The Ferry Still Crosses at 3am" },
   dek: { en: "Awake and anxious at 3am, watching the harbour — and remembering who never sleeps." },
   cover: cover(
@@ -93,7 +93,7 @@ const ep02: StoryEpisode = {
 const ep03: StoryEpisode = {
   number: 3,
   slug: "03-highland-lakes-camp",
-  status: "draft",
+  status: "published",
   title: { en: "Highland Lakes Camp — Mercies Before Breakfast" },
   dek: { en: "Sunrise over the camp, before anyone had done a single thing to earn it." },
   cover: cover(

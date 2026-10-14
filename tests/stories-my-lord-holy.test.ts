@@ -16,14 +16,14 @@ const EXPECTED_YOUTUBE: Record<string, string> = {
 }
 
 describe("my-lord-holy season", () => {
-  it("is registered as a cross-place season with 3 draft episodes", () => {
+  it("is registered as a cross-place season with 3 published episodes", () => {
     expect(seasons.map((s) => s.slug)).toContain("my-lord-holy")
     const season = getSeason("my-lord-holy")!
     expect(season.destination).toBeUndefined()
     expect(season.region).toBe("anywhere")
     expect(season.episodes).toHaveLength(3)
-    expect(season.episodes.every((episode) => episode.status === "draft")).toBe(true)
-    expect(publishedEpisodes(season)).toHaveLength(0)
+    expect(season.episodes.every((episode) => episode.status === "published")).toBe(true)
+    expect(publishedEpisodes(season)).toHaveLength(3)
   })
 
   it("never matches a destination and its decide link carries no place", () => {
