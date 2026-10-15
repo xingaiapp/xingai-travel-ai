@@ -48,6 +48,12 @@ const ep01: StoryEpisode = {
       },
     },
     {
+      type: "text",
+      body: {
+        en: "The wind and waves were strong, but our Lord kept us safe on the boat and carried us on. No matter how great the storm, our Lord will bring us safely to the other side.",
+      },
+    },
+    {
       type: "quote",
       body: {
         en: "\"The LORD on high is mightier than the noise of many waters, yea, than the mighty waves of the sea.\" — Psalm 93:4 (KJV)",
@@ -55,6 +61,17 @@ const ep01: StoryEpisode = {
       },
     },
     { type: "youtube", youtubeId: "LjFRkfgBtxM", title: { en: "The Power of God at Niagara Falls" } },
+    {
+      type: "text",
+      body: {
+        en: "And here is the falls as I heard it — standing at its foot with nothing but the roar of the water: Thank You, God.",
+      },
+    },
+    {
+      type: "youtube",
+      youtubeId: "c-S1kFGD0c0",
+      title: { en: "Thank You, God — Standing At The Foot Of Niagara Falls" },
+    },
   ],
 }
 

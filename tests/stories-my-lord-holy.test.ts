@@ -9,10 +9,10 @@ import { decideHref, getSeason, publishedEpisodes, seasons, storiesForDestinatio
  */
 const MIN_FRAME_W = 500
 
-const EXPECTED_YOUTUBE: Record<string, string> = {
-  "01-niagara-falls": "LjFRkfgBtxM",
-  "02-hong-kong-harbour-night": "g2hUROL-9y4",
-  "03-highland-lakes-camp": "3mc7JCtYaUY",
+const EXPECTED_YOUTUBE: Record<string, string[]> = {
+  "01-niagara-falls": ["LjFRkfgBtxM", "c-S1kFGD0c0"],
+  "02-hong-kong-harbour-night": ["g2hUROL-9y4"],
+  "03-highland-lakes-camp": ["3mc7JCtYaUY"],
 }
 
 describe("my-lord-holy season", () => {
@@ -33,12 +33,13 @@ describe("my-lord-holy season", () => {
     expect(decideHref(season)).not.toContain("places=")
   })
 
-  it("embeds exactly the expected YouTube Short in each episode", () => {
+  it("embeds exactly the expected YouTube Shorts in each episode", () => {
     const season = getSeason("my-lord-holy")!
     for (const episode of season.episodes) {
       const embeds = episode.blocks.filter((block) => block.type === "youtube")
-      expect(embeds).toHaveLength(1)
-      expect(embeds[0]).toMatchObject({ youtubeId: EXPECTED_YOUTUBE[episode.slug] })
+      expect(embeds.map((block) => (block.type === "youtube" ? block.youtubeId : undefined))).toEqual(
+        EXPECTED_YOUTUBE[episode.slug],
+      )
     }
   })
 
