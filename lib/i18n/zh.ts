@@ -473,6 +473,7 @@ export const zh: Messages = {
     guidesNav: "指南",
     citiesNav: "城市",
     prayerNav: "禱告",
+    prayerForYouNav: "為你的禱告",
     discover: "发现",
   },
   travelers: {

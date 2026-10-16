@@ -11,6 +11,7 @@ import {
   Compass,
   FileText,
   Heart,
+  HeartHandshake,
   House,
   MapPinned,
   Menu,
@@ -58,6 +59,7 @@ const moreLinks = [
   { href: "/compare", labelKey: "compareNav" as const, icon: Scale },
   { href: "/guides", labelKey: "guidesNav" as const, icon: FileText },
   { href: "/prayer", labelKey: "prayerNav" as const, icon: Heart },
+  { href: "/prayer/for-you", labelKey: "prayerForYouNav" as const, icon: HeartHandshake },
 ] as const
 
 function isMoreRoute(pathname: string) {
@@ -68,7 +70,8 @@ function isMoreRoute(pathname: string) {
     pathname.startsWith("/compare/") ||
     pathname === "/guides" ||
     pathname.startsWith("/guides/") ||
-    pathname === "/prayer"
+    pathname === "/prayer" ||
+    pathname === "/prayer/for-you"
   )
 }
 
@@ -108,6 +111,7 @@ function mobileHeaderTitle(pathname: string, messages: Messages) {
   if (pathname === "/compare" || pathname.startsWith("/compare/")) return messages.content.compareNav
   if (pathname === "/guides" || pathname.startsWith("/guides/")) return messages.content.guidesNav
   if (pathname === "/faq") return messages.content.faqNav
+  if (pathname === "/prayer/for-you") return messages.content.prayerForYouNav
   if (pathname === "/prayer") return messages.content.prayerNav
   if (pathname === "/how-it-works") return messages.chrome.mobileHowItWorks
   return messages.chrome.decide

@@ -79,6 +79,20 @@ export const STATIC_PAGE_COPY: Record<string, MetaCopy> = {
       es: "Breves películas de oración desde lugares reales donde estuvo Xing: cascadas, puertos y campamentos que lo hicieron orar, y oraciones nocturnas para corazones sin sueño. Mira, descansa y ora con nosotros.",
     },
   },
+  "/prayer/for-you": {
+    title: {
+      en: "A Prayer For You — Prayers by Situation",
+      zh: "為你預備的禱告 — 按處境找禱告",
+      ko: "당신을 위한 기도 — 상황별 기도",
+      es: "Una oración para ti — Oraciones según tu momento",
+    },
+    description: {
+      en: "Short prayers matched to what you are carrying tonight — can't sleep, anxious, weary, missing home, needing peace or strength. Filmed in real places Xing has stood. Pick one and pray along.",
+      zh: "照你今晚的處境挑一支禱告短片——睡不著、焦慮、疲憊、想家、需要平安或力量。全部在星哥親自去過的真實地點實拍，挑一支，跟著一起禱告。",
+      ko: "오늘 밤 당신의 상황에 맞는 짧은 기도 영상 — 잠이 오지 않을 때, 불안할 때, 지쳤을 때, 집이 그리울 때, 평안과 힘이 필요할 때. Xing이 직접 서 있었던 실제 장소에서 촬영했습니다.",
+      es: "Oraciones breves según lo que cargas esta noche: no poder dormir, ansiedad, cansancio, extrañar tu hogar, necesitar paz o fuerza. Filmadas en lugares reales donde estuvo Xing. Elige una y ora con nosotros.",
+    },
+  },
   "/stories": {
     title: {
       en: "Travel Stories",

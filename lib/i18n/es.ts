@@ -476,6 +476,7 @@ export const es: Messages = {
     guidesNav: "Guías",
     citiesNav: "Ciudades",
     prayerNav: "Oración",
+    prayerForYouNav: "Oración para ti",
     discover: "Descubrir",
   },
   travelers: {

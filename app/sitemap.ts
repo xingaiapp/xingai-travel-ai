@@ -44,6 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/how-it-works", priority: 0.8, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
     { path: "/faq", priority: 0.8, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
     { path: "/prayer", priority: 0.8, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
+    { path: "/prayer/for-you", priority: 0.8, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
     { path: "/privacy", priority: 0.5, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
     { path: "/terms", priority: 0.5, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },
     { path: "/disclaimer", priority: 0.5, changeFrequency: "weekly" as const, lastModified: SHELL_CONTENT_DATE },

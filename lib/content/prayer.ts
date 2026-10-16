@@ -56,6 +56,24 @@ export const prayerCopy = {
     "Oraciones de la mañana, viajes de día y una oración suave para cerrar el día: suscríbete a XingAI Travel en YouTube y viaja con nosotros."
   ),
   subscribeCta: t("Subscribe on YouTube", "在 YouTube 訂閱", "YouTube에서 구독", "Suscribirse en YouTube"),
+  forYouHeading: t(
+    "A Prayer For You — by situation",
+    "為你預備的禱告 — 按處境挑一支",
+    "당신을 위한 기도 — 상황별로 골라보세요",
+    "Una oración para ti, según tu momento"
+  ),
+  forYouBody: t(
+    "Can't sleep, anxious, carrying too much, missing home? Pick the prayer that matches tonight — each one filmed in a real place, with the verse its film carries.",
+    "睡不著、焦慮、扛得太多、想家？照你今晚的處境挑一支禱告——每一支都在真實地點實拍，附上那支片子裡的經文。",
+    "잠이 오지 않거나, 불안하거나, 짐이 무겁거나, 집이 그립나요? 오늘 밤의 상황에 맞는 기도를 골라보세요. 모두 실제 장소에서 촬영했고, 영상 속 말씀도 함께 담았습니다.",
+    "¿No puedes dormir, tienes ansiedad, cargas demasiado, extrañas tu hogar? Elige la oración que encaje con esta noche: cada una se filmó en un lugar real, con el versículo de su película."
+  ),
+  forYouCta: t(
+    "Find your prayer",
+    "去找屬於你的那支",
+    "내 기도 찾기",
+    "Encuentra tu oración"
+  ),
 }
 
 export const prayerPlaylists: PrayerPlaylist[] = [

@@ -2,11 +2,13 @@
 
 import { track } from "@vercel/analytics"
 import { ChevronRight, Play } from "lucide-react"
+import Link from "next/link"
 import { useState } from "react"
 import { ContentHero, ContentShell } from "@/components/content-shell"
 import { useLocale } from "@/components/locale-provider"
 import { prayerCopy, prayerPlaylists, type PrayerPlaylist } from "@/lib/content/prayer"
 import { pickLocalized } from "@/lib/content/types"
+import { asPublicLocale, localizedPublicHref } from "@/lib/public-locale"
 import { YOUTUBE_SUBSCRIBE_URL } from "@/lib/youtube-latest"
 
 /**
@@ -89,6 +91,20 @@ export function PrayerView() {
       {prayerPlaylists.map((playlist) => (
         <PlaylistBlock key={playlist.id} playlist={playlist} />
       ))}
+      <section className="card-hover mt-12 rounded-2xl border border-border bg-card p-5" aria-label={pickLocalized(prayerCopy.forYouHeading, locale)}>
+        <h2 className="text-base font-extrabold">{pickLocalized(prayerCopy.forYouHeading, locale)}</h2>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{pickLocalized(prayerCopy.forYouBody, locale)}</p>
+        <p className="mt-4">
+          <Link
+            href={localizedPublicHref(asPublicLocale(locale), "/prayer/for-you")}
+            onClick={() => track("prayer_to_for_you", { target: "/prayer/for-you" })}
+            className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary hover:underline"
+          >
+            {pickLocalized(prayerCopy.forYouCta, locale)}
+            <ChevronRight className="h-4 w-4" aria-hidden />
+          </Link>
+        </p>
+      </section>
       <section className="card-hover mt-12 rounded-2xl border border-primary/30 bg-primary/5 p-5" aria-label={pickLocalized(prayerCopy.subscribeHeading, locale)}>
         <h2 className="text-base font-extrabold">{pickLocalized(prayerCopy.subscribeHeading, locale)}</h2>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{pickLocalized(prayerCopy.subscribeBody, locale)}</p>

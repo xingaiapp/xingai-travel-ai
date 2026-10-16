@@ -442,6 +442,7 @@ export interface Messages {
     guidesNav: string
     citiesNav: string
     prayerNav: string
+    prayerForYouNav: string
     discover: string
   }
   travelers: {
