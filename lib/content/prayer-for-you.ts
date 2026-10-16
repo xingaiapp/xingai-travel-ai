@@ -16,15 +16,25 @@ const t = (en: string, zh: string, ko: string, es: string): L => ({ en, zh, ko, 
  * - carrying WwWgYRVlj_E — goals pack faith-upload-pack-20261014-27.md,
  *            Matthew 11:28 checked verbatim on BibleGateway.
  * - home     40e8-lhMjW8 — pack 2026-10-14 publish_pack_night_tower.md (Ps 42:8).
- * - peace    Za5qO1DWRlA — pack 2026-10-13 publish_pack_ocean_sunset.md (Ps 4:8).
+ * - grief    tH1TMDph8k8 — pack 2026-10-12 publish_pack_ep02_lake.md (Ps 34:18,
+ *            verse line as printed in the pack's description).
+ * - tomorrow Za5qO1DWRlA — pack 2026-10-13 publish_pack_ocean_sunset.md (Ps 4:8).
+ *            Added 2026-10-16 at Xing's request as its own "worried about
+ *            tomorrow" cell (it previously sat in the peace cell).
  * - strength 3mc7JCtYaUY — pack 2026-10-13 publish_pack_camp_sunrise.md (Ps 143:8).
  * - thanks   AsWmISdSJfU — pack 2026-10-12 publish_pack_cross_lake.md (Ps 107:1).
+ *
+ * Situations Xing named on 2026-10-16 that have no published film yet live in
+ * the production queue, not here: goals/xingai-youtube/files/
+ * prayer-situations-queue-20261016.md (a loved one is sick; guidance —
+ * already scheduled 2026-10-23 / 10-25 in faith-upload-pack-20261014-27.md).
  *
  * Deliberately NOT listed yet (unverified / not yet public on 2026-10-16):
  * - "Waiting for an answer" EP05 — publish pack exists but no public video
  *   id could be verified; add only after a public id is confirmed.
  * - jK80WrHqxqc "Needs Peace Tonight (Part 1)" — scheduled 2026-10-16 23:00 CT;
- *   add to the peace cell only after it is actually public.
+ *   add it as the peace cell only after it is actually public (a separate
+ *   scheduled job handles that on the night).
  * - RWOX8bR8_uI — an earlier Can't Sleep upload id that no longer resolves
  *   as public (oEmbed forbidden); never use.
  */
@@ -51,6 +61,13 @@ export const prayerForYouCopy = {
     "看全部禱告播放清單",
     "전체 기도 재생목록 보기",
     "Ver todas las listas de oración"
+  ),
+  latestHeading: t("Latest prayers", "最新禱告", "최신 기도", "Oraciones recientes"),
+  latestLead: t(
+    "The newest prayers from the channel, gathered here on their own as soon as they are published.",
+    "頻道最新發布的禱告，一公開就自動收進這裡。",
+    "채널에 새로 올라온 기도가 공개되는 즉시 이곳에 자동으로 모입니다.",
+    "Las oraciones más recientes del canal, reunidas aquí en cuanto se publican."
   ),
 }
 
@@ -89,10 +106,18 @@ export const prayerSituations: PrayerSituation[] = [
     verseRef: "Psalm 42:8 (KJV)",
   },
   {
-    key: "peace",
+    key: "grief",
+    videoId: "tH1TMDph8k8",
+    videoTitle: "A Prayer For You Who Lost Someone 🌅🙏",
+    heading: t("Lost someone you love", "失去摯愛的人", "사랑하는 사람을 잃었을 때", "Perdiste a alguien que amas"),
+    verse: "The Lord is close to the brokenhearted — you do not grieve alone.",
+    verseRef: "Psalm 34:18",
+  },
+  {
+    key: "tomorrow",
     videoId: "Za5qO1DWRlA",
     videoTitle: "A Prayer For You Who Is Worried About Tomorrow 🌅🙏",
-    heading: t("Needing peace", "需要平安", "평안이 필요할 때", "Necesitas paz"),
+    heading: t("Worried about tomorrow", "為明天擔心", "내일이 걱정될 때", "Te preocupa el mañana"),
     verse: "I will both lay me down in peace, and sleep: for thou, LORD, only makest me dwell in safety.",
     verseRef: "Psalm 4:8 (KJV)",
   },
