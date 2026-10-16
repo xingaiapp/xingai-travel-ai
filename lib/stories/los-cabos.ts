@@ -231,6 +231,26 @@ const ep01: StoryEpisode = {
         ),
       ),
     },
+    { type: "heading", body: tx("06 — A moment of prayer", "06 · 禱告的時刻", "06 · 기도의 시간", "06 — Un momento de oración") },
+    {
+      type: "text",
+      body: tx(
+        "The same sunrise, given room to breathe — our A Moment of Prayer film, made on this shore. Watch it the way that morning asked to be watched: slowly, and to the end.",
+        "同一個日出，留出呼吸的空間——這是我們在這片海岸拍的《A Moment of Prayer》。用那天早晨要求的方式看它：慢慢看，看到最後。",
+        "같은 일출, 숨 쉴 틈을 준 — 이 해변에서 만든 우리의 《A Moment of Prayer》. 그 아침이 요구한 대로 보라: 천천히, 끝까지.",
+        "El mismo amanecer, con espacio para respirar — nuestra película A Moment of Prayer, hecha en esta orilla. Mírala como esa mañana pedía: despacio, hasta el final.",
+      ),
+    },
+    {
+      type: "youtube",
+      youtubeId: "vUQxUD6Lr0k",
+      title: tx(
+        "Sunrise in Cabo San Lucas — A Moment of Prayer",
+        "Cabo San Lucas 日出 — 禱告的時刻",
+        "카보 산 루카스 일출 — 기도의 시간",
+        "Amanecer en Cabo San Lucas — Un momento de oración",
+      ),
+    },
     {
       type: "verdict",
       intro: tx(

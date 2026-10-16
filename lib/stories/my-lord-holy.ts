@@ -143,6 +143,42 @@ const ep03: StoryEpisode = {
   ],
 }
 
+const ep04: StoryEpisode = {
+  number: 4,
+  slug: "04-cabo-san-lucas-sunrise",
+  status: "published",
+  title: { en: "Cabo San Lucas — New Every Morning" },
+  dek: { en: "A sunrise over the Pacific in Cabo — and mercies that had arrived before I did." },
+  cover: cover(
+    "04",
+    "cabo-sunrise",
+    1600,
+    2844,
+    "Sunrise over a Cabo San Lucas beach, footprints in the sand",
+  ),
+  blocks: [
+    { type: "heading", body: { en: "Cabo San Lucas, Mexico" } },
+    {
+      type: "text",
+      body: {
+        en: "I stood on the sand in Cabo San Lucas before the day began, watching the sun come up over the Pacific. Nothing had gone wrong yet that day — nothing had gone right yet, either — and still His mercies were already there ahead of me, new with the morning, like they had never once been spent. I did not earn that sunrise. I just received it, with sandy feet and a quiet heart. My Lord, holy.",
+      },
+    },
+    {
+      type: "quote",
+      body: {
+        en: "\"It is of the LORD's mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.\" — Lamentations 3:22–23 (KJV)",
+        zh: "「我們不至消滅，是出於耶和華諸般的慈愛；是因他的憐憫不至斷絕。每早晨，這都是新的；你的誠實極其廣大！」— 耶利米哀歌 3:22–23（和合本）",
+      },
+    },
+    {
+      type: "youtube",
+      youtubeId: "vUQxUD6Lr0k",
+      title: { en: "Sunrise in Cabo San Lucas — A Moment of Prayer" },
+    },
+  ],
+}
+
 export const myLordHoly: StorySeason = {
   slug: "my-lord-holy",
   region: "anywhere",
@@ -155,5 +191,5 @@ export const myLordHoly: StorySeason = {
     en: "In a world that never stops worrying, every heart needs a place to land. These are the places where mine did. Every scene here is real, somewhere I have stood myself, in the wind, in the light — and every time, God was already there, walking beside me, letting me take in His beautiful world with a quiet heart. This is what a journey means to me: not just seeing beautiful places, but walking through life with Him, one beautiful stop at a time, until the journey is complete. May these places give your heart a place to land, too. 🙏",
   },
   cover: niagaraCover,
-  episodes: [ep01, ep02, ep03],
+  episodes: [ep01, ep02, ep03, ep04],
 }

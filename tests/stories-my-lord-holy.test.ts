@@ -13,17 +13,18 @@ const EXPECTED_YOUTUBE: Record<string, string[]> = {
   "01-niagara-falls": ["LjFRkfgBtxM", "c-S1kFGD0c0"],
   "02-hong-kong-harbour-night": ["g2hUROL-9y4"],
   "03-highland-lakes-camp": ["3mc7JCtYaUY"],
+  "04-cabo-san-lucas-sunrise": ["vUQxUD6Lr0k"],
 }
 
 describe("my-lord-holy season", () => {
-  it("is registered as a cross-place season with 3 published episodes", () => {
+  it("is registered as a cross-place season with 4 published episodes", () => {
     expect(seasons.map((s) => s.slug)).toContain("my-lord-holy")
     const season = getSeason("my-lord-holy")!
     expect(season.destination).toBeUndefined()
     expect(season.region).toBe("anywhere")
-    expect(season.episodes).toHaveLength(3)
+    expect(season.episodes).toHaveLength(4)
     expect(season.episodes.every((episode) => episode.status === "published")).toBe(true)
-    expect(publishedEpisodes(season)).toHaveLength(3)
+    expect(publishedEpisodes(season)).toHaveLength(4)
   })
 
   it("never matches a destination and its decide link carries no place", () => {
