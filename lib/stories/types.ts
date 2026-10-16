@@ -22,7 +22,7 @@ export type StoryBlock =
   | { type: "photo"; photo: StoryPhoto; wide?: boolean }
   | { type: "pair"; photos: [StoryPhoto, StoryPhoto] }
   | { type: "quote"; body: StoryText }
-  | { type: "youtube"; youtubeId: string; title: StoryText }
+  | { type: "youtube"; youtubeId: string; title: StoryText; aspect?: "portrait" | "landscape" }
   | { type: "take"; items: { kind: TakeKind; text: StoryText }[] }
   | { type: "verdict"; intro: StoryText; rows: { label: StoryText; body: StoryText }[] }
 

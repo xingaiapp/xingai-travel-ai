@@ -244,6 +244,7 @@ const ep01: StoryEpisode = {
     {
       type: "youtube",
       youtubeId: "vUQxUD6Lr0k",
+      aspect: "landscape",
       title: tx(
         "Sunrise in Cabo San Lucas — A Moment of Prayer",
         "Cabo San Lucas 日出 — 禱告的時刻",

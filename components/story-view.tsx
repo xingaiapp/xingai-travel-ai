@@ -116,10 +116,17 @@ function Block({ block }: Readonly<{ block: StoryBlock }>) {
           {t(block.body)}
         </blockquote>
       )
-    case "youtube":
+    case "youtube": {
+      const landscape = block.aspect === "landscape"
       return (
         <figure className="my-8">
-          <div className="relative mx-auto aspect-[9/16] w-full max-w-[22.5rem] overflow-hidden rounded-2xl bg-black shadow-sm">
+          <div
+            className={
+              landscape
+                ? "relative mx-auto aspect-video w-full max-w-3xl overflow-hidden rounded-2xl bg-black shadow-sm"
+                : "relative mx-auto aspect-[9/16] w-full max-w-[22.5rem] overflow-hidden rounded-2xl bg-black shadow-sm"
+            }
+          >
             <iframe
               src={`https://www.youtube-nocookie.com/embed/${block.youtubeId}`}
               title={t(block.title)}
@@ -131,7 +138,7 @@ function Block({ block }: Readonly<{ block: StoryBlock }>) {
           </div>
           <figcaption className="mt-3 text-center text-sm">
             <a
-              href={`https://youtube.com/shorts/${block.youtubeId}`}
+              href={landscape ? `https://www.youtube.com/watch?v=${block.youtubeId}` : `https://youtube.com/shorts/${block.youtubeId}`}
               target="_blank"
               rel="noreferrer"
               className="font-semibold text-primary hover:underline"
@@ -141,6 +148,7 @@ function Block({ block }: Readonly<{ block: StoryBlock }>) {
           </figcaption>
         </figure>
       )
+    }
     case "take":
       return (
         <div className="my-8 grid gap-3 sm:grid-cols-2">
