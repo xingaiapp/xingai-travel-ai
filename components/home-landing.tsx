@@ -13,6 +13,7 @@ import {
   Map,
   MapPin,
   MessageSquareText,
+  Play,
   Scale,
   Search,
   ShieldCheck,
@@ -41,6 +42,7 @@ import {
 } from "@/lib/content/home-landing"
 import { pickLocalized } from "@/lib/content/types"
 import { cn } from "@/lib/utils"
+import { YOUTUBE_SUBSCRIBE_URL, YOUTUBE_UPLOADS_URL, type LatestVideo } from "@/lib/youtube-latest"
 
 const introIcons = [BedDouble, Sparkles, Wallet, Users, XCircle] as const
 const howIcons = [MessageSquareText, Scale, CheckCircle2] as const
@@ -364,7 +366,134 @@ function HeroCarousel({
   )
 }
 
-export function HomeLanding() {
+function LatestVideosSection({
+  t,
+  videos,
+}: {
+  t: (value: Parameters<typeof pickLocalized>[0]) => string
+  videos: LatestVideo[]
+}) {
+  const [playing, setPlaying] = useState(false)
+  if (videos.length === 0) return null
+  const [main, ...rest] = videos
+
+  return (
+    <section className="mt-14 border-t border-border pt-10" aria-labelledby="home-latest-videos">
+      <ScrollIn>
+        <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">{t(homeCopy.videosEyebrow)}</p>
+        <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <h2 id="home-latest-videos" className="hero-display-title text-2xl font-semibold tracking-tight sm:text-3xl">
+            {t(homeCopy.videosTitle)}
+          </h2>
+          <a
+            href={YOUTUBE_SUBSCRIBE_URL}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => track("home_video_subscribe", { target: YOUTUBE_SUBSCRIBE_URL })}
+            className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary"
+          >
+            {t(homeCopy.videosSubscribeCta)}
+            <ChevronRight className="h-4 w-4" aria-hidden />
+          </a>
+        </div>
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">{t(homeCopy.videosNote)}</p>
+      </ScrollIn>
+      <div className="mt-6 grid items-start gap-6 lg:grid-cols-[minmax(0,22.5rem)_minmax(0,1fr)]">
+        <ScrollIn>
+          <figure>
+            <div className="relative mx-auto aspect-[9/16] w-full max-w-[22.5rem] overflow-hidden rounded-2xl bg-black shadow-sm">
+              {playing ? (
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${main.id}?autoplay=1&rel=0`}
+                  title={main.title}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full"
+                />
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPlaying(true)
+                    track("home_video_play", { id: main.id })
+                  }}
+                  aria-label={main.title}
+                  className="group absolute inset-0 h-full w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <img src={main.thumbnail} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                  <span className="absolute inset-0 bg-black/25 motion-safe:transition group-hover:bg-black/35" aria-hidden />
+                  <span className="absolute inset-0 flex items-center justify-center" aria-hidden>
+                    <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_10px_30px_color-mix(in_oklch,var(--primary)_35%,transparent)] motion-safe:transition group-hover:scale-105">
+                      <Play className="ml-1 h-7 w-7 fill-current" aria-hidden />
+                    </span>
+                  </span>
+                </button>
+              )}
+            </div>
+            <figcaption className="mt-3 text-center text-sm">
+              <a
+                href={main.url}
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-primary hover:underline"
+              >
+                {main.title}
+              </a>
+            </figcaption>
+          </figure>
+        </ScrollIn>
+        <div>
+          <ul className="grid gap-4">
+            {rest.map((video, index) => (
+              <li key={video.id}>
+                <ScrollIn delayMs={index * 50}>
+                  <a
+                    href={video.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => track("home_video_open", { id: video.id, target: video.url })}
+                    className="card-hover card-hover-media group grid grid-cols-[minmax(0,10rem)_minmax(0,1fr)] items-center gap-4 overflow-hidden rounded-2xl border border-border bg-card p-3"
+                  >
+                    <span className="relative block aspect-video overflow-hidden rounded-xl">
+                      <img src={video.thumbnail} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                      <span className="absolute inset-0 flex items-center justify-center bg-black/20" aria-hidden>
+                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-black/55 text-white">
+                          <Play className="ml-0.5 h-4 w-4 fill-current" aria-hidden />
+                        </span>
+                      </span>
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-base font-semibold leading-snug tracking-tight">{video.title}</span>
+                      <span className="mt-1.5 inline-flex min-h-6 items-center gap-1 text-sm font-semibold text-primary">
+                        {t(homeCopy.videosWatchOn)}
+                        <ArrowRight className="h-4 w-4 motion-safe:transition group-hover:translate-x-0.5" aria-hidden />
+                      </span>
+                    </span>
+                  </a>
+                </ScrollIn>
+              </li>
+            ))}
+          </ul>
+          <ScrollIn delayMs={100}>
+            <a
+              href={YOUTUBE_UPLOADS_URL}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => track("home_video_all", { target: YOUTUBE_UPLOADS_URL })}
+              className="mt-5 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary"
+            >
+              {t(homeCopy.videosAllCta)}
+              <ChevronRight className="h-4 w-4" aria-hidden />
+            </a>
+          </ScrollIn>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export function HomeLanding({ latestVideos = [] }: { latestVideos?: LatestVideo[] }) {
   const { locale, messages } = useLocale()
   const t = (value: Parameters<typeof pickLocalized>[0]) => textOf(value, locale)
 
@@ -478,6 +607,8 @@ export function HomeLanding() {
           <TravelMapProgress variant="home" />
         </ScrollIn>
       </section>
+
+      <LatestVideosSection t={t} videos={latestVideos} />
 
       <section className="mt-14 border-t border-border pt-10" aria-labelledby="home-editor-picks">
         <ScrollIn>

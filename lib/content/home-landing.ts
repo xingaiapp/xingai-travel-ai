@@ -150,6 +150,17 @@ export const homeCopy = {
     "Lista corta editorial de nuestras guías publicadas: no es un ranking ni va patrocinada. Abre la guía y luego Decide con tus fechas."
   ),
   picksAllCta: t("Browse all cities", "浏览全部城市", "모든 도시 보기", "Ver todas las ciudades"),
+  videosEyebrow: t("From the channel", "頻道直送", "채널에서", "Desde el canal"),
+  videosTitle: t("Latest from the channel", "最新影片", "최신 영상", "Lo último del canal"),
+  videosNote: t(
+    "Travel stories and quiet faith moments, filmed where we actually went. The newest one plays right here — the rest live on our YouTube channel.",
+    "我們親自去過的地方、親手拍下的旅行故事與信仰時刻。最新一支可以直接在這裡看，其餘的都在我們的 YouTube 頻道。",
+    "직접 가서 찍은 여행 이야기와 믿음의 순간들. 최신 영상은 여기서 바로 보고, 나머지는 YouTube 채널에서 볼 수 있습니다.",
+    "Historias de viaje y momentos de fe, filmados en los lugares a los que fuimos. El más reciente se reproduce aquí; el resto está en nuestro canal de YouTube."
+  ),
+  videosSubscribeCta: t("Subscribe on YouTube", "在 YouTube 訂閱", "YouTube에서 구독", "Suscribirse en YouTube"),
+  videosWatchOn: t("Watch on YouTube", "在 YouTube 觀看", "YouTube에서 보기", "Ver en YouTube"),
+  videosAllCta: t("See all uploads", "看全部上傳", "업로드 전체 보기", "Ver todas las subidas"),
   picksOpenCta: t("Open {city} guide", "打开{city}指南", "{city} 가이드 열기", "Abrir guía de {city}"),
   picksByStyleCta: t("Browse by trip style", "按旅行方式逛", "여행 스타일로 보기", "Explorar por estilo de viaje"),
   hkTitle: t("Start with Hong Kong", "先从香港看起", "홍콩부터 보기", "Empieza por Hong Kong"),
