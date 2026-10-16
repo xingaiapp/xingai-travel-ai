@@ -474,6 +474,7 @@ export const ko: Messages = {
     compareNav: "비교",
     guidesNav: "가이드",
     citiesNav: "도시",
+    prayerNav: "기도",
     discover: "탐색",
   },
   travelers: {

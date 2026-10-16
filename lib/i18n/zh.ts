@@ -472,6 +472,7 @@ export const zh: Messages = {
     compareNav: "对比",
     guidesNav: "指南",
     citiesNav: "城市",
+    prayerNav: "禱告",
     discover: "发现",
   },
   travelers: {

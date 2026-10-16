@@ -65,6 +65,20 @@ export const STATIC_PAGE_COPY: Record<string, MetaCopy> = {
       es: "Preguntas sobre XingAI Travel: cómo se eligen destinos, afiliados, viajes en noviembre y verificar antes de reservar.",
     },
   },
+  "/prayer": {
+    title: {
+      en: "Prayer — Faith Through Travel",
+      zh: "禱告 — 信仰之旅",
+      ko: "기도 — 믿음의 여행",
+      es: "Oración — Fe a través del viaje",
+    },
+    description: {
+      en: "Short prayer films from real places Xing has stood — waterfalls, harbours and campsites that made him pray, plus gentle night prayers for sleepless hearts. Watch, rest, and pray along.",
+      zh: "星哥親自去過的真實地點拍下的禱告短片——讓人心生敬畏的瀑布、海港與營地，還有給睡不著的人的夜間禱告。看一看，歇一歇，一起禱告。",
+      ko: "Xing이 직접 서 있었던 실제 장소에서 찍은 짧은 기도 영상 — 기도가 절로 나오는 폭포, 항구, 캠핑장과 잠 못 이루는 밤을 위한 기도. 쉬면서 함께 기도하세요.",
+      es: "Breves películas de oración desde lugares reales donde estuvo Xing: cascadas, puertos y campamentos que lo hicieron orar, y oraciones nocturnas para corazones sin sueño. Mira, descansa y ora con nosotros.",
+    },
+  },
   "/stories": {
     title: {
       en: "Travel Stories",

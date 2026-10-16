@@ -475,6 +475,7 @@ export const en: Messages = {
     compareNav: "Compare",
     guidesNav: "Guides",
     citiesNav: "Cities",
+    prayerNav: "Prayer",
     discover: "Discover",
   },
   travelers: {

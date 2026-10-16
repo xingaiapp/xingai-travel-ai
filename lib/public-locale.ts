@@ -14,6 +14,7 @@ const INDEXABLE_PREFIXES = [
   "/compare",
   "/guides",
   "/stories",
+  "/prayer",
   "/privacy",
   "/terms",
   "/disclaimer",
