@@ -18,6 +18,9 @@ const t = (en: string, zh: string, ko: string, es: string): L => ({ en, zh, ko, 
  * - home     40e8-lhMjW8 — pack 2026-10-14 publish_pack_night_tower.md (Ps 42:8).
  * - grief    tH1TMDph8k8 — pack 2026-10-12 publish_pack_ep02_lake.md (Ps 34:18,
  *            verse line as printed in the pack's description).
+ * - peace    jK80WrHqxqc — pack 2026-10-14 publish_pack_night_harbor.md
+ *            (Ps 4:8). Harbour Part 1; scheduled 2026-10-16 23:00 CT and
+ *            verified PUBLIC on the live channel that night before adding.
  * - tomorrow Za5qO1DWRlA — pack 2026-10-13 publish_pack_ocean_sunset.md (Ps 4:8).
  *            Added 2026-10-16 at Xing's request as its own "worried about
  *            tomorrow" cell (it previously sat in the peace cell).
@@ -32,9 +35,6 @@ const t = (en: string, zh: string, ko: string, es: string): L => ({ en, zh, ko, 
  * Deliberately NOT listed yet (unverified / not yet public on 2026-10-16):
  * - "Waiting for an answer" EP05 — publish pack exists but no public video
  *   id could be verified; add only after a public id is confirmed.
- * - jK80WrHqxqc "Needs Peace Tonight (Part 1)" — scheduled 2026-10-16 23:00 CT;
- *   add it as the peace cell only after it is actually public (a separate
- *   scheduled job handles that on the night).
  * - RWOX8bR8_uI — an earlier Can't Sleep upload id that no longer resolves
  *   as public (oEmbed forbidden); never use.
  */
@@ -118,6 +118,14 @@ export const prayerSituations: PrayerSituation[] = [
     videoId: "Za5qO1DWRlA",
     videoTitle: "A Prayer For You Who Is Worried About Tomorrow 🌅🙏",
     heading: t("Worried about tomorrow", "為明天擔心", "내일이 걱정될 때", "Te preocupa el mañana"),
+    verse: "I will both lay me down in peace, and sleep: for thou, LORD, only makest me dwell in safety.",
+    verseRef: "Psalm 4:8 (KJV)",
+  },
+  {
+    key: "peace",
+    videoId: "jK80WrHqxqc",
+    videoTitle: "A Prayer For You Who Needs Peace Tonight 🌙🙏 (Part 1)",
+    heading: t("Needing peace", "需要平安", "평안이 필요할 때", "Necesitas paz"),
     verse: "I will both lay me down in peace, and sleep: for thou, LORD, only makest me dwell in safety.",
     verseRef: "Psalm 4:8 (KJV)",
   },

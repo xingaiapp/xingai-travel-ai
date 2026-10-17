@@ -9,7 +9,8 @@ import { staticPageMetaCopy } from "@/lib/seo-page-copy"
  */
 const BLOCKED_IDS = [
   "RWOX8bR8_uI", // earlier Can't Sleep upload id — no longer public
-  "jK80WrHqxqc", // Needs Peace Tonight P1 — scheduled 2026-10-16 23:00 CT, not public at page launch
+  // jK80WrHqxqc (Needs Peace Tonight P1) was blocked only until its scheduled
+  // 2026-10-16 23:00 CT release; verified PUBLIC that night and unblocked.
 ]
 
 describe("prayer-for-you situations", () => {
