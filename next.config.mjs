@@ -48,6 +48,8 @@ const nextConfig = {
       { source: "/legal/privacy", destination: "/privacy", permanent: false },
       { source: "/legal/terms", destination: "/terms", permanent: false },
       { source: "/legal/disclaimer", destination: "/disclaimer", permanent: false },
+      { source: "/cities", destination: "/city", permanent: true },
+      { source: "/:locale(zh|ko|es)/cities", destination: "/:locale/city", permanent: true },
       { source: `${season}/01-the-hong-kong-i-called-home`, destination: ep01, permanent: true },
       { source: `${season}/02-the-harbor-i-kept-coming-back-to`, destination: ep01, permanent: true },
       { source: `${season}/03-what-i-actually-ate`, destination: ep02, permanent: true },
