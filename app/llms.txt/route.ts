@@ -62,6 +62,8 @@ Indexable pages expose hreflang (en, zh-CN, ko, es, x-default). /result and /tri
 Primary pages:
 - / (product home; primary action is Make My Travel Decision)
 - /decide (the Travel Decision form; self-canonical per locale)
+- /prayer (Faith Through Travel — short prayer films and playlists from real places)
+- /prayer/for-you (situation-led prayers for sleeplessness, anxiety, grief, homesickness, peace, and strength)
 - /city (city-guide directory; search + region + trip-style filters)
 - /privacy
 - /terms
